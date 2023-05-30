@@ -32,3 +32,10 @@ UserRepository
     Add
     Get by username
 
+**Conditions**
+1. Username must be unique
+    If #get_by_username does not return None, display error message
+2. Password and Confirm Password must match
+3. Email must be unique
+    If #get_by_email does not return None, display error message
+
