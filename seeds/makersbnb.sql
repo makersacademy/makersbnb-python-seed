@@ -39,10 +39,14 @@ CREATE TABLE bookings (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-INSERT INTO users (username, email, password) VALUES ('owner', 'owner@email.com', 'password123')
-INSERT INTO users (username, email, password) VALUES ('renter', 'renter@email.com', 'password123')
-INSERT INTO listings (user_id, price, location) VALUES (1, 150, "London")
+INSERT INTO users (username, email, PASSWORD)
+VALUES('owner', 'owner@email.com', 'password123');
 
+INSERT INTO users (username, email, PASSWORD)
+VALUES('renter', 'renter@email.com', 'password123');
+
+INSERT INTO listings (user_id, price, LOCATION)
+VALUES(1, 150, 'London');
 
 
 
