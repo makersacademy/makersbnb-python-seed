@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+
+    {% if user_created %}
+    <div id="user-created-message">User successfully created!</div>
+    {% endif %}
+
+    <form action="/signup" method="POST">
+        <p>
+            <label for="name">Name</label>
+            <br>
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="username">Username</label>
+            <br>
+            <input type="text" name="username" id="username">
+        </p>
+        <p>
+            <label for="email">Email</label>
+            <br>
+            <input type="text" name="email" id="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <br>
+            <input type="text" name="password" id="password">
+        </p>
+        <p>
+            <label for="confirm_password">Confirm Password</label>
+            <br>
+            <input type="text" name="confirm_password" id="confirm_password">
+        </p>
+        <p>
+            <input type="submit" value="Sign Up">
+        </p>
+    </form>
+
+</body>
+</html>
