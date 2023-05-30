@@ -20,9 +20,8 @@ CREATE TABLE listings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     price FLOAT,
-    location VARCHAR(20),
+    name VARCHAR(20),
     description TEXT,
-    availability BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 

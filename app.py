@@ -40,6 +40,18 @@ def add_user():
 
     return render_template('sign_up.html', user_created=user_created)
 
+@app.route('/listings', methods=['GET'])
+def view_listings():
+    return render_template('show.html')
+
+@app.route('/listings', methods = ['POST'])
+def create_listing():
+    if request.method == "POST":
+        name = request.form['Name']
+        description = request.form['Description']
+        price_per_night = request.form['Price_per_night']
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
