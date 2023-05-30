@@ -21,11 +21,11 @@ CREATE TABLE listings (
     ON DELETE CASCADE
 );
 
-INSERT INTO users (username, password, email)
+INSERT INTO users (username, actualname, email, password)
 VALUES 
-('User1', 'Password1', 'user1@email.com'),
-('User2', 'Password2', 'user2@email.com'),
-('User3', 'Password3', 'user3@email.com');
+('User1', 'Actual Name 1', 'user1@email.com', 'Password1'),
+('User2', 'Actual Name 2', 'user2@email.com', 'Password2'),
+('User3', 'Actual Name 3', 'user3@email.com', 'Password3');
 
 -- Insert into listings table
 INSERT INTO listings (name, description, price, user_id)

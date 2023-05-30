@@ -8,14 +8,14 @@ class UserRepository:
         rows = self._connection.execute('SELECT * from users')
         users = []
         for row in rows:
-            item = User(row["id"], row["username"], row['actualname'], row["password"], row["email"])
+            item = User(row["id"], row["username"], row['actualname'], row["email"],  row["password"])
             users.append(item)
         return users
     
     def create(self, user):
         self._connection.execute(
-            'INSERT INTO users (username, actualname, password, email) VALUES (%s, %s, %s, %s)', 
-            [user.username, user.actualname, user.password, user.email]
+            'INSERT INTO users (username, actualname,email, password) VALUES (%s, %s, %s, %s)', 
+            [user.username, user.actualname, user.email, user.password]
         )
         return None
     # def create(self, listing):
