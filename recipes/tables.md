@@ -29,7 +29,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 | Record                | Properties          |
 | --------------------- | ------------------  |
 | users                 | name, email, password
-| spaces                | space_name, description, price, location, booking_id, owner
+| spaces                | space_name, description, price, location, user_id
 | bookings              | date, space_id, user_id
 
 1. Name of the first table (always plural): `users` 
@@ -38,7 +38,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 
 2. Name of the second table (always plural): `spaces` 
 
-    Column names: `space_name`, `description`, `price`, `location`, `booking_id`, `owner`
+    Column names: `space_name`, `description`, `price`, `location`, `user_id`
 
 3. Name of the third table (always plural): `bookings` 
 
@@ -66,8 +66,7 @@ space_name: text
 description: text
 price: float
 location: text
-booking_id: int
-owner: int
+user_id: int
 
 Table: bookings
 id: SERIAL
@@ -97,22 +96,6 @@ The join table usually contains two columns, which are two foreign keys, each on
 
 The naming convention is `table1_table2`.
 
-```
-# JOIN 1
-Join table for tables: users and spaces
-Join table name: users_spaces
-Columns: user_id, space_id
-
-# JOIN 2
-Join table for tables: spaces and bookings
-Join table name: spaces_bookings
-Columns: space_id, booking_id
-
-# JOIN 3
-Join table for tables: users and bookings
-Join table name: users_bookings
-Columns: user_id, booking_id
-```
 
 ## 4. Write the SQL.
 
@@ -136,8 +119,7 @@ CREATE TABLE spaces (
     description text,
     price float,
     location text,
-    booking_id int,
-    owner int
+    user_id int
 );
 
 -- Create the third table.
@@ -148,35 +130,10 @@ CREATE TABLE bookings (
     user_id int
 );
 
--- Create the join table.
-CREATE TABLE users_spaces (
-  user_id int,
-  space_id int,
-  constraint fk_user foreign key(user_id) references users(id) on delete cascade,
-  constraint fk_space foreign key(space_id) references spaces(id) on delete cascade,
-  PRIMARY KEY (user_id, space_id)
-);
-
-CREATE TABLE spaces_bookings (
-  space_id int,
-  booking_id int,
-  constraint fk_space foreign key(space_id) references spaces(id) on delete cascade,
-  constraint fk_booking foreign key(booking_id) references bookings(id) on delete cascade,
-  PRIMARY KEY (space_id, booking_id)
-);
-
-CREATE TABLE users_bookings (
-  user_id int,
-  booking_id int,
-  constraint fk_user foreign key(user_id) references users(id) on delete cascade,
-  constraint fk_booking foreign key(booking_id) references bookings(id) on delete cascade,
-  PRIMARY KEY (user_id, booking_id)
-);
-
 ```
 
 ## 5. Create the tables.
 
 ```bash
-psql -h 127.0.0.1 makersbnb < makersbnb.sql
+psql -h 127.0.0.1 makersbnb < seeds/makersbnb.sql
 ```
