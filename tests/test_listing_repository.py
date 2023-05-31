@@ -27,3 +27,14 @@ def test_create_listing(db_connection):
         Listing(3, "Beach House", "A house with a beautiful ocean view.", 200.00, 3),
         Listing(4, "Mountain Cabin", "A cozy cabin in the mountains.", 125.00, 1),
     ]
+
+
+def test_get_single_listing(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = ListingRepository(db_connection)
+
+    listing, available_dates = repository.get_single_listing(1)
+
+    assert listing == Listing(1,'Charming Cottage', 'A small, cozy cottage in the woods.', 100.00, 1)
+    assert available_dates == ['2023-06-05','2023-06-06','2023-06-07']
+        

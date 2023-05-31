@@ -35,3 +35,10 @@ def test_check_password(db_connection):
     repo.create(User(None, "User4", "Actual Name 4", "user4@email.com", "Password4"))
     assert repo.check_password("User4", "Password4") == True
 
+
+def test_check_password_fails_with_wrond_pw(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repo = UserRepository(db_connection)
+    repo.create(User(None, "User4", "Actual Name 4", "user4@email.com", "Password4"))
+    assert repo.check_password("User4", "banana") == False
+
