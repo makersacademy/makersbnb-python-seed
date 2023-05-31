@@ -4,7 +4,7 @@
         <title>MakersBnB</title>
 
         <!--
-            Head to https://github.com/makersacademy/web-applications/blob/main/pills/loading_css_or_static_files.md
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
         <link rel="stylesheet" href="/static/style.css" >
@@ -40,9 +40,12 @@
             <div class="card">
                 <img src="/static/preview1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card 1</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    {% for listing in listings %}
+                    <h5 class="card-title">Listings Name: {{ listing.name }}</h5>
+                    <p class="card-text">Listings Description: {{ listing.description}} <br>
+                    Price £{{ listing.price }}</p>
                 </div>
+                {% endfor %}
             </div>
             <div class="card">
                 <img src="/static/preview2.jpg" class="card-img-top" alt="...">

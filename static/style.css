@@ -178,12 +178,12 @@ padding-bottom: 5px;
 }
 
 img.card-img-top{
-    width: 57vh;
+    width: 50vh;
 
 }
 
 .card-text {
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
     font-size: 15px;
 
 }
@@ -218,10 +218,3 @@ footer {
     }
 }
 
-.preview-section{
-
-}
-
-/* .preview{
-
-} */
