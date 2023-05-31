@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.list_a_space import Listing
+from lib.list_a_spaceRepository import ListingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -40,6 +42,31 @@ def add_user():
 
     return render_template('sign_up.html', user_created=user_created)
 
+@app.route('/new_listing', methods=['GET'])
+def get_new_listing():
+    return render_template('new_listing.html')
+
+@app.route('/new_listing', methods = ['POST'])
+def add_new_listing():
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+
+    listing_created = False
+
+    name = request.form['Name']
+    description = request.form['Description']
+    price = request.form['Price_per_night']
+
+    listing = Listing(name, description, price)
+    repository.add(listing)
+
+    listing_created = True
+
+    if listing_created == True:
+        return render_template('new_listing.html', listing_created=listing_created)
+    else:
+        return render_template('new_listing.html')
+    
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
