@@ -17,17 +17,20 @@
         <label for="checkbox" id="icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </label>
-        {% if username %}
+        {% if authenticated %}
         <h1 class="logged-in-status">Logged in as {{ username }}</h1>
-    {% else %}
-        <h1 class="logged-in-status">Not logged in</h1>
-    {% endif %}
+        {% else %}
+        <h1 class="logged-in-status">Not logged in {% if message %} - {{message}} {% endif %}</h1>
+        {% endif %}
         <ul>
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="/login">Logout</a></li>
-            <li><a href="/spaces">Spaces</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="#">Sign up</a></li>
+    {% if authenticated %}
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/spaces">Spaces</a></li>
+    {% else %}
+        <li><a href="/login">Login</a></li>
+        <li><a href="#">Sign up</a></li>
+    {% endif %}
         </ul>
     </nav>
     

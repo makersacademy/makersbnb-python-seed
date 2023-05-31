@@ -48,25 +48,25 @@ VALUES
 -- Insert into listings table
 INSERT INTO listings (name, description, price, user_id)
 VALUES 
-('Charming Cottage', 'A small, cozy cottage in the woods.', 100.00, 1);
-('City Apartment', 'An apartment in the heart of the city.', 150.00, 2);
+('Charming Cottage', 'A small, cozy cottage in the woods.', 100.00, 1),
+('City Apartment', 'An apartment in the heart of the city.', 150.00, 2),
 ('Beach House', 'A house with a beautiful ocean view.', 200.00, 3);
 
 INSERT INTO availability (listing_id, available_date)
 VALUES 
-(1, '2023-06-05');
-(1, '2023-06-06');
-(1, '2023-06-07');
-(2, '2023-06-08');
-(2, '2023-06-09');
-(2, '2023-06-10');
-(3, '2023-06-11');
-(3, '2023-06-12');
+(1, '2023-06-05'),
+(1, '2023-06-06'),
+(1, '2023-06-07'),
+(2, '2023-06-08'),
+(2, '2023-06-09'),
+(2, '2023-06-10'),
+(3, '2023-06-11'),
+(3, '2023-06-12'),
 (3, '2023-06-13');
 
 INSERT INTO bookings (user_id, listing_id, booking_date)
 VALUES 
-(1, 1, '2023-06-15');
-(2, 2, '2023-06-18');
+(1, 1, '2023-06-15'),
+(2, 2, '2023-06-18'),
 (3, 3, '2023-06-23');
 

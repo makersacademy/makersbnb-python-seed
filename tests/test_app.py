@@ -22,7 +22,7 @@ def test_get_login_page(page, test_web_address):
 
 def test_login_logs_in_with_correct_pw(page, test_web_address):
     page.goto(f'http://{test_web_address}/login') 
-    div_tag = page.locator('h1')
+    div_tag = page.locator('.logged-in-status')
     page.fill("input[name='username']", "User1")
     page.fill("input[name='password']", "Password1")
     page.click("text=Submit")
@@ -30,7 +30,7 @@ def test_login_logs_in_with_correct_pw(page, test_web_address):
 
 def test_login_fails_with_incorrect_pw(page, test_web_address):
     page.goto(f'http://{test_web_address}/login') 
-    div_tag = page.locator('div')
+    div_tag = page.locator('.logged-in-status')
     page.click("text=Submit")
-    expect(div_tag).to_have_text("Login credentials failed")   
+    expect(div_tag).to_have_text("Not logged in - Unable to authenticate")   
     
