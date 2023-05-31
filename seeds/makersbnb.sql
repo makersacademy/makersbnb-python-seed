@@ -20,7 +20,7 @@ CREATE SEQUENCE IF NOT EXISTS listings_id_seq;
 CREATE TABLE listings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
-    price FLOAT,
+    price INTEGER,
     name VARCHAR(20),
     description TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
