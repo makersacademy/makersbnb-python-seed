@@ -40,11 +40,11 @@ def add_user():
 
     return render_template('sign_up.html', user_created=user_created)
 
-@app.route('/listings', methods=['GET'])
+@app.route('/new_listings', methods=['GET'])
 def view_listings():
-    return render_template('show.html')
+    return render_template('new_listing.html')
 
-@app.route('/listings', methods = ['POST'])
+@app.route('/new_listings', methods = ['POST'])
 def create_listing():
     if request.method == "POST":
         name = request.form['Name']
