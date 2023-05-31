@@ -9,8 +9,12 @@
 <body>
     <h1>Log In</h1>
 
-    {% if error %}
-    <div id="error">{{ error }}</div>
+    {% if success_message %}
+    <div class="success">{{ success_message }}</div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="error">{{ error_message }}</div>
     {% endif %}
 
     <form action="/login" method="post">

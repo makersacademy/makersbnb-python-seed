@@ -1,6 +1,8 @@
+
+#REMINDER: Replace flash with user friendly alternative 
+
 import os
-import time
-from flask import Flask, flash, request, render_template, session, url_for, redirect
+from flask import Flask, request, render_template, session, url_for, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
@@ -11,29 +13,6 @@ app.secret_key = 'not so secret key'
 
 # == Define Functions ==
 
-#dictionary to store login attempts
-login_attempts = {}
-
-# function to store login attempts
-def record_login(username):
-    login_attempts.setdefault(username, []).append(time.time())
-
-# Log in rate limit function
-def has_exceeded_rate_limit(username):
-        max_attempts = 3 #or however many attempts you want
-        time_window_size = 600 #10 minutes
-        #check presence of username in dict
-        if username in login_attempts:
-            first_try_time = login_attempts[username][0]
-        #check if the time window has been breached
-        if time.time() - first_try_time <= time_window_size:
-            if len(login_attempts[username]) >= max_attempts:
-                return True
-        else:
-            #reset login attempts if time window expired
-            login_attempts[username] = []
-
-
 # Password is valid function
 def password_is_valid(password):
     nums = "1234567890"
@@ -41,8 +20,11 @@ def password_is_valid(password):
     return len(password) >= 8 and any(char in nums for char in password) and \
             any(char in special_char for char in password)
 
+# Username is valid function
 def username_is_valid(username):
     return 0 < len(username) <= 20 and username.isalpha()
+
+### Working on rate limit function, will implement if completed
 
 
 # == Routes ==
@@ -78,7 +60,7 @@ def sign_up():
         
         # Error message if password and confirm password do not match
         if not password == confirm_password:
-            error_message = "Passwords do not match"
+            error_message = "Passwords do `ip install --upgrade pip not match"
             return render_template('sign_up.html', error_message=error_message)
 
         user = User(None, name, username, email, password)
@@ -95,27 +77,23 @@ def login():
     connection = get_flask_database_connection(app)
     user_repository = UserRepository(connection)
     error = None
-
+    
     if request.method == 'POST':
-        print('POST request')
         email = request.form['email']
         password = request.form['password']
-
+        
         if user_repository.check_password(email, password):
             user = user_repository.get_by_email(email)
-            print('correct details')
             # Set the user ID in session
             session['user_id'], session['logged_in'] = user.id, True
-            flash('You were successfully logged in')
-            return redirect(url_for('get_index'))
+            success_message = 'You were successfully logged in'
+            return render_template('login.html', success_message=success_message)
         else:
-            error = 'invalid credentials'
-            print('invalid details')
-            return render_template('login.html', error=error)
+            error_message = 'Invalid credentials'
+            return render_template('login.html', error_message=error_message)
     else:
         if session.get('logged_in'):
             return redirect(url_for('get_index'))
-        print('GET request')
         return render_template('login.html')
 
 @app.route('/logout', methods=['GET'])

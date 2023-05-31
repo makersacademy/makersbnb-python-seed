@@ -57,6 +57,9 @@ def test_login_page(page, test_web_address):
     header = page.locator("h1")
     expect(header).to_have_text("Log In")
 
+'''
+We can login as a known user
+'''
 def test_login(db_connection, page, test_web_address):
     db_connection.seed("seeds/user_seed.sql")
     repository = UserRepository(db_connection)
@@ -82,7 +85,7 @@ def test_login(db_connection, page, test_web_address):
     assert user_data.get('logged_in') is True
     assert user_data.get('user_id') == user.id
 
-# Will fail untill user data is added some sort of dictionary/ file for safe keeping
+# Will fail untill user data is added some sort of dictionary/ file for safe keeping - into makersbnb
 
 # def test_sign_up(db_connection, page, test_web_address):
 #     db_connection.seed("seeds/user_seed.sql")
@@ -106,6 +109,9 @@ def test_login(db_connection, page, test_web_address):
 #     expected_user = User(user.id, "John Doe", "johndoe", "johndoe@example.com", "password123")
 #     assert user == expected_user
 
+'''
+Testing valid and invalid passwords
+'''
 def test_password_is_valid():
     # Valid password
     assert password_is_valid("Abcdefg1!")
@@ -128,6 +134,9 @@ def test_password_is_valid():
     # Password contains only uppercase letters
     assert not password_is_valid("ABCDEFGH")
 
+'''
+Testing valid and invalid usernames
+'''
 def test_username_is_valid():
     # Valid usernames
     assert username_is_valid("johndoe")
