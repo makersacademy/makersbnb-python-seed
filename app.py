@@ -6,6 +6,7 @@ from flask import Flask, request, render_template, session, url_for, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.listing_repository import ListingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -29,9 +30,12 @@ def username_is_valid(username):
 
 # == Routes ==
 
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+@app.route('/', methods=['GET'])
+def index():
+    connection = get_flask_database_connection(app)
+    listing_repository = ListingRepository(connection)
+    listings = listing_repository.all()
+    return render_template('listings/index.html', listings = listings)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
@@ -104,5 +108,31 @@ def logout():
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
+
+@app.route('/new_listing', methods = ['GET','POST'])
+def add_new_listing():
+    
+    if request.method == "GET":
+        return render_template('listings/new_listing.html')
+    else:
+        connection = get_flask_database_connection(app)
+        repository = ListingRepository(connection)
+
+        listing_created = False
+
+        user_id = 1
+        price = request.form['price_per_night']
+        name = request.form['name']
+        description = request.form['description']
+        
+        repository.add(user_id, price, name, description)
+
+        listing_created = True
+
+        if listing_created == True:
+            return render_template('listings/index.html')
+        else:
+            return render_template('listings/new_listing.html')
+    
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))

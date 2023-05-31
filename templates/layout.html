@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>MakersBNB</title>
+</head>
+
+<body>
+
+  {% block navbar %}
+  <nav>
+    {% if not session.logged_in %}
+    <a href="/sign_in/">Sign In</a>
+    <a href="/sign_up/">Sign Up</a>
+    {% else %}
+    <a href="/sign_out">Sign Out</a>
+    {% endif %}
+  </nav>
+  {% endblock %}
+
+  <flash>
+    {% for message in get_flashed_messages() %}
+    <p class="flash-message" role="alert">{{ message }}</p>
+    {% endfor %}
+  </flash>
+
+  {% block body %}{% endblock %}
+
+</body>
+
+</html>

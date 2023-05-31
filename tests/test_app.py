@@ -7,19 +7,6 @@ from app import username_is_valid
 # Tests for your routes go here
 
 '''
-We can render the index page
-'''
-def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
-
-    # We look at the <p> tag
-    strong_tag = page.locator("p")
-
-    # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
-
-'''
 Test that the login page has input boxes and correct header
 '''
 def test_signup_page(page, test_web_address):
@@ -151,3 +138,26 @@ def test_username_is_valid():
     assert not username_is_valid("")
     # Username contains whitespace
     assert not username_is_valid("john doe")
+"""
+We can render the index page
+We can see all listings
+"""
+def test_get_homepage(page, test_web_address):
+    page.goto(f"http://{test_web_address}/")
+    page.screenshot(path='screenshot.png')
+    title = page.locator(".t-title")
+    expect(title).to_have_text("MakersBnB")
+    first_listing_name = page.locator("#t-listing-name-1")
+    expect(first_listing_name).to_have_text("name")
+    
+'''
+Test that the login page has input boxes and correct header
+'''
+def test_login_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}/signup")
+    login_box = page.locator("input[name='login']")
+    expect(login_box)
+    password_box = page.locator("input[name='password']")
+    expect(password_box)
+    header = page.locator("h1")
+    expect(header).to_have_text("Sign Up")
