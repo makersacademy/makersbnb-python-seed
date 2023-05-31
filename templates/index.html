@@ -10,6 +10,86 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <h1>This is the homepage.</h1>
-    </body>
+            <!--navbar-->
+    <nav>
+        <header class="logo">MakersBnB</header>
+        <input type="checkbox" id="checkbox">
+        <label for="checkbox" id="icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </label>
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/spaces">Spaces</a></li>
+        </ul>
+    </nav>
+    
+    <section class="main-section image">
+        <h1 class="makers-header">Welcome To MakersBnB</h1>
+        
+        <a href="/create">
+            <button class="create-listing">Create Your Listing</button>
+        </a>
+    
+
+    </section>
+
+    <section class="preview-section">
+        <h1 class="preview-h1">Preview</h1>
+        <div class="card-row">
+            <div class="card">
+                <img src="/static/preview1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 1</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/preview2.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/preview3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 3</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-row">
+            <div class="card">
+                <img src="/static/preview4.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 4</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/preview5.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 5</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/static/preview6.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card 6</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+    <footer>
+    <p className="p-footer">MakersBnB | © 2023 All Rights Reserved</p>
+    </footer>
+
+</body>
 </html>

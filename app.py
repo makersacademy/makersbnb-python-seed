@@ -16,6 +16,44 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    return render_template('spaces.html')
+
+@app.route('/create')
+def create_space():
+    return render_template('create.html')
+
+
+app.secret_key = 'your very secret key'
+
+# This route simply returns the login page
+# @app.route('/login', methods=['GET'])
+# def login():
+#     return render_template('login.html')
+
+
+# @app.route('/login', methods=['POST'])
+# def login_post():
+#     print("fired")
+#     connection = get_flask_database_connection(app)
+#     username = request.form['username']
+#     password = request.form['password']
+#     repo = UserRepository(connection)
+#     print(repo.check_password(username, password))
+#     if repo.check_password(username, password) == True:
+#         print("fired")
+#     #     user = UserRepository.find_by_email(email)
+#     #     # Set the user ID in session
+#         session['user_id'] = username
+#         user = username
+#         return render_template('login_success.html', user=user)
+#     else:
+#         return render_template('login_error.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
