@@ -1,7 +1,5 @@
 from lib.listings import *
 
-
-
 # 
 def test_listing_constructs():
     listing = Listing(1, "Test listingname", "Test description", 100.99, 1)
