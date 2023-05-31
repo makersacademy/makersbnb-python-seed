@@ -52,21 +52,21 @@ VALUES
 ('City Apartment', 'An apartment in the heart of the city.', 150.00, 2),
 ('Beach House', 'A house with a beautiful ocean view.', 200.00, 3);
 
-INSERT INTO availability (listing_id, date_available)
+INSERT INTO availability (listing_id, available_date)
 VALUES 
-(1, '05/06/2023'),
-(1, '06/06/2023'),
-(1, '07/06/2023'),
-(2, '08/06/2023'),
-(2, '09/06/2023'),
-(2, '10/06/2023'),
-(3, '11/06/2023'),
-(3, '12/06/2023'),
-(3, '13/06/2023');
+(1, '2023-06-05'),
+(1, '2023-06-06'),
+(1, '2023-06-07'),
+(2, '2023-06-08'),
+(2, '2023-06-09'),
+(2, '2023-06-10'),
+(3, '2023-06-11'),
+(3, '2023-06-12'),
+(3, '2023-06-13');
 
 INSERT INTO bookings (user_id, listing_id, booking_date)
 VALUES 
-(1, 1, '15/06/2023'),
-(2, 2, '18/06/2023'),
-(3, 3, '21/06/2023');
+(1, 1, '2023-06-15'),
+(2, 2, '2023-06-18'),
+(3, 3, '2023-06-23');
 
