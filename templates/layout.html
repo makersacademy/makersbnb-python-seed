@@ -24,9 +24,7 @@
 
   <flash>
     {% for message in get_flashed_messages() %}
-    <div id="alert" role="alert">
-      <p class="flash-message">{{ message }}</p>
-    </div>
+    <p class="flash-message" role="alert">{{ message }}</p>
     {% endfor %}
   </flash>
 
