@@ -149,6 +149,75 @@ ul li a.active {
 }
 
 
+
+/* Preview CSS */
+.preview-h1 {
+padding-bottom: 5px;
+}
+
+.preview-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 12px;
+    padding: 10px;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.card-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card {
+    flex-basis: calc(33.33% - 10px);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+img.card-img-top{
+    width: 57vh;
+
+}
+
+.card-text {
+    text-overflow: ellipsis;
+    font-size: 15px;
+
+}
+
+/* Footer CSS */
+
+footer {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    font-weight: 600;
+    background-color: #006d77;
+    color: #ffddd2;
+    text-align: center;
+}
+    
+    
+/* @media (min-width: 768px) {
+    .cardContainer {
+        flex-basis: calc(33.33% - 10px);
+    }
+} */
+
+@media (max-width: 768px) {
+    .card {
+        flex-basis: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        flex-basis: 100%;
+    }
+}
+
 .preview-section{
 
 }

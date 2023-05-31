@@ -7,13 +7,26 @@ app = Flask(__name__)
 
 # == Your Routes Here ==
 
+
 # GET /index
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    return render_template('spaces.html')
+
+@app.route('/create')
+def create_space():
+    return render_template('create.html')
 
 
 
