@@ -4,12 +4,51 @@
         <title>MakersBnB</title>
 
         <!--
-            Head to https://github.com/makersacademy/web-applications/blob/main/pills/loading_css_or_static_files.md
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <nav class="navbar">
+            <img src="/static/makers.png">
+            <a href="/"><h4>About</h4></a>
+            <a href="/"><h4>Login</h4></a>
+        </nav>
+        <h1>Feel at home, anywhere</h1>
+        <p class="tagline">Travelling near or afar? MakersBnB will help you find the perfect home away from home</p>
+        <br>
+        <h3>Sign up to MakersBnB</h3>
+        <div class="container">
+        
+            <div>
+        <!-- Form goes here  -->
+                <form>
+            <!-- Email -->
+                    <div>
+                        <label for="email">Email Address</label>
+                        <br>
+                        <input type="text" id="email" name="email" required>
+                    </div>
+            <!-- Password -->
+                    <div>
+                
+                        <label for="password">Password</label>
+                        <br>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+            <!-- Password Confirmation-->
+                    <!-- <div>
+                        <label for="password-confirm">Password confirmation</label>
+                        <br>
+                        <input type="password" id="password-confirm" name="password" required>
+                    </div> -->
+                </form>
+        <!-- Sign up button  -->
+                <br>
+                <button>Sign Up</button>
+            </div>
+        </div>
+        
     </body>
 </html>

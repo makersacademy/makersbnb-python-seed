@@ -1,3 +1,48 @@
+
+
 body {
     font-size: 18px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px;
+    align-items: center;
+}
+
+.navbar img {
+    margin-right: auto;
+}
+
+.navbar a {
+    margin-left: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.tagline {
+    text-align: center;
+    width: 350px;
+    margin: 0 auto;
+}
+
+h3 {
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    outline: 2px solid black;
+    width: 400px;
+    padding: 20px 0px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+img {
+    width: 70px;
+    height: 40px; 
 }
