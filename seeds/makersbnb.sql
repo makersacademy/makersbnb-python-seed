@@ -41,9 +41,9 @@ CREATE TABLE bookings (
 
 INSERT INTO users (username, actualname, email, password)
 VALUES 
-('User1', 'Actual Name 1', 'user1@email.com', '19513fdc9da4fb72a4a05eb66917548d3c90ff94d5419e1f2363eea89dfee1dd'),
-('User2', 'Actual Name 2', 'user2@email.com', '1be0222750aaf3889ab95b5d593ba12e4ff1046474702d6b4779f4b527305b23'),
-('User3', 'Actual Name 3', 'user3@email.com', '2538f153f36161c45c3c90afaa3f9ccc5b0fa5554c7c582efe67193abb2d5202');
+('User1', 'Actual Name 1', 'user1@email.com', 'Password1'),
+('User2', 'Actual Name 2', 'user2@email.com', 'Password2'),
+('User3', 'Actual Name 3', 'user3@email.com', 'Password3');
 
 -- Insert into listings table
 INSERT INTO listings (name, description, price, user_id)

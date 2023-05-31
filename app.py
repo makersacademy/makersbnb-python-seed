@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
+from lib.user_repository import *
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -16,9 +18,58 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def get_login():
+    if request.method == 'POST':
+        connection = get_flask_database_connection(app)
+        username = request.form['username']
+        password = request.form['password']
+        repo = UserRepository(connection)
+
+        if repo.check_password(username, password):
+            session['user_id'] = username
+            return render_template('index.html', username=username, message="Login successful")
+        else:
+            error_message = "Login credentials failed"
+            return render_template('index.html', message=error_message)
+
     return render_template('login.html')
+
+
+# @app.route('/login', methods=['POST'])
+# def login_post():
+#     print("fired")
+#     connection = get_flask_database_connection(app)
+#     username = request.form['username']
+#     password = request.form['password']
+#     repo = UserRepository(connection)
+#     print(username)
+#     print(password)
+#     print(repo.check_password(username, password))
+#     if repo.check_password(username, password):
+#         session['user_id'] = username
+#         flash(username)  # Store the username in the flashed message
+#         return redirect(url_for('get_login'))
+#     else:
+#         flash("Login credentials failed")  # Store the error message in the flashed message
+#         return redirect(url_for('get_login'))
+# @app.route('/login', methods=['POST'])
+# def login_post():
+#     print("fired")
+#     connection = get_flask_database_connection(app)
+#     username = request.form['username']
+#     password = request.form['password']
+#     repo = UserRepository(connection)
+#     print(repo.check_password(username, password))
+#     if repo.check_password(username, password) == True:
+#         print("fired")
+#     #     user = UserRepository.find_by_email(email)
+#     #     # Set the user ID in session
+#         session['user_id'] = username
+#         user = username
+#         return render_template('login_success.html', user=user)
+#     else:
+#         return render_template('login_error.html')
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
