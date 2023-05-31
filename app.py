@@ -3,7 +3,6 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
-from lib.listing import Listing
 from lib.listing_repository import ListingRepository
 
 # Create a new Flask app
@@ -43,7 +42,7 @@ def add_user():
 def add_new_listing():
     
     if request.method == "GET":
-        return render_template('new_listing.html')
+        return render_template('listings/new_listing.html')
     else:
         connection = get_flask_database_connection(app)
         repository = ListingRepository(connection)
@@ -54,8 +53,7 @@ def add_new_listing():
         price = request.form['price_per_night']
         name = request.form['name']
         description = request.form['description']
-        # listing = Listing(None, user_id, price, name, description)
-
+        
         repository.add(user_id, price, name, description)
 
         listing_created = True
@@ -63,7 +61,7 @@ def add_new_listing():
         if listing_created == True:
             return render_template('listings/index.html')
         else:
-            return render_template('new_listing.html')
+            return render_template('listings/new_listing.html')
     
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
