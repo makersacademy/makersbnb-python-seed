@@ -10,16 +10,17 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
+    name TEXT,
     username VARCHAR(20) UNIQUE,
     password VARCHAR(64),
-    email VARCHAR(20)
+    email VARCHAR(64)
 );
 
 CREATE SEQUENCE IF NOT EXISTS listings_id_seq;
 CREATE TABLE listings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
-    price FLOAT,
+    price INTEGER,
     name VARCHAR(20),
     description TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -38,14 +39,16 @@ CREATE TABLE bookings (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-INSERT INTO users (username, email, PASSWORD)
-VALUES('owner', 'owner@email.com', 'password123');
+INSERT INTO users (name, username, email, password) 
+VALUES ('Sam Morgan', 'sjmog', 'samm@makersacademy.com', 'password123');
 
-INSERT INTO users (username, email, PASSWORD)
-VALUES('renter', 'renter@email.com', 'password123');
+INSERT INTO users (name, username, email, PASSWORD)
+VALUES('Owner McOwner', 'owner', 'owner@email.com', 'password123');
 
-INSERT INTO listings (user_id, price, LOCATION)
-VALUES(1, 150, 'London');
+INSERT INTO listings (user_id, price, name, description)
+VALUES(1, 150, 'name', 'listing description');
 
+INSERT INTO listings (user_id, price, name, description)
+VALUES(1, 300, 'name', 'listing description');
 
 
