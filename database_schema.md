@@ -1,7 +1,7 @@
 ## 1. Extract nouns from the user stories or specification
 
 ```
-# EXAMPLE USER STORY:
+# USER STORY
 # (analyse only the relevant part - here, the final line).
 
 As a potential user of the BnB site, I want to be able to register for an account so that I can access personalized features and interact with the platform.
@@ -11,8 +11,6 @@ As a registered user of the BnB site, I want to be able to create a listing for 
 As a user of the BnB site, I want to be able to log in to my account so that I can access my personalized features and interact with the platform.
 
 As a logged-in user of the BnB site, I want to be able to browse available listings and book a space for my desired dates and number of guests.
-
-
 ```
 
 ```
@@ -83,7 +81,7 @@ psql -h 127.0.0.1 makersbnb < makersbnb.sql
 
 _Include the HTTP method, the path, and any query or body parameters._
 
-```
+```-
 # EXAMPLE
 
 # Home route
