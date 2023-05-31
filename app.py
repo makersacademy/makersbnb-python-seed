@@ -29,6 +29,7 @@ def create_space():
     return render_template('create.html')
 
 
+
 app.secret_key = 'your very secret key'
 
 # This route simply returns the login page

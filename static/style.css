@@ -149,6 +149,7 @@ ul li a.active {
 }
 
 
+
 /* Preview CSS */
 .preview-h1 {
 padding-bottom: 5px;
@@ -216,3 +217,11 @@ footer {
         flex-basis: 100%;
     }
 }
+
+.preview-section{
+
+}
+
+/* .preview{
+
+} */
