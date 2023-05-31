@@ -3,19 +3,17 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.listing_repository import ListingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
 
-# == Your Routes Here ==
-
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+@app.route('/', methods=['GET'])
+def get_listings():
+    connection = get_flask_database_connection(app)
+    listing_repository = ListingRepository(connection)
+    listings = listing_repository.all()
+    return render_template('listings/index.html', listings = listings)
 
 @app.route('/signup')
 def get_signup():
