@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <nav>
+        <header class="logo">MakersBnB</header>
+        <input type="checkbox" id="checkbox">
+        <label for="checkbox" id="icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </label>
+        {% if authenticated %}
+        <h1 class="logged-in-status">Logged in as {{ username }}</h1>
+        {% else %}
+        <h1 class="logged-in-status">{% if message %} {{message}} {% endif %}</h1>
+        {% endif %}
+        <ul>
+    {% if authenticated %}
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/spaces">Spaces</a></li>
+    {% else %}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign up</a></li>
+    {% endif %}
+        </ul>
+    </nav>
+
+
+    
+{% block body_content %} 
+
+{% endblock %}
+
+</body>
+</html>
