@@ -1,6 +1,10 @@
 import os
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
+from lib.listings import Listing
+from lib.listing_repository import ListingRepository
+from lib.user import User
+from lib.user_repository import UserRepository
 from lib.user_repository import *
 
 
@@ -43,12 +47,14 @@ def get_login():
         if repo.check_password(username, password):
             session['user_id'] = username
             authenticated = is_authenticated()
-            return render_template('index.html', username=username, authenticated=authenticated)
+            return render_template('dashboard.html', username=username, authenticated=authenticated)
         else:
             error_message = "Unable to authenticate"
             return render_template('index.html', message=error_message)
 
     return render_template('login.html')
+
+
 
 @app.route('/logout')
 def logout():
@@ -56,17 +62,38 @@ def logout():
     return redirect(url_for('get_index'))
 
 
-@app.route('/spaces', methods=['GET'])
+@app.route('/dashboard', methods=['GET'])
 def get_spaces():
-    return render_template('spaces.html')
+    return render_template('dashboard.html')
 
 @app.route('/create')
 def create_space():
     return render_template('create.html')
 
+@app.route('/create', methods=['POST'])
+def create_new_space():
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    name = request.form['name']
+    description = request.form['description']
+    price = request.form['price']
+    listing = Listing(None, name, description, price, 1)
+    repository.create(listing)
+    repository.all()
+    return redirect (f'/')
+
+
 @app.route('/signup')
 def get_signup():
     return render_template('signup.html')
+
+
+@app.route('/dashboard<int:id>', methods=['GET'])
+def get_artist_id(id):
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    listings = repository.find(id)
+    return render_template('dashboard.html', listings = listings)
 
 
 app.secret_key = 'your very secret key'
