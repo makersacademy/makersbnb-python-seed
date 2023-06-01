@@ -57,13 +57,18 @@ def test_create_user(db_connection, page, test_web_address):
     # Navigate to the create listing page
     db_connection.seed("seeds/makersbnb.sql")
     page.goto(f'http://{test_web_address}/signup')
-    page.fill("input[name='uname']", "donutlover")
+    page.fill("input[name='username']", "donutlover")
     page.fill("input[name='actualname']", "Homer Simpson")
     page.fill("input[name='email']", "donuts@springfield.com")
-    page.fill("input[name='password']", "doh")
-    page.click("text=Sign up")
+    page.fill("input[name='signup-password']", "doh")
+
+    page.click('button:has-text("Sign up")')
     # # Submit the form
-    expect(page.getByText('You have successfully signed up, please log in', { exact: true })).toBeVisible();
+    success_message = "You have successfully signed up, please log in"
+    page_content = page.locator('.sign-up-message')
+    expect(page_content).to_have_text(success_message)
+
+    # expect(page.getByText('You have successfully signed up, please log in', { exact: true })).toBeVisible();
     
 
     # signup_message = page.locator("xpath=/html/body/div[2]")
@@ -75,4 +80,3 @@ def test_create_user(db_connection, page, test_web_address):
     # card_row = page.locator('.preview-section')
     # card_row_html = card_row.inner_text()
     # assert listing_text in card_row_html
-

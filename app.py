@@ -87,8 +87,8 @@ def create_new_user():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
     actualname = request.form['actualname']
-    username = request.form['uname']
-    password = request.form['password']
+    username = request.form['username']
+    password = request.form['signup-password']
     email = request.form['email']
 
     user = User(None, username, actualname, email, password)
