@@ -64,6 +64,9 @@ def get_spaces():
 def create_space():
     return render_template('create.html')
 
+@app.route('/signup')
+def get_signup():
+    return render_template('signup.html')
 
 
 app.secret_key = 'your very secret key'
