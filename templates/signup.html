@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/signup_styles.css">
     <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/login_style.css">
+
     <title>Document</title>
 </head>
 <body>
@@ -13,42 +15,47 @@
     {% extends "layout.html" %}
         
     {% block body_content %}
-
+<div style="height: 100px;"></div>
     <form action="" method="post">
       
         <div class="form-container">
             <h3 class = "signup-heading">To create a Listing, you need an account. Sign up here:</h3>
           <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
+          <input type="text" placeholder="Enter Username" name="uname">
             <br>
 
             <label for="uname"><b>Full Name</b></label>
-          <input type="text" placeholder="Enter Full Name" name="actualname" required>
+          <input type="text" placeholder="Enter Full Name" name="actualname">
           <br>
 
           <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="email" required>
+          <input type="text" placeholder="Enter Email" name="email">
           <br>
           
 
           <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="password" required>
+          <input type="password" placeholder="Enter Password" name="password">
       <br>
            <button type="submit">Sign up</button>
-      <!-- if you have an account already login here: -->
-          <!-- <button type="submit">Sign up</button>
-          <br>
-          <h3 class = "signup-heading">If you already have an account, login here:</h3>
-          <a href="/login"><button type="submit">Login Here</button></a>
-           -->
-        </div>
-
-      <br>
-        
+        </div>       
       </form>
 
+<!-- Spacing-->
+<div style="height: 25px;"></div>
 
+    <div class="signin-container">
+      <h1 class="signin-heading">Login Here</h1>
+    <form action="/login" method="post">
+          <label for="username" class="name-input">Username:</label>
+          <input type="text" name="username"><br>
+          <label for="password" class="password-input">Password:</label>
+          <input type="password" name="password"><br>
+          <button type="submit" value="Submit" class="signin-button">Login</button>
     </form>
+    </div>
+
+
+
     {% endblock %}
 </body>
 </html>
