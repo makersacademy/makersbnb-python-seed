@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {box-sizing: border-box}
+
+.dashboard-header{
+    text-align: center;
+    margin: 20px;
+}
+
+.listings-header {
+    text-align: center;
+    margin: 20px;
+}
+
+
+
+/* Set a style for all buttons */
+
+
+.create-new-listing{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+
+
+button {
+    background-color: #83c5be;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+
+}
+  
+  button:hover {
+    opacity:1;
+  }
+  
+  
+  /* Float cancel and signup buttons and add an equal width */
+  .dashboard-button {
+    float: left;
+    width: 100%;
+  }
+  
+  /* Add padding to container elements */
+  .container {
+    padding: 16px;
+  }
+  
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Change styles for cancel button and signup button on extra small screens */
+  @media screen and (max-width: 300px) {
+    .dashboard-button {
+      width: 100%;
+    }
+}
