@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import *
-
+from lib.listings import *
 
 from lib.listing_repository import ListingRepository
 
@@ -21,17 +21,20 @@ def is_authenticated():
         connection = get_flask_database_connection(app)
         repo = UserRepository(connection)
         username = session['user_id']
-        return repo.find_by_username(username) is not None
+        result = repo.find_by_username(username) is not None, username
+        return result is not None, username
     else:
-        return False 
+        return False, None
 
 @app.route('/', methods=['GET'])
 def get_index():
     connection = get_flask_database_connection(app)
     repository = ListingRepository(connection)
     listings = repository.all()
-    authenticated = is_authenticated()
-    return render_template('index.html', listings=listings, authenticated=authenticated)
+    authenticated, username = is_authenticated()
+    print("Authenticated:", authenticated)
+    print("Username:", username)
+    return render_template('index.html', listings=listings, authenticated=authenticated, username=username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def get_login():
@@ -42,7 +45,7 @@ def get_login():
         repo = UserRepository(connection)
         if repo.check_password(username, password):
             session['user_id'] = username
-            authenticated = is_authenticated()
+            authenticated, username = is_authenticated()
             return render_template('index.html', username=username, authenticated=authenticated)
         else:
             error_message = "Unable to authenticate"
@@ -60,9 +63,48 @@ def logout():
 def get_spaces():
     return render_template('spaces.html')
 
-@app.route('/create')
-def create_space():
+@app.route('/create', methods=['GET'])
+def get_create_space_form():
     return render_template('create.html')
+
+@app.route('/create', methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repo = ListingRepository(connection)
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepository(connection)
+    username = session['user_id']
+    user = user_repo.find_by_username(username)
+    name = request.form['name']
+    description = request.form['description']
+    price = request.form['price']
+    listing = Listing(None, name, description, price, user.id)
+    repo.create(listing)
+    return redirect(url_for('get_index'))
+
+@app.route('/signup', methods=['POST'])
+def create_new_user():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    actualname = request.form['actualname']
+    username = request.form['uname']
+    password = request.form['password']
+    email = request.form['email']
+
+    user = User(None, username, actualname, email, password)
+    repo.create(user)
+    result = repo.all()
+    print(result)
+    success = "You have successfully signed up, please log in"
+    return render_template('signup.html', success=success)
+    # if result == "username already taken":
+    #     error = "username already taken"
+    #     return render_template('signup.html', error = error)
+    # if result == "email already has account":
+    #     error = "email already has account"
+    #     return render_template('signup.html', error = error)
+    
+
 
 @app.route('/signup')
 def get_signup():

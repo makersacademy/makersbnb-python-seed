@@ -18,7 +18,7 @@
         {% if authenticated %}
         <h1 class="logged-in-status">Logged in as {{ username }}</h1>
         {% else %}
-        <h1 class="logged-in-status">{% if message %} - {{message}} {% endif %}</h1>
+        <h1 class="logged-in-status">{% if message %} {{message}} {% endif %}</h1>
         {% endif %}
         <ul>
     {% if authenticated %}
@@ -27,7 +27,7 @@
         <li><a href="/spaces">Spaces</a></li>
     {% else %}
         <li><a href="/login">Login</a></li>
-        <li><a href="#">Sign up</a></li>
+        <li><a href="/signup">Sign up</a></li>
     {% endif %}
         </ul>
     </nav>

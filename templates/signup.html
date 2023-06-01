@@ -15,7 +15,7 @@
     {% block body_content %}
 
 <div class="signin-container">
-    <form action="">
+    <form action="/login">
         
         <label for="username"><b>Login with username</b></label>
           <input type="text" placeholder="Enter Username" name="uname" required>
@@ -26,8 +26,8 @@
         <button type="submit">Login</button>
     </form>
 </div>
-
-    <form action="" method="post">
+<div class="sign-up-message">{{success}}</div>
+    <form action="/signup" method="post">
       
         <div class="form-container">
             <h3 class = "signup-heading">If you do not have an account, signup here:</h3>

@@ -22,6 +22,22 @@ class UserRepository:
         )
         return None
     
+        # found_username = self._connection.execute('SELECT * FROM users WHERE username = %s', [user.username])
+        # found_email = self._connection.execute('SELECT * FROM users WHERE email = %s', [user.email])
+        # if not found_username and not found_username:
+        #     binary_password = user.password.encode("utf-8")
+        #     hashed_password = hashlib.sha256(binary_password).hexdigest()
+        #     self._connection.execute(
+        #     'INSERT INTO users (username, actualname, email, password) VALUES (%s, %s, %s, %s)', 
+        #     [user.username, user.actualname, user.email, hashed_password]
+        #     )
+        # else:
+        #     if found_email:
+        #         return "email already has account"
+        #     elif found_username:
+        #         return "username already taken"
+        # return None
+
     def check_password(self, username, password_attempt):
         binary_password_attempt = password_attempt.encode("utf-8")
         hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest().strip()
