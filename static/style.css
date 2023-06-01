@@ -153,6 +153,7 @@ ul li a.active {
 /* Preview CSS */
 .preview-h1 {
 padding-bottom: 5px;
+margin-bottom: 10px;
 }
 
 .preview-section {
@@ -160,22 +161,35 @@ padding-bottom: 5px;
     flex-wrap: wrap;
     margin: 12px;
     padding: 10px;
-    justify-content: space-between;
+    justify-content: center;
     overflow: hidden;
+    align-items: center;
+    
 }
 
 .card-row {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
     flex-basis: calc(33.33% - 10px);
     margin-bottom: 20px;
     box-sizing: border-box;
+    background-color: #83c5be;
+    padding: 20px;
 }
+
+.card-title{
+    font-size: 20px;;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
 
 img.card-img-top{
     width: 50vh;
@@ -185,7 +199,14 @@ img.card-img-top{
 .card-text {
     overflow-wrap: break-word;
     font-size: 15px;
+    margin-bottom: 10px;
+    text-align: center;
 
+}
+
+.price{
+    text-align: center;
+    font-style: bold;
 }
 
 /* Footer CSS */
