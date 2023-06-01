@@ -14,23 +14,10 @@
         
     {% block body_content %}
 
-<div class="signin-container">
-    <form action="">
-        
-        <label for="username"><b>Login with username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
-            <br>
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-        <br>
-        <button type="submit">Login</button>
-    </form>
-</div>
-
     <form action="" method="post">
       
         <div class="form-container">
-            <h3 class = "signup-heading">If you do not have an account, signup here:</h3>
+            <h3 class = "signup-heading">To create a Listing, you need an account. Sign up here:</h3>
           <label for="uname"><b>Username</b></label>
           <input type="text" placeholder="Enter Username" name="uname" required>
             <br>
@@ -47,9 +34,13 @@
           <label for="psw"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="password" required>
       <br>
-            
-          <button type="submit">Sign up</button>
+           <button type="submit">Sign up</button>
+      <!-- if you have an account already login here: -->
+          <!-- <button type="submit">Sign up</button>
           <br>
+          <h3 class = "signup-heading">If you already have an account, login here:</h3>
+          <a href="/login"><button type="submit">Login Here</button></a>
+           -->
         </div>
 
       <br>
