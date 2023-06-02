@@ -140,19 +140,28 @@ def get_artist_id(id):
 
 # Booking page
 
+# @app.route('/booking/<id>')
+# def get_booking_by_id(id):
+#     connection = get_flask_database_connection(app)
+#     repository = ListingRepository(connection)
+#     listings = repository.find(id)
+#     return render_template('booking.html', listings = listings)
+
+
 @app.route('/booking/<id>')
 def get_booking_by_id(id):
     connection = get_flask_database_connection(app)
     repository = ListingRepository(connection)
     listings = repository.find(id)
-    return render_template('booking.html', listings = listings)
+    available_dates = listings.get_available_dates(connection)
+    return render_template('booking.html', listings = listings, available_dates= available_dates)
 
 
-@app.route('/submit_booking', methods=['POST'])
-def submit_booking():
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
-    return 'Booking request submitted successfully!'
+# @app.route('/submit_booking', methods=['POST'])
+# def submit_booking():
+#     start_date = request.form['start_date']
+#     end_date = request.form['end_date']
+#     return 'Booking request submitted successfully!'
 
 # @app.route('/booking', methods=['GET', 'POST'])
 # def booking():
