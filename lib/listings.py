@@ -9,8 +9,11 @@ class Listing:
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
-
-    # # This method makes it look nicer when we print an Artist
     def __repr__(self):
         return f"listing({self.id}, {self.name}, {self.description}, {self.price}, {self.user_id})"
-        # Update the available_dates attribute
+    def get_available_dates(self, connection):
+        rows = connection.execute('SELECT available_date FROM availability WHERE listing_id = %s', [self.id])
+        return [row['available_date'] for row in rows]
+    def add_availability(self, connection, dates):
+        for date in dates:
+            connection.execute('INSERT INTO availability (listing_id, available_date) VALUES (%s, %s)', [self.id, date])    

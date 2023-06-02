@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, session, redirect, url_for, f
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import *
 from lib.listings import *
+from lib.bookings import *
 
 from lib.listing_repository import ListingRepository
 
@@ -90,20 +91,30 @@ def create_new_user():
     username = request.form['username']
     password = request.form['signup-password']
     email = request.form['email']
-
     user = User(None, username, actualname, email, password)
-    repo.create(user)
-    result = repo.all()
-    print(result)
-    success = "You have successfully signed up, please log in"
-    return render_template('signup.html', success=success)
-    # if result == "username already taken":
-    #     error = "username already taken"
-    #     return render_template('signup.html', error = error)
-    # if result == "email already has account":
-    #     error = "email already has account"
-    #     return render_template('signup.html', error = error)
+    result = repo.create(user)
+    if result == "email already has account":
+        error = "email already has account"
+        return render_template('signup.html', error=error)
+    elif result == "username already taken":
+        error = "username already taken"
+        return render_template('signup.html', error=error)
+    else:
+        success = "You have successfully signed up, please log in"
+        return render_template('signup.html', success=success)
+
+@app.route('/book')
+def make_booking_request(listing_id, date):
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepository(connection)
+    username = session['user_id']
+    user = user_repo.find_by_username(username)
+    booking = Booking(None, user, listing_id, date, False)
+    #what template do we want to return?
     
+# @app.route('/signup') #gets the booking requests
+# def get_host_booking_requests():
+
 
 
 @app.route('/signup')

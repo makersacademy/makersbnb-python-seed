@@ -32,11 +32,12 @@ CREATE TABLE availability (
 
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
-    user_id INT,
+    requester_id INT,
     listing_id INT,
     booking_date DATE,
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
-    CONSTRAINT fk_listing FOREIGN KEY(listing_id) REFERENCES listings(id) ON DELETE CASCADE
+    approved BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_requester FOREIGN KEY (requester_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_listing FOREIGN KEY (listing_id) REFERENCES listings (id) ON DELETE CASCADE
 );
 
 INSERT INTO users (username, actualname, email, password)
@@ -64,9 +65,7 @@ VALUES
 (3, '2023-06-12'),
 (3, '2023-06-13');
 
-INSERT INTO bookings (user_id, listing_id, booking_date)
-VALUES 
-(1, 1, '2023-06-15'),
-(2, 2, '2023-06-18'),
-(3, 3, '2023-06-23');
-
+INSERT INTO bookings (requester_id, listing_id, booking_date, approved)
+VALUES (1, 1, '2022-01-01', FALSE),
+    (2, 2, '2022-02-02', FALSE),
+    (3, 1, '2022-03-03', FALSE);

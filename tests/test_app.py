@@ -51,7 +51,7 @@ def test_login_fails_with_incorrect_pw(page, test_web_address):
 #     card_row = page.locator('.preview-section')
 #     card_row_html = card_row.inner_text()
 #     assert listing_text in card_row_html
-    # expect(card_row.inner_text()).to_include(listing_text)
+#     expect(card_row.inner_text()).to_include(listing_text)
 
 def test_create_user(db_connection, page, test_web_address):
     # Navigate to the create listing page
