@@ -15,12 +15,17 @@
     {% extends "layout.html" %}
         
     {% block body_content %}
-
+<div style="height: 100px;"></div>
+    <form action="" method="post">
       
         <div class="form-container">
             <h3 class = "signup-heading">To create a Listing, you need an account. Sign up here:</h3>
           <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname">
+            <br>
 
+            <label for="uname"><b>Full Name</b></label>
+          <input type="text" placeholder="Enter Full Name" name="actualname">
           <br>
 
           <label for="email"><b>Email</b></label>
@@ -29,9 +34,9 @@
           
 
           <label for="psw"><b>Password</b></label>
-
+          <input type="password" placeholder="Enter Password" name="password">
       <br>
-           <button type="submit">Sign up</button>
+          <button type="submit">Sign up</button>
         </div>       
       </form>
 
