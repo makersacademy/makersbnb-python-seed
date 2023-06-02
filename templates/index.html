@@ -17,63 +17,30 @@
     <section class="main-section image">
         <h1 class="makers-header">Welcome To MakersBnB</h1>
         
+        {% if authenticated %}
         <a href="/create">
             <button class="create-listing">Create Your Listing</button>
         </a>
-    
+    {%else%}
+        <a href="/signup">
+        <button class="create-listing">Create Your Listing</button>
+    {% endif %}
     </section>
 
     <section class="preview-section">
         <h1 class="preview-h1">Preview</h1>
+        {% for listing in listings %}
         <div class="card-row">
             <div class="card">
-                <img src="/static/preview1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    {% for listing in listings %}
+        
                     <h5 class="card-title">Listings Name: {{ listing.name }}</h5>
-                    <p class="card-text">Listings Description: {{ listing.description }} <br>
-                    Price £{{ listing.price }}</p>
+                    <p class="card-text">Listings Description: {{ listing.description }}</p> <br>
+                    <p class="price">Price £{{ listing.price }}</p>
                 </div>
-                {% endfor %}
+                
             </div>
-            <div class="card">
-                <img src="/static/preview2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card 2</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="/static/preview3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card 3</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-        <div class="card-row">
-            <div class="card">
-                <img src="/static/preview4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card 4</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="/static/preview5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card 5</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="/static/preview6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card 6</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
     </section>
     
     

@@ -21,10 +21,12 @@
         <h1 class="logged-in-status">{% if message %} {{message}} {% endif %}</h1>
         {% endif %}
         <ul>
+            <li><a href="/" class="active">Home</a></li>
     {% if authenticated %}
-        <li><a href="#" class="active">Home</a></li>
+
         <li><a href="/logout">Logout</a></li>
-        <li><a href="/spaces">Spaces</a></li>
+        <li><a href="/dashboard">Dashboard</a></li> 
+        <li><a href="/create">Create</a></li> 
     {% else %}
         <li><a href="/login">Login</a></li>
         <li><a href="/signup">Sign up</a></li>
