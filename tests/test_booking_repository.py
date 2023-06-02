@@ -63,7 +63,20 @@ def create_and_retrieve_booking(db_connection):
     ]
 
     #Then, create a new booking
+    test_booking = Booking(1, 1, 1, '2023-06-01')
 
-    test_booking_repo.create()
+    #And add to the repo
+    test_booking_repo.create(test_booking)
+
+    #Retrieve bookings again
+    user_1_bookings_after_new = test_booking_repo.get_all_pending_booking_requests(1)
+
+    assert user_1_bookings_after_new == [
+
+        Booking(1, 1, '2022-01-01', False),
+        Booking(3, 1, '2022-03-03', False),
+        Booking(1, 1, 1, '2023-06-01', False)
+
+    ]
 
     #currently working on this from here
