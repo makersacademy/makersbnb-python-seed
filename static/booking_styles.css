@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+h2{
+    margin: 20px 0 20px 0;
+
+}
+
+.description{
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.price-line{
+    margin:20px 0 20px 0;
+}
