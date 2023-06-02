@@ -9,11 +9,12 @@ from lib.user_repository import *
 from lib.listings import *
 from lib.bookings import *
 from lib.booking_repository import *
-
+from datetime import timedelta
 from lib.listing_repository import ListingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+app.permanent_session_lifetime = timedelta(days=7)
 
 # == Your Routes Here ==
 
@@ -110,16 +111,23 @@ def create_new_user():
         success = "You have successfully signed up, please log in"
         return render_template('signup.html', success=success)
 
-@app.route('/book')
-def make_booking_request(listing_id, date):
+@app.route('/book', methods=['POST'])
+def make_booking_request():
     connection = get_flask_database_connection(app)
     user_repo = UserRepository(connection)
     booking_repo = BookingRepository(connection)
+    # listings_repo = ListingRepository(connection)
+    # listing = listings_repo.get_single_listing(listing_id)
+    # available_dates = listing.get_available_dates()
     username = session['user_id']
+    date = request.form['selected_date']
+    listing_id = request.form['listing_id']
     user = user_repo.find_by_username(username)
-    booking = Booking(None, user, listing_id, date, False)
+    print("user id: ", user.id)
+    booking = Booking(None, user.id, listing_id, date, False)
     booking_repo.create(booking)
-    render_template('dashboard.html')
+    message = "Your booking request has been passed to the host for consideration"
+    return render_template('dashboard.html', message=message)
     #what template do we want to return?
     
 # @app.route('/signup') #gets the booking requests
@@ -155,7 +163,7 @@ def get_booking_by_id(id):
     repository = ListingRepository(connection)
     listings = repository.find(id)
     available_dates = listings.get_available_dates(connection)
-    return render_template('booking.html', listings = listings, available_dates= available_dates)
+    return render_template('booking.html', listings =listings, available_dates= available_dates)
 
 
 # @app.route('/submit_booking', methods=['POST'])
