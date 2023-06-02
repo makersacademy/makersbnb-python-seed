@@ -139,6 +139,53 @@ def get_artist_id(id):
     listings = repository.find(id)
     return render_template('dashboard.html', listings = listings)
 
+# Booking page
+
+# @app.route('/booking/<id>')
+# def get_booking_by_id(id):
+#     connection = get_flask_database_connection(app)
+#     repository = ListingRepository(connection)
+#     listings = repository.find(id)
+#     return render_template('booking.html', listings = listings)
+
+
+@app.route('/booking/<id>')
+def get_booking_by_id(id):
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    listings = repository.find(id)
+    available_dates = listings.get_available_dates(connection)
+    return render_template('booking.html', listings = listings, available_dates= available_dates)
+
+
+# @app.route('/submit_booking', methods=['POST'])
+# def submit_booking():
+#     start_date = request.form['start_date']
+#     end_date = request.form['end_date']
+#     return 'Booking request submitted successfully!'
+
+# @app.route('/booking', methods=['GET', 'POST'])
+# def booking():
+#     if request.method == 'POST':
+#         start_date = request.form['start_date']
+#         end_date = request.form['end_date']
+        
+#         # Retrieve available dates from the database for the listing
+#         available_dates = ['2023-06-05', '2023-06-06', '2023-06-07']
+        
+#         if start_date in available_dates and end_date in available_dates:
+#             # Dates are available, process the booking
+#             return "Booking successful!"
+#         else:
+#             # Dates are unavailable, display an error message
+#             return "Dates are unavailable for booking."
+    
+#     # Render the booking form template
+#     return render_template('booking.html')
+
+
+
+
 
 app.secret_key = 'your very secret key'
 

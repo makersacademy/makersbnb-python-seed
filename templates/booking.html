@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css" >
+    <link rel="stylesheet" href="/static/booking_styles.css">
     <title>Document</title>
 </head>
 <body>
@@ -18,15 +19,17 @@
         <div class="card">
             <div class="card-body">
                 <h1>Book This Space</h1>
-                <h2>Listing Name: {{listings.name}}</h2>
-                <p>Description: {{listings.description}}</p>
-                <p>Price: {{listings.price}}</p>
+                <h2>{{listings.name}}</h2>
+                <p class="description">{{listings.description}}</p>
+                <p class="price-line">£{{listings.price}} per night</p>
                 <form method="POST" action="/submit_booking">
                     <label for="start_date">Start Date:</label>
                     <input type="date" id="start_date" name="start_date" required>
                     <label for="end_date">End Date:</label>
                     <input type="date" id="end_date" name="end_date" required>
                     <input type="submit" value="Request Booking">
+
+
                 </form>
             </div>
         </div>
