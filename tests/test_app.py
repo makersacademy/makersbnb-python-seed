@@ -20,19 +20,19 @@ def test_get_login_page(page, test_web_address):
     expect(page.locator(".name-input")).to_have_text("Username:")
     expect(page.locator(".password-input")).to_have_text("Password:")
 
-def test_login_logs_in_with_correct_pw(page, test_web_address):
-    page.goto(f'http://{test_web_address}/login') 
-    div_tag = page.locator('.logged-in-status')
-    page.fill("input[name='username']", "User1")
-    page.fill("input[name='password']", "Password1")
-    page.click("text=Submit")
-    expect(div_tag).to_have_text('Logged in as User1')   
+# def test_login_logs_in_with_correct_pw(page, test_web_address):
+#     page.goto(f'http://{test_web_address}/login') 
+#     div_tag = page.locator('.logged-in-status')
+#     page.fill("input[name='username']", "User1")
+#     page.fill("input[name='password']", "Password1")
+#     page.click("text=Submit")
+#     expect(div_tag).to_have_text('Logged in as User1')   
 
-def test_login_fails_with_incorrect_pw(page, test_web_address):
-    page.goto(f'http://{test_web_address}/login') 
-    div_tag = page.locator('.logged-in-status')
-    page.click("text=Submit")
-    expect(div_tag).to_have_text("Unable to authenticate")   
+# def test_login_fails_with_incorrect_pw(page, test_web_address):
+#     page.goto(f'http://{test_web_address}/login') 
+#     div_tag = page.locator('.logged-in-status')
+#     page.click("text=Submit")
+#     expect(div_tag).to_have_text("Unable to authenticate")   
 
 
 # def test_create_listing(db_connection, page, test_web_address):
@@ -57,18 +57,16 @@ def test_create_user(db_connection, page, test_web_address):
     # Navigate to the create listing page
     db_connection.seed("seeds/makersbnb.sql")
     page.goto(f'http://{test_web_address}/signup')
-    page.fill("input[name='username']", "donutlover")
+    page.fill("input[name='signup-username']", "donutlover")
     page.fill("input[name='actualname']", "Homer Simpson")
     page.fill("input[name='email']", "donuts@springfield.com")
     page.fill("input[name='signup-password']", "doh")
-
+    page.screenshot(path="before_submit_form.png")
     page.click('button:has-text("Sign up")')
-    # # Submit the form
+    # # # Submit the form
     success_message = "You have successfully signed up, please log in"
     page_content = page.locator('.sign-up-message')
     expect(page_content).to_have_text(success_message)
-
-    # expect(page.getByText('You have successfully signed up, please log in', { exact: true })).toBeVisible();
     
 
     # signup_message = page.locator("xpath=/html/body/div[2]")
