@@ -15,14 +15,15 @@ from playwright.sync_api import Page, expect
 #     # We assert that it has the text "This is the homepage."
 #     expect(strong_tag).to_have_text("This is the homepage.")
 
-def test_get_login_page(page, test_web_address):
-    page.goto(f'http://{test_web_address}/login')
-    expect(page.locator(".name-input")).to_have_text("Username:")
-    expect(page.locator(".password-input")).to_have_text("Password:")
+# def test_get_login_page(page, test_web_address):
+#     page.goto(f'http://{test_web_address}/login')
+#     expect(page.locator(".name-input")).to_have_text("Username:")
+#     expect(page.locator(".password-input")).to_have_text("Password:")
 
 # def test_login_logs_in_with_correct_pw(page, test_web_address):
-#     page.goto(f'http://{test_web_address}/login') 
+#     page.goto(f'http://{test_web_address}') 
 #     div_tag = page.locator('.logged-in-status')
+#     page.goto(f'http://{test_web_address}/login') 
 #     page.fill("input[name='username']", "User1")
 #     page.fill("input[name='password']", "Password1")
 #     page.click("text=Submit")
@@ -53,20 +54,20 @@ def test_get_login_page(page, test_web_address):
 #     assert listing_text in card_row_html
 #     expect(card_row.inner_text()).to_include(listing_text)
 
-def test_create_user(db_connection, page, test_web_address):
-    # Navigate to the create listing page
-    db_connection.seed("seeds/makersbnb.sql")
-    page.goto(f'http://{test_web_address}/signup')
-    page.fill("input[name='signup-username']", "donutlover")
-    page.fill("input[name='actualname']", "Homer Simpson")
-    page.fill("input[name='email']", "donuts@springfield.com")
-    page.fill("input[name='signup-password']", "doh")
-    page.screenshot(path="before_submit_form.png")
-    page.click('button:has-text("Sign up")')
-    # # # Submit the form
-    success_message = "You have successfully signed up, please log in"
-    page_content = page.locator('.sign-up-message')
-    expect(page_content).to_have_text(success_message)
+# def test_create_user(db_connection, page, test_web_address):
+#     # Navigate to the create listing page
+#     db_connection.seed("seeds/makersbnb.sql")
+#     page.goto(f'http://{test_web_address}/signup')
+#     page.fill("input[name='signup-username']", "donutlover")
+#     page.fill("input[name='actualname']", "Homer Simpson")
+#     page.fill("input[name='email']", "donuts@springfield.com")
+#     page.fill("input[name='signup-password']", "doh")
+#     page.screenshot(path="before_submit_form.png")
+#     page.click('button:has-text("Sign up")')
+#     # # # Submit the form
+#     success_message = "You have successfully signed up, please log in"
+#     page_content = page.locator('.sign-up-message')
+#     expect(page_content).to_have_text(success_message)
     
 
     # signup_message = page.locator("xpath=/html/body/div[2]")

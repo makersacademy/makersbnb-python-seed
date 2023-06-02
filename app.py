@@ -1,5 +1,4 @@
 import os
-import datetime
 from flask import Flask, request, render_template, session, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
 from lib.listings import Listing
@@ -9,6 +8,7 @@ from lib.user_repository import UserRepository
 from lib.user_repository import *
 from lib.listings import *
 from lib.bookings import *
+from lib.booking_repository import *
 
 from lib.listing_repository import ListingRepository
 
@@ -38,8 +38,6 @@ def get_index():
     repository = ListingRepository(connection)
     listings = repository.all()
     authenticated, username = is_authenticated()
-    print("Authenticated:", authenticated)
-    print("Username:", username)
     return render_template('index.html', listings=listings, authenticated=authenticated, username=username)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -116,10 +114,13 @@ def create_new_user():
 def make_booking_request(listing_id, date):
     connection = get_flask_database_connection(app)
     user_repo = UserRepository(connection)
+    booking_repo = BookingRepository(connection)
     username = session['user_id']
     user = user_repo.find_by_username(username)
     booking = Booking(None, user, listing_id, date, False)
-    
+    booking_repo.create(booking)
+    render_template('dashboard.html')
+    #what template do we want to return?
     
 # @app.route('/signup') #gets the booking requests
 # def get_host_booking_requests():
@@ -137,44 +138,6 @@ def get_artist_id(id):
     repository = ListingRepository(connection)
     listings = repository.find(id)
     return render_template('dashboard.html', listings = listings)
-
-# Booking page
-
-@app.route('/booking/<id>')
-def get_booking_by_id(id):
-    connection = get_flask_database_connection(app)
-    repository = ListingRepository(connection)
-    listings = repository.find(id)
-    return render_template('booking.html', listings = listings)
-
-
-@app.route('/submit_booking', methods=['POST'])
-def submit_booking():
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
-    return 'Booking request submitted successfully!'
-
-# @app.route('/booking', methods=['GET', 'POST'])
-# def booking():
-#     if request.method == 'POST':
-#         start_date = request.form['start_date']
-#         end_date = request.form['end_date']
-        
-#         # Retrieve available dates from the database for the listing
-#         available_dates = ['2023-06-05', '2023-06-06', '2023-06-07']
-        
-#         if start_date in available_dates and end_date in available_dates:
-#             # Dates are available, process the booking
-#             return "Booking successful!"
-#         else:
-#             # Dates are unavailable, display an error message
-#             return "Dates are unavailable for booking."
-    
-#     # Render the booking form template
-#     return render_template('booking.html')
-
-
-
 
 
 app.secret_key = 'your very secret key'

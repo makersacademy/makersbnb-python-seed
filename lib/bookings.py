@@ -1,10 +1,10 @@
 class Booking:
-    def __init__(self, id, requester_id, listing_id, booking_date):
+    def __init__(self, id, requester_id, listing_id, booking_date, approved):
         self.id = id
         self.requester_id = requester_id
         self.listing_id = listing_id
         self.booking_date = booking_date
-        self.approved = False
+        self.approved = approved
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
