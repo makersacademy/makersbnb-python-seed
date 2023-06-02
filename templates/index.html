@@ -24,6 +24,7 @@
     {%else%}
         <a href="/signup">
         <button class="create-listing">Create Your Listing</button>
+    </a>
     {% endif %}
     </section>
 
@@ -33,8 +34,8 @@
         <div class="card-row">
             <div class="card">
                 <div class="card-body">
-        
-                    <h5 class="card-title">Listings Name: {{ listing.name }}</h5>
+                    
+                    <h5 class="card-title"> <a href="/booking/{{listing.id}}">Listings Name: {{ listing.name }}</a></h5>
                     <p class="card-text">Listings Description: {{ listing.description }}</p> <br>
                     <p class="price">Price £{{ listing.price }}</p>
                 </div>
@@ -52,5 +53,5 @@
 
     {% endblock %}
 </body>
-       
+    
 </html>

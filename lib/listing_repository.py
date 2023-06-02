@@ -40,3 +40,10 @@ class ListingRepository:
         print(f"listing: {listing} available_dates: {available_dates}")
         return listing, available_dates
         
+        
+        # Find a single listing by id
+    def find(self, user_id):
+        rows = self._connection.execute(
+            'SELECT * from listings WHERE id = %s', [user_id])
+        row = rows[0]
+        return Listing(row["id"], row["name"], row["description"], row["price"], row["user_id"])
