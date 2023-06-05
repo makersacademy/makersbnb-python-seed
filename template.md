@@ -118,6 +118,7 @@ Replace the relevant bits in this example with your own:
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   first_name text,
+  email text,
   last_name text,
   password text
 );
