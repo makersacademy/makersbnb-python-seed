@@ -1,5 +1,6 @@
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS spaces;
+DROP TABLE IF EXISTS users;
+
 
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
@@ -28,4 +29,7 @@ CREATE TABLE spaces (
     on delete cascade
 );
 
+insert into users (first_name, last_name, email, password) values ('testfirstname', 'testlastname', 'test@gmail.com', 'test123');
 
+insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50.00, '2023-01-08', 1),
+('test_title2', 'test_description2', 60.00, '2023-05-10', 1);
