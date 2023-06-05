@@ -13,6 +13,7 @@ CREATE TABLE users (
     password text
 );
 
+
 CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
