@@ -131,7 +131,7 @@ CREATE TABLE spaces (
   price money,
   dates: date,
 -- The foreign key name is always {other_table_singular}_id
-  user_id int,
+  user_id int,first
   constraint fk_user foreign key(user_id)
     references users(id)
     on delete cascade
