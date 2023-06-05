@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MakersBnB</title>
 
-        <!--
+    <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <p>Welcome to MakersBNB</h1>
-    </body>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <p class="t-title">Welcome to MakersBNB</p>
+    <h1>Sign up</h1>
+    <form action="/signup" method="POST">
+      <p class="t-first-name">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" />
+      </p>
+      <p class="t-last-name">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" />
+      </p>
+      <p class="t-email">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+      </p>
+      <p class="t-password">
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" />
+      </p>
+      <p>
+        <input type="submit" value="Sign up" />
+      </p>
+    </form>
+  </body>
 </html>
