@@ -29,19 +29,3 @@ def test_create_a_space(db_connection, page, test_web_address):
         Space(3, "london", "a nice hotel", "$65.00", "2023-06-10", 1)
     ]
 
-
-
-
-# def test_create_post(db_connection):
-#     db_connection.seed("seeds/chitter_base.sql")
-#     repository = PostRepository(db_connection)
-#     repo2 =  UserRepository(db_connection)
-#     repo2.create(User(3, 'sam@gmail.com', 'samtheman', 'sam', 'sammy_boy'))
-#     repository.create(Post(None, 'Testing peep', 3, datetime.now()))
-#     #since reverse chronology, latest post added is at the top
-#     posts = repository.all()
-#     assert posts == [
-#         Post(3, 'Testing peep', 3, datetime.now()), 
-#         Post(1,'my first peep!', 1, datetime.now()),
-#         Post(2,'quite an interesting app', 2, datetime.now())
-#     ]
