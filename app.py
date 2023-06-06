@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, request, render_template
+from flask import Flask, redirect, request, render_template, session
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
@@ -57,6 +57,24 @@ def post_signup():
     user_repository.create_user(user)
     #TODO should be redirected to pages with list of spaces once created
     return redirect(f"/")
+
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def post_login():
+    connection = get_flask_database_connection(app)
+    email = request.form['email']
+    password = request.form['password']
+    user_repository = UserRepository(connection)
+    if user_repository.check_password(email, password):
+        user = user_repository.find_user_by_email(email)
+        # Set the user ID in session
+        # session['user_id'] = user.id (#TODO)
+        return redirect(f"/")
+    else:
+        return render_template('login.html', errormessage="Invalid email or password")
     
 
 
