@@ -41,19 +41,27 @@ nav {
 
 nav li {
     list-style: none;
-    padding: 0 1rem;
+    padding: .5rem 1rem;
 }
 
-a {
+nav li a {
     text-decoration: none;
     font-size: 1.4rem;
     color: var(--fc-title-h1);
-}
-li{
-    height: var(--nav-height);
-    transition: background 500ms;
+    transition: text-decoration 500ms ease-in-out, color 500ms;
 
 }
-li:hover{
+
+nav li a:hover {
+    text-decoration: underline;
+    color: var(--bg-color);
+}
+nav li{
+    height: var(--nav-height);
+    transition: background 500ms;
+}
+
+nav li:hover{
     background: var(--focus-color);
+    color: var(--bg-color);
 }
