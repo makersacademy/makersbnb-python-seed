@@ -27,7 +27,6 @@ def test_signup(page, test_web_address):
     page.fill("input[name=password]", "1234")
     page.click("text='Sign up'")
 
-<<<<<<< HEAD
 def test_login(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/")
@@ -35,7 +34,7 @@ def test_login(page, test_web_address):
     page.fill("input[name=email]", "Test Email")
     page.fill("input[name=password]", "1234")
     page.click("text='Log-in'")
-=======
+    
 def test_homepage_link(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/signup")
@@ -55,4 +54,3 @@ def test_get_all_spaces(db_connection, page, test_web_address):
         'test_title, test_description, $50.00, 2023-01-08',
         'test_title2, test_description2, $60.00, 2023-05-10'
     ])
->>>>>>> 03a847ba6369b5e64317e18716e86d84ba3df66b
