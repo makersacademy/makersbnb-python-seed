@@ -17,5 +17,10 @@ body {
     align-items: center;
     color: var(--fc-title-h1);
     gap:1.6rem;
+}
+
+a {
+    text-decoration: none;
+    font-size: 1.4rem;
     
 }
