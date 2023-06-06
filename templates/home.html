@@ -20,11 +20,15 @@
     <h1 class="t-title">Welcome to MakersBNB</h1>
     <h2>Spaces</h2>
     <ul >
-        {% for space in spaces %}
-        <li class="space-item">
-                {{space.title}}, {{space.description}}, {{space.price}}, {{space.date_range}}
-        </li>
-        {% endfor %}
+      {% for space in spaces %}
+      <li class="space-item">
+      <h3 class="space-title">{{space.title}}</h3>
+      <p class="description">{{space.description}}</p>
+      <p class="price">{{space.price}}</p>
+      <p class="date">{{space.date_range}}</p>
+      </li>
+      {% endfor %}
+      
     </ul>
 
   </body>
