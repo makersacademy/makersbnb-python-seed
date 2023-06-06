@@ -17,7 +17,7 @@ def test_get_home(page, test_web_address):
 
 def test_signup(page, test_web_address):
     page.set_default_timeout(1000)
-    page.goto(f"http://{test_web_address}/")
+    page.goto(f"http://{test_web_address}/signup")
     page.fill("input[name=first_name]", "Test First Name")
     page.fill("input[name=last_name]", "Test Last Name")
     page.fill("input[name=email]", "Test Email")
