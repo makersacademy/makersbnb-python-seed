@@ -12,4 +12,6 @@ class UserRepository:
         return users
     
     def create_user(self, user):
-        self._connection.execute('INSERT INTO users (first_name, last_name, email, password) VALUES (%s, %s, %s, %s)', [user.first_name, user.last_name, user.email, user.password])
+        rows = self._connection.execute('INSERT INTO users (first_name, last_name, email, password) VALUES (%s, %s, %s, %s) RETURNING id', [user.first_name, user.last_name, user.email, user.password])
+        user.id = rows[0]["id"]
+        return user
