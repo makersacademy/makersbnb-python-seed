@@ -20,7 +20,7 @@ CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     title text,
     description text,
-    price int,
+    price money,
     date_range date,
     -- The foreign key name is always {other_table_singular}_id
     user_id int,
@@ -31,5 +31,5 @@ CREATE TABLE spaces (
 
 insert into users (first_name, last_name, email, password) values ('testfirstname', 'testlastname', 'test@gmail.com', 'test123');
 
-insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50, '2023-01-08', 1),
-('test_title2', 'test_description2', 60, '2023-05-10', 1);
+insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50.00, '2023-01-08', 1),
+('test_title2', 'test_description2', 60.00, '2023-05-10', 1);
