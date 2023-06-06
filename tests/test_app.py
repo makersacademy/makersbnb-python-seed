@@ -44,4 +44,5 @@ def test_get_all_spaces(db_connection, page, test_web_address):
         'test_title, test_description, $50.00, 2023-01-08',
         'test_title2, test_description2, $60.00, 2023-05-10'
     ])
+    
 
