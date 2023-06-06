@@ -21,3 +21,4 @@ def test_posts_format_nicely():
     assert str(space) == "Space(1, title, description, price, date_range, 1)"
     # Try commenting out the `__repr__` method in lib/artist.py
     # And see what happens when you run this test again.
+
