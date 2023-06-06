@@ -6,6 +6,7 @@
     font-size: 62,5%;
 
     --bg-color: #FFFFFF;
+    --nav-color: #eeeeee;
     --fc-title-h1: #484848;
 
 }
@@ -18,9 +19,21 @@ body {
     color: var(--fc-title-h1);
     gap:1.6rem;
 }
+nav {
+    width: 100vw;
+    background: var(--nav-color);
+    box-shadow: 2px 2px 4px  var(--nav-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 2rem 1rem;
+}
+
+nav li {
+    list-style: none;
+}
 
 a {
     text-decoration: none;
     font-size: 1.4rem;
-    
 }
