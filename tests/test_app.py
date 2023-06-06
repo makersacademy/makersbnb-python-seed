@@ -23,3 +23,11 @@ def test_signup(page, test_web_address):
     page.fill("input[name=email]", "Test Email")
     page.fill("input[name=password]", "1234")
     page.click("text='Sign up'")
+
+def test_login(page, test_web_address):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}/")
+    page.click("text='Log-in'")
+    page.fill("input[name=email]", "Test Email")
+    page.fill("input[name=password]", "1234")
+    page.click("text='Log-in'")

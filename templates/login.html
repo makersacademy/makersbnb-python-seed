@@ -11,23 +11,15 @@
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
-    <nav>
-      <ul>
-      <li><a href="/signup">Sign-up</a></li>
-      <li><a href="/login">Log-in</a></li>
-    </ul>
-    </nav>
     <p class="t-title">Welcome to MakersBNB</p>
-    <h1>Sign up</h1>
-    <form action="/signup" method="POST">
-      <p class="t-first-name">
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" id="first_name" />
-      </p>
-      <p class="t-last-name">
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" id="last_name" />
-      </p>
+      {% if errormessage %}
+      <div class="t-errors">
+        Your form contained these errors: {{ errormessage }}
+        
+      </div>
+      {% endif %}
+    <h1>Log in</h1>
+    <form action="/login" method="POST">
       <p class="t-email">
         <label for="email">Email</label>
         <input type="text" name="email" id="email" />
@@ -37,7 +29,7 @@
         <input type="text" name="password" id="password" />
       </p>
       <p>
-        <input type="submit" value="Sign up" />
+        <input type="submit" value="Log-in" />
       </p>
     </form>
   </body>
