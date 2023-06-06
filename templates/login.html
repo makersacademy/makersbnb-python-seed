@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MakersBnB</title>
+
+    <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <p class="t-title">Welcome to MakersBNB</p>
+      {% if errormessage %}
+      <div class="t-errors">
+        Your form contained these errors: {{ errormessage }}
+        
+      </div>
+      {% endif %}
+    <h1>Log in</h1>
+    <form action="/login" method="POST">
+      <p class="t-email">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+      </p>
+      <p class="t-password">
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" />
+      </p>
+      <p>
+        <input type="submit" value="Log-in" />
+      </p>
+    </form>
+  </body>
+</html>
