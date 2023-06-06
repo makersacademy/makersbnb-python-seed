@@ -24,7 +24,5 @@ class UserRepository:
     
     def find_user_by_email(self, email):
         rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
-        print("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
-        print(rows)
         row = rows[0]
         return User(row['id'], row['first_name'], row['last_name'], row['email'], row['password'])
