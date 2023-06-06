@@ -21,7 +21,6 @@ def get_index():
     space_repo = SpaceRepository(connection)
 
     spaces = space_repo.all()
-
     return render_template('home.html', spaces = spaces)
 
 

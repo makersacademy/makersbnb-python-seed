@@ -15,5 +15,14 @@
       <a href="/signup">Sign-up</a>
     </nav>
     <p class="t-title">Welcome to MakersBNB</p>
+    <h1>Spaces</h1>
+    <ul >
+        {% for space in spaces %}
+        <li class="space-item">
+                {{space.title}}, {{space.description}}, {{space.price}}, {{space.date_range}}
+        </li>
+        {% endfor %}
+    </ul>
+
   </body>
 </html>
