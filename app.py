@@ -17,6 +17,10 @@ app = Flask(__name__)
 def get_index():
     return render_template('home.html')
 
+@app.route('/signup', methods=['GET'])
+def get_sign_up():
+    return render_template('sign_up.html')
+
 @app.route('/signup', methods=['POST'])
 def post_signup():
     connection = get_flask_database_connection(app)
