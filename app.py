@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, redirect, request, render_template
 from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
@@ -14,6 +14,17 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def get_index():
     return render_template('home.html')
+
+@app.route('/signup', methods=['POST'])
+def post_signup():
+    #connection = get_flask_database_connection(app)
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+    password = request.form['password']
+    
+    return redirect(f"/")
+    
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
