@@ -17,7 +17,8 @@ def test_create_user(db_connection):
     db_connection.seed('seeds/users_spaces.sql')
     user_repository = UserRepository(db_connection)
     user = User(None, "Alfred", "Einstein", "a.einstein@gmail.com", "1234567")
-    user_repository.create_user(user)
+    new_user = user_repository.create_user(user)
+    assert new_user == User(2, "Alfred", "Einstein", "a.einstein@gmail.com", "1234567")
     assert user_repository.all() == [User(1, "testfirstname", "testlastname", "test@gmail.com", "test123"),
                                     User(2, "Alfred", "Einstein", "a.einstein@gmail.com", "1234567")]
     

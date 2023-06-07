@@ -13,8 +13,15 @@
   <body>
     <nav>
       <ul>
+      {% if not logged_in %}
       <li><a href="/signup">Sign-up</a></li>
       <li><a href="/login">Log-in</a></li>
+      {% endif %}
+      {% if logged_in %}
+      <form action="/logout" method="POST">
+        <input type="submit" value="Log Out">
+      </form>
+      {% endif %}
     </ul>
     </nav>
     <h1 class="t-title">Welcome to MakersBNB</h1>
