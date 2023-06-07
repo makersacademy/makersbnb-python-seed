@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, redirect, request, render_template, session
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
@@ -8,6 +9,8 @@ from lib.space import Space
 
 # Create a new Flask app
 app = Flask(__name__)
+load_dotenv()
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # == Your Routes Here ==
 
@@ -19,13 +22,18 @@ app = Flask(__name__)
 def get_index():
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
-
+    logged_in = False
+    if 'user_id' in session:
+        logged_in = True
     spaces = space_repo.all()
-    return render_template('home.html', spaces = spaces)
+    return render_template('home.html', spaces = spaces, logged_in=logged_in)
 
 @app.route('/new-space', methods=["GET"])
 def get_space_new():
-    return render_template('new-space.html')
+    if 'user_id' in session:
+        return render_template('new-space.html')
+    else: 
+        return redirect(f"/login")
 
 @app.route('/new-space', methods=["POST"])
 def create_space():
@@ -58,8 +66,13 @@ def post_signup():
         errors = user.generate_errors()
         return render_template("sign_up.html", errors=errors)
     user_repository = UserRepository(connection)
-    user_repository.create_user(user)
-    #TODO should be redirected to pages with list of spaces once created
+    user = user_repository.create_user(user)
+    session['user_id'] = user.id
+    return redirect(f"/")
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user_id')
     return redirect(f"/")
 
 @app.route('/login', methods=['GET'])
@@ -74,13 +87,10 @@ def post_login():
     user_repository = UserRepository(connection)
     if user_repository.check_password(email, password):
         user = user_repository.find_user_by_email(email)
-        # Set the user ID in session
-        # session['user_id'] = user.id (#TODO)
+        session['user_id'] = user.id
         return redirect(f"/")
     else:
         return render_template('login.html', errormessage="Invalid email or password")
-    
-
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
