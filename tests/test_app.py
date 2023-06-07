@@ -69,7 +69,6 @@ def test_show_create_page(db_connection, page, test_web_address):
     page.fill("input[name=title]", "London")
     page.fill("input[name=description]", "A nice hotel")
     page.fill("input[name=price]", "$75")
-    # page.fill("input[name=date]", "2023-05-12")
 
 
     title_tag = page.locator(".space-title")
@@ -80,12 +79,7 @@ def test_show_create_page(db_connection, page, test_web_address):
 
     price_tag = page.locator(".space-price")
     expect(price_tag).to_have_text("Price:")
-    # date_tag = page.locator(".space-date")
-    # expect(date_tag).to_have_text("Dates:")
-    page.screenshot(path="screenshot2.png", full_page=True)
 
-    page.screenshot(path="screenshot4.png", full_page=True)
     page.click("text='Add Space'")
-    page.screenshot(path="screenshot5.png", full_page=True)
 
 
