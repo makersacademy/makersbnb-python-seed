@@ -21,7 +21,7 @@ CREATE TABLE spaces (
     title text,
     description text,
     price money,
-    date_range date,
+    date_range text ARRAY,
     -- The foreign key name is always {other_table_singular}_id
     user_id int,
     constraint fk_user foreign key(user_id)
@@ -31,5 +31,5 @@ CREATE TABLE spaces (
 
 insert into users (first_name, last_name, email, password) values ('testfirstname', 'testlastname', 'test@gmail.com', 'test123');
 
-insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50.00, '2023-01-08', 1),
-('test_title2', 'test_description2', 60.00, '2023-05-10', 1);
+insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50.00, ARRAY['2023-01-08', '2023-01-09'], 1),
+('test_title2', 'test_description2', 60.00, ARRAY['2023-02-12', '2023-02-13'], 1);

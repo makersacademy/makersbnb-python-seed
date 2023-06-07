@@ -25,7 +25,13 @@
       <h3 class="space-title">{{space.title}}</h3>
       <p class="description">{{space.description}}</p>
       <p class="price">{{space.price}}</p>
-      <p class="date">{{space.date_range}}</p>
+      <!-- <ul>
+      {% for date in space.date_range %}
+      <li>
+        <a href="#" class="date">{{date}}</a>
+      </li>
+      {% endfor %}
+      </ul> -->
       </li>
       {% endfor %}
       
