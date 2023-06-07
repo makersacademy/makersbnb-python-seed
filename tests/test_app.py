@@ -44,7 +44,6 @@ def test_get_all_spaces(db_connection, page, test_web_address):
     page.set_default_timeout(1000)
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
-    space_item_tag = page.locator(".space-item")
     space_title_tag = page.locator(".space-title")
     # date_tag = page.locator(".date")
     #====todo=====
@@ -55,13 +54,15 @@ def test_get_all_spaces(db_connection, page, test_web_address):
 
 def test_show_booking_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
-    page.goto(f"http://{test_web_address}/spaces/1")
+    page.goto(f"http://{test_web_address}/")
     
     page.click("text='test_title'")
     header_tag = page.locator(".header")
     expect(header_tag).to_have_text("test_title")
+    title_tag = page.locator(".space-title")
+    expect(title_tag).to_have_text("test_title")
 
-    pick_tag = page.locator(".date")
+    pick_tag = page.locator(".dropbtn")
     expect(pick_tag).to_have_text("Pick a night")
 
     book_button_tag = page.locator(".book")

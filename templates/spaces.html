@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a space</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <p class="space-title">
+    {{space.title}}
+    </p>
+    <p class="space-description">
+    {{space.description}}
+    </p>
+    <p class="space-price">
+    {{space.price}}
+    </p>
+
+    <div class="dropdown">
+        <button class="dropbtn">Pick a night</button>
+        <div class="dropdown-content">
+        {% for date in space.date_range %}
+          <a href="#">{{date}}</a>
+        {% endfor %}
+        </div>
+    </div>
+
+    <button class="book" >Request to book</button>
+</body>
+</html>

@@ -14,7 +14,7 @@ def test_get_all_spaces(db_connection):
         Space(2, "test_title2", "test_description2", "$60.00", ['2023-02-12', '2023-02-13'], 1)
     ]
 
-def test_create_a_space(db_connection, page, test_web_address):
+def test_create_a_space(db_connection):
     db_connection.seed("seeds/users_spaces.sql")
     space_repo = SpaceRepository(db_connection)
     user_repo = UserRepository(db_connection)
@@ -28,3 +28,10 @@ def test_create_a_space(db_connection, page, test_web_address):
         Space(2, "test_title2", "test_description2", "$60.00", ['2023-02-12', '2023-02-13'], 1),
         Space(3, "london", "a nice hotel", "$65.00", ['2023-06-10'], 1)
     ]
+
+def test_find_space(db_connection):
+    db_connection.seed("seeds/users_spaces.sql")
+    space_repo = SpaceRepository(db_connection)
+
+    target_space = space_repo.find(1)
+    assert target_space == Space(1, "test_title", "test_description", "$50.00", ['2023-01-08', '2023-01-09'], 1)
