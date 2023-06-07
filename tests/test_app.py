@@ -41,6 +41,7 @@ def test_homepage_link(page, test_web_address):
     page.click("text='Back to Homepage'")
 
 def test_get_all_spaces(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
     space_item_tag = page.locator(".space-item")
