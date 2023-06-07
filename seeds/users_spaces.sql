@@ -50,6 +50,9 @@ CREATE TABLE requests (
 );
 
 insert into users (first_name, last_name, email, password) values ('testfirstname', 'testlastname', 'test@gmail.com', 'test123');
+insert into users (first_name, last_name, email, password) values ('Michael', 'Jackson', 'michael@gmail.com', '123456');
 
 insert into spaces (title, description, price, date_range, user_id) values ('test_title', 'test_description', 50.00, ARRAY['2023-01-08', '2023-01-09'], 1),
 ('test_title2', 'test_description2', 60.00, ARRAY['2023-02-12', '2023-02-13'], 1);
+
+insert into requests (owner_id, visitor_id, space_id, request_date, confirmed) values (1, 2, 1, '2023-01-08', False)
