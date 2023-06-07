@@ -30,7 +30,10 @@ def get_index():
 
 @app.route('/new-space', methods=["GET"])
 def get_space_new():
-    return render_template('new-space.html')
+    if 'user_id' in session:
+        return render_template('new-space.html')
+    else: 
+        return redirect(f"/login")
 
 @app.route('/new-space', methods=["POST"])
 def create_space():
@@ -40,7 +43,6 @@ def create_space():
     description = request.form['description']
     price = request.form['price']
     date = request.form['date']
-
 
     space = Space(None, title, description, price, date, 1)
     space_repo.create(space)

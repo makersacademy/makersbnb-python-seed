@@ -40,9 +40,6 @@ def test_homepage_link(page, test_web_address):
     page.goto(f"http://{test_web_address}/signup")
     page.click("text='Back to Homepage'")
 
-"""
-"""
-
 def test_get_all_spaces(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
@@ -54,14 +51,17 @@ def test_get_all_spaces(db_connection, page, test_web_address):
     ])
 
 def test_show_create_page(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/new-space")
-    page.screenshot(path="screenshot3.png", full_page=True)
+    page.fill("input[name=email]", "test@gmail.com")
+    page.fill("input[name=password]", "test123")
+    page.click("text='Log-in'")
+    page.click("text='Create new space'")
     page.fill("input[name=title]", "London")
     page.fill("input[name=description]", "A nice hotel")
     page.fill("input[name=price]", "$75")
     page.fill("input[name=date]", "2023-05-12")
-
 
 
     title_tag = page.locator(".space-title")
@@ -75,7 +75,6 @@ def test_show_create_page(db_connection, page, test_web_address):
     date_tag = page.locator(".space-date")
     expect(date_tag).to_have_text("Date:")
     page.screenshot(path="screenshot2.png", full_page=True)
-
 
     page.screenshot(path="screenshot4.png", full_page=True)
     page.click("text='Add Space'")
