@@ -94,7 +94,10 @@ def post_login():
     
 @app.route('/requests', methods=['GET'])
 def get_requests():
-    return render_template('requests.html')
+    if 'user_id' in session:
+        return render_template('requests.html')
+    else: 
+        return redirect(f"/login")
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
