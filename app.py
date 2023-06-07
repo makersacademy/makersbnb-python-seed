@@ -91,7 +91,10 @@ def post_login():
         return redirect(f"/")
     else:
         return render_template('login.html', errormessage="Invalid email or password")
-
+    
+@app.route('/requests', methods=['GET'])
+def get_requests():
+    return render_template('requests.html')
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
