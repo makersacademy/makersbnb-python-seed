@@ -26,7 +26,29 @@ def get_index():
     if 'user_id' in session:
         logged_in = True
     spaces = space_repo.all()
+<<<<<<< HEAD
     return render_template('home.html', spaces = spaces, logged_in=logged_in)
+=======
+    return render_template('home.html', spaces = spaces)
+
+@app.route('/new-space', methods=["GET"])
+def get_space_new():
+    return render_template('new-space.html')
+
+@app.route('/new-space', methods=["POST"])
+def create_space():
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+    title = request.form['title']
+    description = request.form['description']
+    price = request.form['price']
+    date = request.form['date']
+
+
+    space = Space(None, title, description, price, date, 1)
+    space_repo.create(space)
+    return redirect(f"/")
+>>>>>>> 8f531fd67f92bea33e2318bfd6db75ba4e0022df
 
 @app.route('/signup', methods=['GET'])
 def get_sign_up():
