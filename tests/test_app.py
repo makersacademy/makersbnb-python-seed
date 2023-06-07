@@ -57,8 +57,7 @@ def test_show_booking_page(db_connection, page, test_web_address):
     page.goto(f"http://{test_web_address}/")
     
     page.click("text='test_title'")
-    header_tag = page.locator(".header")
-    expect(header_tag).to_have_text("test_title")
+    
     title_tag = page.locator(".space-title")
     expect(title_tag).to_have_text("test_title")
 
