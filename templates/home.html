@@ -13,11 +13,20 @@
   <body>
     <nav>
       <ul>
+      {% if not logged_in %}
       <li><a href="/signup">Sign-up</a></li>
       <li><a href="/login">Log-in</a></li>
+      {% endif %}
+      {% if logged_in %}
+      <form action="/logout" method="POST">
+        <input type="submit" value="Log Out">
+      </form>
+      {% endif %}
     </ul>
     </nav>
+    <main>
     <h1 class="t-title">Welcome to MakersBNB</h1>
+    <a href="/new-space"><button> Create new space</button></a>
     <h2>Spaces</h2>
     <ul >
       {% for space in spaces %}
@@ -36,6 +45,6 @@
       {% endfor %}
       
     </ul>
-
+  </main>
   </body>
 </html>
