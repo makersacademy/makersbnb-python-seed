@@ -49,16 +49,16 @@ def test_get_all_spaces(db_connection, page, test_web_address):
     #====todo=====
     #comments in this file are for next implementation with displaying date
 
-
     expect(space_title_tag).to_have_text(["test_title", "test_title2"])
     # expect(date_tag).to_have_text(["['2023-01-08', '2023-01-09']", "['2023-02-12', '2023-02-13']"])
-
 
 def test_show_booking_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
     
     page.click("text='test_title'")
+    header_tag = page.locator(".header")
+    expect(header_tag).to_have_text("test_title")
     title_tag = page.locator(".space-title")
     expect(title_tag).to_have_text("test_title")
 
@@ -79,7 +79,6 @@ def test_show_create_page(db_connection, page, test_web_address):
     page.fill("input[name=title]", "London")
     page.fill("input[name=description]", "A nice hotel")
     page.fill("input[name=price]", "$75")
-    # page.fill("input[name=date]", "2023-05-12")
 
 
     title_tag = page.locator(".space-title")
@@ -90,8 +89,6 @@ def test_show_create_page(db_connection, page, test_web_address):
 
     price_tag = page.locator(".space-price")
     expect(price_tag).to_have_text("Price:")
-    # date_tag = page.locator(".space-date")
-    # expect(date_tag).to_have_text("Dates:")
 
     page.click("text='Add Space'")
 
