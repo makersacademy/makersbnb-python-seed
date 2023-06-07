@@ -49,3 +49,12 @@ def test_user_errors():
     assert User(1, None, "Last Name", "Email_test", "password_test").generate_errors() == "First Name can't be blank"
     assert User(1, "First Name", "Last Name", "Email_test", "password_test").generate_errors() == None
     assert User(None, "First Name", "Last Name", "Email_test", "password_test").generate_errors() == None
+
+def test_users_are_equal():
+    user1 = User(1, 'firstname', 'lastname', 'test@test.com', 'password')
+    user2 = User(1, 'firstname', 'lastname', 'test@test.com', 'password')
+    assert user1 == user2
+
+def test_posts_format_nicely():
+    user = User(1, 'firstname', 'lastname', 'test@test.com', 'password')
+    assert str(user) == "User(1, firstname, lastname, test@test.com, password)"
