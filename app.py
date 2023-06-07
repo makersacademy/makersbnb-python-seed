@@ -43,6 +43,8 @@ def create_space():
     description = request.form['description']
     price = request.form['price']
     date = request.form['date']
+    new_date = date.split(', ')
+    #handle users input for date, split the string into list
 
     space = Space(None, title, description, price, date, 1)
     space_repo.create(space)

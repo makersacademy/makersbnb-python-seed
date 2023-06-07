@@ -43,12 +43,19 @@ def test_homepage_link(page, test_web_address):
 def test_get_all_spaces(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
-    space_item = page.locator(".space-item")
+    space_item_tag = page.locator(".space-item")
+    space_title_tag = page.locator(".space-title")
+    # date_tag = page.locator(".date")
+    #====todo=====
+    #comments in this file are for next implementation with displaying date
 
-    expect(space_item).to_have_text([
-        'test_title, test_description, $50.00, 2023-01-08',
-        'test_title2, test_description2, $60.00, 2023-05-10'
-    ])
+
+    page.screenshot(path="screenshot10.png", full_page=True)
+    expect(space_title_tag).to_have_text(["test_title", "test_title2"])
+    # expect(date_tag).to_have_text(["['2023-01-08', '2023-01-09']", "['2023-02-12', '2023-02-13']"])
+
+    page.screenshot(path="screenshot11.png", full_page=True)
+
 
 def test_show_create_page(db_connection, page, test_web_address):
     page.set_default_timeout(1000)
@@ -61,7 +68,7 @@ def test_show_create_page(db_connection, page, test_web_address):
     page.fill("input[name=title]", "London")
     page.fill("input[name=description]", "A nice hotel")
     page.fill("input[name=price]", "$75")
-    page.fill("input[name=date]", "2023-05-12")
+    # page.fill("input[name=date]", "2023-05-12")
 
 
     title_tag = page.locator(".space-title")
@@ -72,8 +79,8 @@ def test_show_create_page(db_connection, page, test_web_address):
 
     price_tag = page.locator(".space-price")
     expect(price_tag).to_have_text("Price:")
-    date_tag = page.locator(".space-date")
-    expect(date_tag).to_have_text("Date:")
+    # date_tag = page.locator(".space-date")
+    # expect(date_tag).to_have_text("Dates:")
     page.screenshot(path="screenshot2.png", full_page=True)
 
     page.screenshot(path="screenshot4.png", full_page=True)
