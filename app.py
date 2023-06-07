@@ -92,6 +92,14 @@ def post_login():
     else:
         return render_template('login.html', errormessage="Invalid email or password")
 
+@app.route('/spaces/<int:id>')
+def get_book_page(id):
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    space = repository.find(id)
+    return render_template('spaces.html', space=space)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.

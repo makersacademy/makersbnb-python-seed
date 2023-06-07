@@ -44,28 +44,25 @@ def test_get_all_spaces(db_connection, page, test_web_address):
     page.set_default_timeout(1000)
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
-    space_item_tag = page.locator(".space-item")
     space_title_tag = page.locator(".space-title")
     # date_tag = page.locator(".date")
     #====todo=====
     #comments in this file are for next implementation with displaying date
 
 
-    page.screenshot(path="screenshot10.png", full_page=True)
     expect(space_title_tag).to_have_text(["test_title", "test_title2"])
     # expect(date_tag).to_have_text(["['2023-01-08', '2023-01-09']", "['2023-02-12', '2023-02-13']"])
 
-    page.screenshot(path="screenshot11.png", full_page=True)
 
 def test_show_booking_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
-    page.goto(f"http://{test_web_address}/spaces/1")
+    page.goto(f"http://{test_web_address}/")
     
-    page.click("text='test_title")
-    header_tag = page.locator(".header")
-    expect(header_tag).to_have_text("test_title")
+    page.click("text='test_title'")
+    title_tag = page.locator(".space-title")
+    expect(title_tag).to_have_text("test_title")
 
-    pick_tag = page.locator(".date")
+    pick_tag = page.locator(".dropbtn")
     expect(pick_tag).to_have_text("Pick a night")
 
     book_button_tag = page.locator(".book")
@@ -95,10 +92,7 @@ def test_show_create_page(db_connection, page, test_web_address):
     expect(price_tag).to_have_text("Price:")
     # date_tag = page.locator(".space-date")
     # expect(date_tag).to_have_text("Dates:")
-    page.screenshot(path="screenshot2.png", full_page=True)
 
-    page.screenshot(path="screenshot4.png", full_page=True)
     page.click("text='Add Space'")
-    page.screenshot(path="screenshot5.png", full_page=True)
 
 
