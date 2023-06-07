@@ -26,10 +26,7 @@ def get_index():
     if 'user_id' in session:
         logged_in = True
     spaces = space_repo.all()
-<<<<<<< HEAD
     return render_template('home.html', spaces = spaces, logged_in=logged_in)
-=======
-    return render_template('home.html', spaces = spaces)
 
 @app.route('/new-space', methods=["GET"])
 def get_space_new():
@@ -48,7 +45,6 @@ def create_space():
     space = Space(None, title, description, price, date, 1)
     space_repo.create(space)
     return redirect(f"/")
->>>>>>> 8f531fd67f92bea33e2318bfd6db75ba4e0022df
 
 @app.route('/signup', methods=['GET'])
 def get_sign_up():
