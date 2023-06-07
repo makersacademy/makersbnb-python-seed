@@ -46,7 +46,7 @@ def create_space():
     new_date = date.split(', ')
     #handle users input for date, split the string into list
 
-    space = Space(None, title, description, price, date, 1)
+    space = Space(None, title, description, price, new_date, 1)
     space_repo.create(space)
     return redirect(f"/")
 
