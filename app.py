@@ -53,6 +53,9 @@ def post_signup():
     email = request.form['email']
     password = request.form['password']
     user = User(None, first_name, last_name, email, password)
+    if not user.is_valid():
+        errors = user.generate_errors()
+        return render_template("sign_up.html", errors=errors)
     user_repository = UserRepository(connection)
     user_repository.create_user(user)
     #TODO should be redirected to pages with list of spaces once created

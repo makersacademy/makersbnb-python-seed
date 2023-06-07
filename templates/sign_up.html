@@ -16,6 +16,11 @@
     </nav>
     <h1>Sign up</h1>
     <form action="/signup" method="POST">
+      {% if errors %}
+      <div class="t-errors">
+        Your form contained these errors: {{ errors }}
+      </div>
+      {% endif %}
       <p class="t-first-name">
         <label for="first_name">First Name</label>
         <input type="text" name="first_name" id="first_name" />
