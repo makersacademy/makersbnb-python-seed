@@ -50,18 +50,14 @@ def test_get_all_spaces(db_connection, page, test_web_address):
     #====todo=====
     #comments in this file are for next implementation with displaying date
 
-
-    page.screenshot(path="screenshot10.png", full_page=True)
     expect(space_title_tag).to_have_text(["test_title", "test_title2"])
     # expect(date_tag).to_have_text(["['2023-01-08', '2023-01-09']", "['2023-02-12', '2023-02-13']"])
-
-    page.screenshot(path="screenshot11.png", full_page=True)
 
 def test_show_booking_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/spaces/1")
     
-    page.click("text='test_title")
+    page.click("text='test_title'")
     header_tag = page.locator(".header")
     expect(header_tag).to_have_text("test_title")
 
