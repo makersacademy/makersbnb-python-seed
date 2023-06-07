@@ -57,6 +57,19 @@ def test_get_all_spaces(db_connection, page, test_web_address):
 
     page.screenshot(path="screenshot11.png", full_page=True)
 
+def test_show_booking_page(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users_spaces.sql")
+    page.goto(f"http://{test_web_address}/spaces/1")
+    
+    page.click("text='test_title")
+    header_tag = page.locator(".header")
+    expect(header_tag).to_have_text("test_title")
+
+    pick_tag = page.locator(".date")
+    expect(pick_tag).to_have_text("Pick a night")
+
+    book_button_tag = page.locator(".book")
+    expect(book_button_tag).to_have_text("Request to book")
 
 def test_show_create_page(db_connection, page, test_web_address):
     page.set_default_timeout(1000)
