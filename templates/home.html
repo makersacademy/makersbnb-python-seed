@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MakersBnB</title>
+
+    <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+      <li><a href="/signup">Sign-up</a></li>
+      <li><a href="/login">Log-in</a></li>
+    </ul>
+    </nav>
+    <h1 class="t-title">Welcome to MakersBNB</h1>
+    <h2>Spaces</h2>
+    <ul >
+        {% for space in spaces %}
+        <li class="space-item">
+                {{space.title}}, {{space.description}}, {{space.price}}, {{space.date_range}}
+        </li>
+        {% endfor %}
+    </ul>
+
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/static/style.css" />
+
+</head>
+<body>
+    <nav>
+        <ul>
+        <li><a href="/">Back to Homepage</a></li>
+        </ul>
+    </nav>
+    <h1>Sign up</h1>
+    <form action="/signup" method="POST">
+      <p class="t-first-name">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" />
+      </p>
+      <p class="t-last-name">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" />
+      </p>
+      <p class="t-email">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+      </p>
+      <p class="t-password">
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" />
+      </p>
+      <p>
+        <input type="submit" value="Sign up" />
+      </p>
+    </form>
+</body>
+</html>
