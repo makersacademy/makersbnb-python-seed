@@ -7,13 +7,13 @@ app = Flask(__name__)
 
 # == Your Routes Here ==
 
-# GET /index
+# GET /home
 # Returns the homepage
 # Try it:
-#   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+#   ; open http://localhost:5000/home
+@app.route('/', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    return render_template('home.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
