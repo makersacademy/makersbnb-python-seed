@@ -55,6 +55,11 @@ def test_get_all_spaces(db_connection, page, test_web_address):
 def test_show_booking_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/users_spaces.sql")
     page.goto(f"http://{test_web_address}/")
+
+    page.click("text='Log-in'")
+    page.fill("input[name=email]", "test@gmail.com")
+    page.fill("input[name=password]", "test123")
+    page.click("text='Log-in'")
     
     page.click("text='test_title'")
     
@@ -118,3 +123,18 @@ def test_create_request(db_connection, page, test_web_address):
 
     confirmed_tag = page.locator(".confirmed").nth(2)
     expect(confirmed_tag).to_have_text("Booking not confirmed")
+
+def test_confirm_request(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
+
+    db_connection.seed("seeds/users_spaces.sql")
+    page.goto(f"http://{test_web_address}/")
+    page.click("text='Log-in'")
+    page.fill("input[name=email]", "test@gmail.com")
+    page.fill("input[name=password]", "test123")
+    page.click("text='Log-in'")
+
+    page.click("text='Requests'")
+    page.click("text='Confirm Booking'")
+    confirmed_tag = page.locator(".confirmed").nth(0)
+    expect(confirmed_tag).to_have_text("Booking confirmed")
