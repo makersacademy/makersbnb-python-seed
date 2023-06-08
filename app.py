@@ -138,8 +138,11 @@ def get_requests_page():
 def confirm_request():
     connection = get_flask_database_connection(app)
     repository = RequestRepository(connection)
+    space_repo = SpaceRepository(connection)
     request_id = request.form['confirm']
     repository.confirm(int(request_id))
+    request_obj = repository.find(request_id)
+    space_repo.remove_date(request_obj.space_id, request_obj.request_date)
     return redirect(f"/requests")
 
 # These lines start the server if you run this file directly
