@@ -10,3 +10,11 @@ class RequestRepository:
             requests.append(Request(row['id'], row['owner_id'], row['visitor_id'],
                                     row['space_id'], str(row['request_date']), row['confirmed']))
         return requests
+
+    def get_requests_by_visitor_id(self, visitor_id):
+        rows = self._connection.execute('SELECT * FROM requests WHERE visitor_id = %s', [visitor_id])
+        requests = []
+        for row in rows: 
+            requests.append(Request(row['id'], row['owner_id'], row['visitor_id'],
+                                    row['space_id'], str(row['request_date']), row['confirmed']))
+        return requests
