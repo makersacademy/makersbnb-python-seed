@@ -17,3 +17,10 @@ def test_get_all_requests_made_by_visitor(db_connection):
     request_repository = RequestRepository(db_connection)
     requests = request_repository.get_requests_by_visitor_id(2)
     assert requests == [Request(1, 1, 2, 1, '2023-01-08', False)]
+
+def test_creates_request(db_connection):
+    db_connection.seed('seeds/users_spaces.sql')
+    request_repository = RequestRepository(db_connection)
+    request = Request(None, 1, 2, 1, '2023-02-02', False)
+    new_request = request_repository.create(request)
+    assert new_request == Request(2, 1, 2, 1, '2023-02-02', False)

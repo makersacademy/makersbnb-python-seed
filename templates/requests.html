@@ -17,13 +17,13 @@
     <ul>
         {% for request in owners_requests %}
         <li class="space-item">
-            <h3 class="space-title">{{spaces[loop.index0].description}}</h3>
-            <p class="price">{{spaces[loop.index0].price}}</p>
+            <h3 class="space-description">{{spaces[loop.index0].description}}</h3>
+            <p class="space-price">{{spaces[loop.index0].price}}</p>
             <p class="request-date">{{request.request_date}}</p>
             {% if request.confirmed %}
             <p class="confirmed">Booking confirmed</p>
             {% else %}
-            <p>Booking not confirmed</p>
+            <p class="confirmed">Booking not confirmed</p>
             {% endif %}
         </li>
         {% endfor %}
@@ -32,13 +32,13 @@
     <ul>
         {% for request in visitors_requests %}
         <li class="space-item">
-            <h3 class="space-title">{{visitors_spaces[loop.index0].description}}</h3>
-            <p class="price">{{visitors_spaces[loop.index0].price}}</p>
+            <h3 class="space-description">{{visitors_spaces[loop.index0].description}}</h3>
+            <p class="space-price">{{visitors_spaces[loop.index0].price}}</p>
             <p class="request-date">{{request.request_date}}</p>
             {% if request.confirmed %}
             <p class="confirmed">Booking confirmed</p>
             {% else %}
-            <p>Booking not confirmed</p>
+            <p class="confirmed">Booking not confirmed</p>
             {% endif %}
         </li>
         {% endfor %}
