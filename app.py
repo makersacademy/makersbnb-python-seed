@@ -134,7 +134,13 @@ def get_requests_page():
     else: 
         return redirect(f"/login")
 
-
+@app.route('/confirm_request', methods=['POST'])
+def confirm_request():
+    connection = get_flask_database_connection(app)
+    repository = RequestRepository(connection)
+    request_id = request.form['confirm']
+    repository.confirm(int(request_id))
+    return redirect(f"/requests")
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

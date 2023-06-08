@@ -24,6 +24,9 @@
             <p class="confirmed">Booking confirmed</p>
             {% else %}
             <p class="confirmed">Booking not confirmed</p>
+            <form action="/confirm_request" method="POST">
+                <button class="confirm_booking" type="submit" name="confirm" value={{request.id}}>Confirm Booking</button>
+            </form>
             {% endif %}
         </li>
         {% endfor %}

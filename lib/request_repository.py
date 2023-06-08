@@ -23,4 +23,13 @@ class RequestRepository:
         rows = self._connection.execute('INSERT INTO requests (owner_id, visitor_id, space_id, request_date, confirmed) VALUES (%s, %s, %s, %s, %s) RETURNING id', [request.owner_id, request.visitor_id, request.space_id, request.request_date, request.confirmed])
         request.id = rows[0]['id']
         return request
+    
+    def find(self, request_id):
+        rows = self._connection.execute('SELECT * FROM requests WHERE id=%s', [request_id])
+        row = rows[0]
+        return Request(row['id'], row['owner_id'], row['visitor_id'],
+                        row['space_id'], str(row['request_date']), row['confirmed'])
+    
+    def confirm(self, request_id):
+        self._connection.execute('UPDATE requests SET confirmed = True WHERE id = %s', [request_id])
 
