@@ -100,6 +100,13 @@ def get_book_page(id):
     space = repository.find(id)
     return render_template('spaces.html', space=space)
 
+@app.route('/requests')
+def get_requests_page():
+    if 'user_id' in session:
+        return render_template('requests.html')
+    else: 
+        return redirect(f"/login")
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
