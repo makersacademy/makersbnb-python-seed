@@ -20,3 +20,8 @@ class SpaceRepository:
         rows = self._connection.execute('SELECT * FROM spaces WHERE id = %s', [space_id])
         row = rows[0]
         return Space(row["id"], row["title"], row["description"], row["price"], row["date_range"], row["user_id"])
+    
+    def remove_date(self, space_id, date):
+        date_range = self.find(space_id).date_range
+        date_range.remove(date)
+        self._connection.execute('UPDATE spaces SET date_range = %s WHERE id = %s', [date_range, space_id])

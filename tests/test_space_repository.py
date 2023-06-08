@@ -35,3 +35,9 @@ def test_find_space(db_connection):
 
     target_space = space_repo.find(1)
     assert target_space == Space(1, "test_title", "test_description", "$50.00", ['2023-01-08', '2023-01-09'], 1)
+
+def test_remove_date(db_connection):
+    db_connection.seed("seeds/users_spaces.sql")
+    space_repo = SpaceRepository(db_connection)
+    space_repo.remove_date(1, "2023-01-09")
+    assert space_repo.find(1) == Space(1, "test_title", "test_description", "$50.00", ['2023-01-08'], 1)
