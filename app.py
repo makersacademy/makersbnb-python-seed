@@ -95,10 +95,13 @@ def post_login():
 
 @app.route('/spaces/<int:id>', methods=['GET'])
 def get_book_page(id):
-    connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
-    space = repository.find(id)
-    return render_template('spaces.html', space=space)
+    if 'user_id' in session:
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        space = repository.find(id)
+        return render_template('spaces.html', space=space)
+    else:
+        return redirect(f"/login")
 
 @app.route('/spaces/<int:id>', methods=['POST'])
 def create_request(id):
@@ -130,9 +133,6 @@ def get_requests_page():
         return render_template('requests.html', owners_requests = owners_requests, spaces = spaces, visitors_spaces = visitors_spaces, visitors_requests = visitors_requests)
     else: 
         return redirect(f"/login")
-
-
-
 
 
 
