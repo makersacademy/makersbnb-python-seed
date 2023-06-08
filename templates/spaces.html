@@ -18,15 +18,15 @@
     {{space.price}}
     </p>
 
-    <div class="dropdown">
-        <button class="dropbtn">Pick a night</button>
-        <div class="dropdown-content">
+    <form action="/spaces/{{space.id}}" method="post">
+        <label class="dropbtn" for="space">Pick a night:</label>
+        <select name="date" id="date">
         {% for date in space.date_range %}
-          <a href="#">{{date}}</a>
+            <option value={{date}}>{{date}}</option>
         {% endfor %}
-        </div>
-    </div>
-
-    <button class="book" >Request to book</button>
+        </select>
+        <br><br>
+        <input class="book" type="submit" value="Request to book">
+    </form>
 </body>
 </html>

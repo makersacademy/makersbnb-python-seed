@@ -62,10 +62,10 @@ def test_show_booking_page(db_connection, page, test_web_address):
     expect(title_tag).to_have_text("test_title")
 
     pick_tag = page.locator(".dropbtn")
-    expect(pick_tag).to_have_text("Pick a night")
+    expect(pick_tag).to_have_text("Pick a night:")
 
     book_button_tag = page.locator(".book")
-    expect(book_button_tag).to_have_text("Request to book")
+    expect(book_button_tag).to_have_value("Request to book")
 
 def test_show_create_page(db_connection, page, test_web_address):
     page.set_default_timeout(1000)
@@ -92,3 +92,29 @@ def test_show_create_page(db_connection, page, test_web_address):
     page.click("text='Add Space'")
 
 
+def test_create_request(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
+
+    db_connection.seed("seeds/users_spaces.sql")
+    page.goto(f"http://{test_web_address}/")
+    page.click("text='Log-in'")
+    page.fill("input[name=email]", "test@gmail.com")
+    page.fill("input[name=password]", "test123")
+    page.click("text='Log-in'")
+
+    page.click("text='test_title'")
+
+    page.click("text='Request to book'")
+
+
+    description_tag = page.locator(".space-description").nth(2)
+    expect(description_tag).to_have_text("test_description")
+
+    price_tag = page.locator(".space-price").nth(2)
+    expect(price_tag).to_have_text("$50.00")
+
+    date_tag = page.locator(".request-date").nth(2)
+    expect(date_tag).to_have_text("2023-01-08")
+
+    confirmed_tag = page.locator(".confirmed").nth(2)
+    expect(confirmed_tag).to_have_text("Booking not confirmed")

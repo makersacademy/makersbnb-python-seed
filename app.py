@@ -7,6 +7,7 @@ from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
 from lib.space import Space
 from lib.request_repository import RequestRepository
+from lib.request import Request
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -45,7 +46,6 @@ def create_space():
     price = request.form['price']
     date = request.form['date']
     new_date = date.split(', ')
-    #handle users input for date, split the string into list
 
     space = Space(None, title, description, price, new_date, 1)
     space_repo.create(space)
@@ -93,12 +93,24 @@ def post_login():
     else:
         return render_template('login.html', errormessage="Invalid email or password")
 
-@app.route('/spaces/<int:id>')
+@app.route('/spaces/<int:id>', methods=['GET'])
 def get_book_page(id):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.find(id)
     return render_template('spaces.html', space=space)
+
+@app.route('/spaces/<int:id>', methods=['POST'])
+def create_request(id):
+    connection = get_flask_database_connection(app)
+    repository = RequestRepository(connection)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(id)
+    selected_date = request.form['date']
+    request_obj = Request(None, space.user_id, session['user_id'], id, selected_date, False)
+    repository.create(request_obj)
+    return redirect(f"/requests")
+
 
 @app.route('/requests')
 def get_requests_page():
@@ -118,6 +130,10 @@ def get_requests_page():
         return render_template('requests.html', owners_requests = owners_requests, spaces = spaces, visitors_spaces = visitors_spaces, visitors_requests = visitors_requests)
     else: 
         return redirect(f"/login")
+
+
+
+
 
 
 # These lines start the server if you run this file directly

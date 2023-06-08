@@ -18,3 +18,9 @@ class RequestRepository:
             requests.append(Request(row['id'], row['owner_id'], row['visitor_id'],
                                     row['space_id'], str(row['request_date']), row['confirmed']))
         return requests
+    
+    def create(self, request):
+        rows = self._connection.execute('INSERT INTO requests (owner_id, visitor_id, space_id, request_date, confirmed) VALUES (%s, %s, %s, %s, %s) RETURNING id', [request.owner_id, request.visitor_id, request.space_id, request.request_date, request.confirmed])
+        request.id = rows[0]['id']
+        return request
+
