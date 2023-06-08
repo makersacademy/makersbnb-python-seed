@@ -6,6 +6,7 @@ from lib.user import User
 from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+from lib.request_repository import RequestRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -96,16 +97,28 @@ def post_login():
 def get_book_page(id):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
-
     space = repository.find(id)
     return render_template('spaces.html', space=space)
 
 @app.route('/requests')
 def get_requests_page():
+    connection = get_flask_database_connection(app)
+    repository = RequestRepository(connection)
+    space_repo = SpaceRepository(connection)
+    spaces = []
+    visitors_spaces = []
+
     if 'user_id' in session:
-        return render_template('requests.html')
+        owners_requests = repository.get_requests_by_owner_id(session['user_id'])
+        visitors_requests = repository.get_requests_by_visitor_id(session['user_id'])
+        for request in owners_requests:
+            spaces.append(space_repo.find(request.space_id))
+        for request in visitors_requests:
+            visitors_spaces.append(space_repo.find(request.space_id))
+        return render_template('requests.html', owners_requests = owners_requests, spaces = spaces, visitors_spaces = visitors_spaces, visitors_requests = visitors_requests)
     else: 
         return redirect(f"/login")
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
