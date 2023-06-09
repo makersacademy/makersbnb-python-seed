@@ -47,7 +47,7 @@ def create_space():
     date = request.form['date']
     new_date = date.split(', ')
 
-    space = Space(None, title, description, price, new_date, 1)
+    space = Space(None, title, description, price, new_date, session['user_id'])
     space_repo.create(space)
     return redirect(f"/")
 
