@@ -8,3 +8,6 @@ class Booking:
 
     def __repr__(self):
         return f"Booking({self.id}, {self.start_date}, {self.end_date}, {self.property_id}, {self.user_id})"
+    
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
