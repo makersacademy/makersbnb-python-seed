@@ -3,12 +3,31 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import *
 from lib.user import *
-
+from lib.user import User
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
+
+@app.route('/index', methods=['POST'])
+def post_user_on_index():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
+    repository.create(user)
+        # below to be updated to redirect to next page
+    return render_template('index.html')
+
+@app.route('/index', methods=['POST'])
+def existing_user_log_in():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
+    repository.create(user)
+    # below to be updated to redirect to next page
+    return render_template('index.html')
 
 # GET /index
 # Returns the homepage
@@ -17,8 +36,8 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-
-@app.route('/book_space', methods = ["GET"])
+  
+ @app.route('/book_space', methods = ["GET"])
 def get_all_listings():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
