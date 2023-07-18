@@ -15,3 +15,19 @@ class UserRepository():
             'INSERT INTO users (username, user_password, email) VALUES (%s, %s, %s) RETURNING id', [
                 user.username, user.user_password, user.email])
         user.id = rows[0]['id']
+
+    def find_user(self, email):
+        rows = self._connection.execute(
+            'SELECT * from users WHERE email = %s', [email])
+        row = rows[0]
+        return User(row["id"], row["username"], row["user_password"], row["email"])
+    
+    def username_and_password_match_user(self, email, password):
+        rows = self._connection.execute(
+            'SELECT user_password from users WHERE email = %s', [email])
+        row = rows[0]
+        if row['user_password'] == password:
+            return True
+        return False
+
+
