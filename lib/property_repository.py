@@ -44,13 +44,3 @@ class PropertyRepository():
 
 
 
-
-
-
-    # def find(self,id):
-    #     rows = self._connection.execute(
-    #             "SELECT * FROM posts WHERE id = %s", [id])
-    #     row = rows[0]
-    #     return  Post(
-    #             row['id'],row['title'],row['content'],row['views'],row['user_id'])
-
