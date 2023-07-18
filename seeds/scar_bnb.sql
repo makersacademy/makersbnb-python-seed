@@ -1,7 +1,9 @@
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS users_id_seq;
+DROP TABLE IF EXISTS requests;
+DROP SEQUENCE IF EXISTS requests_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS users_id_seq;
 
 
 CREATE TABLE users (
@@ -17,7 +19,7 @@ CREATE TABLE spaces (
     name text,
     description text,
     price int,
-    dates_available text,
+    availability text,
     user_id int
 );
 
@@ -36,4 +38,4 @@ CREATE TABLE requests (
 INSERT INTO users (username, user_password, email) VALUES ('Example User', 'examplepassword', 'exampleemail@email.com');
 INSERT INTO users (username, user_password, email) VALUES ('Example User2', 'examplepassword2', 'exampleemail2@email.com');
 
-INSERT INTO spaces (name, description, price, dates_available, user_id) VALUES ('Example bnb', 'Examply cosy bnb', 100, '18/07/23', 2);
+INSERT INTO spaces (name, description, price, availability, user_id) VALUES ('Example bnb', 'Examply cosy bnb', 100, '18/07/23', 2);
