@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>MakersBnB</title>
 
@@ -10,6 +10,21 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <h1>Makers BnB</h1>
+        <h2>Log in</h2>
+        <form action="/index" method="post">
+            <p>
+                <label for="email">email</label>
+                <input type="text" name="email" id="email">
+            </p>
+            <p>
+                <label for="password">password</label>
+                <input type="text" name="password" id="password">
+            </p>
+            <p>
+                <input type="submit" value="Log in">
+            </p>
+        </form>
+        <a href="/sign-up">Sign up</a>
     </body>
 </html>
