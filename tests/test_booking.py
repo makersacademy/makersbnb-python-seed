@@ -25,3 +25,19 @@ def test_bookings_are_equal():
     booking1 = Booking(1, '2023-07-22', '2023-07-22', 1, 1)
     booking2 = Booking(1, '2023-07-22', '2023-07-22', 1, 1)
     assert booking1 == booking2
+
+'''
+We can assess a booking for validity
+'''
+def test_booking_is_valid():
+    assert Booking(1, '2023-07-22', '2023-07-22', 1, 1).is_valid() == True
+    assert Booking(1, '2023-07-22', '2023-08-24', 1, 1).is_valid() == True
+    assert Booking(1, '', '', 1, 1).is_valid() == False
+    assert Booking(1, '2023-07-22', '', 1, 1).is_valid() == False
+    assert Booking(1, '', '2023-07-22', 1, 1).is_valid() == False
+    assert Booking(1, None, None, 1, 1).is_valid() == False
+    assert Booking(1, '2023-07-22', None, 1, 1).is_valid() == False
+    assert Booking(1, None, '2023-07-22', 1, 1).is_valid() == False
+    assert Booking(1, '2023-08-22', '2023-07-22', 1, 1).is_valid() == False
+    assert Booking(1, '2024-07-22', '2023-07-22', 1, 1).is_valid() == False
+    assert Booking(1, '2023-07-22', '2023-07-20', 1, 1).is_valid() == False
