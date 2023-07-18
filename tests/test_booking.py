@@ -1,7 +1,7 @@
 from lib.booking import Booking
 
 '''
-booking constructs with an id, title  and author_name
+booking constructs with an id, start_date, end_date, user_id, property_id
 '''
 def test_booking_constructs():
     booking = Booking(1, '2023-07-22', '2023-07-22', 1, 1)
