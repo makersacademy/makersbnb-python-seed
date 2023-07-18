@@ -28,14 +28,7 @@ class PropertyRepository():
         row = rows[0]
         return Property(
                 row['id'],row['name'],row['description'],row['price'],row['user_id'])
-        
-
-
-
-
-
-
-
+    
 
 
 
