@@ -18,7 +18,7 @@ def test_create_user(db_connection):
         User(2, "Example User2", "examplepassword2", "exampleemail2@email.com"),
         User(3, "Example user3", "examplepassword3", "exampleemail3@email.com")
     ]
-
+    
 def test_find_user(db_connection):
     repostiory = UserRepository(db_connection)
     assert repostiory.find_user("exampleemail@email.com") == User(1, "Example User", "examplepassword", "exampleemail@email.com")
