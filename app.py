@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
+from lib.UserRepository import UserRepository
+from lib.User import User
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -14,6 +16,18 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+@app.route('/index', methods=['POST'])
+def user_login():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    email = request.form['email']
+    password = request.form['password']
+    user = repository.find_by_email(email)
+    if user.id == None:
+        return render_template('index.html', errors = True) , 400
+    if password == user.password:
+        return redirect(f"/listings")
 
 @app.route('/sign-up')
 def get_sign_up():

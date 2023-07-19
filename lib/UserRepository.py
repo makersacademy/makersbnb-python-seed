@@ -19,6 +19,8 @@ class UserRepository:
     def find_by_email(self, email):
         rows = self.connection.execute(
          'SELECT * from users WHERE email = %s', [email])
+        if rows == []:
+            return User(None,"","")
         row = rows[0]
         return User(row["id"], row["email"], row["password"])
 
