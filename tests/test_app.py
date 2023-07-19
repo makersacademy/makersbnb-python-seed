@@ -42,3 +42,11 @@ def test_takes_to_add_new_listing(page, test_web_address):
     page.click("text='Add New Listing'")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Create Below")
+
+def test_takes_user_to_booking_request_confirmation_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}//spaces/1")
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text("Name: Example bnb")
+    page.click("text='18/07/23'")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Confirm request or go back")

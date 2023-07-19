@@ -5,6 +5,7 @@ from lib.space_repository import *
 from lib.user import *
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.request_repository import *
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -36,7 +37,7 @@ def existing_user_log_in():
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-  
+
 @app.route('/book_space', methods = ["GET"])
 def get_all_listings():
     connection = get_flask_database_connection(app)
@@ -67,8 +68,15 @@ def get_single_space_page(id):
     repository = SpaceRepository(connection)
     spaces = repository.find(id)
     space = spaces[0]
-    return render_template("spaces/show_space.html", space=space)
+    dates = space.availability.split(",")
+    return render_template("spaces/show_space.html", space=space, dates=dates)
 
+# @app.route('/spaces/<int:id>/confirm_booking_request')
+# def confirm_booking_request(date):
+#     connection = get_flask_database_connection(app)
+#     space_repository = SpaceRepository(connection)
+#     request_repository = RequestRepository(connection)
+#     request_repository.create()
 
 
 # These lines start the server if you run this file directly

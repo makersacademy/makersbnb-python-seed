@@ -6,10 +6,19 @@
   </head>
   <body>
     <div>
+    <a href="/index">Take Me Home!</a>
+    <a href="/book_space">Take me to all listings</a>
+    </div>
+    <br>
+    <div>
       <h1>Name: {{space.name}}</h1>
       <p>Description: {{space.description}}</p>
       <p>Price: {{space.price}}</p>
-      <p>Availability: {{space.availability}}</p>
+      <p>Availability:</p>
+      {% for date in dates %}
+      <a href="/send_booking_request"><li>{{ date }}</li></href>
+      {% endfor %}
+      
     </div>
   </body>
 </html>

@@ -39,4 +39,5 @@ CREATE TABLE requests (
 INSERT INTO users (username, user_password, email) VALUES ('Example User', 'examplepassword', 'exampleemail@email.com');
 INSERT INTO users (username, user_password, email) VALUES ('Example User2', 'examplepassword2', 'exampleemail2@email.com');
 
-INSERT INTO spaces (name, description, price, availablility, user_id) VALUES ('Example bnb', 'Examply cosy bnb', 100, '18/07/23', 2);
+INSERT INTO spaces (name, description, price, availability, user_id) VALUES ('Example bnb', 'Examply cosy bnb', 100, '18/07/23, 19/07/23, 20/07/23', 2);
+
