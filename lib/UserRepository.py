@@ -20,7 +20,7 @@ class UserRepository:
     
     def create(self, user):
         self.connection.execute("INSERT INTO users (email, password) VALUES (%s, %s)", [user.email, user.password])
-        return True
+        return None
     
     def find_user_by_email(self,user_email):
         email_rows = self.connection.execute(
