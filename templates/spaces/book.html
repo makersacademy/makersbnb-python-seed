@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Book A Space</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Spaces listed below</h1>
+    {% for space in spaces %}
+    <div>
+      <p>Name: {{ space.name }}</p>
+      <p>Description: {{ space.description }}</p>
+      <p>Price: {{ space.price }}</p>
+      <p>Availability: {{ space.availability }}</p>
+      <br />
+    </div>
+    {% endfor %}
+    <a href="/spaces/new_space">Add New Listing</a>
+  </body>
+</html>
