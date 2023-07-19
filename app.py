@@ -6,6 +6,8 @@ from lib.user import *
 from lib.user import User
 from lib.user_repository import UserRepository
 from lib.request_repository import *
+from lib.request import *
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -71,12 +73,24 @@ def get_single_space_page(id):
     dates = space.availability.split(",")
     return render_template("spaces/show_space.html", space=space, dates=dates)
 
-# @app.route('/spaces/<int:id>/confirm_booking_request')
-# def confirm_booking_request(date):
-#     connection = get_flask_database_connection(app)
-#     space_repository = SpaceRepository(connection)
-#     request_repository = RequestRepository(connection)
-#     request_repository.create()
+
+
+@app.route('/spaces/<int:id>/send_booking_request/<date>')
+def confirm_booking_request(id, date):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    request = Request(None, 1, id, date, "TBC")
+    request_repository.create(request)
+    return render_template("spaces/confirm_booking.html", request=request)
+
+@app.route('/spaces/<int:id>/send_booking_request/<date>/confirm/<request_id>', methods=["POST"])
+def confirm_confirm(id, date, request_id):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    request_to_use = request_repository.find(request_id)
+    request_repository.confirm(request_to_use)
+    return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use)
+
 
 
 # These lines start the server if you run this file directly

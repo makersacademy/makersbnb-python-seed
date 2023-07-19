@@ -16,7 +16,7 @@
       <p>Price: {{space.price}}</p>
       <p>Availability:</p>
       {% for date in dates %}
-      <a href="/send_booking_request"><li>{{ date }}</li></href>
+      <a href="/spaces/{{ space.id }}/send_booking_request/{{ date }}" ><li>click to request this date: {{ date }}</li></href>
       {% endfor %}
       
     </div>
