@@ -9,45 +9,20 @@
         -->
     <link rel="stylesheet" href="/static/style.css" />
   </head>
-  <body>
-    <h1>This is the homepage.</h1>
-    <a href="/book_space">Click me to book a space</a>
-  </body>
 
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <h1>This is the homepage.</h1>
-    </body>
-    <body>
-        <h2>Sign Up</h2>
-        <form action="/index" method="POST">
-            <p>
-                <label for="username">Username</label>
-                <br>
-                <input type="text" name="username">
-            </p>
-            <p>
-                <label for="email">Email</label>
-                <br>
-                <input type="text" name="email" id="email">
-            </p>
-            <p>
-                <label for="user_password">Password</label>
-                <br>
-                <input type="text" name="user_password" id="user_password">
-            </p>
-            <p> 
-                <input type="submit" value="Sign Up">
-            </p>
-        </form>
-    </body>
-    <h3>Already have an account? Log in here:</h3>
+    <h1>This is the homepage.</h1>
+    <link rel="stylesheet" href="/static/style.css" >
+    <h2>Sign Up</h2>
     <form action="/index" method="POST">
         <p>
             <label for="username">Username</label>
             <br>
             <input type="text" name="username">
+        </p>
+        <p>
+            <label for="email">Email</label>
+            <br>
+            <input type="text" name="email" id="email">
         </p>
         <p>
             <label for="user_password">Password</label>
@@ -58,5 +33,22 @@
             <input type="submit" value="Sign Up">
         </p>
     </form>
+</body>
+<h3>Already have an account? Log in here:</h3>
+<form action="/index" method="POST">
+    <p>
+        <label for="username">Username</label>
+        <br>
+        <input type="text" name="username">
+    </p>
+    <p>
+        <label for="user_password">Password</label>
+        <br>
+        <input type="text" name="user_password" id="user_password">
+    </p>
+    <p> 
+        <input type="submit" value="Sign Up">
+    </p>
+</form>
+  </body>
 </html>
-
