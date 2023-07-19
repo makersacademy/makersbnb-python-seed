@@ -48,3 +48,10 @@ def test_all_properties_listed_in_listings(page, test_web_address, db_connection
 """"
 Each listing on the /listings page links to its own /listings/<id> page
 """
+def test_listing_item_links_to_id(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/listings")
+    page.click("text=Ma house")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Ma house")
+    

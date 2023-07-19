@@ -27,6 +27,13 @@ def get_listings():
     properties = repository.all()
     return render_template('listings.html', properties=properties)
 
+@app.route('/listings/<id>')
+def get_listings_id(id):
+    connection = get_flask_database_connection(app)
+    repository = PropertyRepository(connection)
+    property = repository.find(id)
+    return render_template('listings_id.html', property=property)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
