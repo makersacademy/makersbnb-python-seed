@@ -19,17 +19,22 @@ def post_user_on_index():
     repository = UserRepository(connection)
     user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
     repository.create(user)
-        # below to be updated to redirect to next page
-    return render_template('index.html')
+    return render_template('spaces/book.html')
 
-@app.route('/index', methods=['POST'])
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
 def existing_user_log_in():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
-    user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
-    repository.create(user)
-    # below to be updated to redirect to next page
-    return render_template('index.html')
+    user_email = request.form['email']
+    user_password = request.form['user_password']
+    repository.find_user(user_email)
+    if repository.username_and_password_match_user(user_email, user_password) == True:
+        return render_template('spaces/book.html')
+    return "Incorrect username or password. Try Again"
 
 # GET /index
 # Returns the homepage
