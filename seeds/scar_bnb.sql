@@ -19,7 +19,7 @@ CREATE TABLE spaces (
     name text,
     description text,
     price int,
-    availablility text,
+    availability text,
     user_id int
 );
 
