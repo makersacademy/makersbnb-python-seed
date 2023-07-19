@@ -5,6 +5,7 @@ from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
 from lib.User import User
 
+
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -35,6 +36,24 @@ def user_login():
 @app.route('/sign-up')
 def get_sign_up():
     return render_template('sign-up.html')
+
+@app.route('/sign-up', methods=['POST'])
+def post_create_new_user():
+    connection = get_flask_database_connection(app)
+    user_repository = UserRepository(connection)
+    user = User(
+        None,
+        email = request.form['email'],
+        password = request.form['password']
+    )
+    if user.password == "":
+        return render_template('sign-up.html', error_password = True) , 400
+    if user_repository.find_user_by_email(user.email) == "User already exists":
+        return render_template('sign-up.html', errors = True) , 400
+    else:
+        user_repository.create(user)
+        return redirect(f"/index")
+
 
 @app.route('/listings')
 def get_listings():
