@@ -5,7 +5,13 @@
     </head>
     <body>
         <h1>Sign up</h1>
-        <form action="/index" method="post">
+        {% if errors %}
+        <div class="sign-up-error">User already exists</div>
+        {% endif %}
+        {% if error_password %}
+        <div class="password-error">Password invalid</div>
+        {% endif %}
+        <form action="/sign-up" method="POST">
             <p>
                 <label for="email">email</label>
                 <input type="text" name="email" id="email">
@@ -16,6 +22,9 @@
             </p>
             <p>
                 <input type="submit" value="Sign up">
+            </p>
+            <p>
+                <a href="/index">Login Page</a>
             </p>
         </form>
     </body>

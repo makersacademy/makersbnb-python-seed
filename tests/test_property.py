@@ -24,8 +24,8 @@ def test_property_formatted_correctly():
     assert str(property) == "Property(1,NameTest1,DescriptionTest1,50.00,1)"
 
 
-# We can assess a propert for validity
-def test_book_validity():
+# We can assess a property for validity
+def test_property_validity():
     assert Property(1, "", "","","").is_valid() == False
 
     assert Property(1,None,"","","").is_valid() == False

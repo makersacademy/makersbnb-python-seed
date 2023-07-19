@@ -32,6 +32,28 @@ def test_create_user(db_connection):
         User(5, 'testemail', 'testpassword')
     ]
 
+def test_find_by_email_does_raise_an_error(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = UserRepository(db_connection)
+    searched_user = repository.find_user_by_email("fahim@example.com")
+    assert searched_user == "User already exists"
+
+
+def test_find_by_email_no_error_raised(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = UserRepository(db_connection)
+    searched_user = repository.find_user_by_email("alex@example.com")
+    assert searched_user == True
+
+
+
+
+
+
+
+
+
+
 
 
 

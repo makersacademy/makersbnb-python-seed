@@ -17,10 +17,52 @@ def test_get_index(page, test_web_address):
 """
 We can render the sign up page
 """
-def test_get_signup(page, test_web_address):
-    page.goto(f"http://{test_web_address}/sign-up")
+def test_get_signup(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/index")
+    page.click("text= Sign up")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Sign up")
+
+"""
+When user enters exisitng details it will redirect to 
+back to the sign in page
+"""
+def test_check_existing_user(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/sign-up")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']","password1")
+    page.get_by_role("button").click()
+    error_element = page.locator(".sign-up-error")
+    expect(error_element).to_have_text("User already exists")
+
+
+"""
+When new user enters details it will redirect to 
+login page
+"""
+def test_check_for_new_user(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/sign-up")
+    page.fill("input[name='email']", "steve@example.com")
+    page.fill("input[name='password']","stevepassword")
+    page.get_by_role("button").click()
+    h2_tag = page.locator("h2")
+    expect(h2_tag).to_have_text("Log in")
+
+"""
+When new user enters invalid(empty) password it will redirect back
+sign up page
+"""
+def test_check_for_new_user_with_invalid_password(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/sign-up")
+    page.fill("input[name='email']", "bob@example.com")
+    page.fill("input[name='password']","")
+    page.get_by_role("button").click()
+    error_element = page.locator(".password-error")
+    expect(error_element).to_have_text("Password invalid")
 
 """
 We can render the listings page
