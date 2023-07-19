@@ -66,3 +66,15 @@ def test_sign_up_button_redirects(page, test_web_address, db_connection):
     page.click("text=Sign up")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Sign up")
+
+'''
+When an existing user enters the wrong password there is an error message
+'''
+def test_wrong_password_by_existing_user(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "p@ssword")
+    page.get_by_role("button").click()
+    error_element = page.locator(".login-error")
+    expect(error_element).to_have_text("Incorrect password. Please try again.")

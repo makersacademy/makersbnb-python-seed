@@ -13,7 +13,7 @@
         <h1>Makers BnB</h1>
         <h2>Log in</h2>
         {% if errors %}
-            <div class="login-error">User does not exist</div>
+            <div class="login-error">{{errors}}</div>
         {% endif %}
         <form action="/index" method="post">
             <p>

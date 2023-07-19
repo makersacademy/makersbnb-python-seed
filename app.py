@@ -25,9 +25,11 @@ def user_login():
     password = request.form['password']
     user = repository.find_by_email(email)
     if user.id == None:
-        return render_template('index.html', errors = True) , 400
+        return render_template('index.html', errors = "User does not exist") , 400
     if password == user.password:
         return redirect(f"/listings")
+    else:
+        return render_template('index.html', errors = "Incorrect password. Please try again.") , 400
 
 @app.route('/sign-up')
 def get_sign_up():
