@@ -29,3 +29,7 @@ def test_decline_a_request(db_connection):
     request_1 = repository.find(1)
     repository.confirm(request_1)
     assert request_1.request_status == "True"
+
+def test_find_spaces_by_user_id(db_connection):
+    repository = RequestRepository(db_connection)
+    assert repository.find_spaces_by_user_id(1) == "hfggfg"
