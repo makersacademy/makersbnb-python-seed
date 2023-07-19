@@ -28,5 +28,4 @@ class UserRepository():
         row = rows[0]
         if row['user_password'] == password:
             return True
-        return False
-
+        return "Incorrect username or password. Try Again"
