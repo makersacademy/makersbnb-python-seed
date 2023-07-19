@@ -5,6 +5,13 @@
     </head>
     <body>
         <h1>Listings</h1>
-        
+        <a href="/list-property">List your property</a>
+        <ul>
+            {% for property in properties %}
+            <li>
+                <a href="/listings/{{property.id}}">{{property.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
     </body>
 </html>

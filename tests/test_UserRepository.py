@@ -45,15 +45,11 @@ def test_find_by_email_no_error_raised(db_connection):
     searched_user = repository.find_user_by_email("alex@example.com")
     assert searched_user == True
 
-
-
-
-
-
-
-
-
-
+def test_find_by_email(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = UserRepository(db_connection)
+    user = repository.find_by_email("lydia@example.com")
+    assert user == User(2, 'lydia@example.com', 'password2')
 
 
 
