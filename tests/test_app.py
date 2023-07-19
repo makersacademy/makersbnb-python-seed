@@ -25,7 +25,7 @@ We can render the index page
 #     # We look at the <p> tag
 #     strong_tag = page.locator("p")
     # We look at the <p> tag
-    strong_tag = page.locator("h1")
+    # strong_tag = page.locator("h1")
 
 #     # We assert that it has the text "This is the homepage."
 #     expect(strong_tag).to_have_text("This is the homepage.")
