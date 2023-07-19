@@ -3,7 +3,6 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import *
 from lib.user import *
-from lib.user import User
 from lib.user_repository import UserRepository
 
 # Create a new Flask app
@@ -36,7 +35,7 @@ def existing_user_log_in():
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-  
+
 @app.route('/book_space', methods = ["GET"])
 def get_all_listings():
     connection = get_flask_database_connection(app)

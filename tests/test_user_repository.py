@@ -20,9 +20,13 @@ def test_create_user(db_connection):
     ]
     
 def test_find_user(db_connection):
-    repostiory = UserRepository(db_connection)
-    assert repostiory.find_user("exampleemail@email.com") == User(1, "Example User", "examplepassword", "exampleemail@email.com")
+    repository = UserRepository(db_connection)
+    assert repository.find_user("exampleemail@email.com") == User(1, "Example User", "examplepassword", "exampleemail@email.com")
 
 def test_username_and_password_match_user(db_connection):
-    repostiory = UserRepository(db_connection)
-    assert repostiory.username_and_password_match_user("exampleemail@email.com", "examplepassword") == True
+    repository = UserRepository(db_connection)
+    assert repository.username_and_password_match_user("exampleemail@email.com", "examplepassword") == True
+
+def test_error_message_when_match_user_and_password(db_connection):
+    repository = UserRepository(db_connection)
+    assert repository.username_and_password_match_user("exampleemail@email.com", "examplepassword32") == "Incorrect username or password. Try Again"
