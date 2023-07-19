@@ -48,7 +48,8 @@ def post_create_new_user():
     )
     if user.password == "":
         return render_template('sign-up.html', error_password = True) , 400
-    if user_repository.find_user_by_email(user.email) == "User already exists":
+    find_user = user_repository.find_by_email(user.email)
+    if find_user.id != None:
         return render_template('sign-up.html', errors = True) , 400
     else:
         user_repository.create(user)

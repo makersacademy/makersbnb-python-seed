@@ -30,15 +30,6 @@ class UserRepository:
         self.connection.execute("INSERT INTO users (email, password) VALUES (%s, %s)", [user.email, user.password])
         return None
     
-    def find_user_by_email(self,user_email):
-        email_rows = self.connection.execute(
-         'SELECT * from users WHERE email = %s', [user_email])
-        if len(email_rows) > 0:
-            return "User already exists"
-        elif email_rows == []:
-            return True
-
-
 
 
 
