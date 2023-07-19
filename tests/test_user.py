@@ -15,3 +15,5 @@ def test_equality():
 def test_formatting():
     user = User(1, "Example User", "examplepassword", "exampleemail@email.com")
     assert str(user) == "User(1, Example User, examplepassword, exampleemail@email.com)"
+
+def test_is_valid_username
