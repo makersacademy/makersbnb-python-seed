@@ -3,7 +3,6 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import *
 from lib.user import *
-from lib.user import User
 from lib.user_repository import UserRepository
 from lib.request_repository import *
 
