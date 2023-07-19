@@ -154,3 +154,18 @@ def test_wrong_password_by_existing_user(page, test_web_address, db_connection):
     page.get_by_role("button").click()
     error_element = page.locator(".login-error")
     expect(error_element).to_have_text("Incorrect password. Please try again.")
+
+"""
+When on listings/<id> page, we see the property's short description and price per night
+"""
+def test_listings_id_page_has_decription_and_price(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/listings/1")
+    description_class = page.locator(".description")
+    price_class = page.locator(".price")
+    expect(description_class).to_have_text("A mystery place full of bugs")
+    expect(price_class).to_have_text("£50.00 per night")
+
+
+
+    
