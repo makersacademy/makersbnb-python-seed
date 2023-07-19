@@ -37,7 +37,7 @@ def existing_user_log_in():
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
- 
+
 @app.route('/book_space', methods = ["GET"])
 def get_all_listings():
     connection = get_flask_database_connection(app)
