@@ -32,6 +32,11 @@ def test_create_user(db_connection):
         User(5, 'testemail', 'testpassword')
     ]
 
+def test_find_by_email(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = UserRepository(db_connection)
+    user = repository.find_by_email("lydia@example.com")
+    assert user == User(2, 'lydia@example.com', 'password2')
 
 
 
