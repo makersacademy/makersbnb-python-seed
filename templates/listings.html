@@ -5,6 +5,12 @@
     </head>
     <body>
         <h1>Listings</h1>
-        
+        <ul>
+            {% for property in properties %}
+            <li>
+                {{property.name}}
+            </li>
+            {% endfor %}
+        </ul>
     </body>
 </html>

@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.property_repository import PropertyRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -21,7 +22,10 @@ def get_sign_up():
 
 @app.route('/listings')
 def get_listings():
-    return render_template('listings.html')
+    connection = get_flask_database_connection(app)
+    repository = PropertyRepository(connection)
+    properties = repository.all()
+    return render_template('listings.html', properties=properties)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
