@@ -128,6 +128,13 @@ def confirm_confirm(id, date, request_id):
     request_repository.confirm_booking(request_to_use)
     return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use, id=id, date=date, request_id=request_id)
 
+@app.route('/spaces/<id>/send_booking_request/<date>/decline/<request_id>', methods=["POST"])
+def decline_request(id, date, request_id):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    request_to_use = request_repository.find(request_id)
+    request_repository.decline_a_request(request_to_use)
+    return render_template("spaces/booking_declined.html", request_to_use=request_to_use, id=id, date=date, request_id=request_id)
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.

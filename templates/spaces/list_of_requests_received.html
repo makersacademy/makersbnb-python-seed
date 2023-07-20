@@ -29,7 +29,7 @@
         <form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/confirm/{{  request.id  }}" method="post">
         <input type="submit" value="confirm booking" />
         </form>
-        <form action="/cancel" method="post">
+        <form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/decline/{{  request.id  }}" method="post">
         <input type="submit" value="cancel your booking" />
       </form>
 
