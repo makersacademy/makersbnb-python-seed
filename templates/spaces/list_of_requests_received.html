@@ -15,6 +15,11 @@
         {% for request in requests %}
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
+        <p>bookng status: {{ request.request_status}}</p>
+        <form action="/cancel" method="post">
+        <input type="submit" value="confirm booking" />
+        <input type="submit" value="cancel your booking" />
+      </form>
         {% endfor %}
       </div>
       <div>
@@ -22,6 +27,7 @@
         {% for request in request_made %}
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
+        <p>bookng status: {{ request.request_status}}</p>
         {% endfor %}
         <br />
       </div>
