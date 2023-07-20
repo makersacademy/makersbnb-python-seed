@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,17 +21,28 @@
         <input type="submit" value="confirm booking" />
         <input type="submit" value="cancel your booking" />
       </form>
+
         {% endfor %}
       </div>
       <div>
         <h1>Requests Sent</h1>
+
         {% for request in request_made %}
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
         <p>bookng status: {{ request.request_status}}</p>
         {% endfor %}
+
         <br />
       </div>
     </div>
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>
+  
