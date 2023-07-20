@@ -38,38 +38,14 @@ class RequestRepository():
         return None
     
     def find_spaces_by_user_id(self, user_id):
-        rows1 = self._connection.execute(
-            'SELECT space_id FROM requests') 
-        rows2 = self._connection.execute(
-            'SELECT user_id FROM spaces WHERE id = %s',[user_id] #selects all the spaces owned by the given user
-        )#of these spaces owned by user check which ones have a request 
-        request_list = []
-        for space_id in rows1:
-            if space_id in rows2:
-                request_list.append(space_id)
-            else:
-                pass
-        print(request_list)
-
-
-
-
-        # rows = self._connection.execute(
-        #     'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status = \'TBC\' AND spaces.user_id = %s',[user_id])
-        # spaces_by_user_id = []
-        # for row in rows:
-        #     item = Space(row["id"], 
-        #                 row["name"], 
-        #                 row["description"], 
-        #                 row["price"], 
-        #                 row["availability"], 
-        #                 row["user_id"])
-        #     spaces_by_user_id.append(item)
-        print('********************')
-        print(rows1)
-        print('********************')
-        print(rows2)
-        print('********************')
-
-        # print(spaces_by_user_id)
-        return None
+        rows = self._connection.execute(
+            'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status = \'TBC\' AND spaces.user_id = %s',[user_id])
+        spaces_by_user_id = []
+        for row in rows:
+            item = Request(row["id"], 
+                        row["user_id"], 
+                        row["space_id"], 
+                        row["date_to_book"], 
+                        row["request_status"],)
+            spaces_by_user_id.append(item)
+        return spaces_by_user_id
