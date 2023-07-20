@@ -9,11 +9,12 @@
         -->
     <link rel="stylesheet" href="/static/style.css" />
   </head>
-    <body>
-    <h1>This is the homepage.</h1>
+
+    <h1>Login</h1>
     <link rel="stylesheet" href="/static/style.css" >
-    <h2>Sign Up</h2>
-    <form action="/index" method="POST">
+<body>
+
+    <form action="/login" method="POST">
         <p>
             <label for="username">Username</label>
             <br>
@@ -22,7 +23,7 @@
         <p>
             <label for="email">Email</label>
             <br>
-            <input type="text" name="email" id="email">
+            <input type="text" name="email">
         </p>
         <p>
             <label for="user_password">Password</label>
@@ -30,16 +31,8 @@
             <input type="text" name="user_password" id="user_password">
         </p>
         <p> 
-            <input type="submit" value="Sign Up">
+            <input type="submit" value="Sign In">
         </p>
-    </form><br>
-
-    {% if g.logged_in_as %}
-    <h3>{{  logged_in_as  }}</h3>
-    <a href="/logout">Log out</a>
-    {% else %}<h3>Not logged in</h3>
-        <h3>Already have an account?</h3>
-        <a href="/login">Log in here</a><br>
-    {% endif %}
-    </body>
+    </form>
+  </body>
 </html>

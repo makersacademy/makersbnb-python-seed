@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Book A Space</title>
+    <meta charset="utf-8" />
+  </head>
+
+  {% if g.logged_in_as %}
+
+  <body>
+    <div>
+      <a href="/index">Take Me Home!</a>
+    </div>
+    <h1>Spaces listed below</h1>
+    {% for space in spaces %}
+    <div>
+      <a href="/spaces/{{space.id}}"><p>Name: {{ space.name }}</p></a>
+      <p>Description: {{ space.description }}</p>
+      <p>Price: {{ space.price }}</p>
+      <p>Availability: {{ space.availability }}</p>
+      <br />
+    </div>
+    {% endfor %}
+    <a href="/spaces/new_space">Add New Listing</a>
+    <a href="/spaces/2/my_requests">See my requests received and sent!</a>
+    
+    
+    <br>
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+
+
+  {% else %}
+  
+  <div>
+    <a href="/index">Take Me Home!</a>
+  </div>
+  <h1>Spaces listed below - Log in to request a booking</h1>
+  {% for space in spaces %}
+  <div>
+    <p>Name: {{ space.name }}</p></a>
+    <p>Description: {{ space.description }}</p>
+    <p>Price: {{ space.price }}</p>
+    <p>Availability: {{ space.availability }}</p>
+    <br />
+  </div>
+  {% endfor %}
+
+
+  <h3>Not logged in</h3>
+  <a href="/login">Log in here</a><br>
+  {% endif %}
+
+  </body>
+</html>
