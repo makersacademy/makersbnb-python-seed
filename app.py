@@ -82,28 +82,27 @@ def get_list_property():
 
 @app.route('/listings/<property_id>', methods=['POST'])
 def book_property(property_id):
-    print("###########################################")
-    user_id = session.get('user_id')
+    user_id = session.get('user_id') #We get the logged in user id
     connection = get_flask_database_connection(app)
     start_date = request.form["start_date"]
-    date_type_start_date = date.fromisoformat(start_date)
+    date_type_start_date = date.fromisoformat(start_date) #We convert the dates entered in the form to date format
     end_date = request.form["end_date"]
     date_type_end_date = date.fromisoformat(end_date)
+    
     booking = Booking(None, date_type_start_date, date_type_end_date, property_id, user_id)
-    print("Booking prints here:")
-    print(booking)
-    repository = BookingRepository(connection)
-    error = "Property booked for those dates"
-    print("Result of availability checker print here")
-    print(repository.availability_checker(booking))
-    if repository.availability_checker(booking) == False:
-        property = repository.find(property_id)
-        return render_template('listings_id.html', error=error, property=property)
+    booking_repository = BookingRepository(connection)
+    error = "Property is unavailable for those dates"
+    confirmation = "Booking confirmed"
+
+    property_repository = PropertyRepository(connection)
+    property = property_repository.find(property_id)
+    formatted_price = property_repository.price_formatter(property)
+
+    if booking_repository.availability_checker(booking) == False:
+        return render_template('listings_id.html', error=error, property=property, formatted_price=formatted_price)
     else:
-        repository.create(booking)
-        confirmation = "Booking confirmed"
-        property = repository.find(property_id)
-        return render_template('listings_id.html', confirmation=confirmation, property=property)
+        booking_repository.create(booking)
+        return render_template('listings_id.html', confirmation=confirmation, property=property, formatted_price=formatted_price)
 
 
 
