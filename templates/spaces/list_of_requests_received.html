@@ -2,37 +2,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style>
-      div {
-        border: 2px solid rgb(15, 2, 2);
-        padding: 10px;
-      }
-      </style>
     <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div>
+      <a href="/index"><i class="fa fa-home"></i>Home</a>
+      <br>
+      <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
+    </div>
     <title>Space</title>
     <meta charset="utf-8" />
   </head>
   <body>
     <div>
-
-      <a href="/index"><i class="fa fa-home"></i>Home</a>
-      <br>
-      <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
-    </div>
-    <div>
         <h1>Requests Received</h1>
-        <br />
         {% for request in requests %}
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
         <p>bookng status: {{ request.request_status}}</p>
-        <form action="/cancel" method="post">
+        <h2><form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/confirm/{{  request.id  }}" method="post">
         <input type="submit" value="confirm booking" />
+        </form>
+        <form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/decline/{{  request.id  }}" method="post">
         <input type="submit" value="cancel your booking" />
-      </form>
-
+      </form></h2>
         {% endfor %}
       </div>
+      <br>
       <div>
         <h1>Requests Sent</h1>
 
@@ -41,16 +36,15 @@
         <p>date_chosen: {{ request.date_to_book }}</p>
         <p>bookng status: {{ request.request_status}}</p>
         {% endfor %}
-
-        <br />
+        <br>
       </div>
     </div>
     
     <br>{% if g.logged_in_as %}
     <h3>{{  g.logged_in_as  }}</h3>
-    <a href="/logout">Log out</a>
+    <h3><a href="/logout">Log out</a></h3>
     {% else %}<h3>Not logged in</h3>
-        <a href="/login">Log in here</a><br>
+        <h3><a href="/login">Log in here</a><br></h3>
     {% endif %}
   </body>
 </html>

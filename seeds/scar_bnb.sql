@@ -41,5 +41,5 @@ INSERT INTO users (username, user_password, email) VALUES ('Example User2', 'exa
 
 INSERT INTO spaces (name, description, price, availability, user_id) VALUES ('Example bnb', 'Examply cosy bnb', 100, '18-07-23, 19-07-23, 20-07-23', 2);
 
-INSERT INTO requests (user_id, space_id, date_to_book, request_status) VALUES (1, 1, '01/01/2023', 'TBC')
+INSERT INTO requests (user_id, space_id, date_to_book, request_status) VALUES (1, 1, '01-01-2023', 'TBC')
 
