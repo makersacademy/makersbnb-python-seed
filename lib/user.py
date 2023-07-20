@@ -1,4 +1,4 @@
-from lib.user_repository import UserRepository
+# from lib.user_repository import UserRepository
 
 class User():
     def __init__(self, id, username, user_password, email):
@@ -25,12 +25,10 @@ class User():
     
     def generate_errors(self):
         errors = []
-        if not self.is_valid_username:
+        if not self.is_valid_username():
             errors.append("Username can't be blank")
-        if not self.is_valid_password:
+        if not self.is_valid_user_password():
             errors.append("Password must be at least 8 latters")
-        if UserRepository.username_and_password_match_user() == False:
-            errors.append("Incorrect username or password. Try Again")
         if len(errors) == 0:
             return None
         return errors
