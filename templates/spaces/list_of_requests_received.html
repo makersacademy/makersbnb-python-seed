@@ -10,20 +10,29 @@
       <a href="/index">Take Me Home!</a>
       <a href="/book_space">Take me to all listings</a>
     </div>
-    <br />
-    <p>{{(  requests) }}</p>
-    <p>{{  requests[0].id  }}</p>
-    <p>{{  requests[0].date_to_book  }}</p>
     <div>
         <h1>Requests Received</h1>
         <br />
         {% for request in requests %}
-        <p>id: {{ request.request_id }}</p>
-        <p>date_chosen: {{ request.dates_to_book }}</p>
+        <p>id: {{ request.id }}</p>
+        <p>date_chosen: {{ request.date_to_book }}</p>
+        <p>bookng status: {{ request.request_status}}</p>
+        <form action="/cancel" method="post">
+        <input type="submit" value="confirm booking" />
+        <input type="submit" value="cancel your booking" />
+      </form>
+
         {% endfor %}
       </div>
       <div>
         <h1>Requests Sent</h1>
+
+        {% for request in request_made %}
+        <p>id: {{ request.id }}</p>
+        <p>date_chosen: {{ request.date_to_book }}</p>
+        <p>bookng status: {{ request.request_status}}</p>
+        {% endfor %}
+
         <br />
       </div>
     </div>

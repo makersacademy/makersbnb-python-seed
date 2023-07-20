@@ -36,7 +36,7 @@ class RequestRepository():
     def decline_a_request(self, request):
         request.request_status = "False"
         return None
-      
+          
     def find_spaces_by_user_id(self, user_id):
         rows = self._connection.execute(
             'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status = \'TBC\' AND spaces.user_id = %s',[user_id])
@@ -49,3 +49,21 @@ class RequestRepository():
                         row["request_status"],)
             spaces_by_user_id.append(item)
         return spaces_by_user_id
+    
+    def find_requests_sent_by_user_id(self, user_id):
+        rows = self._connection.execute(
+            'SELECT * FROM requests WHERE requests.user_id = %s', [user_id])
+        users_requests_made = []
+        for row in rows:
+            item= Request(row["id"], 
+                        row["user_id"], 
+                        row["space_id"], 
+                        row["date_to_book"], 
+                        row["request_status"],)
+            users_requests_made.append(item)
+        return users_requests_made
+
+"""
+user_id in requests
+and match all the      
+"""

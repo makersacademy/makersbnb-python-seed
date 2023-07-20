@@ -6,6 +6,8 @@ from lib.user import *
 from lib.user_repository import UserRepository
 from lib.request_repository import *
 from lib.request import *
+# from flask.flask_login import LoginManager
+from flask import session
 
 
 # Create a new Flask app
@@ -27,13 +29,17 @@ def set_logged_in_user():
     g.logged_in_as = get_logged_in_user()
 
 
+
+
+
 @app.route('/index', methods=['POST'])
 def post_user_on_index():
+    user123 = user_logged_in
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
     repository.create(user)
-    return render_template('spaces/book.html')
+    return render_template('spaces/book.html', user_logged_in=user123)
 
 
 @app.route('/login', methods=['GET'])
@@ -58,10 +64,10 @@ def logout():
     session.clear()
     return redirect('/index')  # Redirect the user to the homepage or any other page after logout
 
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
+      
+
+
+
 @app.route('/index', methods=['GET'])
 def get_index():
     logged_in_as = get_logged_in_user()
@@ -124,12 +130,16 @@ def confirm_confirm(id, date, request_id):
     return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use)
 
 
+
 @app.route('/spaces/<user_id>/my_requests')
 def shows_all_requests(user_id):
     connection = get_flask_database_connection(app)
     request_repository = RequestRepository(connection)
     requests = request_repository.find_spaces_by_user_id(user_id)
-    return render_template("spaces/list_of_requests_received.html", requests=requests, user_id=user_id)
+
+
+    requests_made = request_repository.find_requests_sent_by_user_id(user_id)
+    return render_template("spaces/list_of_requests_received.html", requests=requests, request_made=requests_made)
 
 
 # These lines start the server if you run this file directly

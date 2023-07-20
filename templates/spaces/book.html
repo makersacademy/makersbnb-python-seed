@@ -12,6 +12,7 @@
       <a href="/index">Take Me Home!</a>
     </div>
     <h1>Spaces listed below</h1>
+    <p>{{user_logged_in}}</p>
     {% for space in spaces %}
     <div>
       <a href="/spaces/{{space.id}}"><p>Name: {{ space.name }}</p></a>
@@ -50,6 +51,7 @@
   <h3>Not logged in</h3>
   <a href="/login">Log in here</a><br>
   {% endif %}
+
 
   </body>
 </html>

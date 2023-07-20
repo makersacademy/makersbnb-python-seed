@@ -32,3 +32,5 @@ class User():
         if len(errors) == 0:
             return None
         return errors
+    
+    
