@@ -12,12 +12,19 @@
       <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
     </div>
     <br />
-    <h1>Booking confirmed - details below</h1>
+    <h1>Booking requested - details below</h1>
     <div>
       <h1>Name: {{request.space_id}}</h1>
       <p>Selected Dates: {{ request.date_to_book }}</p>
       <p>User_id: {{ request.user_id }}</p>
       <p>Space_id: {{ request.space_id }}</p>
     </div>
+
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>

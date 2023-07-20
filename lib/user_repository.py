@@ -1,4 +1,5 @@
 from lib.user import *
+from flask import session
 
 class UserRepository():
     def __init__(self, connection):
@@ -27,11 +28,12 @@ class UserRepository():
     def username_and_password_match_user(self, email, password):
         rows = self._connection.execute(
             'SELECT user_password from users WHERE email = %s', [email])
-        if rows == []:
-            return "Incorrect email. Try Again"
+        if not rows:
+            return False
         row = rows[0]
         if row['user_password'] == password:
+            session['email'] = email
             return True
         else: 
-            return "Incorrect password. Try Again"
-        
+            return False
+

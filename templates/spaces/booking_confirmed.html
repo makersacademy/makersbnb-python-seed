@@ -21,5 +21,12 @@
       <p>Space_id: {{ request_to_use.space_id }}</p>
       <p>Request Status: {{ request_to_use.request_status }}</p>
     </div>
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>

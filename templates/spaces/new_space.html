@@ -47,6 +47,12 @@
         </p>
       </form>
     </div>
-    <br />
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>
