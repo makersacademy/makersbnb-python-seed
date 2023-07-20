@@ -26,8 +26,10 @@
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
         <p>bookng status: {{ request.request_status}}</p>
-        <form action="/cancel" method="post">
+        <form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/confirm/{{  request.id  }}" method="post">
         <input type="submit" value="confirm booking" />
+        </form>
+        <form action="/cancel" method="post">
         <input type="submit" value="cancel your booking" />
       </form>
 
