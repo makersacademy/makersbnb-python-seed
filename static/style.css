@@ -1,3 +1,68 @@
 body {
-    font-size: 18px;
+    background-image: url("https://i.ibb.co/KwBS12G/m7J3IG.jpg");
+    background-size: cover;
+    background-color: aliceblue;
 }
+
+input {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid rgb(17, 17, 17);
+    border-radius: 4px;
+    background-color: rgb(9, 74, 28);
+    color: white;
+}
+    
+input[type=submit]{
+    width:15%;
+    background-color: #010403;
+    box-sizing: border-box;
+    border: 2px solid rgb(255, 255, 255);
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;    
+}
+
+input[type=submit]:hover {
+    background-color:rgb(9, 74, 28);
+    transition: 0.7s;
+}
+
+
+h1 {
+    color: black;
+    font-size: 40px;
+    text-align: center;
+    text-decoration: overline underline;
+    text-decoration-color: rgb(9, 74, 28);
+    text-decoration-style: double;
+    }
+
+h2 {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    }
+
+h3 {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    }
+
+a {
+    color:black;
+    text-align: center;
+    font-weight: bold;
+    }  
+
+p {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    }

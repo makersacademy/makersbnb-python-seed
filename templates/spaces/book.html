@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+          <div>
+            <a href="/index"><i class="fa fa-home"></i>Home</a>
+          </div>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Book A Space</title>
+    <meta charset="utf-8" />
+  </head>
+
+  {% if g.logged_in_as %}
+
+  <body>
+    <h1>Spaces listed below</h1>
+    {% for space in spaces %}
+    <div>
+      <a href="/spaces/{{space.id}}"><p>Name: {{ space.name }}</p></a>
+      <p><u>Description:</u> {{ space.description }}</p>
+      <p><u>Price:</u> {{ space.price }}</p>
+      <p><u>Availability:</u> {{ space.availability }}</p>
+      <br />
+    </div>
+    {% endfor %}
+    <h2>
+    <a href="/spaces/new_space">Add New Listing</a>
+      <br>
+    <a href="/spaces/{{g.user_id}}/my_requests">See my requests received and sent!</a>
+
+    
+    <br>
+    <h3>{{  g.logged_in_as  }}
+      <br>
+      <a href="/logout">Log out</a></h3>
+
+
+
+  {% else %}
+  
+  <h1>Spaces listed below - Log in to request a booking</h1>
+  {% for space in spaces %}
+  <div>
+    <p>Name: {{ space.name }}</p></a>
+    <p>Description: {{ space.description }}</p>
+    <p>Price: {{ space.price }}</p>
+    <p>Availability: {{ space.availability }}</p>
+    <br />
+  </div>
+  {% endfor %}
+
+
+  <h3>Not logged in
+    <br>
+    <a href="/login">Log in here</a>
+  </h3>
+  <br>
+  {% endif %}
+
+
+  </body>
+</html>

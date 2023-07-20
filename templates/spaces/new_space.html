@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Create</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div>
+      <a href="/index"><i class="fa fa-home"></i>Home</a>
+      <br>
+      <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
+    </div>
+    <br />
+    <div>
+      <h1>Create Below</h1>
+      <br />
+      <form action="/spaces/new_space" method="post">
+        <p>
+          Name
+          <br>
+          <input type="text" name="name" />
+        </p>
+        <p>
+          Description
+          <br>
+          <input type="text" name="description" />
+        </p>
+        <p>
+          Price
+          <br>
+          <input type="number" name="price" />
+        </p>
+        <p>
+          Availability
+          <br>
+          <input type="text" name="availability" />
+        </p>
+        <p>
+          User-ID
+          <br>
+          <input type="number" name="user_id" />
+        </p>
+        <p>
+          <input type="submit" value="Create a space!" />
+        </p>
+      </form>
+    </div>
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}
+      <br>
+    <a href="/logout">Log out</a></h3>
+    {% else %}<h3>Not logged in
+      <br>
+        <a href="/login">Log in here</a></h3>
+    {% endif %}
+  </body>
+</html>
