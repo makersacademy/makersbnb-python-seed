@@ -2,8 +2,17 @@
 <html lang="en">
     <head>
         <title>Sign up</title>
+        <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <ul class="navigation">
+            <li><a href="/index">Home</a></li>
+            <li>My Listings</li>
+            <li>My Bookings</li>
+            <li><a href="/sign-up">Sign Up</a></li>
+            <li>Log Out</li>
+        </ul>
+
         <h1>Sign up</h1>
         {% if errors %}
         <div class="sign-up-error">User already exists</div>
