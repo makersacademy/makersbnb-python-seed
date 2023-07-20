@@ -81,6 +81,10 @@ def get_list_property():
         return redirect(f"/index")
     return render_template('list-property.html')
 
+@app.route('/logout')
+def get_logout():
+    return redirect(f"/index")
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
