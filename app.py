@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
@@ -8,8 +8,7 @@ from lib.User import User
 
 # Create a new Flask app
 app = Flask(__name__)
-
-# == Your Routes Here ==
+app.secret_key = "key"
 
 # GET /index
 # Returns the homepage
@@ -17,6 +16,7 @@ app = Flask(__name__)
 #   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
+    session['user_id'] = None
     return render_template('index.html')
 
 @app.route('/index', methods=['POST'])
@@ -29,12 +29,14 @@ def user_login():
     if user.id == None:
         return render_template('index.html', errors = "User does not exist") , 400
     if password == user.password:
+        session['user_id'] = user.id
         return redirect(f"/listings")
     else:
         return render_template('index.html', errors = "Incorrect password. Please try again.") , 400
 
 @app.route('/sign-up')
 def get_sign_up():
+    session['user_id'] = None
     return render_template('sign-up.html')
 
 @app.route('/sign-up', methods=['POST'])
@@ -55,9 +57,10 @@ def post_create_new_user():
         user_repository.create(user)
         return redirect(f"/index")
 
-
 @app.route('/listings')
 def get_listings():
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     properties = repository.all()
@@ -65,6 +68,8 @@ def get_listings():
 
 @app.route('/listings/<id>')
 def get_listings_id(id):
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     property = repository.find(id)
@@ -72,6 +77,8 @@ def get_listings_id(id):
 
 @app.route('/list-property')
 def get_list_property():
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     return render_template('list-property.html')
 
 # These lines start the server if you run this file directly
