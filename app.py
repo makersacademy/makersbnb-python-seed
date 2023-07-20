@@ -6,6 +6,7 @@ from lib.UserRepository import UserRepository
 from lib.booking_repository import BookingRepository  
 from lib.booking import Booking
 from lib.User import User
+from datetime import date
 
 
 # Create a new Flask app
@@ -81,18 +82,28 @@ def get_list_property():
 
 @app.route('/listings/<property_id>', methods=['POST'])
 def book_property(property_id):
+    print("###########################################")
     user_id = session.get('user_id')
     connection = get_flask_database_connection(app)
     start_date = request.form["start_date"]
+    date_type_start_date = date.fromisoformat(start_date)
     end_date = request.form["end_date"]
-    booking = Booking(None, start_date, end_date, property_id, user_id)
+    date_type_end_date = date.fromisoformat(end_date)
+    booking = Booking(None, date_type_start_date, date_type_end_date, property_id, user_id)
+    print("Booking prints here:")
+    print(booking)
     repository = BookingRepository(connection)
-    repository.create(booking)
-    confirmation = "Booking confirmed"
-    repository = PropertyRepository(connection)
-    property = repository.find(property_id)
-    
-    return render_template('listings_id.html', confirmation=confirmation, property=property)
+    error = "Property booked for those dates"
+    print("Result of availability checker print here")
+    print(repository.availability_checker(booking))
+    if repository.availability_checker(booking) == False:
+        property = repository.find(property_id)
+        return render_template('listings_id.html', error=error, property=property)
+    else:
+        repository.create(booking)
+        confirmation = "Booking confirmed"
+        property = repository.find(property_id)
+        return render_template('listings_id.html', confirmation=confirmation, property=property)
 
 
 

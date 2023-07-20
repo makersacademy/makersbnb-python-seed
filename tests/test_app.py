@@ -195,6 +195,15 @@ def test_booking_available_property_updates_db_and_confirmation_message(page, te
     confirmation = page.locator(".confirmation")
     expect(confirmation).to_have_text("Booking confirmed")
 
+
+
+
+
+
+
+
+
+
 """
 When booking a property that is not available for the chosen dates
 we see an error message "Property booked for those dates"
