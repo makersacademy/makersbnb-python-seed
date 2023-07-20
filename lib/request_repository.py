@@ -37,9 +37,6 @@ class RequestRepository():
         return None
     
     def find_spaces_by_user_id(self, user_id):
-                rows = self._connection.execute(
-            'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status =  )
-        # rows = self._connection.execute(
-        #     'SELECT requests.space_id FROM requests JOIN spaces ON spaces.user_id = requests.user_id')
-        print(rows)
-        return rows
+            rows = self._connection.execute(
+                     'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status =  ')
+            return rows

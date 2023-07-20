@@ -71,7 +71,7 @@ def get_single_space_page(id):
     spaces = repository.find(id)
     space = spaces[0]
     dates = space.availability.split(",")
-    return render_template("spaces/show_space.html", space=space, dates=dates)
+    return render_template("spaces/select_and_confirm_date.html", space=space, dates=dates)
 
 
 
@@ -91,7 +91,9 @@ def confirm_confirm(id, date, request_id):
     request_repository.confirm(request_to_use)
     return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use)
 
-
+@app.route('spaces/my_requests')
+def shows_all_requests():
+    pass
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
