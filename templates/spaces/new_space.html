@@ -49,10 +49,12 @@
     </div>
     
     <br>{% if g.logged_in_as %}
-    <h3>{{  g.logged_in_as  }}</h3>
-    <a href="/logout">Log out</a>
-    {% else %}<h3>Not logged in</h3>
-        <a href="/login">Log in here</a><br>
+    <h3>{{  g.logged_in_as  }}
+      <br>
+    <a href="/logout">Log out</a></h3>
+    {% else %}<h3>Not logged in
+      <br>
+        <a href="/login">Log in here</a></h3>
     {% endif %}
   </body>
 </html>
