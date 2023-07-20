@@ -17,8 +17,14 @@
       <p>Availability:</p>
       {% for date in dates %}
       <a href="/spaces/{{ space.id }}/send_booking_request/{{ date }}" ><li>click to request this date: {{ date }}</li></href>
-      {% endfor %}
-      
+      {% endfor %}  
     </div>
+
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>

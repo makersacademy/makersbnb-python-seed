@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,19 +7,33 @@
   </head>
   <body>
     <div>
-    <a href="/index">Take Me Home!</a>
-    <a href="/book_space">Take me to all listings</a>
+      <a href="/index">Take Me Home!</a>
+      <a href="/book_space">Take me to all listings</a>
     </div>
-    <br>
+    <br />
+    <p>{{(  requests) }}</p>
+    <p>{{  requests[0].id  }}</p>
+    <p>{{  requests[0].date_to_book  }}</p>
     <div>
-      <h1>Name: {{space.name}}</h1>
-      <p>Description: {{space.description}}</p>
-      <p>Price: {{space.price}}</p>
-      <p>Availability:</p>
-      {% for date in dates %}
-      <a href="/spaces/{{ space.id }}/send_booking_request/{{ date }}" ><li>click to request this date: {{ date }}</li></href>
-      {% endfor %}
-      
+        <h1>Requests Received</h1>
+        <br />
+        {% for request in requests %}
+        <p>id: {{ request.request_id }}</p>
+        <p>date_chosen: {{ request.dates_to_book }}</p>
+        {% endfor %}
+      </div>
+      <div>
+        <h1>Requests Sent</h1>
+        <br />
+      </div>
     </div>
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
   </body>
 </html>
+  

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session, url_for, g
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import *
 from lib.user import *
@@ -10,8 +10,22 @@ from lib.request import *
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 # == Your Routes Here ==
+
+def get_logged_in_user():
+#Session module from Flask, this takes in the email provided in the login function and saves it
+    if 'email' in session:
+        return f"Logged in as {session['email']}"
+    return None
+
+
+@app.before_request
+def set_logged_in_user():
+#The g function saves logged_in_as as a global variable so it doesn't need to be defined in every single route
+    g.logged_in_as = get_logged_in_user()
+
 
 @app.route('/index', methods=['POST'])
 def post_user_on_index():
@@ -21,9 +35,11 @@ def post_user_on_index():
     repository.create(user)
     return render_template('spaces/book.html')
 
+
 @app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login.html')
+
 
 @app.route('/login', methods=['POST'])
 def existing_user_log_in():
@@ -31,10 +47,16 @@ def existing_user_log_in():
     repository = UserRepository(connection)
     user_email = request.form['email']
     user_password = request.form['user_password']
-    repository.find_user(user_email)
+    username = repository.find_user(user_email)
     if repository.username_and_password_match_user(user_email, user_password) == True:
-        return render_template('spaces/book.html')
+        return redirect('/book_space')
     return "Incorrect username or password. Try Again"
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return redirect('/index')  # Redirect the user to the homepage or any other page after logout
 
 # GET /index
 # Returns the homepage
@@ -42,18 +64,23 @@ def existing_user_log_in():
 #   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    logged_in_as = get_logged_in_user()
+    return render_template('index.html',logged_in_as=logged_in_as)
+
 
 @app.route('/book_space', methods = ["GET"])
 def get_all_listings():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    return render_template('/spaces/book.html', spaces=spaces)
+    login_status = get_logged_in_user()
+    return render_template('/spaces/book.html', spaces=spaces, login_status=login_status)
+
 
 @app.route("/spaces/new_space", methods=["GET"])
 def get_new_space():
     return render_template("/spaces/new_space.html")
+
 
 @app.route('/spaces/new_space', methods=["POST"])
 def post_new_space():
@@ -67,6 +94,7 @@ def post_new_space():
     new_space = Space(None, name, description, price, availability, user_id)
     repository.create(new_space)
     return redirect(f"/spaces/{new_space.id}")
+
 
 @app.route('/spaces/<int:id>')
 def get_single_space_page(id):
@@ -95,9 +123,14 @@ def confirm_confirm(id, date, request_id):
     request_repository.confirm(request_to_use)
     return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use)
 
-@app.route('spaces/my_requests')
-def shows_all_requests():
-    pass
+
+@app.route('/spaces/<user_id>/my_requests')
+def shows_all_requests(user_id):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    requests = request_repository.find_spaces_by_user_id(user_id)
+    return render_template("spaces/list_of_requests_received.html", requests=requests, user_id=user_id)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

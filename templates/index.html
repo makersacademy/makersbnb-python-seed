@@ -32,9 +32,14 @@
         <p> 
             <input type="submit" value="Sign Up">
         </p>
-    </form>
-    
+    </form><br>
+
+    {% if g.logged_in_as %}
+    <h3>{{  logged_in_as  }}</h3>
+    <a href="/logout">Log out</a>
+    {% else %}<h3>Not logged in</h3>
         <h3>Already have an account?</h3>
-            <a href="/login">Log in here</a>
+        <a href="/login">Log in here</a><br>
+    {% endif %}
     </body>
 </html>
