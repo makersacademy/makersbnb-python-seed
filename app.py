@@ -1,14 +1,14 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
 from lib.User import User
-
+from lib.property import Property
 
 # Create a new Flask app
 app = Flask(__name__)
-
+app.secret_key = "key"
 # == Your Routes Here ==
 
 # GET /index
@@ -29,6 +29,7 @@ def user_login():
     if user.id == None:
         return render_template('index.html', errors = "User does not exist") , 400
     if password == user.password:
+        session['user_id'] = user.id 
         return redirect(f"/listings")
     else:
         return render_template('index.html', errors = "Incorrect password. Please try again.") , 400
@@ -70,9 +71,31 @@ def get_listings_id(id):
     property = repository.find(id)
     return render_template('listings_id.html', property=property)
 
-@app.route('/list-property')
+@app.route('/list-property', methods=['GET'])
 def get_list_property():
-    return render_template('list-property.html')
+    user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    user_repository = UserRepository(connection)
+    user = user_repository.find(user_id)
+    if user.id != None:
+        return render_template('list-property.html')
+    
+@app.route('/list-property', methods=['POST'])
+def post_new_property():
+    current_user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    repo = PropertyRepository(connection)
+    name = request.form["name"]
+    description = request.form["description"]
+    price = request.form["price"]
+    list_of_properties = [name, description, price]
+    if None in list_of_properties or "" in list_of_properties:
+        return render_template('list-property.html', errors="Please fill in all the details."), 400
+    else:
+        property = Property(None, name, description, price, current_user_id)
+        property = repo.create(property)
+        return redirect(f"/listings")
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
