@@ -15,7 +15,6 @@
 
   <body>
     <h1>Spaces listed below</h1>
-    <p>{{user_logged_in}}</p>
     {% for space in spaces %}
     <div>
       <a href="/spaces/{{space.id}}"><p>Name: {{ space.name }}</p></a>
@@ -27,10 +26,9 @@
     {% endfor %}
     <h2>
     <a href="/spaces/new_space">Add New Listing</a>
-    <br>
-    <br>
-    <a href="/spaces/2/my_requests">See my requests received and sent!</a>
-    </h2>
+
+    <a href="/spaces/{{g.user_id}}/my_requests">See my requests received and sent!</a>
+
     
     <br>
     <h3>{{  g.logged_in_as  }}
