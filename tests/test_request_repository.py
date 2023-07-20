@@ -69,8 +69,3 @@ def test_find_spaces_by_user_id(db_connection):
             Request(8, 3, 1, '01/01/2023', 'TBC'),
             Request(10, 4, 1, '01/01/2023', 'TBC')]
 
-def test_find_users_requests_sent(db_connection):
-    db_connection.seed("seeds/scar_bnb.sql")
-    repository = RequestRepository(db_connection)
-    space_repository = SpaceRepository(db_connection)
-    user_repository = UserRepository(db_connection)
