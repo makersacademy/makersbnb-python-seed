@@ -10,12 +10,22 @@
       <a href="/book_space">Take me to all listings</a>
     </div>
     <br />
-    <h1>Booking confirmed - details below</h1>
     <div>
       <h1>Name: {{request.space_id}}</h1>
       <p>Selected Dates: {{ request.date_to_book }}</p>
       <p>User_id: {{ request.user_id }}</p>
       <p>Space_id: {{ request.space_id }}</p>
+    </div>
+    <div>
+      <form
+        action="/spaces/{{  request.space_id  }}/send_booking_request/ {{ request.date_to_book }}/confirm/{{  request.id  }}"
+        method="post"
+      >
+        <input type="submit" value="confirm your booking" />
+      </form>
+      <form action="/cancel" method="post">
+        <input type="submit" value="cancel your booking" />
+      </form>
     </div>
   </body>
 </html>
