@@ -2,18 +2,19 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="/static/style.css" />
-    <title>Space</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div>
       <a href="/index"><i class="fa fa-home"></i>Home</a>
       <br>
       <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
     </div>
-    <br />
+    <title>Space</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <br/>
     <div>
-      <h1>Name: {{request.space_id}}</h1>
+      <p>Name: {{request.space_id}}</p>
       <p>Selected Dates: {{ request.date_to_book }}</p>
       <p>User_id: {{ request.user_id }}</p>
       <p>Space_id: {{ request.space_id }}</p>
@@ -30,10 +31,12 @@
       </form>
     </div>
     <br>{% if g.logged_in_as %}
-    <h3>{{  g.logged_in_as  }}</h3>
-    <a href="/logout">Log out</a>
-    {% else %}<h3>Not logged in</h3>
-        <a href="/login">Log in here</a><br>
+    <h3>{{  g.logged_in_as  }}
+      <br>
+      <a href="/logout">Log out</a></h3>
+    {% else %}<h3>Not logged in
+      <br>
+      <a href="/login">Log in here</a></h3>
     {% endif %}
   </body>
 </html>
