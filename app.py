@@ -9,7 +9,6 @@ from lib.property import Property
 # Create a new Flask app
 app = Flask(__name__)
 app.secret_key = "key"
-# == Your Routes Here ==
 
 # GET /index
 # Returns the homepage
@@ -17,6 +16,7 @@ app.secret_key = "key"
 #   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
+    session['user_id'] = None
     return render_template('index.html')
 
 @app.route('/index', methods=['POST'])
@@ -36,6 +36,7 @@ def user_login():
 
 @app.route('/sign-up')
 def get_sign_up():
+    session['user_id'] = None
     return render_template('sign-up.html')
 
 @app.route('/sign-up', methods=['POST'])
@@ -56,9 +57,10 @@ def post_create_new_user():
         user_repository.create(user)
         return redirect(f"/index")
 
-
 @app.route('/listings')
 def get_listings():
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     properties = repository.all()
@@ -66,6 +68,8 @@ def get_listings():
 
 @app.route('/listings/<id>')
 def get_listings_id(id):
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     property = repository.find(id)
@@ -73,6 +77,8 @@ def get_listings_id(id):
 
 @app.route('/list-property', methods=['GET'])
 def get_list_property():
+    if session.get('user_id') == None :
+        return redirect(f"/index")
     user_id = session.get('user_id')
     connection = get_flask_database_connection(app)
     user_repository = UserRepository(connection)
@@ -96,6 +102,9 @@ def post_new_property():
         property = repo.create(property)
         return redirect(f"/listings")
 
+@app.route('/logout')
+def get_logout():
+    return redirect(f"/index")
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

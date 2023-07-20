@@ -1,3 +1,29 @@
 body {
     font-size: 18px;
 }
+
+.navigation li{
+    float: left;
+    border-right: 1px solid #fefcfc;
+}
+
+.navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;    
+    background-color: #68e393;
+    width: 400px; /* Set a fixed width for the navigation bar */
+}
+
+.navigation li a{
+    display: block;
+    color: rgb(15, 14, 14);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navigation li a:hover {
+    background-color: #ffffff;
+}

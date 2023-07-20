@@ -2,13 +2,19 @@
 <html lang="en">
     <head>
         <title>Listings</title>
+        <link rel="stylesheet" href="/static/style.css" >
+        <ul class="navigation">
+            <li>My Listings</li>
+            <li>My Bookings</li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
     </head>
     <body>
         <h1>Listings</h1>
         <a href="/list-property">List your property</a>
         <ul>
             {% for property in properties %}
-            <li>
+            <li class="listings">
                 <a href="/listings/{{property.id}}">{{property.name}}</a>
             </li>
             {% endfor %}

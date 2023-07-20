@@ -67,7 +67,12 @@ def test_check_for_new_user_with_invalid_password(page, test_web_address,db_conn
 """
 We can render the listings page
 """
-def test_get_listings(page, test_web_address):
+def test_get_listings(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Listings")
@@ -78,8 +83,12 @@ We see a list of all properties from the properties table in /listings
 """
 def test_all_properties_listed_in_listings(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
-    list_tag = page.locator("li")
+    list_tag = page.locator('[class="listings"]')
     expect(list_tag).to_have_text([
         "Hackers Hideaway",
         "Ma house",
@@ -93,6 +102,10 @@ Each listing on the /listings page links to its own /listings/<id> page
 """
 def test_listing_item_links_to_id(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
     page.click("text=Ma house")
     h1_tag = page.locator("h1")
@@ -107,6 +120,7 @@ def test_listings_redirects_to_list_property(page, test_web_address, db_connecti
     page.fill("input[name='email']", "asha@example.com")
     page.fill("input[name='password']", "password1")
     page.get_by_role("button").click()
+    page.goto(f"http://{test_web_address}/listings")
     page.click("text=List your property")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("List your property")
@@ -174,13 +188,9 @@ def test_create_new_listing(page, test_web_address, db_connection):
     page.fill("input[name='description']", "In the middle of our street")
     page.fill("input[name='price']", "20.00")
     page.get_by_role("button").click()
-    list_tag = page.locator("li")
-    expect(list_tag).to_have_text([
-        "Hackers Hideaway",
-        "Ma house",
-        "Makers HQ",
-        "Our house"
-    ])
+    page.click("text=Our house")
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text("Our house")
 
 '''
 when we are trying to list a property that has no price
