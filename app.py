@@ -29,17 +29,13 @@ def set_logged_in_user():
     g.logged_in_as = get_logged_in_user()
 
 
-
-
-
 @app.route('/index', methods=['POST'])
 def post_user_on_index():
-    user123 = user_logged_in
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
     repository.create(user)
-    return render_template('spaces/book.html', user_logged_in=user123)
+    return render_template('spaces/book.html')
 
 
 @app.route('/login', methods=['GET'])
@@ -63,10 +59,6 @@ def existing_user_log_in():
 def logout():
     session.clear()
     return redirect('/index')  # Redirect the user to the homepage or any other page after logout
-
-      
-
-
 
 @app.route('/index', methods=['GET'])
 def get_index():
@@ -101,7 +93,6 @@ def post_new_space():
     repository.create(new_space)
     return redirect(f"/spaces/{new_space.id}")
 
-
 @app.route('/spaces/<int:id>')
 def get_single_space_page(id):
     connection = get_flask_database_connection(app)
@@ -111,36 +102,31 @@ def get_single_space_page(id):
     dates = space.availability.split(",")
     return render_template("spaces/select_and_confirm_date.html", space=space, dates=dates)
 
-
-
-@app.route('/spaces/<int:id>/send_booking_request/<date>')
-def confirm_booking_request(id, date):
-    connection = get_flask_database_connection(app)
-    request_repository = RequestRepository(connection)
-    request = Request(None, 1, id, date, "TBC")
-    request_repository.create(request)
-    return render_template("spaces/confirm_booking.html", request=request)
-
-@app.route('/spaces/<int:id>/send_booking_request/<date>/confirm/<request_id>', methods=["POST"])
-def confirm_confirm(id, date, request_id):
-    connection = get_flask_database_connection(app)
-    request_repository = RequestRepository(connection)
-    request_to_use = request_repository.find(request_id)
-    request_repository.confirm(request_to_use)
-    return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use)
-
-
-
 @app.route('/spaces/<user_id>/my_requests')
 def shows_all_requests(user_id):
     connection = get_flask_database_connection(app)
     request_repository = RequestRepository(connection)
     requests = request_repository.find_spaces_by_user_id(user_id)
-
-
     requests_made = request_repository.find_requests_sent_by_user_id(user_id)
     return render_template("spaces/list_of_requests_received.html", requests=requests, request_made=requests_made)
 
+
+@app.route('/spaces/<int:id>/send_booking_request/<date>')
+def confirm_booking_request(id, date, user_id):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    user_id = ""
+    request = Request(None, user_id, id, date, "TBC")
+    request_repository.create(request)
+    return render_template("spaces/confirm_booking.html", request=request)
+
+@app.route('/spaces/<id>/send_booking_request/<date>/confirm/<request_id>', methods=["POST"])
+def confirm_confirm(id, date, request_id):
+    connection = get_flask_database_connection(app)
+    request_repository = RequestRepository(connection)
+    request_to_use = request_repository.find(request_id)
+    request_repository.confirm_booking(request_to_use)
+    return render_template("spaces/booking_confirmed.html", request_to_use=request_to_use, id=id, date=date, request_id=request_id)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
