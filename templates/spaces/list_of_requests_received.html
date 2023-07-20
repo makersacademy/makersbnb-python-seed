@@ -19,10 +19,10 @@
         <p>id: {{ request.id }}</p>
         <p>date_chosen: {{ request.date_to_book }}</p>
         <p>bookng status: {{ request.request_status}}</p>
-    </div>
-    <h2>    
         <form action="/cancel" method="post">
         <input type="submit" value="confirm booking" />
+        </form>
+        <form action="/cancel" method="post">
         <input type="submit" value="cancel your booking" />
       </form>
     </h2>
