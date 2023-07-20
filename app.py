@@ -4,6 +4,7 @@ from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
 from lib.User import User
+from lib.property import Property
 
 
 # Create a new Flask app
@@ -79,7 +80,28 @@ def get_listings_id(id):
 def get_list_property():
     if session.get('user_id') == None :
         return redirect(f"/index")
-    return render_template('list-property.html')
+    user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    user_repository = UserRepository(connection)
+    user = user_repository.find(user_id)
+    if user.id != None:
+        return render_template('list-property.html')
+    
+@app.route('/list-property', methods=['POST'])
+def post_new_property():
+    current_user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    repo = PropertyRepository(connection)
+    name = request.form["name"]
+    description = request.form["description"]
+    price = request.form["price"]
+    list_of_properties = [name, description, price]
+    if None in list_of_properties or "" in list_of_properties:
+        return render_template('list-property.html', errors="Please fill in all the details."), 400
+    else:
+        property = Property(None, name, description, price, current_user_id)
+        property = repo.create(property)
+        return redirect(f"/listings")
 
 @app.route('/logout')
 def get_logout():
