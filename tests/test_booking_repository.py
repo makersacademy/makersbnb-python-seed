@@ -46,3 +46,30 @@ def test_3_create_new_booking(db_connection):
         Booking(4,date(2024,1,10), date(2024,1,16), 1, 3),
         Booking(5,date(2023,5,30), date(2023,9,15), 3, 2)
     ]
+
+"""
+When we call BookingRepository#availability_checker
+when start date and end date for a given property clash 
+with an existing booking for that property
+it returns False
+"""
+def test_booking_availability_returns_false(db_connection): 
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = BookingRepository(db_connection)
+    booking = Booking(None,date(2024, 2, 14), date(2024, 2,15), 2, 2)
+    availability = repository.availability_checker(booking)
+    assert availability == False
+
+"""
+When we call BookingRepository#availability_checker
+when start date and end date for a given property do not clash 
+with an existing booking for that property
+it returns True
+"""
+
+def test_booking_availability_returns_true(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = BookingRepository(db_connection)
+    booking = Booking(None,date(2024, 2, 20), date(2024, 2,21), 2, 2)
+    availability = repository.availability_checker(booking)
+    assert availability == True

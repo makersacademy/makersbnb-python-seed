@@ -23,3 +23,5 @@ class BookingRepository:
             booking.start_date, booking.end_date, booking.property_id, booking.user_id])
         booking.id = row[0]["id"]
         return booking
+    
+    

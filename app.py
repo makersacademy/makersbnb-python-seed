@@ -1,13 +1,16 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
+from lib.booking_repository import BookingRepository  
+from lib.booking import Booking
 from lib.User import User
 
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = "key"
 
 # == Your Routes Here ==
 
@@ -29,6 +32,7 @@ def user_login():
     if user.id == None:
         return render_template('index.html', errors = "User does not exist") , 400
     if password == user.password:
+        session['user_id'] = user.id
         return redirect(f"/listings")
     else:
         return render_template('index.html', errors = "Incorrect password. Please try again.") , 400
@@ -68,11 +72,33 @@ def get_listings_id(id):
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     property = repository.find(id)
-    return render_template('listings_id.html', property=property)
+    formatted_price = repository.price_formatter(property)
+    return render_template('listings_id.html', property=property, formatted_price=formatted_price)
 
 @app.route('/list-property')
 def get_list_property():
     return render_template('list-property.html')
+
+@app.route('/listings/<property_id>', methods=['POST'])
+def book_property(property_id):
+    user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    start_date = request.form["start_date"]
+    end_date = request.form["end_date"]
+    booking = Booking(None, start_date, end_date, property_id, user_id)
+    repository = BookingRepository(connection)
+    repository.create(booking)
+    confirmation = "Booking confirmed"
+    repository = PropertyRepository(connection)
+    property = repository.find(property_id)
+    
+    return render_template('listings_id.html', confirmation=confirmation, property=property)
+
+
+
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

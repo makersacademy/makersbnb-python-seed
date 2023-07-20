@@ -29,9 +29,10 @@ class PropertyRepository():
         return Property(
                 row['id'],row['name'],row['description'],row['price'],row['user_id'])
 
-    def price_formatter(self,property):
-        
-        
+    def price_formatter(self, property):
+        property_price = property.price
+        formatted_price =  f'{property_price:.2f}'
+        return f"£{formatted_price} per night"
         
 
 
