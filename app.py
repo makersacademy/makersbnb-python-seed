@@ -6,7 +6,6 @@ from lib.UserRepository import UserRepository
 from lib.User import User
 from lib.property import Property
 
-
 # Create a new Flask app
 app = Flask(__name__)
 app.secret_key = "key"
@@ -30,7 +29,7 @@ def user_login():
     if user.id == None:
         return render_template('index.html', errors = "User does not exist") , 400
     if password == user.password:
-        session['user_id'] = user.id
+        session['user_id'] = user.id 
         return redirect(f"/listings")
     else:
         return render_template('index.html', errors = "Incorrect password. Please try again.") , 400
@@ -76,7 +75,7 @@ def get_listings_id(id):
     property = repository.find(id)
     return render_template('listings_id.html', property=property)
 
-@app.route('/list-property')
+@app.route('/list-property', methods=['GET'])
 def get_list_property():
     if session.get('user_id') == None :
         return redirect(f"/index")

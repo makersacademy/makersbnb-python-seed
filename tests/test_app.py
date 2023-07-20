@@ -172,6 +172,7 @@ def test_wrong_password_by_existing_user(page, test_web_address, db_connection):
     error_element = page.locator(".login-error")
     expect(error_element).to_have_text("Incorrect password. Please try again.")
 
+
 """
 When we click List your property /listings redirects to /list-property page
 and then we can create a new listing that will appear on the /listings page
@@ -190,7 +191,6 @@ def test_create_new_listing(page, test_web_address, db_connection):
     page.click("text=Our house")
     h1_tag = page.locator('h1')
     expect(h1_tag).to_have_text("Our house")
-
 
 '''
 when we are trying to list a property that has no price
