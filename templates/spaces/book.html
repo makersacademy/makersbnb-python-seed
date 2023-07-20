@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      div {
+        border: 2px solid rgb(15, 2, 2);
+        padding: 10px;
+      }
+      </style>
+    <link rel="stylesheet" href="/static/style.css" />
     <title>Book A Space</title>
     <meta charset="utf-8" />
   </head>
   <body>
     <div>
-      <a href="/index">Take Me Home!</a>
+      <a href="/index"><i class="fa fa-home"></i>Home</a>
     </div>
     <h1>Spaces listed below</h1>
     {% for space in spaces %}
