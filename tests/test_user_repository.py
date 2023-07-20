@@ -23,6 +23,11 @@ def test_find_user(db_connection):
     repository = UserRepository(db_connection)
     assert repository.find_user("exampleemail@email.com") == User(1, "Example User", "examplepassword", "exampleemail@email.com")
 
+def test_find_user_unexists(db_connection):
+    repository = UserRepository(db_connection)
+    assert repository.find_user("bla@email.com") == "Invalid email"
+
+
 def test_username_and_password_match_user(db_connection):
     repository = UserRepository(db_connection)
     assert repository.username_and_password_match_user("exampleemail@email.com", "examplepassword") == True

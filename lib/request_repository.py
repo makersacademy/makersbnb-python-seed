@@ -1,4 +1,5 @@
 from lib.request import Request
+from lib.space import Space
 
 class RequestRepository():
     def __init__(self, connection):
@@ -23,11 +24,11 @@ class RequestRepository():
         return Request(row["id"], row["user_id"], row["space_id"], row["date_to_book"], row["request_status"])
     
     def send_request(self, request):
-        self._connection.execute('UPDATE requests SET request_status = \'True\' WHERE id = %s', [request.id])
-        request.request_status = "TB"
+        self._connection.execute('UPDATE requests SET request_status = \'TBC\' WHERE id = %s', [request.id])
+        request.request_status = "TBC"
         return None
 
-    def confirm(self, request):
+    def confirm_booking(self, request):
         self._connection.execute('UPDATE requests SET request_status = \'True\' WHERE id = %s', [request.id])
         request.request_status = "True"
         return None
@@ -35,8 +36,17 @@ class RequestRepository():
     def decline_a_request(self, request):
         request.request_status = "False"
         return None
-    
+      
     def find_spaces_by_user_id(self, user_id):
-            rows = self._connection.execute(
-                     'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status =  ')
-            return rows
+
+        rows = self._connection.execute(
+            'SELECT * FROM spaces JOIN requests ON spaces.id = requests.space_id WHERE request_status = \'TBC\' AND spaces.user_id = %s',[user_id])
+        spaces_by_user_id = []
+        for row in rows:
+            item = Request(row["id"], 
+                        row["user_id"], 
+                        row["space_id"], 
+                        row["date_to_book"], 
+                        row["request_status"],)
+            spaces_by_user_id.append(item)
+        return spaces_by_user_id
