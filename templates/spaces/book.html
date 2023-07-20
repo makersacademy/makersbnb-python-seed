@@ -19,7 +19,6 @@
       <a href="/index"><i class="fa fa-home"></i>Home</a>
     </div>
     <h1>Spaces listed below</h1>
-    <p>{{user_logged_in}}</p>
     {% for space in spaces %}
     <div>
       <a href="/spaces/{{space.id}}"><p>Name: {{ space.name }}</p></a>
@@ -30,7 +29,7 @@
     </div>
     {% endfor %}
     <a href="/spaces/new_space">Add New Listing</a>
-    <a href="/spaces/2/my_requests">See my requests received and sent!</a>
+    <a href="/spaces/{{g.user_id}}/my_requests">See my requests received and sent!</a>
     
     
     <br>

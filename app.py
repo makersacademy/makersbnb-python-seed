@@ -16,30 +16,44 @@ app.secret_key = 'your_secret_key'
 
 # == Your Routes Here ==
 
-def get_logged_in_user():
+def get_logged_in_user_email():
 #Session module from Flask, this takes in the email provided in the login function and saves it
     if 'email' in session:
         return f"Logged in as {session['email']}"
+    return None
+
+def get_logged_in_user_id():
+#Extract user_id from email
+    if 'email' in session:
+        email = session['email']
+        connection = get_flask_database_connection(app)
+        user_repository = UserRepository(connection)
+        extract_user = user_repository.find_user(email)
+        user_id = extract_user.id
+        return user_id
     return None
 
 
 @app.before_request
 def set_logged_in_user():
 #The g function saves logged_in_as as a global variable so it doesn't need to be defined in every single route
-    g.logged_in_as = get_logged_in_user()
+    g.logged_in_as = get_logged_in_user_email()
 
 
+@app.before_request
+def set_logged_in_user_id():
+#Save logged in user_id as global variable
+    g.user_id = get_logged_in_user_id()
 
 
 
 @app.route('/index', methods=['POST'])
 def post_user_on_index():
-    user123 = user_logged_in
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     user = User(None, request.form['username'], request.form['user_password'], request.form['email'])
     repository.create(user)
-    return render_template('spaces/book.html', user_logged_in=user123)
+    return render_template('spaces/book.html')
 
 
 @app.route('/login', methods=['GET'])
@@ -53,7 +67,7 @@ def existing_user_log_in():
     repository = UserRepository(connection)
     user_email = request.form['email']
     user_password = request.form['user_password']
-    username = repository.find_user(user_email)
+
     if repository.username_and_password_match_user(user_email, user_password) == True:
         return redirect('/book_space')
     return "Incorrect username or password. Try Again"
@@ -62,16 +76,14 @@ def existing_user_log_in():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return redirect('/index')  # Redirect the user to the homepage or any other page after logout
+# Redirect the user to the homepage or any other page after logout
+    return redirect('/index')
 
       
 
-
-
 @app.route('/index', methods=['GET'])
 def get_index():
-    logged_in_as = get_logged_in_user()
-    return render_template('index.html',logged_in_as=logged_in_as)
+    return render_template('index.html')
 
 
 @app.route('/book_space', methods = ["GET"])
@@ -79,8 +91,7 @@ def get_all_listings():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    login_status = get_logged_in_user()
-    return render_template('/spaces/book.html', spaces=spaces, login_status=login_status)
+    return render_template('/spaces/book.html', spaces=spaces)
 
 
 @app.route("/spaces/new_space", methods=["GET"])
@@ -120,6 +131,7 @@ def confirm_booking_request(id, date):
     request = Request(None, 1, id, date, "TBC")
     request_repository.create(request)
     return render_template("spaces/confirm_booking.html", request=request)
+
 
 @app.route('/spaces/<int:id>/send_booking_request/<date>/confirm/<request_id>', methods=["POST"])
 def confirm_confirm(id, date, request_id):
