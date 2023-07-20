@@ -44,8 +44,8 @@ def test_decline_a_request(db_connection):
     assert request_1.request_status == "False"
     
 def test_find_spaces_by_user_id(db_connection):
+    db_connection.seed("seeds/scar_bnb.sql")
     repository = RequestRepository(db_connection)
-    
     space_repository = SpaceRepository(db_connection)
     user_repository = UserRepository(db_connection)
 
@@ -54,7 +54,6 @@ def test_find_spaces_by_user_id(db_connection):
 
     user_3 = User(None, "Example user3", "examplepassword3", "exampleemail3@email.com")
     user_4 = User(None, "Example user4", "examplepassword4", "exampleemail4@email.com")
-   
     user_repository.create(user_3)
     user_repository.create(user_4)
 
@@ -62,4 +61,16 @@ def test_find_spaces_by_user_id(db_connection):
     repository.create(Request(None, 3, 2, "01/01/2023", "TBC"))
     repository.create(Request(None, 4, 1, "01/01/2023", "TBC"))
     repository.create(Request(None, 4, 2, "01/01/2023", "TBC"))
-    assert repository.find_spaces_by_user_id(2) == [Space(None,"Example Name","Example description",200,"02-03-2023",1)]
+    print(repository.find_spaces_by_user_id(2))
+    assert repository.find_spaces_by_user_id(2) == [Request(2, 1, 1, '01/01/2023', 'TBC'),
+            Request(3, 1, 1, '01/01/2023', 'TBC'),
+            Request(4, 3, 1, '01/01/2023', 'TBC'),
+            Request(6, 4, 1, '01/01/2023', 'TBC'),
+            Request(8, 3, 1, '01/01/2023', 'TBC'),
+            Request(10, 4, 1, '01/01/2023', 'TBC')]
+
+def test_find_users_requests_sent(db_connection):
+    db_connection.seed("seeds/scar_bnb.sql")
+    repository = RequestRepository(db_connection)
+    space_repository = SpaceRepository(db_connection)
+    user_repository = UserRepository(db_connection)
