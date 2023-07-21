@@ -14,6 +14,9 @@
   </head>
   <body>
     <div>
+
+      {% if g.user_id|string() == user_id|string() %}
+    
         <h1>Requests Received</h1>
         {% for request in requests %}
         <p>id: {{ request.id }}</p>
@@ -37,10 +40,14 @@
         <p>bookng status: {{ request.request_status}}</p>
         {% endfor %}
         <br>
+      {% else %}
+        <p>Access denied!</p>
+      {% endif %}
       </div>
     </div>
     
-    <br>{% if g.logged_in_as %}
+    <br>
+    {% if g.logged_in_as %}
     <h3>{{  g.logged_in_as  }}</h3>
     <h3><a href="/logout">Log out</a></h3>
     {% else %}<h3>Not logged in</h3>

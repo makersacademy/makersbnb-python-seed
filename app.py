@@ -125,14 +125,14 @@ def shows_all_requests(user_id):
     request_repository = RequestRepository(connection)
     requests = request_repository.find_spaces_by_user_id(user_id)
     requests_made = request_repository.find_requests_sent_by_user_id(user_id)
-    return render_template("spaces/list_of_requests_received.html", requests=requests, request_made=requests_made)
+    return render_template("spaces/list_of_requests_received.html", requests=requests, user_id=user_id, request_made=requests_made)
 
 
-@app.route('/spaces/<int:id>/send_booking_request/<date>')
-def confirm_booking_request(id, date, user_id):
+@app.route('/spaces/<id>/send_booking_request/<date>/')
+def confirm_booking_request(id, date):
     connection = get_flask_database_connection(app)
     request_repository = RequestRepository(connection)
-    user_id = ""
+    user_id = g.user_id
     request = Request(None, user_id, id, date, "TBC")
     request_repository.create(request)
     return render_template("spaces/confirm_booking.html", request=request)
