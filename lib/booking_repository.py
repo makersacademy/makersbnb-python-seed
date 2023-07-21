@@ -50,3 +50,14 @@ class BookingRepository:
             if date in booked_dates:
                 return False
         return True
+
+    def find_bookings_with_property_name_and_booking_dates_by_user_id(self, user_id):
+        bookings = []
+        rows = self.connection.execute(
+            "SELECT properties.name, bookings.start_date, bookings.end_date " \
+        "FROM bookings JOIN properties ON bookings.property_id=properties.id " \
+        "WHERE bookings.user_id=%s",[user_id])
+        for row in rows:
+            bookings.append(f"{row['name']} - {row['start_date']} - {row['end_date']}")
+        return bookings
+        

@@ -333,7 +333,6 @@ def test_get_my_listings_page_with_properties_attached(page, test_web_address, d
         "Name: Ma house"
     ]) 
 
-
 '''
 when you are logged user has no properties 
 you will see an error message saying
@@ -350,3 +349,24 @@ def test_get_my_properties_with_no_properties_attached(page, test_web_address, d
     expect(h1_tag).to_have_text("My listings")
     error_tag = page.locator(".error")
     expect(error_tag).to_have_text("You have no listings to view")
+    
+'''
+after logging in, I want to be able to click on the navigation button "My Bookings"
+and be redicted to a page where I can see all of my confirmed bookings
+'''
+def test_logged_in_user_can_see_my_bookings_page_with_confirmed_bookings(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "fahim@example.com")
+    page.fill("input[name='password']", "password3")
+    page.get_by_role("button").click()
+    page.click("text=Ma house")
+    page.fill("input[name='start_date']", "2024-02-17")
+    page.fill("input[name='end_date']", "2024-02-18")
+    page.get_by_role("button").click()
+    page.click("text=My Bookings")
+    my_bookings = page.locator(".my_bookings")
+    expect(my_bookings).to_have_text([
+        "Hackers Hideaway - 2024-01-10 - 2024-01-16",
+        "Ma house - 2024-02-17 - 2024-02-18"
+    ])
