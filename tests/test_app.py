@@ -1,4 +1,7 @@
 from playwright.sync_api import Page, expect
+from lib.booking_repository import BookingRepository
+from lib.booking import Booking
+from datetime import date
 
 # Tests for your routes go here
 
@@ -174,6 +177,67 @@ def test_wrong_password_by_existing_user(page, test_web_address, db_connection):
 
 
 """
+When on listings/<id> page, we see the property's short description and price per night
+"""
+def test_listings_id_page_has_decription_and_price(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/listings/1")
+    description_class = page.locator(".description")
+    price_class = page.locator(".price")
+    expect(description_class).to_have_text("Description: A mystery place full of bugs")
+    expect(price_class).to_have_text("Price: £50.00 per night")
+
+"""
+When booking a property with available dates
+BookingRepository#all returns list including the booking
+and we see a "Booking Complete" message on /listings/id
+"""
+def test_booking_available_property_updates_db_and_confirmation_message(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "fahim@example.com")
+    page.fill("input[name='password']", "password3")
+    page.get_by_role("button").click()
+    page.click("text=Ma house")
+    page.fill("input[name='start_date']", "2024-02-17")
+    page.fill("input[name='end_date']", "2024-02-18")
+    page.get_by_role("button").click()
+    repository = BookingRepository(db_connection)
+    assert repository.all() == [
+        Booking(1,date(2024, 1, 1), date(2024,1,8), 1, 4),
+        Booking(2,date(2024, 2, 14), date(2024, 2,15), 2, 2),
+        Booking(3,date(2024,6,7), date(2024,8,7), 3, 1),
+        Booking(4,date(2024,1,10), date(2024,1,16), 1, 3),
+        Booking(5,date(2024,2,17), date(2024,2,18), 2, 3)
+    ]
+    confirmation = page.locator(".confirmation")
+    expect(confirmation).to_have_text("Booking confirmed")
+
+"""
+When booking a property that is not available for the chosen dates
+we see an error message "Property booked for those dates"
+""" 
+def test_not_available_dates_and_property_booked_for_those_date_message(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "fahim@example.com")
+    page.fill("input[name='password']", "password3")
+    page.get_by_role("button").click()
+    page.click("text=Ma house")
+    page.fill("input[name='start_date']", "2024-02-14")
+    page.fill("input[name='end_date']", "2024-02-15")
+    page.get_by_role("button").click()
+    repository = BookingRepository(db_connection)
+    assert repository.all() == [
+        Booking(1,date(2024, 1, 1), date(2024,1,8), 1, 4),
+        Booking(2,date(2024, 2, 14), date(2024, 2,15), 2, 2),
+        Booking(3,date(2024,6,7), date(2024,8,7), 3, 1),
+        Booking(4,date(2024,1,10), date(2024,1,16), 1, 3)
+    ]
+    error_message = page.locator(".error")
+    expect(error_message).to_have_text("Property is unavailable for those dates")
+
+"""
 When we click List your property /listings redirects to /list-property page
 and then we can create a new listing that will appear on the /listings page
 """
@@ -245,3 +309,4 @@ def test_creating_listing_without_description(page, test_web_address, db_connect
     page.get_by_role("button").click()
     error_element = page.locator(".listing-error")
     expect(error_element).to_have_text("Please fill in all the details.")
+

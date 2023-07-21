@@ -3,12 +3,17 @@ from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.UserRepository import UserRepository
+from lib.booking_repository import BookingRepository  
+from lib.booking import Booking
 from lib.User import User
+from datetime import date
 from lib.property import Property
+
 
 # Create a new Flask app
 app = Flask(__name__)
 app.secret_key = "key"
+
 
 # GET /index
 # Returns the homepage
@@ -73,7 +78,8 @@ def get_listings_id(id):
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     property = repository.find(id)
-    return render_template('listings_id.html', property=property)
+    formatted_price = repository.price_formatter(property)
+    return render_template('listings_id.html', property=property, formatted_price=formatted_price)
 
 @app.route('/list-property', methods=['GET'])
 def get_list_property():
@@ -105,6 +111,36 @@ def post_new_property():
 @app.route('/logout')
 def get_logout():
     return redirect(f"/index")
+
+@app.route('/listings/<property_id>', methods=['POST'])
+def book_property(property_id):
+    user_id = session.get('user_id') #We get the logged in user id
+    connection = get_flask_database_connection(app)
+    start_date = request.form["start_date"]
+    date_type_start_date = date.fromisoformat(start_date) #We convert the dates entered in the form to date format
+    end_date = request.form["end_date"]
+    date_type_end_date = date.fromisoformat(end_date)
+    
+    booking = Booking(None, date_type_start_date, date_type_end_date, property_id, user_id)
+    booking_repository = BookingRepository(connection)
+    error = "Property is unavailable for those dates"
+    confirmation = "Booking confirmed"
+
+    property_repository = PropertyRepository(connection)
+    property = property_repository.find(property_id)
+    formatted_price = property_repository.price_formatter(property)
+
+    if booking_repository.availability_checker(booking) == False:
+        return render_template('listings_id.html', error=error, property=property, formatted_price=formatted_price)
+    else:
+        booking_repository.create(booking)
+        return render_template('listings_id.html', confirmation=confirmation, property=property, formatted_price=formatted_price)
+
+
+
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

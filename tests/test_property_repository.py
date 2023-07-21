@@ -30,3 +30,11 @@ def test_find_property(db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
     repository = PropertyRepository(db_connection)
     assert repository.find(1) == Property(1,'Hackers Hideaway', 'A mystery place full of bugs', 50.00, 1)
+
+def test_price_formatter_formats_to_2_decimals(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository =  PropertyRepository(db_connection)
+    property = repository.find(2)
+    formatted_price = repository.price_formatter(property)
+    assert formatted_price == "£25.50 per night"
+    
