@@ -2,9 +2,35 @@
 <html lang="en">
     <head>
         <title>List Your Property</title>
+        <link rel="stylesheet" href="/static/style.css" >
+        <ul class="navigation">
+            <li><a href="/listings">Home</a></li>
+            <li>My Listings</li>
+            <li>My Bookings</li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
     </head>
     <body>
         <h1>List your property</h1>
-        
+        {% if errors %}
+            <div class="listing-error">{{errors}}</div>
+        {% endif %}
+        <form action="/list-property" method="POST">
+            <p>
+                <label for="name">name</label>
+                <input type="text" name="name" id="name">
+            </p>
+            <p>
+                <label for="description">description</label>
+                <input type="text" name="description" id="description">
+            </p>
+            <p>
+                <label for="price">price</label>
+                <input type="text" name="price" id="price">
+            </p>
+            <p>
+                <input type="submit" role="button" value="list property">
+            </p>
+        </form>
     </body>
 </html>

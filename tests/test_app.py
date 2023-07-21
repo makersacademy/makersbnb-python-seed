@@ -70,7 +70,12 @@ def test_check_for_new_user_with_invalid_password(page, test_web_address,db_conn
 """
 We can render the listings page
 """
-def test_get_listings(page, test_web_address):
+def test_get_listings(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Listings")
@@ -81,8 +86,12 @@ We see a list of all properties from the properties table in /listings
 """
 def test_all_properties_listed_in_listings(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
-    list_tag = page.locator("li")
+    list_tag = page.locator('[class="listings"]')
     expect(list_tag).to_have_text([
         "Hackers Hideaway",
         "Ma house",
@@ -96,6 +105,10 @@ Each listing on the /listings page links to its own /listings/<id> page
 """
 def test_listing_item_links_to_id(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
     page.click("text=Ma house")
     h1_tag = page.locator("h1")
@@ -106,6 +119,10 @@ When we click List your property /listings redirects to /list-property page
 """
 def test_listings_redirects_to_list_property(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings")
     page.click("text=List your property")
     h1_tag = page.locator("h1")
@@ -157,6 +174,7 @@ def test_wrong_password_by_existing_user(page, test_web_address, db_connection):
     page.get_by_role("button").click()
     error_element = page.locator(".login-error")
     expect(error_element).to_have_text("Incorrect password. Please try again.")
+
 
 """
 When on listings/<id> page, we see the property's short description and price per night
@@ -218,3 +236,77 @@ def test_not_available_dates_and_property_booked_for_those_date_message(page, te
     ]
     error_message = page.locator(".error")
     expect(error_message).to_have_text("Property is unavailable for those dates")
+
+"""
+When we click List your property /listings redirects to /list-property page
+and then we can create a new listing that will appear on the /listings page
+"""
+def test_create_new_listing(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
+    page.click("text=List your property")
+    page.fill("input[name='name']", "Our house")
+    page.fill("input[name='description']", "In the middle of our street")
+    page.fill("input[name='price']", "20.00")
+    page.get_by_role("button").click()
+    page.click("text=Our house")
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text("Our house")
+
+'''
+when we are trying to list a property that has no price
+we get an error "please fill in all the details"
+'''   
+def test_creating_listing_without_price(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
+    page.click("text=List your property")
+    page.fill("input[name='name']", "Our house")
+    page.fill("input[name='description']", "In the middle of our street")
+    page.fill("input[name='price']", "")
+    page.get_by_role("button").click()
+    error_element = page.locator(".listing-error")
+    expect(error_element).to_have_text("Please fill in all the details.")
+
+'''
+when we are trying to list a property that has no name
+we get an error "please fill in all the details"
+'''   
+def test_creating_listing_without_name(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
+    page.click("text=List your property")
+    page.fill("input[name='name']", "")
+    page.fill("input[name='description']", "In the middle of our street")
+    page.fill("input[name='price']", "50.00")
+    page.get_by_role("button").click()
+    error_element = page.locator(".listing-error")
+    expect(error_element).to_have_text("Please fill in all the details.")
+
+'''
+when we are trying to list a property that has no description
+we get an error "please fill in all the details"
+'''   
+def test_creating_listing_without_description(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
+    page.click("text=List your property")
+    page.fill("input[name='name']", "Our house")
+    page.fill("input[name='description']", "")
+    page.fill("input[name='price']", "50.00")
+    page.get_by_role("button").click()
+    error_element = page.locator(".listing-error")
+    expect(error_element).to_have_text("Please fill in all the details.")
+
