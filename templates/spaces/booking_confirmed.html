@@ -14,13 +14,12 @@
     </div>
     <br />
     <div>
-      <h1>Booking requested</h1>
-      <p>Booking ID = {{ request_to_use.id}}</p>
-      <p>Name: {{request_to_use.space_id}}</p>
+      <h1>Booking confirmed</h1>
+      <p>Booking ID: {{ request_to_use.id}}</p>
+      <p>Space_id: {{ request_to_use.space_id }}</p>
       <p>Selected Dates: {{ request_to_use.date_to_book }}</p>
       <p>User_id: {{ request_to_use.user_id }}</p>
-      <p>Space_id: {{ request_to_use.space_id }}</p>
-      <p>Request Status: {{ request_to_use.request_status }}</p>
+      <p>Request confirmed: {{ request_to_use.request_status }}</p>
     </div>
     
     <br>{% if g.logged_in_as %}
