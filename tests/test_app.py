@@ -318,7 +318,7 @@ def test_creating_listing_without_description(page, test_web_address, db_connect
 when you are logged user has properties 
 you can see them listed in my listings page
 '''
-def test_get_my_listings_page(page, test_web_address, db_connection):
+def test_get_my_listings_page_with_properties_attached(page, test_web_address, db_connection):
     db_connection.seed('seeds/makers_bnb_database.sql')
     page.goto(f"http://{test_web_address}/index")
     page.fill("input[name='email']", "asha@example.com")
@@ -339,7 +339,7 @@ when you are logged user has no properties
 you will see an error message saying
 "You have no listings to view"
 '''
-def test_get_my_listings_page(page, test_web_address, db_connection):
+def test_get_my_properties_with_no_properties_attached(page, test_web_address, db_connection):
     db_connection.seed('seeds/makers_bnb_database.sql')
     page.goto(f"http://{test_web_address}/index")
     page.fill("input[name='email']", "fahim@example.com")
