@@ -35,3 +35,6 @@ class SpaceRepository():
                         row["user_id"])
             space.append(item)
         return space
+    
+    def update_availability(self, space_id, new_availability):
+        self._connect.execute('UPDATE spaces SET availability = %s WHERE id = %s', [new_availability, space_id])
