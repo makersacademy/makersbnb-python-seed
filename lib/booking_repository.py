@@ -45,39 +45,8 @@ class BookingRepository:
         booked_dates = []
         for booking in bookings:
             booked_dates.extend(self.date_range_maker(booking.start_date, booking.end_date))
-        print("Dates already booked")
-        print(booked_dates)
         dates_to_check = self.date_range_maker(booking_to_check.start_date, booking_to_check.end_date)
-        print("Dates to check")
-        print(dates_to_check)
         for date in dates_to_check:
             if date in booked_dates:
-                print("!!!!")
                 return False
         return True
-                
-
-        # for booking in bookings:
-        #     date_ranges[booking.start_date] = booking.end_date
-        # for item in date_ranges.items():
-        #     start_date = item[0]
-        #     end_date = item[1]
-        #     delta = timedelta(days=1)
-        #     while start_date <= end_date:
-        #         already_booked_dates.append(start_date)
-        #         start_date += delta
-        # if booking_to_check.start_date in dates or booking_to_check.end_date in dates:
-        #     return False
-        # else:
-        #     return True
-            
-
-
-
-
-
-
-
-
-
-    
