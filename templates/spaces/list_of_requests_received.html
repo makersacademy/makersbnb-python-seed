@@ -19,15 +19,22 @@
     
         <h1>Requests Received</h1>
         {% for request in requests %}
-        <p>id: {{ request.id }}</p>
-        <p>date_chosen: {{ request.date_to_book }}</p>
-        <p>bookng status: {{ request.request_status}}</p>
+        <table>
+        <tr>
+        <th>id: {{ request.id }}</th>
+        </tr>
+        <th>date_chosen: {{ request.date_to_book }}</th>
+        <tr>
+        <th>booking status: {{ request.request_status}}</th>
+        </tr>
+        </table>
         <h2><form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/confirm/{{  request.id  }}" method="post">
         <input type="submit" value="confirm booking" />
         </form>
         <form action="/spaces/{{  request.space_id  }}/send_booking_request/{{  request.date_to_book  }}/decline/{{  request.id  }}" method="post">
         <input type="submit" value="cancel your booking" />
-      </form></h2>
+        </form></h2>
+        <br>
         {% endfor %}
       </div>
       <br>
@@ -35,11 +42,17 @@
         <h1>Requests Sent</h1>
 
         {% for request in request_made %}
-        <p>id: {{ request.id }}</p>
-        <p>date_chosen: {{ request.date_to_book }}</p>
-        <p>bookng status: {{ request.request_status}}</p>
-        {% endfor %}
+        <table>
+        <tr>
+        <th>id: {{ request.id }}</th>
+        </tr>
+        <th>date_chosen: {{ request.date_to_book }}</th>
+        <tr>
+        <th>bookng status: {{ request.request_status}}</th>
+        </tr>
+        </table>
         <br>
+        {% endfor %}
       {% else %}
         <p>Access denied!</p>
       {% endif %}

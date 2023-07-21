@@ -66,3 +66,12 @@ p {
     font-weight: bold;
     font-size: 20px;
     }
+
+table {
+    border: 3px solid rgb(9, 74, 28);
+    text-align: center;
+    font-size: 25px;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    }
