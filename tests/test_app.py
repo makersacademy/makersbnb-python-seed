@@ -314,3 +314,39 @@ def test_creating_listing_without_description(page, test_web_address, db_connect
     error_element = page.locator(".listing-error")
     expect(error_element).to_have_text("Please fill in all the details.")
 
+'''
+when you are logged user has properties 
+you can see them listed in my listings page
+'''
+def test_get_my_listings_page(page, test_web_address, db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
+    page.goto(f"http://{test_web_address}/my-listings")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("My listings")
+    name_tag = page.locator(".name")
+    expect(name_tag).to_have_text([
+        "Name: Hackers Hideaway",
+        "Name: Ma house"
+    ]) 
+
+
+'''
+when you are logged user has no properties 
+you will see an error message saying
+"You have no listings to view"
+'''
+def test_get_my_listings_page(page, test_web_address, db_connection):
+    db_connection.seed('seeds/makers_bnb_database.sql')
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "fahim@example.com")
+    page.fill("input[name='password']", "password3")
+    page.get_by_role("button").click()
+    page.goto(f"http://{test_web_address}/my-listings")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("My listings")
+    error_tag = page.locator(".error")
+    expect(error_tag).to_have_text("You have no listings to view")
