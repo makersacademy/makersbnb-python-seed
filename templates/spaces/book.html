@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+          <div>
+            <a href="/index"><i class="fa fa-home"></i>Home</a>
+          </div>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Book A Space</title>
+    <meta charset="utf-8" />
+    <style>
+      table {
+    border: 3px solid rgb(9, 74, 28);
+    text-align: center;
+    font-size: 20px;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    </style>
+  </head>
+
+  {% if g.logged_in_as %}
+
+  <body>
+    <h1>Spaces listed below</h1>
+    {% for space in spaces %}
+    <table>
+      <tr>
+      <th style="font-size: 30px;"><a href="/spaces/{{space.id}}">{{ space.name }}</a></th>
+      </tr>
+      <th><u>Description:</u> <br> {{ space.description }}</th>
+      <tr>
+      <th><u>Price:</u> £{{ space.price }} per night</th>
+      </tr>
+      <th><u>Dates available:</u><br> {{ space.availability }}</th>
+      </tr>
+      <th><u>Space owner:</u><br> {{ space.user_id }}</th>
+    </table>
+    <br>
+    {% endfor %}
+    <h2>
+    <br>
+    <a href="/spaces/new_space">Add new listing</a>
+    </h2>
+    <br>
+    <h2>
+    <a href="/spaces/{{g.user_id}}/my_requests">See my requests received and sent</a>
+    </h2>
+
+    
+    <br>
+    <h3>{{  g.logged_in_as  }}
+      <br>
+      <a href="/logout">Log out</a></h3>
+
+
+
+  {% else %}
+  
+  <h1>Spaces listed below - Log in to request a booking</h1>
+  {% for space in spaces %}
+  <table>
+    <tr>
+    <th>{{ space.name }}</th>
+    </tr>
+    <th>Description: {{ space.description }}</th>
+    <tr>
+    <th>Price: £{{ space.price }} per night</th>
+    <th>Dates available: {{ space.availability }}</th>
+    </tr>
+  </table>
+  {% endfor %}
+
+
+  <h3>Not logged in
+    <br>
+    <a href="/login">Log in here</a>
+  </h3>
+  <br>
+  {% endif %}
+
+
+  </body>
+</html>

@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MakersBnB</title>
-
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
+  <head>
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        h4 {
+        color: black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 25px;
+        }
+    </style>
+    <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
+  </head>
     <body>
-        <p>This is the homepage.</h1>
+    <h1>Welcome to MakersBnB!</h1>
+    <link rel="stylesheet" href="/static/style.css" >
+    <h2>Sign Up</h2>
+    <form action="/index" method="POST">
+        <p>
+            <label for="username">Username</label>
+            <br>
+            <input type="text" name="username">
+        </p>
+        <p>
+            <label for="email">Email</label>
+            <br>
+            <input type="text" name="email" id="email">
+        </p>
+        <p>
+            <label for="user_password">Password</label>
+            <br>
+            <input type="text" name="user_password" id="user_password">
+        </p>
+        <p> 
+            <input type="submit" value="Sign Up">
+        </p>
+
+    {% if g.logged_in_as %}
+
+    <h3>{{  logged_in_as  }}</h3>
+    <br>
+    <h3><a href="/logout">Log out</a></h3>
+    {% else %}
+    <br>
+        <h3>Already have an account?
+            <br>
+            <a href="/login">Log in here</a></h3>
+
+    {% endif %}
     </body>
 </html>

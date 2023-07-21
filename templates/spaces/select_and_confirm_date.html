@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Space</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div>
+      <a href="/index"><i class="fa fa-home"></i>Home</a>
+      <br>
+      <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
+    </div>
+    <br />
+    <div>
+        <div>
+            <h1>{{space.name}}</h1>
+            <p>Description: {{space.description}}</p>
+            <p>Price: £{{space.price}} per night</p>
+            <p>Availability:</p>
+            {% for date in dates %}
+            <a href="/spaces/{{ space.id }}/send_booking_request/{{ date }}" ><li>click to request this date: {{ date }}</li></href>
+            {% endfor %}
+            
+          </div>
+    </div>
+    
+    <br>{% if g.logged_in_as %}
+    <h3>{{  g.logged_in_as  }}
+      <br>
+    <a href="/logout">Log out</a></h3>
+    {% else %}<h3>Not logged in
+      <br>
+        <a href="/login">Log in here</a></h3>
+    {% endif %}
+  </body>
+</html>
