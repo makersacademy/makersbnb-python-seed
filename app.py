@@ -120,20 +120,22 @@ def book_property(property_id):
     date_type_start_date = date.fromisoformat(start_date) #We convert the dates entered in the form to date format
     end_date = request.form["end_date"]
     date_type_end_date = date.fromisoformat(end_date)
-    
-    booking = Booking(None, date_type_start_date, date_type_end_date, property_id, user_id)
     booking_repository = BookingRepository(connection)
-    error = "Property is unavailable for those dates"
-    confirmation = "Booking confirmed"
-
     property_repository = PropertyRepository(connection)
     property = property_repository.find(property_id)
     formatted_price = property_repository.price_formatter(property)
+    booking_date_formatted = Booking(None, date_type_start_date, date_type_end_date, property_id, user_id)
+    booking = Booking(None, start_date, end_date, property_id, user_id)
+    if not booking.is_valid():
+        error = booking.generate_errors()
+        return render_template('listings_id.html', error=error, property=property, formatted_price=formatted_price)
+    error = "Property is unavailable for those dates"
+    confirmation = "Booking confirmed"
 
-    if booking_repository.availability_checker(booking) == False:
+    if booking_repository.availability_checker(booking_date_formatted) == False:
         return render_template('listings_id.html', error=error, property=property, formatted_price=formatted_price)
     else:
-        booking_repository.create(booking)
+        booking_repository.create(booking_date_formatted)
         return render_template('listings_id.html', confirmation=confirmation, property=property, formatted_price=formatted_price)
 
 @app.route('/my-bookings')

@@ -334,3 +334,19 @@ def test_logged_in_user_can_see_my_bookings_page_with_confirmed_bookings(page, t
         "Hackers Hideaway - 2024-01-10 - 2024-01-16",
         "Ma house - 2024-02-17 - 2024-02-18"
     ])
+
+    """
+    When booking dates are invalid, we see an error message
+    """
+    def test_invalid_booking_dates_generates_error(page, test_web_address, db_connection):
+        db_connection.seed("seeds/makers_bnb_database.sql")
+        page.goto(f"http://{test_web_address}/index")
+        page.fill("input[name='email']", "fahim@example.com")
+        page.fill("input[name='password']", "password3")
+        page.get_by_role("button").click()
+        page.click("text=Ma house")
+        page.fill("input[name='start_date']", "2024-02-20")
+        page.fill("input[name='end_date']", "2024-02-18")
+        page.get_by_role("button").click()
+        error = page.locator(".error")
+        expect(error).to_have_text("Please insert: a start date that is earlier than the end date")
