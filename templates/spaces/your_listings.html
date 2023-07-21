@@ -14,9 +14,9 @@
     </div>
     <br>
     <div>
-      <h1>Name: {{space.name}}</h1>
+      <h1>{{space.name}}</h1>
       <p>Description: {{space.description}}</p>
-      <p>Price: {{space.price}}</p>
+      <p>Price: £{{space.price}} per night</p>
       <p>Availability:</p>
       {% for date in dates %}
       <a href="/spaces/{{ space.id }}/send_booking_request/{{ date }}" ><li>click to request this date: {{ date }}</li></href>
