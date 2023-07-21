@@ -3,6 +3,7 @@
   <head>
     <title>MakersBnB</title>
     <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         h4 {
         color: black;
@@ -11,6 +12,7 @@
         font-size: 25px;
         }
     </style>
+    <a href="/book_space"><i class="fa fa-bars"></i>All listings</a>
   </head>
     <body>
     <h1>Welcome to MakersBnB!</h1>
@@ -38,9 +40,9 @@
 
     {% if g.logged_in_as %}
 
-    <h3>{{  logged_in_as  }}
-        <br>
-    <a href="/logout">Log out</a></h3>
+    <h3>{{  logged_in_as  }}</h3>
+    <br>
+    <h3><a href="/logout">Log out</a></h3>
     {% else %}
     <br>
         <h3>Already have an account?
