@@ -136,9 +136,13 @@ def book_property(property_id):
         booking_repository.create(booking)
         return render_template('listings_id.html', confirmation=confirmation, property=property, formatted_price=formatted_price)
 
-
-
-
+@app.route('/my-bookings')
+def get_my_bookings():
+    user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    bookings = booking_repository.find_bookings_with_property_name_and_booking_dates_by_user_id(user_id)
+    return render_template('my-bookings.html', bookings=bookings)
 
 
 
