@@ -28,7 +28,7 @@
     {% for space in spaces %}
     <table>
       <tr>
-      <th style="font-size: 30px;"><a href="/spaces/{{space.id}}">Name: {{ space.name }}</a></th>
+      <th style="font-size: 30px;"><a href="/spaces/{{space.id}}">{{ space.name }}</a></th>
       </tr>
       <th><u>Description:</u> <br> {{ space.description }}</th>
       <tr>
@@ -61,7 +61,7 @@
   {% for space in spaces %}
   <table>
     <tr>
-    <th>Name: {{ space.name }}</th>
+    <th>{{ space.name }}</th>
     </tr>
     <th>Description: {{ space.description }}</th>
     <tr>
