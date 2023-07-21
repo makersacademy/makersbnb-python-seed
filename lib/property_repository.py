@@ -35,7 +35,18 @@ class PropertyRepository():
         return f"£{formatted_price} per night"
         
 
-
+    def find_property_user_id(self,user_id):
+            rows = self._connection.execute(
+                "SELECT * FROM properties WHERE user_id = %s", [user_id]
+            )
+            properties_list = []
+            if rows == []:
+                return []
+            for row in rows:
+                item = Property(
+                    row['id'],row['name'],row['description'],row['price'],row['user_id'])
+                properties_list.append(item)
+            return properties_list
 
 
 

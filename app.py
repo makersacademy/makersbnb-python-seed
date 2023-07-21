@@ -137,6 +137,22 @@ def book_property(property_id):
     else:
         booking_repository.create(booking_date_formatted)
         return render_template('listings_id.html', confirmation=confirmation, property=property, formatted_price=formatted_price)
+    
+@app.route('/my-listings')
+def get_my_listings():
+    user_id = session.get('user_id')
+    connection = get_flask_database_connection(app)
+    repository = PropertyRepository(connection)
+    error = "You have no listings to view"
+    if user_id:
+        current_user_properties = repository.find_property_user_id(user_id)
+        if current_user_properties == []:
+                    return render_template(
+                        'my-listings.html', error=error, properties=current_user_properties)
+        else:
+            for property in current_user_properties:
+                property.price = repository.price_formatter(property)
+            return render_template('my-listings.html', properties=current_user_properties)
 
 @app.route('/my-bookings')
 def get_my_bookings():
@@ -145,7 +161,6 @@ def get_my_bookings():
     booking_repository = BookingRepository(connection)
     bookings = booking_repository.find_bookings_with_property_name_and_booking_dates_by_user_id(user_id)
     return render_template('my-bookings.html', bookings=bookings)
-
 
 
 # These lines start the server if you run this file directly
