@@ -90,3 +90,14 @@ def test_booking_availability_returns_true(db_connection):
     availability = repository.availability_checker(booking)
     assert availability == True
 
+""""
+When we call BookingRepository#find_bookings_with_property_name_and_booking_dates_by_user_id
+with a user id
+we get a list of strings containing the propertyname, start and end dates
+"""
+
+def test_finding_bookings_with_property_name_and_dates_from_user_id(db_connection):
+    db_connection.seed("seeds/makers_bnb_database.sql")
+    repository = BookingRepository(db_connection)
+    bookings = repository.find_bookings_with_property_name_and_booking_dates_by_user_id(4)
+    assert bookings == ["Hackers Hideaway - 2024-01-01 - 2024-01-08"]

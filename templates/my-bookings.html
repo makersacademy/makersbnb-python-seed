@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Listings</title>
+        <title>My Bookings</title>
         <link rel="stylesheet" href="/static/style.css" >
         <ul class="navigation">
+            <li><a href="/listings">Home</a></li>
             <li>My Listings</li>
             <li><a href="/my-bookings">My Bookings</a></li>
             <li><a href="/logout">Log Out</a></li>
         </ul>
     </head>
     <body>
-        <h1>Listings</h1>
-        <a href="/list-property">List your property</a>
+        <h1>My Bookings</h1>
         <ul>
-            {% for property in properties %}
-            <li class="listings">
-                <a href="/listings/{{property.id}}">{{property.name}}</a>
+            {% for booking in bookings %}
+            <li class="my_bookings">
+                {{booking}}
             </li>
             {% endfor %}
         </ul>
+        
     </body>
 </html>
