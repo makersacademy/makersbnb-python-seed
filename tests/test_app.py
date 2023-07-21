@@ -181,6 +181,10 @@ When on listings/<id> page, we see the property's short description and price pe
 """
 def test_listings_id_page_has_decription_and_price(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb_database.sql")
+    page.goto(f"http://{test_web_address}/index")
+    page.fill("input[name='email']", "asha@example.com")
+    page.fill("input[name='password']", "password1")
+    page.get_by_role("button").click()
     page.goto(f"http://{test_web_address}/listings/1")
     description_class = page.locator(".description")
     price_class = page.locator(".price")
