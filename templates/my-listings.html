@@ -18,9 +18,9 @@
 
             {% for property in properties %}
             <li>
-                <strong class="name">Name:</strong> {{ property.name }}<br>
+                <p class="name"><strong>Name:</strong> {{ property.name }}</p>
                 <strong>Description:</strong> {{ property.description }}<br>
-                        <strong>Price:</strong> {{ property.price }}
+                <strong>Price:</strong> {{ property.price }}
                 <hr>
             </li>
         {% endfor %}
