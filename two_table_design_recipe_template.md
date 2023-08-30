@@ -122,7 +122,7 @@ CREATE TABLE properties (
   price int,
   location text, 
   start_date date,
-  end_date date
+  end_date date,
   available boolean
 -- The foreign key name is always {other_table_singular}_id
   user_id int,

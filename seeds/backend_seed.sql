@@ -1,8 +1,9 @@
 -- First, we must delete (drop) all our tables
-DROP TABLE IF EXISTS users;
+DROP TABLE users CASCADE;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS properties;
 DROP SEQUENCE IF EXISTS properties_id_seq;
+
 
 -- Then, we recreate them
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
@@ -36,8 +37,8 @@ INSERT INTO users (email, password) VALUES ('test3@test.com', 'password12345');
 INSERT INTO users (email, password) VALUES ('test4@test.com', 'password123456');
 
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Flat', 'Sunny 2bdr flat in city centre', 100, Hackney, 2023-08-30, 2023-12-31, 1, 1 );
+    VALUES ('Flat', 'Sunny 2bdr flat in city centre', 100, 'Hackney', '2023-08-30', '2023-12-31', '1', 1 );
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Maisonette','Large 3bdr 2ba with spacious garden', 300, Brixton, 2023-08-30, 2023-12-31, 1, 2 );
+    VALUES ('Maisonette','Large 3bdr 2ba with spacious garden', 300, 'Brixton', '2023-08-30', '2023-12-31', '1', 2 );
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Annex','Double bed 2floor with ensuite', 80, Brighton, 2023-08-30, 2023-12-31, 1, 3 );
+    VALUES ('Annex','Double bed 2floor with ensuite', 80, 'Brighton', '2023-08-30', '2023-12-31', '1', 3 );
