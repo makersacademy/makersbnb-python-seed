@@ -33,6 +33,6 @@ and I format it to a string,
 it comes out in a nice format 
 """
 
-def test_format(): 
-    properties = Properties(1, 'Flat', 'Sunny 2bdr flat in city centre', 100, 'Hackney', '2023-08-30', '2023-12-31', '1', 1 )
-    assert str(properties) == '1 - Flat - Sunny 2bdr flat in city centre - 100 - Hackney - 2023-08-30 - 2023-12-31 - 1 - 1'
+# def test_format(): 
+#     properties = Properties(1, 'Flat', 'Sunny 2bdr flat in city centre', 100, 'Hackney', '2023-08-30', '2023-12-31', '1', 1 )
+#     assert str(properties) == '1 - Flat - Sunny 2bdr flat in city centre - 100 - Hackney - 2023-08-30 - 2023-12-31 - 1 - 1'

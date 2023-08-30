@@ -6,26 +6,26 @@ class PropertiesRepository():
         self._connection = connection
 
     def all(self):
-        propertiess_dictionary = self._connection.execute("SELECT * FROM properties")
-        propertiess = []
-        for properties in propertiess_dictionary:
-            properties_object = Properties(properties["id"], properties["property_type"], properties["description"], properties["price"], properties["location"], properties["start_date"], properties["end_date"], properties["available"], properties["user_id"])
-            propertiess.append(properties_object)
-        return propertiess
+        properties_dictionary = self._connection.execute("SELECT * FROM properties")
+        properties = []
+        for property in properties_dictionary:
+            properties_object = Properties(property["id"], property["property_type"], property["description"], property["price"], property["location"], property["start_date"], property["end_date"], property["available"], property["user_id"])
+            properties.append(properties_object)
+        return properties
     
     def find(self, id):
-        propertiess_dictionary = self._connection.execute("SELECT * FROM propertiess WHERE id = %s", [id])
-        properties = propertiess_dictionary[0]
-        return Properties(properties["id"], properties["property_type"], properties["description"], properties["price"], properties["location"], properties["start_date"], properties["end_date"], properties["available"])
+        properties_dictionary = self._connection.execute("SELECT * FROM Properties WHERE id = %s", [id])
+        property = properties_dictionary[0]
+        return Properties(property["id"], property["property_type"], property["description"], property["price"], property["location"], property["start_date"], property["end_date"], property["available"])
         
     def create(self, properties):
-        self._connection.execute("INSERT INTO propertiess(property_type, description, price, location, start_date, end_date, available) VALUES (%s, %s, %s, %s, %s, %s, %s)", [properties.property_type, properties.description, properties.price, properties.location, properties.start_date, properties.end_date, properties.available])
+        self._connection.execute("INSERT INTO Properties(property_type, description, price, location, start_date, end_date, available) VALUES (%s, %s, %s, %s, %s, %s, %s)", [properties.property_type, properties.description, properties.price, properties.location, properties.start_date, properties.end_date, properties.available])
         return None 
         
     def update(self, properties):
-        self._connection.execute("UPDATE propertiess SET property_type = %s , description = %s, price = %s, location = %s, start_date = %s, end_date = %s, available = %s WHERE id = %s", [properties.property_type, properties.description, properties.price, properties.location, properties.start_date, properties.end_date, properties.available, properties.id])
+        self._connection.execute("UPDATE Properties SET property_type = %s , description = %s, price = %s, location = %s, start_date = %s, end_date = %s, available = %s WHERE id = %s", [properties.property_type, properties.description, properties.price, properties.location, properties.start_date, properties.end_date, properties.available, properties.id])
         return None   
     
     def delete(self, id):
-        self._connection.execute("DELETE FROM propertiess WHERE id = %s", [id])
+        self._connection.execute("DELETE FROM Properties WHERE id = %s", [id])
         return None 
