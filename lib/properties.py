@@ -5,9 +5,9 @@ class Properties:
         self.property_type = property_type
         self.description = description
         self.price = price
-        self.location = location
-        self.start_date = start_date
-        self.end_date = end_date
+        self.location = location 
+        self.start_date = start_date # date time object
+        self.end_date = end_date # date time object
         self.available = available
         self.user_id = user_id
     

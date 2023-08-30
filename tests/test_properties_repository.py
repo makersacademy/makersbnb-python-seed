@@ -1,6 +1,7 @@
 import os
 from lib.properties_repository import *
 from lib.properties import *
+import datetime
 
 
 """
@@ -12,9 +13,9 @@ def test_all(db_connection):
     repository = PropertiesRepository(db_connection)
     actual = repository.all()
     expected = [
-        Properties(1, 'Flat', 'Sunny 2bdr flat in city centre', 100, 'Hackney', '2023-08-30', '2023-12-31', True, 1),
-        Properties(2, 'Maisonette','Large 3bdr 2ba with spacious garden', 300, 'Brixton', '2023-08-30', '2023-12-31', True, 2),
-        Properties(3, 'Annex','Double bed 2floor with ensuite', 80, 'Brighton', '2023-08-30', '2023-12-31', True, 3)
+        Properties(1, 'Flat', 'Sunny 2bdr flat in city centre', 100, 'Hackney', datetime.date(2023, 10, 30), datetime.date(2023, 12, 31), True, 1),
+        Properties(2, 'Maisonette','Large 3bdr 2ba with spacious garden', 300, 'Brixton', datetime.date(2023, 10, 30), datetime.date(2023, 12, 31), True, 2),
+        Properties(3, 'Annex','Double bed 2floor with ensuite', 80, 'Brighton', datetime.date(2023, 10, 30), datetime.date(2023, 12, 31), True, 3)
     ]
     
     print("Actual properties:")
@@ -25,7 +26,7 @@ def test_all(db_connection):
     for prop in expected:
         print(prop)
         
-    assert expected[0].property_type == actual[0].property_type
+    assert expected[0].start_date == actual[0].start_date
     assert actual == expected 
 
 # """
