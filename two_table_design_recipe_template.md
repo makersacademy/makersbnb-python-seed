@@ -13,7 +13,7 @@ As a user I can register with email and password
 As a user I can see the listings with 
 property type, description, price, location and dates
 
-As a user I can book an available property
+As a user I can properties an available property
 
 ```
 

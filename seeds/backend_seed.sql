@@ -1,8 +1,9 @@
 -- First, we must delete (drop) all our tables
-DROP TABLE users CASCADE;
-DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS properties;
 DROP SEQUENCE IF EXISTS properties_id_seq;
+-- DROP TABLE users CASCADE;
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS users_id_seq;
 
 
 -- Then, we recreate them
