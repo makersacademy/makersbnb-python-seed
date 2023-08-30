@@ -23,6 +23,7 @@ input {
     height: 50px;
     border-radius: 15px;
     font-size: 20px;
+    text-align: center;
     
 }
 
@@ -33,7 +34,7 @@ button{
     border-radius: 20px;
 }
 
-div {
+.login_page {
     width:max-content;
     height: fit-content;
     border: 5px solid rgb(0, 0, 0);
@@ -41,4 +42,8 @@ div {
     float: right;
     margin-top: 300px;
     margin-right: 200px;
+}
+
+.psw{
+    margin-left: 0%;
 }
