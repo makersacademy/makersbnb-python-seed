@@ -30,14 +30,14 @@ CREATE TABLE properties (
 );
 
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO users (email, password) VALUES ('Pixies', 'Rock');
-INSERT INTO users (email, password) VALUES ('ABBA', 'Pop');
-INSERT INTO users (email, password) VALUES ('Taylor Swift', 'Pop');
-INSERT INTO users (email, password) VALUES ('Nina Simone', 'Jazz');
+INSERT INTO users (email, password) VALUES ('test1@test.com', 'password123');
+INSERT INTO users (email, password) VALUES ('test2@test.com', 'password1234');
+INSERT INTO users (email, password) VALUES ('test3@test.com', 'password12345');
+INSERT INTO users (email, password) VALUES ('test4@test.com', 'password123456');
 
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Doolittle', 1989, 1);
+    VALUES ('Flat', 'Sunny 2bdr flat in city centre', 100, Hackney, 2023-08-30, 2023-12-31, 1, 1 );
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Surfer Rosa', 1988, 1);
+    VALUES ('Maisonette','Large 3bdr 2ba with spacious garden', 300, Brixton, 2023-08-30, 2023-12-31, 1, 2 );
 INSERT INTO properties (property_type, description, price, location, start_date, end_date, available, user_id) 
-    VALUES ('Waterloo', 1974, 2);
+    VALUES ('Annex','Double bed 2floor with ensuite', 80, Brighton, 2023-08-30, 2023-12-31, 1, 3 );
