@@ -1,4 +1,4 @@
-/* login and sign up styling*/ 
+/* login and sign up styling
 
 body {
     font-size: 30px;
@@ -50,7 +50,7 @@ button{
     margin-left: 0%;
 }
 
-/* welcome homepage styling*/ 
+
 
 .welcome_page{
     margin-top: 2%;
@@ -73,7 +73,7 @@ table, .room_price, th {
 }
 
 
-/* booking confirmed styling*/ 
+
 
 .welcome_page{
     margin-top: 20%;
@@ -85,3 +85,4 @@ table, .room_price, th {
 }
 
 
+/*
