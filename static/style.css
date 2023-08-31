@@ -73,4 +73,15 @@ table, .room_price, th {
 }
 
 
+/* booking confirmed styling*/ 
+
+.welcome_page{
+    margin-top: 20%;
+    margin-left: 35%;
+}
+
+.booking_confirmed_txt{
+    margin-left: 18%;
+}
+
 
