@@ -50,11 +50,29 @@ form {
     padding: 20px
 }
 
-td {
-  padding: 5vh;
+.room_description {
+float: left;
+justify-content: left;
 }
 
+.room_price {
+  width: 150px;
+  float: left;
+  margin-top: 40px;
+}
 
+.rooms_found_txt{
+  margin-left: -1600px;
+  margin-top: 100px;
+}
+
+th {
+  margin-right: 100px;
+}
+
+td {
+  text-align: center;
+}
 
 a:link {
   color: gray;
