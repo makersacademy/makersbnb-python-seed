@@ -1,28 +1,26 @@
-<!--LOGIN AND SIGNUP PAGE-->
+@media (prefers-color-scheme: dark) {
+
 
 body {
-    background-color: black !important;
-    font-family: var(--font-sans);
-    background: radial-gradient(circle at 45% -18%, hsl(263, 71%, 90%), rgba(255, 255, 255, 0) 20%),
-        radial-gradient(circle at 55% -18%, hsl(246, 72%, 90%), rgba(255, 255, 255, 0) 20%);
+    background-color: rgb(21, 21, 21) !important;
+    text-align: center;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-position: top;
     background-repeat: no-repeat;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh !important;
+    min-height:     250vh !important;
     overflow-x: hidden !important;
+    margin: 0;
+    background: radial-gradient(circle at 50% -20%, hsl(0, 0%, 100%), rgba(255, 255, 255, 0) 25%);	
 }
 
- 
-body {
-        background: radial-gradient(circle at 45% -20%, hsl(263, 53%, 20%), rgba(255, 255, 255, 0) 25%),
-            radial-gradient(circle at 55% -20%, hsl(337, 47%, 25%), rgba(255, 255, 255, 0) 25%);	
-}
-
-h1 {
-    font-size: xx-large;
+.message {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: rgb(39, 38, 38);
+    color: #9441FF;
+    font-weight: bolder;
+    font-size: 8vh;
 }
 
 .login_page {
@@ -37,20 +35,31 @@ body img {
 align-items: left;
 width: 40%;
 max-height: 40%;
-border-radius: 10px;
+border-radius: 7px;
+margin-left: 2.5%;
 }
 
-.logo {
-    max-height: 100;    
+.header {
+    position:static;
+    overflow: hidden;
+    width: 100%;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    text-align: left;
+    background-color: rgb(11, 11, 11);
+    height: 15vh;
+    margin-bottom: 10;
+    opacity: 80%;
 }
 
-.logo img {
-    max-height: 100px;
-    max-width: 100px;
+.header img {
+  padding-top: 10px;
+    max-height: 20vh;
+    max-width: 10vh;
 }
 
-.logo h1 {
-    padding-top: 50px;
+.header h1 {
+    padding-top: 10px;
 }
 
 form {
@@ -58,38 +67,55 @@ form {
 }
 
 input {
+    min-width: 35%;
     margin: 10px;
     padding: 10px;
+    border-radius: 50px;
+    border: none;
+    color: #9441FF;
 }
 
-table {
-    border-spacing: 30px;
-    border: 1px solid rgb(168, 162, 162);
-    text-align: center;
-    margin: 25px;
-    width: 80%;
+button {
+    margin: 10px;
+    width: 150;
+    height: 35;
+    background-color: 9441FF;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    font-weight: bolder;
+}
+a:link {
+  color: gray;
+  background-color: transparent;
+  text-decoration: none;
 }
 
-img {
-    width: 600px;
-    height: 150px;
+a:visited {
+  color: gray;
+  background-color: transparent;
+  text-decoration: none;
 }
 
-.room_description{
-    width: 800px;
-    float: left;
+a:hover {
+  color: #9441FF;
+  background-color: transparent;
+  text-decoration: none;
 }
 
-.room_price{
-    width: 150px;
-    float: left;
-    margin-top: 40px;
+a:active {
+  color: rgb(172, 89, 255);
+  background-color: transparent;
+  text-decoration: underline;
 }
 
-.rooms_found_txt{
-    margin-left: -1600px;
-    margin-top: 100px;
+.psw {
+  font-size: small;
+}
+
+.login {
+  font-size: small;
 }
 
 
-
+}
