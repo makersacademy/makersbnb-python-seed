@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Spaces</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Add a new space.</h1>
+        <form action="/spaces" method="POST">
+            <p>
+                <label for="space_name">Space Name</label>
+                <br>
+                <input type="text" name="space_name" id="space_name">
+            </p>
+            <p>
+                <label for="description">Description</label>
+                <br>
+                <input type="text" name="description" id="description">
+            </p>
+            <p>
+                <label for="price">Price Per night</label>
+                <br>
+                <input type="number" name="price" id="price">
+            </p>
+            <p>
+                <label for="user_id">User ID</label>
+                <br>
+                <input type="text" name="user_id" id="user_id">
+            </p>
+            <p>
+                <label for="start_date">Start Date (dd/mm/yyyy)</label>
+                <br>
+                <input type="text" name="start_date" id="start_date">
+            </p>
+            <p>
+                <label for="end_date">End Date (dd/mm/yyyy)</label>
+                <br>
+                <input type="text" name="end_date" id="end_date">
+            </p>
+            <p>
+                <input type="submit" value="Add space">
+            </p>
+            </form>
+    </body>
+</html>
