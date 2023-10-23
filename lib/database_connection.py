@@ -9,9 +9,10 @@ from psycopg.rows import dict_row
 # If the below seems too complex right now, that's OK.
 # That's why we have provided it!
 class DatabaseConnection:
-    # VVV CHANGE BOTH OF THESE VVV
+
     DEV_DATABASE_NAME = "makersbnb"
     TEST_DATABASE_NAME = "makersbnb_test"
+
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
