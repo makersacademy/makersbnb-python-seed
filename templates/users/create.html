@@ -1,13 +1,13 @@
 {% extends "components/base.html" %}
 {%block title%}
-Title!!
+Create User
 {%endblock title %}
 
 {%block content%}
-<div class="d-flex align-items-center" style="height: 80vh;">
+<div class="form-container" style="height: 80vh;">
     <div class="card mx-auto" style="width: 35rem;">
         <div class="card-body">
-        <h5 class="card-title">Create New Account</h5>
+        <h5 class="card-title">Create New User</h5>
         <form action="">
             <div class="mb-3">
                 <label class="form-label" for="username">Username</label>
@@ -21,7 +21,7 @@ Title!!
                 <label class="form-label" for="password2">Confirm Password</label>
                 <input class="form-control" type="password" name="password2" id="password2">
             </div>
-            <input class="btn btn-primary" type="submit" value="Login">
+            <input class="btn btn-primary login-btn" type="submit" value="Create New User">
         </form>
     </div>
 </div>

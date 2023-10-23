@@ -1,6 +1,6 @@
 {% extends "components/base.html" %}
 {%block title%}
-Title!!
+Login
 {%endblock title %}
 
 {%block content%}
@@ -17,8 +17,10 @@ Title!!
                 <label class="form-label" for="password">Password</label>
                 <input class="form-control" type="password" name="password" id="password">
             </div>
-            <input class="btn btn-primary" type="submit" value="Login">
+            <input class="btn btn-primary login-btn" type="submit" value="Login">
         </form>
+        <div class="mt-2 text-center">
+            <a class="signup-link" href="{{ url_for('get_new_user') }}">New to MakersBNB?</a>
         </div>
     </div>
 </div>
