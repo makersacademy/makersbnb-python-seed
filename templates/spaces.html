@@ -11,5 +11,10 @@
     </head>
     <body>
         <h1>Spaces available.</h1>
+        {%for space in spaces%}
+        <li>
+            {{space.space_name}} 
+        </li>
+        {%endfor%}
     </body>
 </html>

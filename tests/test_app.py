@@ -15,10 +15,10 @@ def test_get_spaces(page, test_web_address):
 """
 we want to tests for lists of spaces available
 """
-# def test_get_list_of_spaces(page, test_web_address):
-    #page.goto(f"http://{test_web_address}/spaces") 
-    #h1_tag = page.locator("h1")
-    #expect(h1_tag).to_have_text("Spaces available.")
+def test_get_list_of_spaces(page, test_web_address):
+    page.goto(f"http://{test_web_address}/spaces") 
+    li_tags = page.locator("li")
+    expect(li_tags).to_have_text(["Sunny Cottage","Hill House","MCdonalds"])
 
 
 
