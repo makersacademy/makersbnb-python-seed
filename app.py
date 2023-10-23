@@ -1,4 +1,5 @@
 import os
+from lib.space import Space
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 
@@ -9,7 +10,10 @@ app = Flask(__name__)
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
-    return render_template('spaces.html')
+    spaces = [Space(1, "Sunny Cottage", "Light spacious home", 200, 1), 
+              Space(2, "Hill House", "Haunted house", 300, 2),
+              Space(3, "MCdonalds", "home of donald", 400, 3)]
+    return render_template('spaces.html', spaces=spaces)
 
 
 
