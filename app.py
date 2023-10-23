@@ -12,8 +12,7 @@ app = Flask(__name__)
 def get_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
-    spaces = repo_instance.all()
-    print(f"!!!!! REPO INSTANCE ALL = {spaces}")
+    spaces = repo_instance.all() # breaking line
     return render_template('spaces.html', spaces=spaces)
 
 

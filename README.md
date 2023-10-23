@@ -29,6 +29,9 @@ Everyone in the team should then clone this fork to their local machine to work 
 # Run the tests (with extra logging)
 ; pytest -sv
 
+# Seed the dev database 
+
+
 # Run the app
 ; python app.py
 
