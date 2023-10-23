@@ -11,10 +11,29 @@
     </head>
     <body>
         <h1>Spaces available.</h1>
-        {%for space in spaces%}
-        <li>
-            {{space.space_name}} 
-        </li>
-        {%endfor%}
+        {% for space in spaces %}
+        <div class="space-div">
+            <li class="space-id">id: {{space.id}}</li>
+            <!-- <li>
+                space_name: {{space.space_name}} 
+            </li>
+            <li>
+                description: {{space.description}} 
+            </li>
+            <li>
+                price_per_night: {{space.price_per_night}} 
+            </li>
+            <li>
+                user_id: {{space.user_id}} 
+            </li>
+            <li>
+                start_date: {{space.start_date}} 
+            </li>
+            <li>
+                end_date: {{space.end_date}} 
+            </li> -->
+        </div>
+        
+        {% endfor %}
     </body>
 </html>
