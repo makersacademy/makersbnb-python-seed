@@ -6,11 +6,18 @@ from lib.database_connection import get_flask_database_connection
 app = Flask(__name__)
 
 # == Your Routes Here ==
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    connection = get_flask_database_connection(app)
+    return render_template('spaces.html')
+
+
 
 # GET /index
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
+
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
