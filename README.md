@@ -30,7 +30,7 @@ Everyone in the team should then clone this fork to their local machine to work 
 ; pytest -sv
 
 # Seed the dev database 
-
+; psql -d YOUR_PROJECT_NAME < seeds/seedfile.sql
 
 # Run the app
 ; python app.py
