@@ -1,8 +1,29 @@
 from playwright.sync_api import Page, expect
 
 # Tests for your routes go here
+"""
+we want to render the spaces page
+"""
+def test_get_spaces(page, test_web_address):
+    page.goto(f"http://{test_web_address}/spaces") 
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Spaces available.")
+
+
+
 
 """
+we want to tests for lists of spaces available
+"""
+# def test_get_list_of_spaces(page, test_web_address):
+    #page.goto(f"http://{test_web_address}/spaces") 
+    #h1_tag = page.locator("h1")
+    #expect(h1_tag).to_have_text("Spaces available.")
+
+
+
+"""
+
 We can render the index page
 """
 def test_get_index(page, test_web_address):
