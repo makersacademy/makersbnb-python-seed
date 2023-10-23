@@ -15,6 +15,9 @@ def get_spaces():
               Space(3, "MCdonalds", "home of donald", 400, 3)]
     return render_template('spaces.html', spaces=spaces)
 
+@app.route('/add_space', methods=['GET'])
+def add_space():
+    return render_template('add_space.html')
 
 
 # GET /index
@@ -31,3 +34,6 @@ def get_index():
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+
+
+
