@@ -2,11 +2,6 @@ body {
     font-size: 18px;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-}
-
-.form-container {
-    margin-top: 200px;
+.card {
+    box-shadow: 0 0 10px 5px lightblue;
 }
