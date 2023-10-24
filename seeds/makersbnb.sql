@@ -36,11 +36,20 @@ INSERT INTO
 
 -- AvailableDate
 
-DROP TABLE IF EXISTS AvailableDates
+DROP TABLE IF EXISTS AvailableDates;
 DROP SEQUENCE IF EXISTS AvailableDates_id_seq;
 
 CREATE TABLE AvailableDates (
     id SERIAL PRIMARY KEY,
     date_name TEXT,
-    space_id FOREIGN KEY REFERENCES spaces(id)
+    space_id INT,
+    CONSTRAINT fk_space_id
+        FOREIGN KEY(space_id)
+        REFERENCES spaces(id)
 );
+
+INSERT INTO AvailableDates (date_name, space_id)
+    VALUES ('12/11/03', 1);
+INSERT INTO AvailableDates (date_name, space_id)
+    VALUES ('11/11/00', 2); 
+-- Here i found out sql doesnt accept double "" quotes GRRR
