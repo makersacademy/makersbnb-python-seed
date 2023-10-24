@@ -15,6 +15,13 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+# GET /listings return the listing of all the spaces
+
+@app.route('/listings', methods=['GET'])
+def get_listings():
+    return render_template('listings.html')
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
