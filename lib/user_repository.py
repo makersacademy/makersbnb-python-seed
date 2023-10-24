@@ -9,17 +9,18 @@ class UserRepository(BaseModelManager):
         self._table_name = 'users'
 
     def create(self, user):
-        self._connection.execute(
-            'INSERT INTO users (email, username, password) VALUES (%s, %s, %s)',
+        rows = self._connection.execute(
+            'INSERT INTO users (email, username, password) VALUES (%s, %s, %s) RETURNING id',
             [user.email, user.username, user.password]
         )
-        return None
+        user.id = rows[0].get('id')
+        return user
 
     #TODO: Move it to BASE CLASS
     def update(self, user):
-        rows = self._connection.execute(
-            'UPDATE users SET email = %s, username = %s, password = %s WHERE id = %s RETURNING id',
+        self._connection.execute(
+            'UPDATE users SET email = %s, username = %s, password = %s WHERE id = %s',
             [user.email, user.username, user.password, user.id])
-        user.id = rows[0].get('id')
+        
         return None
     
