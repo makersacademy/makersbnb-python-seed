@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>MakersBnB</title>
+        <meta charset ="utf-8">
+        <title>MakersBnB Sign Up</title>
 
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
@@ -10,6 +11,20 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <h1>Sign Up</h1>
+        <form action="/index" method="post">
+            <fieldset>
+                <label id="username-label">Username<input type="text" name="username" id="username"></label> 
+            </br>
+                <label id="email-label">email<input type="text" name="email" id="email"></label>
+            </br>
+                <label id="password-label">password<input type="text" name="password" id="password"></label>
+            </br>
+                <input type="submit" value="Sign Up">
+            </fieldset>
+
+
+        </form>
+
     </body>
 </html>
