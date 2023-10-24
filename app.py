@@ -67,10 +67,13 @@ def post_available_date():
     repo_instance.create(new_available_date)
 
     return render_template('add_available_date.html')
-@app.route('/sign_up', methods=['GET'])
-def get_sign_up():
-    return render_template('sign_up.html')
 
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space_request_page(id):
+    connection = get_flask_database_connection(app)
+    repo_instance = SpaceRepository(connection)
+    space = repo_instance.find(id)
+    return render_template('request_space.html', space = space)
 
 # GET /index
 # Returns the homepage
