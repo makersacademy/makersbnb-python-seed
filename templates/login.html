@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <div><a name="home" href="/">Home</a></div>
+        <h1>Log in to Makers B&B</h1>
+
+        <div>
+            <form action="/login" method="POST">
+                <p>
+                    <label for="email">Email</label>
+                    <br>
+                    <input type="text" name="email" id="email">
+                    <br>
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <br>
+                    <input type="password" name="password_attempt" id="password_attempt">
+                </p>
+                <input type="submit" value="Log In">
+            </form>
+        </div>
+    </body>
+</html>
