@@ -47,6 +47,8 @@ CREATE TABLE AvailableDates (
     CONSTRAINT fk_space_id
         FOREIGN KEY(space_id)
         REFERENCES spaces(id)
+        ON DELETE CASCADE
+        -- ^ If a space is deleted, the associated available date(s) will also be deleted, carry it over to bookings someway...
 );
 
 INSERT INTO AvailableDates (date_name, space_id)
