@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spaces</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        {{ render_partial('shared/partials/navbar.html.jinja')}}
+        <h1>Spaces available.</h1>
+        {% for space in spaces %}
+        <div class="space-div">
+            <li class="space-id">id: {{space.id}}</li>
+            <li>
+                space_name: {{space.space_name}} 
+            </li>
+            <li>
+                description: {{space.description}} 
+            </li>
+            <li>
+                price_per_night: {{space.price_per_night}} 
+            </li>
+            <li>
+                user_id: {{space.user_id}} 
+            </li>
+            <li>
+                start_date: {{space.start_date}} 
+            </li>
+            <li>
+                end_date: {{space.end_date}} 
+            </li>
+        </div>
+        
+        {% endfor %}
+    </body>
+</html>

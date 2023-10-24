@@ -14,16 +14,22 @@ jinja_partials.register_extensions(app)
 
 # == Your Routes Here ==
 
+## Home
+
+@app.route('/', methods=['GET'])
+def get_index():
+    return render_template('index.html.jinja')
+
 ## Spaces
 
-@app.route('/spaces', methods=['GET'])
+@app.route('/spaces/index', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
     spaces = repo_instance.all()
-    return render_template('spaces.html.jinja', spaces=spaces)
+    return render_template('/spaces/index.html.jinja', spaces=spaces)
 
-@app.route('/spaces', methods=['POST'])
+@app.route('/spaces/index', methods=['POST'])
 def post_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
@@ -34,17 +40,15 @@ def post_spaces():
     new_space = Space(None, space_name, description, price, user_id)
     repo_instance.create(new_space)
     spaces = repo_instance.all()
-    return render_template('spaces.html.jinja', spaces=spaces)
+    return render_template('/spaces/index.html.jinja', spaces=spaces)
 
-@app.route('/add_space', methods=['GET'])
-def add_space():
-    return render_template('add_space.html.jinja')
+@app.route('/spaces/add_a_space_form', methods=['GET'])
+def add_a_space_form():
+    return render_template('/spaces/add_a_space_form.html.jinja')
 ## Signup
 @app.route('/sign_up', methods=['GET'])
 def get_sign_up():
     return render_template('sign_up.html.jinja')
-
-
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
@@ -66,7 +70,7 @@ def post_available_date():
 
     repo_instance.create(new_available_date)
 
-    return render_template('add_available_date.html.jinja')
+    return render_template('/spaces/add_available_date.html.jinja')
 
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space_request_page(id):
@@ -74,15 +78,6 @@ def get_space_request_page(id):
     repo_instance = SpaceRepository(connection)
     space = repo_instance.find(id)
     return render_template('request_space.html.jinja', space = space)
-
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
-
-@app.route('/', methods=['GET'])
-def get_index():
-    return render_template('index.html.jinja')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

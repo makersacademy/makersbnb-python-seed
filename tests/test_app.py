@@ -5,31 +5,25 @@ from playwright.sync_api import Page, expect
 we want to render the spaces page
 """
 def test_get_spaces(page, test_web_address):
-    page.goto(f"http://{test_web_address}/spaces") 
+    page.goto(f"http://{test_web_address}/spaces/index") 
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Spaces available.")
-
-
-
 
 """
 we want to tests for lists of spaces available
 """
 def test_get_list_of_spaces(page, test_web_address, db_connection):
     db_connection.seed('seeds/makersbnb.sql')
-    page.goto(f"http://{test_web_address}/spaces") 
+    page.goto(f"http://{test_web_address}/spaces/index") 
     space_id_li_tags = page.locator(".space-id")
     expect(space_id_li_tags).to_have_text(["id: 1", "id: 2"])
 
-
-
 """
-
 We can render the index page
 """
 def test_get_index(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
+    page.goto(f"http://{test_web_address}/")
 
     # We look at the <p> tag
     strong_tag = page.locator("p")
@@ -40,8 +34,8 @@ def test_get_index(page, test_web_address):
     
     
 """ we want to render add new space page """
-def test_add_space(page, test_web_address):
-    page.goto(f"http://{test_web_address}/add_space")
+def test_add_a_space_form(page, test_web_address):
+    page.goto(f"http://{test_web_address}/add_a_space_form")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Add a new space.")
 
@@ -51,7 +45,7 @@ Test adding new space using webpage, then view all spaces once added
 """
 
 def test_add_new_space(page, test_web_address, db_connection):
-    page.goto(f"http://{test_web_address}/add_space")
+    page.goto(f"http://{test_web_address}/add_a_space_form")
     db_connection.seed('seeds/makersbnb.sql')
 
     page.fill("input[name=space_name]", "Test New Space Name")
