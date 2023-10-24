@@ -25,6 +25,16 @@ CREATE TABLE spaces (
     owner_id INTEGER
 );
 
+CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    space_id INTEGER,
+    booker_id INTEGER,
+    start_date date,
+    end_date date,
+    confirmed boolean
+);
+
 
 -- Finally, we add any records that are needed for the tests to run
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Leonardo', 'Leonardopoulos', 'leonar364@net.com','pug3&');
