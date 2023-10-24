@@ -9,20 +9,20 @@ class SpaceRepository:
         rows = self._connection.execute('SELECT * FROM space')
         spaces = []
         for row in rows:
-            spaces.append(Space(row['id'], row['space_name'], row['description'], row['price_per_night'], row['user_id'], row['start_date'], row['end_date']))
+            spaces.append(Space(row['id'], row['space_name'], row['description'], row['price_per_night'], row['user_id']))
         return spaces
     
     def find(self, id):
         rows = self._connection.execute('SELECT * FROM space WHERE id = %s', [id])
         row = rows[0]
-        space = Space(row['id'], row['space_name'], row['description'], row['price_per_night'], row['user_id'], row['start_date'], row['end_date'])
+        space = Space(row['id'], row['space_name'], row['description'], row['price_per_night'], row['user_id'])
         return space
     
     def create(self, space):
         self._connection.execute('INSERT INTO space \
                                 (space_name, description, price_per_night, user_id, start_date, end_date) \
-                                VALUES (%s, %s, %s, %s, %s, %s)', \
-                                [space.space_name, space.description, space.price_per_night, space.user_id, space.start_date, space.end_date])
+                                VALUES (%s, %s, %s, %s)', \
+                                [space.space_name, space.description, space.price_per_night, space.user_id])
         return None
     
     def delete(self, space_id):
