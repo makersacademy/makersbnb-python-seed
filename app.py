@@ -19,12 +19,13 @@ def get_index():
 # They also start the server configured to use the test database
 # if started in test mode.
 
-@app.route('/login', methods=['GET']) 
+# @app.route('/login', methods=['GET']) 
+# def get_login():
+#     return render_template('login.html')
+
+@app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login.html')
-
-
-
 
 
 
