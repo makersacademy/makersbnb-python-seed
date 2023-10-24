@@ -37,7 +37,9 @@ def post_spaces():
 
     return render_template('spaces.html', spaces=spaces)
 
-
+@app.route('/sign_up', methods=['GET'])
+def get_sign_up():
+    return render_template('sign_up.html')
 
 
 @app.route('/add_space', methods=['GET'])
