@@ -50,14 +50,14 @@ def test_add_space(page, test_web_address):
 Test adding new space using webpage, then view all spaces once added
 """
 
-def test_add_new_space(page, test_web_address):
+def test_add_new_space(page, test_web_address, db_connection):
     page.goto(f"http://{test_web_address}/add_space")
-    
+    db_connection.seed('seeds/makersbnb.sql')
+
     page.fill("input[name=space_name]", "Test New Space Name")
     page.fill("input[name=description]", "Test description of said place")
     page.fill("input[name=price]", '200')
     page.fill("input[name=user_id]", '1')
-    page.fill("input[name=available_date]", "24/10/2023")
     page.click("text=Add space")
     page.screenshot(path='screenshot_1.png', full_page=True)
     
@@ -66,4 +66,4 @@ def test_add_new_space(page, test_web_address):
     page.screenshot(path='screenshot_2.png', full_page=True)
 
     space_id_li_tags = page.locator(".space-id")
-    expect(space_id_li_tags).to_have_text(["id: 1"])
+    expect(space_id_li_tags).to_have_text(["id: 1", "id: 2", "id: 3"])
