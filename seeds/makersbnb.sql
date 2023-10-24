@@ -1,11 +1,14 @@
 -- add tables
 -- users, spaces
 
-
+DROP TABLE IF EXISTS AvailableDates;
+DROP SEQUENCE IF EXISTS AvailableDates_id_seq;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
+
+
 
 CREATE SEQUENCE IF NOT EXISTS users_id_seq; 
 CREATE TABLE users (
@@ -34,4 +37,22 @@ INSERT INTO
     spaces (space_name, description, price_per_night, user_id)
     VALUES ('space_2', 'Another nice space', 20, 2);
 
-    
+-- AvailableDate
+
+
+CREATE TABLE AvailableDates (
+    id SERIAL PRIMARY KEY,
+    date_name TEXT,
+    space_id INT,
+    CONSTRAINT fk_space_id
+        FOREIGN KEY(space_id)
+        REFERENCES spaces(id)
+        ON DELETE CASCADE
+        -- ^ If a space is deleted, the associated available date(s) will also be deleted, carry it over to bookings someway...
+);
+
+INSERT INTO AvailableDates (date_name, space_id)
+    VALUES ('12/11/03', 1);
+INSERT INTO AvailableDates (date_name, space_id)
+    VALUES ('11/11/00', 2); 
+-- Here i found out sql doesnt accept double "" quotes GRRR

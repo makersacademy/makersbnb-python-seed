@@ -16,10 +16,10 @@ def test_get_spaces(page, test_web_address):
 we want to tests for lists of spaces available
 """
 def test_get_list_of_spaces(page, test_web_address, db_connection):
-    db_connection.seed('seeds/space.sql')
+    db_connection.seed('seeds/makersbnb.sql')
     page.goto(f"http://{test_web_address}/spaces") 
     space_id_li_tags = page.locator(".space-id")
-    expect(space_id_li_tags).to_have_text(["id: 1", "id: 2", "id: 3", "id: 4"])
+    expect(space_id_li_tags).to_have_text(["id: 1", "id: 2"])
 
 
 
