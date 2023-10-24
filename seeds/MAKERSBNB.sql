@@ -15,19 +15,19 @@ id SERIAL PRIMARY KEY,
 name text,
 description text,
 price_per_night numeric,
-spaces_user_id int
+user_id int,
 constraint fk_user foreign key(id)
     references users(id)
     on delete cascade
 );
 
 """CREATE TABLE availability (
+id SERIAL PRIMARY KEY,
 date_not_available date,
 status boolean,
 requested_by_user_id int,
-
-
-constraint fk_space foreign key(space_id)
-    references spaces(space_id)
+spaces_id
+constraint fk_spaces foreign key(user_id)
+    references spaces(user_id)
     on delete cascade
 );"""
