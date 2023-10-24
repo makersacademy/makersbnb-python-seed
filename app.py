@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect
 from lib.user_repository import UserRepository
 from lib.database_connection import get_flask_database_connection
 
@@ -19,7 +19,12 @@ def get_index():
 
 @app.route('/', methods=['POST'])
 def create_user():
-    pass
+    email = request.form['email']
+    password = request.form['password']
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    repository.create(email, password)
+    return redirect("http://localhost:5000/account_page")
 
 @app.route('/login', methods=['GET'])
 def get_login():
@@ -38,14 +43,14 @@ def post_login():
     else:
         return render_template('login_error.html')
 
-# @app.route('/account_page')
-# def account_page():
-#     if 'user_id' not in session:
-#         # No user id in the session so the user is not logged in.
-#         return redirect('/login')
-#     else:
-#         # The user is logged in, display their account page.
-#         return render_template('account.html')
+@app.route('/account_page')
+def account_page():
+    # if 'user_id' not in session:
+    #     # No user id in the session so the user is not logged in.
+    #     return redirect('/login')
+    # else:
+    #     # The user is logged in, display their account page.
+    return render_template('account_page.html')
 
 
 # These lines start the server if you run this file directly

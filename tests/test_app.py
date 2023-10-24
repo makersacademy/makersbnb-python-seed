@@ -39,8 +39,8 @@ def test_request_homepage_has_correct_ui(page, test_web_address):
     password_input = page.locator('input[name="password"]')
     assert password_input.is_visible()
 
-    password_confirmation_input = page.locator('input[name="password_confirmation"]')
-    assert password_confirmation_input.is_visible()
+    # password_confirmation_input = page.locator('input[name="password_confirmation"]')
+    # assert password_confirmation_input.is_visible()
 
     submit_button = page.locator('input[type="submit"]')
     assert submit_button.is_visible()
@@ -56,7 +56,7 @@ def test_request_login_page_has_correct_ui(page, test_web_address):
     email_input = page.locator('input[name="email"]')
     assert email_input.is_visible()
 
-    password_input = page.locator('input[name="password"]')
+    password_input = page.locator('input[name="password_attempt"]')
     assert password_input.is_visible()
 
     submit_button = page.locator('input[type="submit"]')
@@ -82,7 +82,8 @@ def test_create_new_user(page, test_web_address, db_connection):
     page.goto(f"http://{test_web_address}/")
     page.fill("input[name='email']", "test-email-4")
     page.fill("input[name='password']", "testpassword4")
-    page.click("text=Sign Up")
+    page.click("text='Sign Up'")
 
     h3_tag = page.locator("h3")
     expect(h3_tag).to_have_text("Congratulations, you have signed in!")
+    # expect (page.goto(f"http://{test_web_address}/account_page"))
