@@ -73,3 +73,16 @@ def test_log_in_link_takes_us_to_login_page(page, test_web_address):
     h1_tag = page.locator('h1')
 
     expect(h1_tag).to_have_text("Log in to Makers B&B")
+
+"""
+Test creates new user
+"""
+def test_create_new_user(page, test_web_address, db_connection):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/")
+    page.fill("input[name='email']", "test-email-4")
+    page.fill("input[name='password']", "testpassword4")
+    page.click("text=Sign Up")
+
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text("Congratulations, you have signed in!")
