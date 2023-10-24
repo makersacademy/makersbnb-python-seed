@@ -17,8 +17,9 @@ class UserRepository(BaseModelManager):
 
     #TODO: Move it to BASE CLASS
     def update(self, user):
-        self._connection.execute(
-            'UPDATE users SET email = %s, username = %s, password = %s WHERE id = %s',
+        rows = self._connection.execute(
+            'UPDATE users SET email = %s, username = %s, password = %s WHERE id = %s RETURNING id',
             [user.email, user.username, user.password, user.id])
+        user.id = rows[0].get('id')
         return None
     
