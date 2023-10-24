@@ -14,16 +14,22 @@ class UserRepository():
             users.append(user)
         return users
     
-    def create(self, user):
-        email=user.email
-        password=user.password
+    def create(self, email, password):
         binary_password = password.encode("utf-8")
         hashed_password = hashlib.sha256(binary_password).hexdigest()
-
-        # Store the email and hashed password in the database
         self._connection.execute(
             'INSERT INTO users (email, password) VALUES (%s, %s)',
             [email, hashed_password])
 
+    def check_password(self, email, password_attempt):
+        binary_password_attempt = password_attempt.encode("utf-8")
+        hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest()
+        rows = self._connection.execute(
+            'SELECT * FROM users WHERE email = %s AND password = %s',
+            [email, hashed_password_attempt])
+        return len(rows) > 0
 
-
+    def find_by_email(self, email):
+        rows = self._connection. execute('SELECT * FROM users WHERE email = %s', [email])
+        user = User(rows[0]['id'], rows[0]['email'], rows[0]['password'])
+        return user

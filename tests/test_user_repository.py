@@ -18,7 +18,7 @@ def test_all_method_lists_all_users(db_connection):
 def test_create_method_adds_new_user(db_connection):
     db_connection.seed('seeds/users.sql')
     repository = UserRepository(db_connection)
-    repository.create(User(None, 'test-email-4', 'test-password-4'))
+    repository.create('test-email-4', 'test-password-4')
     users = repository.all()
     assert users == [
         User(1, 'test-email-1', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42'),
@@ -27,3 +27,25 @@ def test_create_method_adds_new_user(db_connection):
         User(4, 'test-email-4', '14b609f073d95e8c1472d314fb23215328608cc26f44a1ad0ba069978aea2a44')
     ]
 
+# check_password() compares hashed password attempt vs stored hash for given email
+# return true for password match
+def test_check_password_method_returns_true(db_connection):
+    db_connection.seed('seeds/users.sql')
+    repository = UserRepository(db_connection)
+    result = repository.check_password('test-email-1', 'test-password-1')
+    assert result == True
+
+# check_password() compares hashed password attempt vs stored hash for given email
+# return false for password mismatch
+def test_check_password_method_returns_false(db_connection):
+    db_connection.seed('seeds/users.sql')
+    repository = UserRepository(db_connection)
+    result = repository.check_password('test-email-1', 'wrong_password')
+    assert result == False
+
+# find_by_email() returns correct user
+def test_find_by_email(db_connection):
+    db_connection.seed('seeds/users.sql')
+    repository = UserRepository(db_connection)
+    user = repository.find_by_email('test-email-1')
+    assert user == User(1, 'test-email-1', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42')
