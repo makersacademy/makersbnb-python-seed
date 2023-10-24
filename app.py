@@ -1,6 +1,10 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.space_class import Space
+from lib.space_repository import SpaceRepository
+from lib.user_class import User
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
