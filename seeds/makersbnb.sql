@@ -7,14 +7,14 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 
-
+CREATE SEQUENCE IF NOT EXISTS users_id_seq; 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT,
     spaces TEXT
 );
 
-
+CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name TEXT,
