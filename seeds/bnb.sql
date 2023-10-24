@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS listings (
     id SERIAL PRIMARY KEY,
     listing_name VARCHAR(255),
     listing_description VARCHAR(255),
-    listing_price INTEGER,
+    listing_price FLOAT,
     user_id INTEGER,
     constraint fk_user foreign key(user_id)
         references users(id)
@@ -36,13 +36,13 @@ INSERT INTO users (username, email, password) VALUES ('user9', 'user9email@examp
 INSERT INTO users (username, email, password) VALUES ('user10', 'user10email@example.com', 'password10');
 
 
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Cozy Cottage', 'A charming cottage for a peaceful retreat', 99.99, 1);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Beachfront Villa', 'Enjoy stunning ocean views in this luxury villa', 249.95, 2);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Mountain Chalet', 'Experience the beauty of the mountains in this cozy chalet', 149.99, 3);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('City Apartment', 'Convenient urban living in the heart of the city', 89.49, 4);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Lakefront Cabin', 'Rustic cabin on the tranquil shores of the lake', 124.50, 5);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Seaside Bungalow', 'Relax in a charming bungalow by the sea', 199.99, 6);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Luxury Resort Suite', 'Indulge in luxury at this 5-star resort suite', 499.95, 7);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Countryside Retreat', 'Escape to the peaceful countryside in this cottage', 79.99, 8);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Historic Mansion', 'Step back in time at this historic mansion', 349.99, 9);
-INSERT INTO listings (listing_name, listing_description, listing_price) VALUES ('Riverside Cabin', 'Cozy cabin with a river view, perfect for fishing', 109.75, 10);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Cozy Cottage', 'A charming cottage for a peaceful retreat', 99.99, 1);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Beachfront Villa', 'Enjoy stunning ocean views in this luxury villa', 249.95, 2);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Mountain Chalet', 'Experience the beauty of the mountains in this cozy chalet', 149.99, 3);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('City Apartment', 'Convenient urban living in the heart of the city', 89.49, 4);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Lakefront Cabin', 'Rustic cabin on the tranquil shores of the lake', 124.50, 5);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Seaside Bungalow', 'Relax in a charming bungalow by the sea', 199.99, 6);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Luxury Resort Suite', 'Indulge in luxury at this 5-star resort suite', 499.95, 7);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Countryside Retreat', 'Escape to the peaceful countryside in this cottage', 79.99, 8);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Historic Mansion', 'Step back in time at this historic mansion', 349.99, 9);
+INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Riverside Cabin', 'Cozy cabin with a river view, perfect for fishing', 109.75, 10);
