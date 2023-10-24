@@ -3,9 +3,10 @@ from lib.space import Space
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
+import jinja_partials # to enable partials jinja html for the header for ex.
 
-# Create a new Flask app
 app = Flask(__name__)
+jinja_partials.register_extensions(app)
 
 # == Your Routes Here ==
 @app.route('/spaces', methods=['GET'])
@@ -47,7 +48,7 @@ def add_space():
 # Try it:
 #   ; open http://localhost:5000/index
 
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
 
