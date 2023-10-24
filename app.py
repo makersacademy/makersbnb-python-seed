@@ -1,6 +1,8 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.space import Space
+from lib.spaces_repository import SpacesRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -19,7 +21,12 @@ def get_index():
 
 @app.route('/listings', methods=['GET'])
 def get_listings():
-    return render_template('listings.html')
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    all_spaces = repository.all_listings()
+    print("test")
+    print(all_spaces[0].name)
+    return render_template('listings.html', all_spaces=all_spaces)
 
 
 # These lines start the server if you run this file directly
