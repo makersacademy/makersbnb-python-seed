@@ -67,3 +67,17 @@ def test_add_new_space(page, test_web_address, db_connection):
 
     space_id_li_tags = page.locator(".space-id")
     expect(space_id_li_tags).to_have_text(["id: 1", "id: 2", "id: 3"])
+
+"""
+Test find profile page for specific user_id
+"""
+def test_profile_page(page, test_web_address, db_connection):
+    
+    db_connection.seed('seeds/makersbnb.sql')
+    page.goto(f"http://{test_web_address}/profile_page/1")
+
+    user_id = page.locator(".user-id")
+    expect(user_id).to_have_text('id: 1')
+    
+    user_name = page.locator(".user-name")
+    expect(user_name).to_have_text('username: user_1')
