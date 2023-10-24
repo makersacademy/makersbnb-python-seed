@@ -37,3 +37,9 @@ class UserRepository:
     def delete_by_id(self,id):
         self._connection.execute('DELETE FROM users WHERE id = %s',[id]) 
         return None
+    
+    #Show Owners property Bookings
+    #Needs Response Clearning UP#
+    def show_bookings(self,approval_status,host_id):
+        response = self._connection.execute('SELECT availability.id,availability.date_not_available,users.username,spaces.name FROM availability JOIN spaces ON spaces.id=availability.spaces_id JOIN users on users.id=availability.requested_by_user_id WHERE availability.approved= (%s) AND spaces.host_id= (%s)'[approval_status,host_id])
+        return response 
