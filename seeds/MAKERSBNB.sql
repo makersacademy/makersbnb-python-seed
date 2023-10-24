@@ -28,6 +28,6 @@ approved boolean,
 requested_by_user_id int,
 spaces_id int,
 constraint fk_spaces foreign key(spaces_id)
-    references spaces(host_id)
+    references spaces(id)
     on delete cascade
 );
