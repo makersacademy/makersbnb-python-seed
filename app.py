@@ -67,6 +67,10 @@ def post_available_date():
     repo_instance.create(new_available_date)
 
     return render_template('add_available_date.html')
+@app.route('/sign_up', methods=['GET'])
+def get_sign_up():
+    return render_template('sign_up.html')
+
 
 # GET /index
 # Returns the homepage
