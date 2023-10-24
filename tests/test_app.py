@@ -44,3 +44,26 @@ def test_add_space(page, test_web_address):
     page.goto(f"http://{test_web_address}/add_space")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Add a new space.")
+
+
+"""
+Test adding new space using webpage, then view all spaces once added
+"""
+
+def test_add_new_space(page, test_web_address):
+    page.goto(f"http://{test_web_address}/add_space")
+    
+    page.fill("input[name=space_name]", "Test New Space Name")
+    page.fill("input[name=description]", "Test description of said place")
+    page.fill("input[name=price]", '200')
+    page.fill("input[name=user_id]", '1')
+    page.fill("input[name=available_date]", "24/10/2023")
+    page.click("text=Add space")
+    page.screenshot(path='screenshot_1.png', full_page=True)
+    
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text('Spaces available.')
+    page.screenshot(path='screenshot_2.png', full_page=True)
+
+    space_id_li_tags = page.locator(".space-id")
+    expect(space_id_li_tags).to_have_text(["id: 1"])
