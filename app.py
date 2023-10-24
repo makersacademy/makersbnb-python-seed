@@ -13,7 +13,7 @@ jinja_partials.register_extensions(app)
 def get_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
-    spaces = repo_instance.all() # breaking line
+    spaces = repo_instance.all()
     return render_template('spaces.html', spaces=spaces)
 
 
@@ -44,6 +44,10 @@ def add_space():
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
+    # connection = get_flask_database_connection(app)
+    # repo_instance = SpaceRepository(connection)
+    # spaces = repo_instance.find_all_by_user_id(id)
+    #^To pass in once we get login sessions working
     return render_template('add_available_date.html')
 
 # GET /index
