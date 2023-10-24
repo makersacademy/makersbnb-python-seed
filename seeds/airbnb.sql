@@ -22,6 +22,7 @@ CREATE TABLE spaces (
     name VARCHAR(255),
     description VARCHAR(255),
     size INTEGER,
+    price INTEGER
     owner_id INTEGER
 );
 
@@ -42,9 +43,9 @@ INSERT INTO users (first_name, last_name, email, password) VALUES ('Donatello', 
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Michelangelo', 'Michelangelou', 'mich937@lst.gr','Poodlehd3&');
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Raphael', 'Raphaelidis', 'raph086@pet.com', 'shitsugewv9%');
 
-INSERT INTO spaces (name, description, size, owner_id) VALUES ('Beach House', 'The most relaxing place', 187, 3);
-INSERT INTO spaces (name, description, size, owner_id) VALUES ('Lake House', 'The most quiet place', 157, 3);
-INSERT INTO spaces (name, description, size, owner_id) VALUES ('City Centre House', 'The most popular place', 55, 3);
+INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('Beach House', 'The most relaxing place', 187, 999, 3);
+INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('Lake House', 'The most quiet place', 157, 879, 3);
+INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('City Centre House', 'The most popular place', 55, 276, 3);
 
 
 
