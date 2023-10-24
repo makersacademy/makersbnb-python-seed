@@ -20,7 +20,7 @@ class SpaceRepository:
     
     def create(self, space):
         self._connection.execute('INSERT INTO spaces \
-                                (space_name, description, price_per_night, user_id, start_date, end_date) \
+                                (space_name, description, price_per_night, user_id) \
                                 VALUES (%s, %s, %s, %s)', \
                                 [space.space_name, space.description, space.price_per_night, space.user_id])
         return None
