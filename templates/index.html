@@ -9,7 +9,35 @@
         -->
         <link rel="stylesheet" href="/static/style.css" >
     </head>
+    <header align="right">
+        <a href="/login">Log In</a>
+    </header>
     <body>
-        <p>This is the homepage.</h1>
+    <center>
+        <h1>Feel at home, anywhere</h1>
+        <br>
+        <br>
+        <br>
+        <h2>Sign up to Makers BnB</h2>
+
+        <p>Email Address</p>
+        <form action="/index" method="POST">
+            <input type="text" name="email">
+
+        <p>Phone Number</p>
+        <form action="/index" method="POST">
+            <input type="integer" name="phone">
+
+        <p>Password</p>
+            <input type="text" name="password">
+
+        <p>Password Confirmation</p>
+            <input type="text" name="password_confirm">
+        </form>
+        <br>
+        <br>
+        <input type="submit" value="Sign Up">
+    </center>
+
     </body>
 </html>
