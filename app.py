@@ -15,6 +15,29 @@ def get_spaces():
     spaces = repo_instance.all() # breaking line
     return render_template('spaces.html', spaces=spaces)
 
+
+@app.route('/spaces', methods=['POST'])
+def post_spaces():
+    connection = get_flask_database_connection(app)
+    repo_instance = SpaceRepository(connection)
+
+    space_name = request.form['space_name']
+    description = request.form['description']
+    user_id = request.form['user_id']
+    price = request.form['price']
+    available_date = request.form['available_date']
+
+    new_space = Space(None, space_name, description,
+                      price, user_id, available_date)
+
+    repo_instance.create(new_space)
+    spaces = repo_instance.all()
+
+    return render_template('spaces.html', spaces=spaces)
+
+
+
+
 @app.route('/add_space', methods=['GET'])
 def add_space():
     return render_template('add_space.html')
