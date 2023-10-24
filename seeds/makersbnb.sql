@@ -1,11 +1,14 @@
 -- add tables
 -- users, spaces
 
-
+DROP TABLE IF EXISTS AvailableDates;
+DROP SEQUENCE IF EXISTS AvailableDates_id_seq;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
+
+
 
 
 CREATE TABLE users (
@@ -36,8 +39,6 @@ INSERT INTO
 
 -- AvailableDate
 
-DROP TABLE IF EXISTS AvailableDates;
-DROP SEQUENCE IF EXISTS AvailableDates_id_seq;
 
 CREATE TABLE AvailableDates (
     id SERIAL PRIMARY KEY,
