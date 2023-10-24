@@ -3,6 +3,8 @@ from lib.space import Space
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
+from lib.available_date import AvailableDate
+from lib.available_date_repository import AvailableDateRepository
 import jinja_partials # to enable partials jinja html for the header for ex.
 
 app = Flask(__name__)
@@ -42,6 +44,20 @@ def post_spaces():
 def add_space():
     return render_template('add_space.html')
 
+
+@app.route('/add_available_date', methods=['POST'])
+def post_available_date():
+    connection = get_flask_database_connection(app)
+    repo_instance = AvailableDateRepository(connection)
+
+    space_id = request.form['space_id']
+    date_name = request.form['date_name']
+
+    new_available_date = AvailableDate(None, date_name, space_id)
+
+    repo_instance.create(new_available_date)
+
+    return render_template('add_available_date.html')
 
 # GET /index
 # Returns the homepage
