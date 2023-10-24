@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add Spaces</title>
+        <title>Book Spaces</title>
 
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
@@ -11,22 +11,16 @@
     </head>
     <body>
         {{ render_partial('shared/partials/navbar.html.jinja')}}
-        <h1>Add a new space.</h1>
+        <h1>Book: {{space.space_name}} .</h1>
+        <ul>
+            <li>Description: {{space.description}}</li>
+            <li>Price Per Night: £{{space.price_per_night}}</li>
+        </ul>
         <form action="/spaces" method="POST">
             <p>
-                <label for="space_name">Space Name</label>
+                <label for="date">Date</label>
                 <br>
-                <input type="text" name="space_name" id="space_name">
-            </p>
-            <p>
-                <label for="description">Description</label>
-                <br>
-                <input type="text" name="description" id="description">
-            </p>
-            <p>
-                <label for="price">Price Per night</label>
-                <br>
-                <input type="number" name="price" id="price">
+                <input type="text" name="date" id="date">
             </p>
             <p>
                 <label for="user_id">User ID</label>
@@ -34,7 +28,7 @@
                 <input type="text" name="user_id" id="user_id">
             </p>
             <p>
-                <input type="submit" value="Add space">
+                <input type="submit" value="Book space">
             </p>
             </form>
     </body>
