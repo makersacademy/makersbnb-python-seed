@@ -21,10 +21,12 @@ Test we can find specific users using a user ID
 def test_find_users(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repo = UserRepository(db_connection)
-
-    users = repo.find(2)
-
-    assert users == User('user_2', 'space_2')
+    users = repo.all()
+    print(users)
+    user = repo.find(2)
+    print(user.id)
+    assert user.username == "user_2"
+    assert user == User("user_2", "space_2", id=2)
 
 
 """

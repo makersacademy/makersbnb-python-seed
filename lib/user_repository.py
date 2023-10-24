@@ -20,8 +20,8 @@ class UserRepository:
 
     def find(self, user_id):
         rows = self._connection.execute("SELECT * FROM users WHERE id = %s", [user_id])
-        row = rows[0]
-        user = User(row['username'], row['spaces'])
+        row  = rows[0]
+        user = User(row['username'], row['spaces'], row['id'])
         return user
 
 

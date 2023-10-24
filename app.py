@@ -3,6 +3,7 @@ from lib.space import Space
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
+from lib.user_repository import UserRepository
 from lib.available_date import AvailableDate
 from lib.available_date_repository import AvailableDateRepository
 import jinja_partials # to enable partials jinja html for the header for ex.
@@ -11,6 +12,7 @@ import jinja_partials # to enable partials jinja html for the header for ex.
 
 app = Flask(__name__)
 jinja_partials.register_extensions(app)
+
 
 # == Your Routes Here ==
 
@@ -41,7 +43,7 @@ def post_spaces():
     repo_instance.create(new_space)
     spaces = repo_instance.all()
     return render_template('/spaces/index.html.jinja', spaces=spaces)
-
+ 
 @app.route('/spaces/add_a_space_form', methods=['GET'])
 def get_space_form():
     return render_template('/spaces/add_a_space_form.html.jinja')
@@ -49,6 +51,10 @@ def get_space_form():
 @app.route('/sign_up', methods=['GET'])
 def get_sign_up():
     return render_template('sign_up.html.jinja')
+
+@app.route('/spaces/add_space', methods=['GET'])
+def add_space():
+    return render_template('add_space.html.jinja')
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
@@ -79,11 +85,29 @@ def get_space_request_page(id):
     space = repo_instance.find(id)
     return render_template('request_space.html.jinja', space = space)
 
+@app.route('/profile_page/<id>', methods=['GET'])
+def profile_page(id):
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    users = repo.all()
+    print(users)
+    user = repo.find(str(id))
+    return render_template('profile_page.html.jinja', user=user)
+
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000/index
+
+@app.route('/', methods=['GET'])
+def get_index():
+    return render_template('index.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+    
 
 
 
