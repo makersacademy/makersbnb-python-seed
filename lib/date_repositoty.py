@@ -7,7 +7,7 @@ class DateRepository():
     
     def all(self):
         rows = self._connection.execute(
-            "SELECT * FROM dates;"
+            "SELECT * FROM dates ORDER BY id ASC;"
         )
         return [
             Date(row['id'], str(row['date']), row['available'], row['space_id']) for row in rows
@@ -57,5 +57,14 @@ class DateRepository():
     def delete_by_space(self, space_id):
         self._connection.execute(
             "DELETE FROM dates WHERE space_id = %s", [space_id]
+        )
+        return None
+    
+    # To update a date's availability to available, give the date_id and True.
+    # To update a date's availability to unavailable, give the date_id and False.
+    def update_availability(self, date_id, new_available):
+        self._connection.execute(
+            "UPDATE dates SET available = %s WHERE id = %s", 
+            [new_available, date_id]
         )
         return None
