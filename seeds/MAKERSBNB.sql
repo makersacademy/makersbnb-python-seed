@@ -44,17 +44,17 @@ INSERT INTO users (username, password, email, phone_number) VALUES ('Filipa Jyot
 INSERT INTO users (username, password, email, phone_number) VALUES ('Silas Narmer','PLd969;W','tule_piceyi54@yahoo.com','07700900239');
 INSERT INTO users (username, password, email, phone_number) VALUES ('Cornelio Rozenn','Zq07O0)X','yaloki_saro39@aol.com','01214978789');
 
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Mill Lodge', '', 00000.00, 1);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('River View', '', 00025.20, 1);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Melvins House', '', 01200.00, 1);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('The Old Vicarage', '', 00023.00, 3);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Black End', '', 00500.00, 4);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Primroselands', '', 00060.70, 2);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Firlands', '', 00123.00, 2);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('The Firs', '', 00834.10, 5);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Sunny End', '', 10030.02, 5);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Middleton House', '', 00100.40, 7);
-INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Newport Lodge', '', 00020.70, 6);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Mill Lodge', 'This large town is located near the coast and has a futuristic look.  It is best-known for its haunted house, a tumultuous history, and for being the home of a famous painter.  Also, there are all sorts of old artifacts still lying around the area.', 00000.00, 1);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('River View', "This large town is located in the hills and has a rustic atmosphere.  It is best-known for its diverse population.  Also, rumor has it that many of the town's citizens are involved in some sort of secret project.", 00025.20, 1);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Melvins House', "This small town is located in the desert and looks very modern.  It is best-known for the nearby military base.  Also, there are all sorts of old artifacts still lying around the area.", 01200.00, 1);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('The Old Vicarage', "This large town is located by a lake and has a rustic atmosphere.  It is best-known for its haunted house.  Also, there are all sorts of old artifacts still lying around the area.", 00023.00, 3);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Black End', "This moderate-sized town is located near the coast and looks very modern.  It is best-known for its beautiful park.  Also, rumor has it that the inhabitants are hiding something.", 00500.00, 4);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Primroselands', "This large town is located in a valley and has a fairytale-like look to it.  It is best-known for its beautiful park, its autumn festival, and for being the home of a famous sculptor.  Also, rumor has it that the inhabitants are hiding something.", 00060.70, 2);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Firlands', "This moderate-sized town is located in the hills and looks quite old.  It is best-known for its theater.  Also, there are all sorts of old artifacts still lying around the area.", 00123.00, 2);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('The Firs', "This moderate-sized town is located in the desert and looks very old-fashioned.  It is best-known for its diverse population.  Also, rumor has it that a treasure is hidden somewhere in the town.", 00834.10, 5);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Sunny End', "This large town is located in the mountains and has a rustic atmosphere.  It is best-known for a tumultuous history.  Also, rumor has it that the inhabitants may not be entirely human.", 10030.02, 5);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Middleton House', "This moderate-sized town is located in a valley and has a rustic atmosphere.  It is best-known for a tumultuous history and its diverse population.  Also, rumor has it that the inhabitants are hiding something.", 00100.40, 7);
+INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Newport Lodge', "This small town is located by a lake and looks very old-fashioned.  It is best-known for its fine dining and for being the home of a famous painter.  Also, strange objects are occasionally seen in the sky.", 00020.70, 6);
 
 INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES (2023-10-24, false, 3, 1);
 INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES (2021-02-24, false, 2, 1);
