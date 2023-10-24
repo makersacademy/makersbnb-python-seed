@@ -99,7 +99,7 @@ def profile_page(id):
 #   ; open http://localhost:5000/index
 
 @app.route('/', methods=['GET'])
-def get_index():
+def get_app_index():
     return render_template('index.html')
 
 # These lines start the server if you run this file directly
