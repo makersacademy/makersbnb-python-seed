@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        {{ render_partial('shared/partials/navbar.html.jinja')}}
         <h1>Add a new space.</h1>
         <form action="/spaces" method="POST">
             <p>
