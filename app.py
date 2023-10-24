@@ -32,8 +32,9 @@ def post_index():
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
-    listing = ListingRepo(connection)
-    listings = listing.all()    
+    repo = ListingRepo(connection)
+    listings = repo.all()
+    print(listings)
     return render_template('spaces.html', listings=listings)
 
 @app.route('/spaces/new', methods=['GET'])
@@ -50,7 +51,6 @@ def post_spaces():
     repo = ListingRepo(connection)
     repo.add(listing_name, listing_description, listing_price, user_id)
     return '', 200
-
 
 
 # These lines start the server if you run this file directly
