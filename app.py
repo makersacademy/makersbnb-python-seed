@@ -1,6 +1,10 @@
 import os
 from flask import Flask, request, render_template, session
+<<<<<<< HEAD
 # from lib.user_repository import UserRepository
+=======
+from lib.user_repository import UserRepository
+>>>>>>> main
 from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
