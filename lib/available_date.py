@@ -5,3 +5,5 @@ class AvailableDate: # a single available date for a particular space
         s.space_id = space_id
     def __repr__(s):
         return(f"AvailableDate({s.id}, {s.date_name}, {s.space_id})")
+    def __eq__(self, other) -> bool:
+        return(self.__dict__ == other.__dict__)
