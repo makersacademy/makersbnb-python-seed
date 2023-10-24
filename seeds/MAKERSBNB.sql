@@ -1,29 +1,33 @@
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Spaces;
-DROP TABLE IF EXISTS Dates;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS spaces;
+DROP TABLE IF EXISTS availability ;
 
-CREATE TABLE Users (
-user_id SERIAL PRIMARY KEY,
-username text,
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
+username varchar(255),
 password varchar(255),
 email varchar(255),
-phone_number int,
+phone_number text
 );
 
-CREATE TABLE Spaces (
-user_id SERIAL PRIMARY KEY,
+CREATE TABLE spaces (
+id SERIAL PRIMARY KEY,
 name text,
 description text,
-price-per-night, int,
+price_per_night numeric (5,2),
+host_id int,
+constraint fk_user foreign key(host_id)
+    references users(id)
+    on delete cascade
 );
 
-user_id int,
-constraint fk_user foreign key(user_id)
-    references Users(id)
+CREATE TABLE availability (
+id SERIAL PRIMARY KEY,
+date_not_available date,
+approved boolean,
+requested_by_user_id int,
+spaces_id int,
+constraint fk_spaces foreign key(spaces_id)
+    references spaces(id)
     on delete cascade
-
-CREATE TABLE Availability (
-space_id SERIAL PRIMARY KEY,
-date-not-available date)
-;
-
+);
