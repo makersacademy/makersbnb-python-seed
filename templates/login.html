@@ -5,8 +5,13 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>
-            Login page
-        </p>
+        <h1>Welcome Back!</h1>
+        <form action="/login" method="post">
+            <label for="Username">Username</label><br>
+            <input type="text" name="Username" id="Username"><br>
+            <label for="Password">Password</label><br>
+            <input type="text" name="Password" id="Password"><br>
+            <input type="submit" value="Log in">
+        </form>
     </body>
 </html>
