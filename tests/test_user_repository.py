@@ -53,9 +53,9 @@ def test_update_password(db_connection):
     user.password = "124A!12346"
     assert repository.update(user) == None
     assert repository.all() == [
-        User(1, 'new@email1', 'New User 1', '124A!12346'),
         User(2, 'name2@cmail.com', 'name2', 'password2'),
         User(3, 'name3@cmail.com', 'name3', 'password3'),
+        User(1, 'new@email1', 'New User 1', '124A!12346'),
     ]
 
 """
