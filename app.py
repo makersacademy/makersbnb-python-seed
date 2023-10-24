@@ -15,6 +15,14 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    # Seed the database
+    listing = ListingRepo(app)
+    listings = listing.all()
+    
+    return render_template('spaces.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
