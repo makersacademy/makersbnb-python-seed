@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Dates;
 
 CREATE TABLE Users (
 user_id SERIAL PRIMARY KEY,
-username text,
+username varchar(255),
 password varchar(255),
 email varchar(255),
 phone_number int,
@@ -12,18 +12,20 @@ phone_number int,
 
 CREATE TABLE Spaces (
 user_id SERIAL PRIMARY KEY,
+space_id SERIAL PRIMARY KEY,
 name text,
 description text,
-price-per-night, int,
+price_per_night, int,
 );
 
 user_id int,
 constraint fk_user foreign key(user_id)
-    references Users(id)
+    references Users(user_id)
     on delete cascade
 
 CREATE TABLE Availability (
 space_id SERIAL PRIMARY KEY,
-date-not-available date)
-;
+date_not_available date,
+approved boolean,
+);
 
