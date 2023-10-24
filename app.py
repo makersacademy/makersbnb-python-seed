@@ -43,7 +43,7 @@ def post_spaces():
     return render_template('/spaces/index.html.jinja', spaces=spaces)
 
 @app.route('/spaces/add_a_space_form', methods=['GET'])
-def add_a_space_form():
+def get_space_form():
     return render_template('/spaces/add_a_space_form.html.jinja')
 ## Signup
 @app.route('/sign_up', methods=['GET'])
