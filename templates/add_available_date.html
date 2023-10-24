@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Available Dates for your Spaces</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        {{ render_partial('shared/partials/navbar.html.jinja')}}
+        <h1>Add Available Dates for your Spaces.</h1>
+        <form action="/available_dates" method="POST">
+            <p>
+                <label for="space_id">Space ID</label>
+                <br>
+                <input type="number" name="space_id" id="space_id">
+            </p>
+            <p>
+                <label for="date_name">Date (DD/MM/YY)</label>
+                <br>
+                <input type="text" name="date_name" id="date_name">
+            </p>
+            <p>
+                <input type="submit" value="Add date">
+            </p>
+        </form>
+        <div class="your-current-spaces">
+            
+        </div>
+    </body>
+</html>

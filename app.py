@@ -42,6 +42,9 @@ def post_spaces():
 def add_space():
     return render_template('add_space.html')
 
+@app.route('/add_available_date', methods=['GET'])
+def add_available_date():
+    return render_template('add_available_date.html')
 
 # GET /index
 # Returns the homepage
