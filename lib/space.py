@@ -6,6 +6,7 @@ class Space():
     Stores a space's details
     Related to the User class
     """
+    id: int
     name: str
     description: str
     size: int
