@@ -13,6 +13,7 @@ class DateRepository():
             Date(row['id'], str(row['date']), row['available'], row['space_id']) for row in rows
         ]
     
+    # to find an specific date, enter the date id.
     def find_with_id(self, id):
         rows = self._connection.execute(
             "SELECT * FROM dates WHERE id = %s", [id]
@@ -39,6 +40,7 @@ class DateRepository():
             Date(row['id'], str(row['date']), row['available'], row['space_id']) for row in rows
         ]
     
+    # to add a new available date, enter the date with available set to True and the space's id.
     def create(self, date):
         rows = self._connection.execute(
             "INSERT INTO dates (date, available, space_id) VALUES (%s, %s, %s) RETURNING id",
@@ -48,12 +50,14 @@ class DateRepository():
         date.id = row['id']
         return None
     
+    # to delete a specific space and date, enter the date id.
     def delete_individual(self, id):
         self._connection.execute(
             "DELETE FROM dates WHERE id = %s", [id]
         )
         return None
     
+    # to delete all dates associated with a space, enter the space id.
     def delete_by_space(self, space_id):
         self._connection.execute(
             "DELETE FROM dates WHERE space_id = %s", [space_id]
