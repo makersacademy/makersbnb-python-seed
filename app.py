@@ -1,6 +1,8 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.space_repository import SpaceRepository
+from lib.space_class import Space
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -11,10 +13,11 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
-    # Access all spaces from database table 'spaces'
-    return render_template('index.html')
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    allspaces=spacerepo.all()
+    return render_template('index.html',spaces=allspaces)
 
 @app.route('/session/new')
 def get_login():
