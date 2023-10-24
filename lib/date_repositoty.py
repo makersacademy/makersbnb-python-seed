@@ -1,0 +1,2 @@
+class DateRepository():
+    pass
