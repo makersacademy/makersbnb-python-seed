@@ -20,9 +20,13 @@ def get_index():
     # Access all spaces from database table 'spaces'
     return render_template('index.html')
 
-@app.route('/session/new')
+@app.route('/login')
 def get_login():
-    return render_template('new_session.html')
+    return render_template('login.html')
+
+@app.route('/register')
+def get_register():
+    return render_template('register.html')
 
 @app.route('/spaces/new')
 def get_new_space():
