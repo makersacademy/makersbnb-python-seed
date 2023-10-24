@@ -25,10 +25,9 @@ def post_spaces():
     description = request.form['description']
     user_id = request.form['user_id']
     price = request.form['price']
-    available_date = request.form['available_date']
 
     new_space = Space(None, space_name, description,
-                      price, user_id, available_date)
+                      price, user_id)
 
     repo_instance.create(new_space)
     spaces = repo_instance.all()
