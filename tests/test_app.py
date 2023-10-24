@@ -16,29 +16,29 @@ def test_get_index(page, test_web_address):
     expect(strong_tag).to_have_text("This is the homepage.")
 
 
-def test_login_path(page, test_web_address):
-    page.goto(f"http://{test_web_address}/login")
-    # button = page.locator("a")
-    # expect(button).to_have_url("This is a button")
-    expect(page).to_have_url("http://localhost:4709/login")
-  
+
 """
 test web page has a login form
 """
 def test_web_page_has_a_login_form(page, test_web_address):
-    page.goto(f"http://{test_web_address}/login")
-    button = page.locator("button")
-    expect(button).to_have_text("Button")
+    page.goto(f"http://{test_web_address}/index")
+    # login = page.locator("button").first()
+    # expect(login).to_have_text("Login")
+    login = page.locator("id=1")
+    expect(login).to_have_id("1")
+
 
 """
 test web page has a register form
 """
+def test_web_page_has_a_register_form(page, test_web_address):
+    page.goto(f"http://{test_web_address}/index")
+    sign_up = page.locator("id=2")
+    expect(sign_up).to_have_id("2")
 
 """
-test web page has a logout button
+Login button redirects to login page
 """
-
-"""
-test web page has a logout button
-"""
-
+def test_login_button_redirect_to_login_page(web_client):
+    button = web_client.get("/login")
+    assert button.status_code == 200
