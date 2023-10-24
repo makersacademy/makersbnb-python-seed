@@ -38,10 +38,9 @@ def post_login():
         return render_template('login.html',errors='errors')
     elif current_user.password == password:
         logged_in = current_user
-        return redirect('/index')
+        return redirect('/')
     else:
         return render_template('login.html',errors='errors')
-
 
 @app.route('/register')
 def get_register():
@@ -49,7 +48,23 @@ def get_register():
 
 @app.route('/spaces/new')
 def get_new_space():
-    return render_template('new_space.html')
+    global logged_in
+    if logged_in != None:
+        return render_template('new_space.html')
+    if logged_in == None:
+        return render_template('need_login.html')
+
+@app.route('/spaces/new', methods=['POST'])
+def post_new_space():
+    global logged_in
+    spaces_repo = SpaceRepository(get_flask_database_connection(app))
+    name = request.form['name']
+    description = request.form['Description']
+    ppn = request.form['Price per night']
+    host_id = logged_in.id
+    spaces_repo.create(name, host_id, description, ppn)
+    return redirect('/')
+
 
 @app.route('/spaces/<id>')
 def get_space(id):
