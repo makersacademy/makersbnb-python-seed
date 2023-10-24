@@ -15,8 +15,13 @@ class UserRepository:
         return userlist
     
     #Find a Specific User by their ID
-    def all(self,id):
+    def find_by_id(self, id):
         ReturnedUser = self._connection.execute('SELECT * FROM users WHERE id = (%s)',[id])  
+        user=User(ReturnedUser[0]['id'],ReturnedUser[0]['username'],ReturnedUser[0]['name'],ReturnedUser[0]['password'],ReturnedUser[0]['email'],ReturnedUser[0]['phone_number'])
+        return user
+
+    def find_by_username(self, username):
+        ReturnedUser = self._connection.execute('SELECT * FROM users WHERE username ILIKE (%s)',[username])
         user=User(ReturnedUser[0]['id'],ReturnedUser[0]['username'],ReturnedUser[0]['name'],ReturnedUser[0]['password'],ReturnedUser[0]['email'],ReturnedUser[0]['phone_number'])
         return user
 
