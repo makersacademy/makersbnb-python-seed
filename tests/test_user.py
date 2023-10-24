@@ -1,4 +1,4 @@
-from lib.user import *
+from lib.user import User
 
 """
 test init function
@@ -14,12 +14,9 @@ def test_construction_return_username():
 test nicer looking representation (repr function) 
 """
 
-def test_repr_method(capfd):
-    charlie = User("charliemeister649", ['mcdonalds'])
-    print(charlie)
-    out, err = capfd.readouterr()
-    assert out == "User(charliemeister649, ['mcdonalds'])\n"
-    
+def test_repr_method():
+    charlie = User("charliemeister649", ['mcdonalds'], id=1)
+    assert str(charlie) == "User(charliemeister649, ['mcdonalds'], 1)"
 
 """
 test two user instances with identical dict (parameters) are ==

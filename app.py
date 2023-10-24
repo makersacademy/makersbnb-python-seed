@@ -3,9 +3,11 @@ from lib.space import Space
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+
 
 # == Your Routes Here ==
 @app.route('/spaces', methods=['GET'])
@@ -35,14 +37,20 @@ def post_spaces():
     return render_template('spaces.html', spaces=spaces)
 
 
-
-
 @app.route('/add_space', methods=['GET'])
 def add_space():
     return render_template('add_space.html')
 
 
-# GET /index
+@app.route('/profile_page/<id>', methods=['GET'])
+def profile_page(id):
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    users = repo.all()
+    print(users)
+    user = repo.find(str(id))
+    return render_template('profile_page.html', user=user)
+
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
@@ -56,6 +64,7 @@ def get_index():
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+    
 
 
 
