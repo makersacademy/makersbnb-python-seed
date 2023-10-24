@@ -34,4 +34,13 @@ INSERT INTO
     spaces (space_name, description, price_per_night, user_id)
     VALUES ('space_2', 'Another nice space', 20, 2);
 
-    
+-- AvailableDate
+
+DROP TABLE IF EXISTS AvailableDates
+DROP SEQUENCE IF EXISTS AvailableDates_id_seq;
+
+CREATE TABLE AvailableDates (
+    id SERIAL PRIMARY KEY,
+    date_name TEXT,
+    space_id FOREIGN KEY REFERENCES spaces(id)
+);
