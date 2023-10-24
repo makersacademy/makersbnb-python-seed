@@ -11,7 +11,7 @@ class BaseModelManager:
         self._table_name = None
 
     def all(self):
-        query = "SELECT * FROM %s;" % self._table_name
+        query = "SELECT * FROM %s ORDER BY id ASC;" % self._table_name
         rows = self._connection.execute(query)
         return [self._model_class(**row) for row in rows]
 
