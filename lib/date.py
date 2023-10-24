@@ -1,12 +1,15 @@
-class Date():
-    def __init__(self, id, date, available, space_id):
-        self.id = id
-        self.date = date
-        self.available = available
-        self.space_id = space_id
+from dataclasses import dataclass
 
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+@dataclass
+class Date():
+    """
+    Stores a date's details
+    Related to the Space class
+    """
+    id: int
+    date: str
+    available: bool
+    space_id: int
     
     def __repr__(self):
         return f"Date({self.id}, {self.date}, {self.available}, {self.space_id})"
