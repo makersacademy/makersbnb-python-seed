@@ -50,8 +50,8 @@ Log-in page has user log-in UI
 """
 def test_request_login_page_has_correct_ui(page, test_web_address):
     page.goto(f"http://{test_web_address}/login")
-    # page.get_by_role("link", name="login").click()
-    # expect (page.goto(f"http://{test_web_address}/login"))
+    # page.get_by_role("button", name="login").click()
+    # expect(page.goto(f"http://{test_web_address}/login"))
 
     email_input = page.locator('input[name="email"]')
     assert email_input.is_visible()
@@ -61,3 +61,15 @@ def test_request_login_page_has_correct_ui(page, test_web_address):
 
     submit_button = page.locator('input[type="submit"]')
     assert submit_button.is_visible()
+
+"""
+When log-in link is clicked
+Takes us to log in page
+"""
+def test_log_in_link_takes_us_to_login_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}/")
+
+    page.click("text='Log In'")
+    h1_tag = page.locator('h1')
+
+    expect(h1_tag).to_have_text("Log in to Makers B&B")
