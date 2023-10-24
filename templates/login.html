@@ -5,8 +5,23 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <h1>Welcome back!</h1>
+        {% if errors %}
         <p>
-            Login page
+            Invalid credentials!
+        </p>
+        {% endif %}
+        <form action="/login" method="post">
+            <label for="Username">Username</label><br>
+            <input type="text" name="Username" id="Username"><br>
+            <label for="Password">Password</label><br>
+            <input type="text" name="Password" id="Password"><br>
+            <input type="submit" value="Log in">
+        </form>
+        <br>
+        <p>
+            Not signed up? Register here: <br>
+            <a href="/register"><input type="button" value='Register'></a>
         </p>
     </body>
 </html>
