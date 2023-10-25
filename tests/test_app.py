@@ -77,6 +77,8 @@ def test_create_listing(db_connection, page, test_web_address):
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a space")
 
+
+#Testing sign up a new user and redirecting to /spaces
 def test_signup_user(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
     page.goto(f"http://{test_web_address}/index")
@@ -87,3 +89,20 @@ def test_signup_user(db_connection, page, test_web_address):
 
     page.click("#signup-button")
     assert "/spaces" in page.url
+
+def test_get_login(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Log in")
+
+# def test_post_login_registered_user(db_connection, page, test_web_address):
+#     db_connection.seed("seeds/bnb.sql")
+    
+#     page.goto(f"http://{test_web_address}/login")
+#     page.fill("input[name='username']","testuser")
+#     page.fill("input[name='password']","testpassword")
+
+#     page.click("#login-button")
+
+#     assert "/spaces" in page.url
+    

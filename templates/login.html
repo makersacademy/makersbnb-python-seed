@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset ="utf-8">
-        <title>MakersBnB Sign Up</title>
+        <title>MakersBnB Log in</title>
 
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
@@ -11,20 +11,20 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <h1>Sign Up</h1>
-        <form action="/index" method="post">
+        
+        <h1>Log in</h1>
+        
+        <form action="/login" method="post">
+            
             <fieldset>
                 <label id="username-label">Username<input type="text" name="username" id="username"></label> 
             </br>
-                <label id="email-label">email<input type="email" name="email" id="email"></label>
-            </br>
                 <label id="password-label">password<input type="password" name="password" id="password"></label>
             </br>
-                <button type="submit" id="signup-button">Sign Up</button>
-            <p>Already have an account?<a href="login.html"> Log in.</a></p>
+                <button type="submit" id="login-button">Sign Up</button>
+            <p>Don't have an account yet?<a href="index.html"> Sign up!</a></p>
             </fieldset>
-
-
+        
         </form>
 
     </body>

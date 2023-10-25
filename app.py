@@ -18,6 +18,7 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+#sign up page
 @app.route('/index', methods=['POST'])
 def post_index():
     username = request.form['username']
@@ -28,6 +29,20 @@ def post_index():
     repo = UserRepository(connection)
     repo.create(user)
     return redirect(f"/spaces")
+
+#log in page get
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+# #log in page post
+# @app.route('/login', methods=['POST'])
+# def post_login():
+#     username = request.form['username']
+#     password = request.form['password']
+#     user = 
+
+
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
