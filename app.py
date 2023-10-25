@@ -11,8 +11,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
-Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
-logged_in = Magicman
+logged_in = None
 # == Your Routes Here ==
 
 # GET /index
@@ -86,11 +85,13 @@ def request_sapce(id):
 
 @app.route('/requests')
 def get_requests():
+    global logged_in
     userrepo = UserRepository(get_flask_database_connection(app))
-    requestlist = userrepo.show_bookings(False,logged_in.id)
-    print(requestlist)
-    return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
-
+    if logged_in != None:
+        requestlist = userrepo.show_bookings(False,logged_in.id)
+        return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
+    else:
+        return render_template('need_login.html')
 
 ############# CURRENTLY WORKING ON THIS BIT ####
 @app.route('/requests/<BOOKINGID>', methods=['POST'])

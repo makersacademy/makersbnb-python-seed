@@ -1,4 +1,4 @@
-Users (user id,username,name,password,email,phone_number)
+Users (user id,name,username,password,email,phone_number)
 Spaces (user id, space id, name, description, price-per-night)
 Availablity (space id, date-not-available)
 
