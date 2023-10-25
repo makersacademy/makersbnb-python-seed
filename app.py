@@ -18,7 +18,6 @@ def get_index():
     return render_template('index.html')
 
 # GET /listings return the listing of all the spaces
-
 @app.route('/listings', methods=['GET'])
 def get_listings():
     connection = get_flask_database_connection(app)
