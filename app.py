@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.listing_repo import *
 from lib.user import *
-from lib.user_repository import *
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def post_index():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
-    user = User(username, email, password)
+    user = User(None, username, email, password)
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
     repo.create(user)

@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     username VARCHAR(255),
     email VARCHAR(255),
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
 );
 
 CREATE SEQUENCE IF NOT EXISTS listings_id_seq;
-CREATE TABLE IF NOT EXISTS listings (
+CREATE TABLE listings (
     id SERIAL PRIMARY KEY,
     listing_name VARCHAR(255),
     listing_description VARCHAR(255),
