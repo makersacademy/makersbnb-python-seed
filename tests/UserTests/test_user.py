@@ -1,4 +1,4 @@
-from lib.User.user import User
+from lib.user.user import User
 
 def test_user_defines():
     user = User('benhurst', 'benhurst@email.com', '0123456789', 'password')

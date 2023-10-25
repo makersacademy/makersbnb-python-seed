@@ -26,6 +26,11 @@ def signup():
     return userid
 
 
+@app.route("/login")
+def get_login():
+    return render_template("login.html")
+
+
 @app.route("/login", methods=["POST"])
 def login():
     user_controller = UserController(UserRepository(get_flask_database_connection(app)))
@@ -42,11 +47,6 @@ if __name__ == "__main__":
 
 
 #  ''' this is the the frontend team's tests '''
-
-
-@app.route("/loginFrontend", methods=["GET"])
-def get_login():
-    return render_template("login.html")
 
 
 @app.route("/spacesFrontend", methods=["GET"])
