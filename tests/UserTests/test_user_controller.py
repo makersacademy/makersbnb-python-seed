@@ -20,7 +20,6 @@ from lib.user.user import User
 #     db_connection.seed("seeds/usertable_connection.sql")
 #     repository = UserRepository(db_connection)
 #     assert repository.check('benhurst1234') == True
-    
 
 
 # def test_user_controller(web_client):
@@ -32,14 +31,14 @@ from lib.user.user import User
 #     }
 
 #     post_response = web_client.post("/signuptwo", data = json_data)
-    
-    assert post_response == json_data
+
+# assert post_response == json_data
 
 
-def test_user_controller_login():
-    json_data = {
-        "username" : "a1",
-        "password" : "b1"
-    }
-    
-    assert UserController.login(json_data) == 
+# def test_user_controller_login():
+#     json_data = {
+#         "username" : "a1",
+#         "password" : "b1"
+#     }
+
+#     assert UserController.login(json_data) ==

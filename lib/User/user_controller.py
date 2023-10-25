@@ -4,6 +4,7 @@ from lib.user.user_repository import UserRepository
 
 from hashlib import sha256
 
+
 class UserController:
     def __init__(self, user_repository):
         self.user_repository = user_repository
@@ -23,8 +24,8 @@ class UserController:
             return user.id, 200
 
     def login(self, request):
-        username = request.get("username")
-        password = request.get("password") 
+        username = request.form.get("username")
+        password = request.form.get("password")
 
         hash_algorithm = sha256()
         hash_algorithm.update(password.encode("utf-8"))
@@ -32,18 +33,15 @@ class UserController:
 
         userReturn = self.user_repository.verify(username, passwordhash)
 
-        if(len(userReturn) > 0):
+        if len(userReturn) > 0:
             userRow = userReturn[0]
             user = User(
-                userRow["username"],
-                userRow["email"],
-                userRow["phonenumber"],
-                password
+                userRow["username"], userRow["email"], userRow["phonenumber"], password
             )
             user.id = userRow["id"]
             return user.id, 200
         else:
             # user does not exist, return error
-            return 'None'
+            return "None"
 
         return None
