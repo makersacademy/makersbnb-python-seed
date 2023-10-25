@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space import Space
 from lib.spaces_repository import SpacesRepository
+import datetime
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -47,6 +48,11 @@ def post_new_listing():
     repository = SpacesRepository(connection)
     name = request.form['name']
     description = request.form['description']
+    price = int(request.form['price'])
+    date_from_input = request.form['date_from']
+    date_to_input = request.form['date_to']
+    date_from = datetime.datetime.strptime(date_from_input, "%d/%m/%Y").date()
+    date_to = datetime.datetime.strptime(date_to_input, "%d/%m/%Y").date()
     listing = Space(None, name, description, price, date_from, date_to)
     repository.create_listing(listing)
     return redirect('/listings')
