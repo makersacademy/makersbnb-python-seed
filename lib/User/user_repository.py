@@ -10,11 +10,11 @@ class UserRepository:
     def create(self, user):
         self._connection.execute(
             "INSERT INTO users " +
-            "(username, email, passwordhash, phonenumber) " + 
-            "VALUES (%s, %s, %s, %s)", [user.username, user.email, user.password_hash, user.phone_number]
+            "(id, username, email, passwordhash, phonenumber) " + 
+            "VALUES (%s, %s, %s, %s, %s)", [user.id, user.username, user.email, user.password_hash, user.phone_number]
         )
 
-    def verify(self, username, password):
+    def verify(self, username, passwordhash):
         return self._connection.execute(
-            "SELECT * FROM users WHERE username=%"
+            "SELECT * FROM users WHERE username=%s AND passwordhash=%s", [username, passwordhash]
         )

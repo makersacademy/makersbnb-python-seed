@@ -10,7 +10,7 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "makers_bnb"
+    DEV_DATABASE_NAME = "postgres"
     TEST_DATABASE_NAME = "makers_bnb_test"
 
     def __init__(self, test_mode=False):
