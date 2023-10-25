@@ -1,22 +1,50 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g, session
 from lib.database_connection import get_flask_database_connection
+from lib.User.user_controller import UserController
+from lib.User.user_repository import UserRepository
+import secrets
 
-# Create a new Flask app
 app = Flask(__name__)
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
 
-# == Your Routes Here ==
-
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
 
-# These lines start the server if you run this file directly
-# They also start the server configured to use the test database
-# if started in test mode.
+@app.route("/signup", methods=["POST", "GET"])
+def signup():
+    user_controller = UserController(
+        UserRepository(
+            get_flask_database_connection(app)
+        )
+    )
+
+    userid = user_controller.signup(
+        request.get_json()
+    )
+
+    session['user_id'] = userid
+
+    return userid
+
+@app.route("/login", methods=["POST"])
+def login():
+    user_controller = UserController(
+        UserRepository(
+            get_flask_database_connection(app)
+        )
+    )
+
+    userid = user_controller.login(
+        request.get_json()
+    )
+
+    session['user_id'] = userid
+
+    return userid
+
 if __name__ == '__main__':
-    app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+    app.run(debug=True, port=int(os.environ.get('PORT', 5003)))
+    
