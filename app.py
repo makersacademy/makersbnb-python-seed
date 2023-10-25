@@ -8,19 +8,34 @@ from lib.available_date import AvailableDate
 from lib.available_date_repository import AvailableDateRepository
 import jinja_partials # to enable partials jinja html for the header for ex.
 
+# == admin stuff ==
+
 app = Flask(__name__)
 jinja_partials.register_extensions(app)
 
 
 # == Your Routes Here ==
-@app.route('/spaces', methods=['GET'])
+
+## Home
+
+@app.route('/', methods=['GET'])
+def get_index():
+    return render_template('index.html.jinja')
+
+## Spaces
+
+@app.route('/spaces/index', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
     spaces = repo_instance.all()
-    return render_template('spaces.html', spaces=spaces)
+    return render_template('/spaces/index.html.jinja', spaces=spaces)
 
+@app.route('/spaces/add_a_space_form', methods=['GET'])
+def get_space_form():
+    return render_template('/spaces/add_a_space_form.html.jinja')
 
+### create a space post method
 @app.route('/spaces', methods=['POST'])
 def post_spaces():
     connection = get_flask_database_connection(app)
@@ -37,15 +52,14 @@ def post_spaces():
     repo_instance.create(new_space)
     spaces = repo_instance.all()
 
-    return render_template('spaces.html', spaces=spaces)
-  
+    return render_template('spaces/index.html.jinja', spaces=spaces)
+
+def get_space_form():
+    return render_template('/spaces/add_a_space_form.html.jinja')
+## Signup
 @app.route('/sign_up', methods=['GET'])
 def get_sign_up():
-    return render_template('sign_up.html')
-
-@app.route('/add_space', methods=['GET'])
-def add_space():
-    return render_template('add_space.html')
+    return render_template('sign_up.html.jinja')
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
@@ -53,7 +67,7 @@ def add_available_date():
     # repo_instance = SpaceRepository(connection)
     # spaces = repo_instance.find_all_by_user_id(id)
     #^To pass in once we get login sessions working
-    return render_template('add_available_date.html')
+    return render_template('add_available_date.html.jinja')
 
 @app.route('/add_available_date', methods=['POST'])
 def post_available_date():
@@ -67,14 +81,14 @@ def post_available_date():
 
     repo_instance.create(new_available_date)
 
-    return render_template('add_available_date.html')
+    return render_template('/spaces/add_available_date.html.jinja')
 
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space_request_page(id):
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
     space = repo_instance.find(id)
-    return render_template('request_space.html', space = space)
+    return render_template('request_space.html.jinja', space = space)
 
 @app.route('/profile_page/<id>', methods=['GET'])
 def profile_page(id):
@@ -83,14 +97,14 @@ def profile_page(id):
     users = repo.all()
     print(users)
     user = repo.find(str(id))
-    return render_template('profile_page.html', user=user)
+    return render_template('profile_page.html.jinja', user=user)
 
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
 
 @app.route('/', methods=['GET'])
-def get_index():
+def get_app_index():
     return render_template('index.html')
 
 # These lines start the server if you run this file directly
