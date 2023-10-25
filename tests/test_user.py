@@ -42,7 +42,7 @@ def test_get_single_user(db_connection):
     db_connection.seed("seeds/airbnb.sql")
     repository = UserRepository(db_connection)
 
-    user = repository.find(1)
+    user = repository.find('leonar364@net.com')
 
     assert user == User(1, 'Leonardo', 'Leonardopoulos', 'leonar364@net.com','pug3&')
 

@@ -1,24 +1,12 @@
 from playwright.sync_api import Page, expect
-import time
-# Tests for your routes go here
 
 """
 We can render the index page
 """
 def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
-
-    # We look at the <p> tag
+    page.goto(f"http://{test_web_address}/")
     strong_tag = page.locator("p")
-
-    # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("This is the homepage.")
-
-# def test_signup(page, test_web_address):
-#     page.goto(f"http://{test_web_address}/signup")
-
-    
 
 #     page.fill("input[name='firstName']", "testName")
 #     page.fill("input[name='lastName']", "testLastName")
@@ -71,3 +59,7 @@ def test_get_new_space(page, test_web_address):
 #     expect(page.locator("#description")).to_have_text("Relaxing place")
 #     expect(page.locator("#size")).to_have_text("210")
 #     expect(page.locator("#price")).to_have_text("80")
+def test_get_space(page, test_web_address):
+    page.goto(f"http://{test_web_address}/spaces/1")
+    strong_tag = page.locator(".space_page > h1")
+    expect(strong_tag).to_have_text("Beach House")

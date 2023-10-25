@@ -6,6 +6,7 @@ from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
+from lib.userRepository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -17,8 +18,21 @@ app = Flask(__name__)
 # Try it:
 #   ; open http://localhost:5000/
 @app.route('/', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+def get_spaces():
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    
+    return render_template('spaces.html', spaces=spaces)
+
+# individual space page
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    space = repository.find(id)
+    
+    return render_template('space.html', space=space, id=id)
 
 @app.route('/signup', methods=['GET'])
 def get_signup_page():
