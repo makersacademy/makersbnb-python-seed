@@ -14,7 +14,7 @@ CREATE TABLE users (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255),
-    password varchar
+    password VARCHAR(255)
 );
 
 CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
