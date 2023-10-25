@@ -22,7 +22,7 @@ CREATE TABLE spaces (
     name VARCHAR(255),
     description VARCHAR(255),
     size INTEGER,
-    price INTEGER
+    price INTEGER,
     owner_id INTEGER
 );
 

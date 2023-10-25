@@ -24,7 +24,7 @@ def get_index():
 # Returns the new space page with a form to add a space
 # Try it:
 #   ; open http://localhost:5000/new-space
-@app.route('/new-space', methods=['GET'])
+@app.route('/spaces/new', methods=['GET'])
 def get_new_space():
     return render_template('new_space.html')
 
@@ -45,18 +45,20 @@ def create_space():
     validator = SpaceParametersValidator(name, description, size, price)
     if not validator._is_valid():
         errors = validator.generate_errors()
-        return render_template('/new_space', errors=errors)
+        return render_template('/spaces/new', errors=errors)
 
     space = Space(
         None, 
-        validator.get_valid_name,
-        validator.get_valid_description,
-        validator.get_valid_size,
-        validator.get_valid_price,
+        validator.get_valid_name(),
+        validator.get_valid_description(),
+        validator.get_valid_size(),
+        validator.get_valid_price(),
         1 #Change last number to owner_id once we have access to current user
     )
 
     repository.create(space)
+    print("testing repository")
+    print(space)
     return redirect(f'spaces/{space.id}')
 
 # These lines start the server if you run this file directly

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MakersBnB</title>
+        <title>Add a Space - MakersBnB</title>
 
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
@@ -19,13 +19,13 @@
             </p>
             {% endif %}
             <label for="name">Name:</label>
-            <input type="text" id="name">
+            <input type="text" name="name" id="name">
             <label for="description">Description:</label>
-            <input type="textarea" id="description">
+            <input type="textarea" name="description" id="description">
             <label for="size">Size of the space (in m2):</label>
-            <input type="text" id="size">
+            <input type="text" name="size" id="size">
             <label for="price">Price per night:</label>
-            <input type="text" id="price">
+            <input type="text" name="price" id="price">
             <input type="submit" value="Add space">
         </form>
     </body>
