@@ -9,14 +9,14 @@ class ListingRepo():
         rows = self._connection.execute('SELECT * FROM listings')
         listings = []
         for row in rows:
-            listing = Listing(row['listing_name'], row['listing_description'], float(row['listing_price']), int(row['user_id']))
+            listing = Listing(row['id'], row['listing_name'], row['listing_description'], float(row['listing_price']), int(row['user_id']))
             listings.append(listing)
         return listings
     
     def find_with_listing_id(self, id):
         data = self._connection.execute('SELECT * FROM listings WHERE id = %i' % (int(id)))
         print(data)
-        listing = Listing(data[0]['listing_name'], data[0]['listing_description'], data[0]['listing_price'], data[0]['user_id'])
+        listing = Listing(data[0]['id'],data[0]['listing_name'], data[0]['listing_description'], data[0]['listing_price'], data[0]['user_id'])
         return listing
     
     def add(self, name, desc, price, user_id):

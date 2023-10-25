@@ -15,10 +15,12 @@
         <div>
             <ul>
                 {% for listing in listings %}
-                <li>
-                    <p>{{listing.listing_name}}</p>
-                    <p>{{listing.listing_description}}</p>
-                </li>
+                <a href="/spaces/{{listing.id}}">
+                    <li>
+                        <p>{{listing.listing_name}}</p>
+                        <p>{{listing.listing_description}}</p>
+                    </li>
+                </a>
                 {% endfor %}
             </ul>
         </div>
