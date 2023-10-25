@@ -23,6 +23,14 @@ def get_login():
 def get_spaces():
     return render_template('spaces.html')
 
+@app.route('/spaces/new', methods=['GET'])
+def get_new_space():
+    return render_template('new.html')
+
+@app.route('/requests', methods=['GET'])
+def get_requests():
+    return render_template('requests.html')
+
 @app.route('/index', methods=['POST'])
 def post_index():
     email = request.form['email'] 
