@@ -42,10 +42,6 @@ def login():
     return userid
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=int(os.environ.get("PORT", 5003)))
-
-
 #  ''' this is the the frontend team's tests '''
 
 
@@ -72,3 +68,6 @@ def post_index():
     password_confirm = request.form["password_confirm"]
 
     return "", 200
+
+if __name__ == "__main__":
+    app.run(debug=True, port=int(os.environ.get("PORT", 5003)))
