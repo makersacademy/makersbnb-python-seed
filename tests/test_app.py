@@ -17,6 +17,22 @@ def test_get_index(page, test_web_address):
 
 
 """
+Render listings page
+"""
+
+def test_get_listings(page, test_web_address,db_connection):
+    db_connection.seed("seeds/spaces.sql")
+    # We load a virtual browser and navigate to the /listings page
+    page.goto(f"http://{test_web_address}/listings")
+
+    # We look at the <p> tag
+    strong_tag = page.locator("p")
+
+    # We assert that it has the text "This is the listings page."
+    expect(strong_tag).to_have_text(["Apartment 1", "Apartment 2"])
+
+
+"""
 test web page has a login form
 """
 def test_web_page_has_a_login_form(page, test_web_address):
@@ -55,5 +71,6 @@ def test_login_button_redirects_to_login_page(web_client, page, test_web_address
 """
 test web page has a logout button
 """
+
 
 
