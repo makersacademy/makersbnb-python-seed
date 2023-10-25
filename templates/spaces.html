@@ -11,8 +11,16 @@
     </head>
     <body>
         <h1>Book a space</h1>
-        <p>List a space</p>
-
-        
+        <button><a href="/spaces/new">List a space</a></button>
+        <div>
+            <ul>
+                {% for listing in listings %}
+                <li>
+                    <p>{{listing.listing_name}}</p>
+                    <p>{{listing.listing_description}}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </body>
 </html>
