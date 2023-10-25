@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.listing_repo import *
 from lib.user import *
@@ -32,25 +32,26 @@ def post_index():
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
-    listing = ListingRepo(connection)
-    listings = listing.all()    
+    repo = ListingRepo(connection)
+    listings = repo.all()
+    print(listings)
     return render_template('spaces.html', listings=listings)
 
 @app.route('/spaces/new', methods=['GET'])
 def get_new():
     return render_template('new.html')
 
-@app.route('/spaces/new', methods=['POST'])
+@app.route('/spaces', methods=['POST'])
 def post_spaces():
-    listing_name = request.form['listing_name']
-    listing_description = request.form['listing_description']
-    listing_price = request.form['listing_price']
+    listing_name = request.form['name']
+    listing_description = request.form['description']
+    listing_price = request.form['price']
     user_id = request.form['user_id']
     connection = get_flask_database_connection(app)
     repo = ListingRepo(connection)
-    repo.add(listing_name, listing_description, listing_price, user_id)
-    return '', 200
-
+    repo.add(listing_name, listing_description, float(listing_price), int(user_id))
+    return redirect(f"/spaces")
+    
 
 
 # These lines start the server if you run this file directly
