@@ -14,27 +14,19 @@
         <h1>Spaces available.</h1>
         {% for space in spaces %}
         <div class="space-div">
+            <a href="spaces/{{space.id}}">{{space.space_name}}</a>
             <li class="space-id">id: {{space.id}}</li>
             <li>
-                space_name: {{space.space_name}} 
+                Description: {{space.description}} 
             </li>
             <li>
-                description: {{space.description}} 
+                Price Per Night: {{space.price_per_night}} 
             </li>
             <li>
-                price_per_night: {{space.price_per_night}} 
+                User ID: {{space.user_id}} 
             </li>
-            <li>
-                user_id: {{space.user_id}} 
-            </li>
-            <li>
-                start_date: {{space.start_date}} 
-            </li>
-            <li>
-                end_date: {{space.end_date}} 
-            </li>
+            <br>
         </div>
-        
         {% endfor %}
     </body>
 </html>
