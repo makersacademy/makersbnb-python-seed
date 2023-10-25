@@ -53,11 +53,11 @@ def test_add_new_space(page, test_web_address, db_connection):
     page.fill("input[name=price]", '200')
     page.fill("input[name=user_id]", '1')
     page.click("text=Add space")
-    page.screenshot(path='screenshot_1.png', full_page=True)
+    #page.screenshot(path='screenshot_1.png', full_page=True)
     
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text('Spaces available.')
-    page.screenshot(path='screenshot_2.png', full_page=True)
+    #page.screenshot(path='screenshot_2.png', full_page=True)
 
     space_id_li_tags = page.locator(".space-id")
     expect(space_id_li_tags).to_have_text(["id: 1", "id: 2", "id: 3"])
