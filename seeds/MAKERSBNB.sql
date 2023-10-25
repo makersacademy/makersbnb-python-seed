@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS availability ;
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 username varchar(255),
-name text,
 password varchar(255),
+name text,
 email varchar(255),
 phone_number text
 );
@@ -25,7 +25,7 @@ constraint fk_user foreign key(host_id)
 CREATE TABLE availability (
 id SERIAL PRIMARY KEY,
 date_not_available date,
-approved boolean,
+approved text,
 requested_by_user_id int,
 spaces_id int,
 constraint fk_spaces foreign key(spaces_id)
@@ -57,14 +57,14 @@ INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Sunny 
 INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Middleton House', 'This moderate-sized town is located in a valley and has a rustic atmosphere.  It is best-known for a tumultuous history and its diverse population.  Also, rumor has it that the inhabitants are hiding something.', 00100.40, 7);
 INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Newport Lodge', 'This small town is located by a lake and looks very old-fashioned.  It is best-known for its fine dining and for being the home of a famous painter.  Also, strange objects are occasionally seen in the sky.', 00020.70, 6);
 
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-10-24', False, 3, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2021-02-24', False, 2, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2026-06-24', True, 6, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2009-01-24', False, 7, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2015-11-24', True, 7, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2022-12-24', True, 1, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2025-04-24', False, 3, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-02-24', True, 7, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-08-24', False, 2, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2027-04-24', True, 8, 1);
-INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-09-24', False, 9, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-10-24', approved, 3, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2021-02-24', denied, 2, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2026-06-24', unavailable, 6, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2009-01-24', pending, 7, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2015-11-24', approved, 7, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2022-12-24', denied, 1, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2025-04-24', unavailable, 3, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-02-24', pending, 7, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-08-24', denied, 2, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2027-04-24', pending, 8, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-09-24', approved, 9, 1);
