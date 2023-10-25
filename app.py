@@ -1,9 +1,16 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.database_connection import DatabaseConnection
+
 
 # Create a new Flask app
 app = Flask(__name__)
+
+connection = DatabaseConnection()
+connection.connect()
+# Seed with some seed data
+connection.seed("seeds/makersbnb.sql")
 
 # == Your Routes Here ==
 
@@ -11,9 +18,12 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
+
+
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
