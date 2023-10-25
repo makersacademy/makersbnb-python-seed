@@ -2,21 +2,11 @@
 <html>
   <head>
     <title>MakersBnB</title>
-
-    <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
     <link rel="stylesheet" href="/static/style.css" />
   </head>
-  <header align="right">
-    <a href="/login">Log In</a>
-  </header>
   <body>
+    <a href="/login">Log In</a>
     <h1>Feel at home, anywhere</h1>
-    <br />
-    <br />
-    <br />
     <h2>Sign up to Makers BnB</h2>
     <form action="/signup" method="POST">
       <label for="username">Username</label>
@@ -31,7 +21,5 @@
       <input type="password" name="password_confirm" />
       <input type="submit" value="Sign Up" name="signup" />
     </form>
-    <br />
-    <br />
   </body>
 </html>
