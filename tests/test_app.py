@@ -59,9 +59,7 @@ def test_integrated_sign_up(db_connection, page, test_web_address):
     page.fill('input[name="phonenumber"]', "8675309")
     page.fill('input[name="password"]', "password2.")
     page.fill('input[name="password_confirm"]', "password2.")
-    page.click("text='Sign Up'")
-    page.screenshot(path="screenshot.png", full_page=True)
-
+    page.click("input[name='signup']")
     repo = UserRepository(db_connection)
-    rows = repo.check("Username1")
-    assert rows == "hello"
+    row = repo.check("Username1")
+    assert row[0]["username"] == "Username1"
