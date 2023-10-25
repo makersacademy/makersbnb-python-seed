@@ -5,12 +5,14 @@ from lib.space_class import Space
 from lib.space_repository import SpaceRepository
 from lib.user_class import User
 from lib.user_repository import UserRepository
-
+from datetime import datetime
 
 # Create a new Flask app
 app = Flask(__name__)
 
-logged_in = None
+# Trial Log in account for testing purposes below 
+Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
+logged_in = Magicman
 # == Your Routes Here ==
 
 # GET /index
@@ -66,13 +68,36 @@ def post_new_space():
     return redirect('/')
 
 
+# This loads t
 @app.route('/spaces/<id>')
 def get_space(id):
-    return render_template('space_by_id.html')
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    SingleSpace=spacerepo.find_by_id(id)
+    unavailable_dates=spacerepo.unavailable_days(id)
+    return render_template('space_by_id.html',current_date=datetime.now(),space=SingleSpace,unavailable_dates=unavailable_dates)
+
+@app.route('/spaces/<id>', methods=['POST'])
+def request_sapce(id):
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    SingleSpace=spacerepo.find_by_id(id)
+    date = request.form['date']
+    spacerepo.request_a_stay(date,id,logged_in.id)
+    return redirect('/')
 
 @app.route('/requests')
 def get_requests():
-    return render_template('all_requests.html')
+    userrepo = UserRepository(get_flask_database_connection(app))
+    requestlist = userrepo.show_bookings(False,logged_in.id)
+    print(requestlist)
+    return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
+
+
+############# CURRENTLY WORKING ON THIS BIT ####
+@app.route('/requests/<BOOKINGID>', methods=['POST'])
+def approve_request():
+    status = request.form['status']
+    return status
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
