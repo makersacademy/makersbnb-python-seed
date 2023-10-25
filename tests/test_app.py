@@ -84,10 +84,10 @@ def test_create_new_user(page, test_web_address, db_connection):
     page.fill("input[name='password']", "testpassword4")
     # page.click("text=Sign Up")
     page.get_by_role("button", name="Sign Up").click()
-    expect(page).to_have_url(f"http://{test_web_address}/account_page")
+    expect(page).to_have_url(f"http://{test_web_address}/login")
     # h3_tag = page.locator("h3")
     # expect(h3_tag).to_have_text("Congratulations, you have signed in!")
-   
+
 
 
 def test_correct_login(page,test_web_address,db_connection):

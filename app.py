@@ -2,9 +2,13 @@ import os
 from flask import Flask, request, render_template, session, redirect
 from lib.user_repository import UserRepository
 from lib.database_connection import get_flask_database_connection
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = os.environ["APP_SECRET_KEY"]
 
 
 # == Your Routes Here ==
@@ -24,7 +28,7 @@ def create_user():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     repository.create(email, password)
-    return redirect("/account_page")
+    return redirect("/login")
 
 @app.route('/login', methods=['GET'])
 def get_login():
@@ -37,8 +41,8 @@ def post_login():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     if repository.check_password(email, password_attempt):
-        # user = repository.find_by_email(email)
-        # session['user_id'] = user.id
+        user = repository.find_by_email(email)
+        session['user_id'] = user.id
         return redirect('/account_page')
     else:
         return redirect('/login')
@@ -46,14 +50,15 @@ def post_login():
     
     
 
+
 @app.route('/account_page')
 def account_page():
-    # if 'user_id' not in session:
-    #     # No user id in the session so the user is not logged in.
-    #     return redirect('/login')
-    # else:
-    #     # The user is logged in, display their account page.
-    return render_template('account_page.html')
+    if 'user_id' not in session:
+        # No user id in the session so the user is not logged in.
+        return redirect('/login')
+    else:
+        # The user is logged in, display their account page.
+        return render_template('account_page.html')
 
 
 
