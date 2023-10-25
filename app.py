@@ -18,5 +18,16 @@ def get_index():
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
+
+# @app.route('/login', methods=['GET']) 
+# def get_login():
+#     return render_template('login.html')
+
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
