@@ -23,6 +23,12 @@ class UserRepository:
         row  = rows[0]
         user = User(row['username'], row['spaces'], row['id'])
         return user
+    
+    def find_by_username(self, username):
+        rows = self._connection.execute("SELECT * FROM users WHERE username = %s", [username])
+        row  = rows[0]
+        user = User(row['username'], row['spaces'], row['id'])
+        return user
 
 
     def create(self, new_user):

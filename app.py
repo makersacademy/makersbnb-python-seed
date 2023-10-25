@@ -1,9 +1,10 @@
 import os
 from lib.space import Space
-from flask import Flask, request, render_template
+from flask import Flask, redirect, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
+from lib.user import User
 from lib.available_date import AvailableDate
 from lib.available_date_repository import AvailableDateRepository
 import jinja_partials # to enable partials jinja html for the header for ex.
@@ -60,6 +61,22 @@ def get_space_form():
 @app.route('/sign_up', methods=['GET'])
 def get_sign_up():
     return render_template('sign_up.html.jinja')
+
+
+@app.route('/sign_up', methods=['POST'])
+def post_username_sign_up():
+    connection = get_flask_database_connection(app)
+    repo_instance = UserRepository(connection)
+    print(request.form,"!!!!!!!!!!!!!!!")
+    username = request.form['username']
+    
+    new_user = User(username, "", None)
+    repo_instance.create(new_user)
+    user = repo_instance.find_by_username(username)
+    return redirect(f'profile_page/{user.id}')
+
+
+
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
