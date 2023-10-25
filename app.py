@@ -37,7 +37,7 @@ def post_login():
     current_user = user_repo.find_by_username(username)
     if current_user==None:
         return render_template('login.html',errors='errors')
-    elif current_user.password == password:
+    if current_user.password == password:
         logged_in = current_user
         return redirect('/')
     else:
@@ -86,12 +86,12 @@ def request_sapce(id):
 @app.route('/requests')
 def get_requests():
     global logged_in
-    userrepo = UserRepository(get_flask_database_connection(app))
-    if logged_in != None:
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        userrepo = UserRepository(get_flask_database_connection(app))
         requestlist = userrepo.show_bookings(False,logged_in.id)
         return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
-    else:
-        return render_template('need_login.html')
 
 ############# CURRENTLY WORKING ON THIS BIT ####
 @app.route('/requests/<BOOKINGID>', methods=['POST'])
