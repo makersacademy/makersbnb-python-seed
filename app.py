@@ -24,6 +24,21 @@ connection.seed("seeds/makersbnb.sql")
 def get_index():
     return render_template('index.html')
 
+@app.route('/register', methods=['GET'])
+def new_registration():
+    return render_template('register.html')
+
+@app.route('/register', methods=['POST'])
+def post_register():
+
+    connection = get_flask_database_connection(app)
+
+    username = request.form("username")
+    email_address = request.form("email_address")
+    password = request.form("password")
+    
+    return render_template('index.html')
+
 @app.route('/booking-requests', methods=['GET'])
 def get_owners_booking_requests():
     return render_template('owner_booking_requests.html')

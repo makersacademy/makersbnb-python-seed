@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersBNB Account Registration</title>
+</head>
+<body>
+    <form action = "/index" "post">
+        {% if error %}
+            <p>
+                Submission unsucessful due to following errors: {{errors}}
+            </p>
+        {% endif %}
+
+        <p>
+            <label for "username">Username</label>
+            <input type = "text" name = "username" id = "username">
+        </p>
+        <p>
+            <label for "email_address">Email address</label>
+            <input type = "text" name = "email_address" id = "email_address">
+        </p>
+        <p>
+            <label for "password">Password</label>
+            <input type = "text" name = "password" id = "password">
+        </p>
+        <p>
+            <input type = "submit" value = "Register your account">
+        </p>
+    </form>
+    
+</body>
+</html>
