@@ -24,7 +24,7 @@ def create_user():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     repository.create(email, password)
-    return redirect("http://localhost:5000/account_page")
+    return redirect("/account_page")
 
 @app.route('/login', methods=['GET'])
 def get_login():
@@ -33,15 +33,18 @@ def get_login():
 @app.route('/login', methods=['POST'])
 def post_login():
     email = request.form['email']
-    password_attempt = request.form['password_attempt']
+    password_attempt = request.form['password']
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     if repository.check_password(email, password_attempt):
-        user = repository.find_by_email(email)
-        session['user_id'] = user.id
-        return render_template('login_success.html')
+        # user = repository.find_by_email(email)
+        # session['user_id'] = user.id
+        return redirect('/account_page')
     else:
-        return render_template('login_error.html')
+        return redirect('/login')
+    
+    
+    
 
 @app.route('/account_page')
 def account_page():
@@ -51,6 +54,7 @@ def account_page():
     # else:
     #     # The user is logged in, display their account page.
     return render_template('account_page.html')
+
 
 
 # These lines start the server if you run this file directly
