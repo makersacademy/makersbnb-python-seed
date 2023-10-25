@@ -68,7 +68,7 @@ def login():
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000
-@app.route('/', methods=['GET'])
+@app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app) 
     repository = SpaceRepository(connection)
