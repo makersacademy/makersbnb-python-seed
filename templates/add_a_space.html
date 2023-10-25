@@ -6,6 +6,22 @@
     <title>Add Your Space</title>
 </head>
 <body>
-    Test
+    <H1> MakersBNB</H1>
+    <form action = "/add-a-space" "POST">
+        {% if error %}
+        <p>
+            Submission unsucessful due to following errors: {{errors}}
+        </p>
+        {% endif %}
+
+        <p> 
+            <label for "spacename"> Space Name </label>
+            <input type = "text" name = "spacename" id = "spacename">
+        </p>
+
+    </form>
+
+
+    <a href="/index" class="return-to-homepage"> Return to homepage</a>
 </body>
 </html>
