@@ -27,7 +27,7 @@ def post_index():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
     repo.create(user)
-    return '', 200
+    return redirect(f"/spaces")
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
