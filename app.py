@@ -24,6 +24,10 @@ connection.seed("seeds/makersbnb.sql")
 def get_index():
     return render_template('index.html')
 
+@app.route('/booking-requests', methods=['GET'])
+def get_owners_booking_requests():
+    return render_template('owner_booking_requests.html')
+
   
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
