@@ -1,36 +1,20 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, redirect
 from lib.database_connection import get_flask_database_connection
-from lib.space import Space
-from lib.space_repository import SpaceRepository
-from lib.user import User
+from lib.space import *
+from lib.space_repository import *
+from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
+from lib.user import User
 
 # Create a new Flask app
 app = Flask(__name__)
 
-# home page
+# == Your Routes Here ==
+
 @app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
-
-# spaces page
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    
-    return render_template('spaces.html', spaces=spaces)
-
-# individual space page
-@app.route('/spaces/<id>', methods=['GET'])
-def get_space(id):
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    space = repository.find(id)
-    
-    return render_template('space.html', space=space, id=id)
 
 @app.route('/signup', methods=['GET'])
 def get_signup_page():
@@ -57,7 +41,6 @@ def register():
     user = repository.create(user)
 
     return redirect("/login")
-    
 
 @app.route('/login', methods=['GET'])
 def get_login_page():
@@ -71,9 +54,6 @@ def login():
     email = request.form['useremail']
     password = request.form['password']
 
-
-    
-
     if not repository.accountExists(email) :
         return render_template('login.html', errors='Account does not exist with this email -> Please sign up and try again.')
     
@@ -82,7 +62,68 @@ def login():
     if user.password != password:
         return render_template('login.html', errors='Password is incorrect')
     else:
-        return render_template('index.html') 
+        return redirect('/') 
+    
+# GET /
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    
+    return render_template('spaces.html', spaces=spaces)
+
+# individual space page
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    space = repository.find(id)
+    
+    return render_template('space.html', space=space, id=id)
+
+# GET /spaces/new
+# Returns the new space page with a form to add a space
+# Try it:
+#   ; open http://localhost:5000/spaces/new
+@app.route('/spaces/new', methods=['GET'])
+def get_new_space():
+    return render_template('new_space.html')
+
+# POST /
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000/
+@app.route('/spaces', methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    name = request.form['name']
+    description = request.form['description']
+    size = request.form['size']
+    price = request.form['price']
+
+    validator = SpaceParametersValidator(name, description, size, price)
+    if not validator._is_valid():
+        errors = validator.generate_errors()
+        return render_template('/spaces/new', errors=errors)
+
+    space = Space(
+        None, 
+        validator.get_valid_name(),
+        validator.get_valid_description(),
+        validator.get_valid_size(),
+        validator.get_valid_price(),
+        1 #Change last number to owner_id once we have access to current user
+    )
+
+    repository.create(space)
+
+    return redirect(f'spaces/{space.id}')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
