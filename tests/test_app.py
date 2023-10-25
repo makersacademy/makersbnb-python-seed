@@ -78,7 +78,7 @@ def test_log_in_link_takes_us_to_login_page(page, test_web_address):
 Test creates new user
 """
 def test_create_new_user(page, test_web_address, db_connection):
-    db_connection.seed("seeds/users.sql")
+    db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/")
     page.fill("input[name='email']", "test-email-4")
     page.fill("input[name='password']", "testpassword4")
@@ -91,7 +91,7 @@ def test_create_new_user(page, test_web_address, db_connection):
 
 
 def test_correct_login(page,test_web_address,db_connection):
-    db_connection.seed("seeds/users.sql")
+    db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name='email']", "test-email-1")
     page.fill("input[name='password']", "test-password-1")
@@ -101,7 +101,7 @@ def test_correct_login(page,test_web_address,db_connection):
 
 
 def test_incorrect_login(page,test_web_address,db_connection):
-    db_connection.seed("seeds/users.sql")
+    db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name='email']", "asdfg")
     page.fill("input[name='password']", "jkjkj")

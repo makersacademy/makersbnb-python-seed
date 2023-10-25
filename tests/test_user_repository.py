@@ -5,7 +5,7 @@ import hashlib
 
 # Calling all() method lists all users
 def test_all_method_lists_all_users(db_connection):
-    db_connection.seed('seeds/users.sql')
+    db_connection.seed('seeds/makers_bnb.sql')
     repository = UserRepository(db_connection)
     users = repository.all()
     assert users == [
@@ -16,7 +16,7 @@ def test_all_method_lists_all_users(db_connection):
 
 # create() adds new user to database
 def test_create_method_adds_new_user(db_connection):
-    db_connection.seed('seeds/users.sql')
+    db_connection.seed('seeds/makers_bnb.sql')
     repository = UserRepository(db_connection)
     repository.create('test-email-4', 'test-password-4')
     users = repository.all()
@@ -30,7 +30,7 @@ def test_create_method_adds_new_user(db_connection):
 # check_password() compares hashed password attempt vs stored hash for given email
 # return true for password match
 def test_check_password_method_returns_true(db_connection):
-    db_connection.seed('seeds/users.sql')
+    db_connection.seed('seeds/makers_bnb.sql')
     repository = UserRepository(db_connection)
     result = repository.check_password('test-email-1', 'test-password-1')
     assert result == True
@@ -38,14 +38,14 @@ def test_check_password_method_returns_true(db_connection):
 # check_password() compares hashed password attempt vs stored hash for given email
 # return false for password mismatch
 def test_check_password_method_returns_false(db_connection):
-    db_connection.seed('seeds/users.sql')
+    db_connection.seed('seeds/makers_bnb.sql')
     repository = UserRepository(db_connection)
     result = repository.check_password('test-email-1', 'wrong_password')
     assert result == False
 
 # find_by_email() returns correct user
 def test_find_by_email(db_connection):
-    db_connection.seed('seeds/users.sql')
+    db_connection.seed('seeds/makers_bnb.sql')
     repository = UserRepository(db_connection)
     user = repository.find_by_email('test-email-1')
     assert user == User(1, 'test-email-1', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42')
