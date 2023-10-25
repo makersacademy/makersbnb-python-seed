@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space import Space
 from lib.spaces_repository import SpacesRepository
@@ -41,6 +41,15 @@ def get_login():
     return render_template('login.html')
 
 
+@app.route('/listings', methods=['POST'])
+def post_new_listing():
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    name = request.form['name']
+    description = request.form['description']
+    listing = Space(None, name, description, price, date_from, date_to)
+    repository.create_listing(listing)
+    return redirect('/listings')
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
