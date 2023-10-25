@@ -49,3 +49,5 @@ def test_find_by_email(db_connection):
     repository = UserRepository(db_connection)
     user = repository.find_by_email('test-email-1')
     assert user == User(1, 'test-email-1', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42')
+
+
