@@ -6,6 +6,7 @@ from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
+from lib.booking import Booking
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -124,6 +125,21 @@ def create_space():
     repository.create(space)
 
     return redirect(f'spaces/{space.id}')
+
+@app.route('/owners-bookings-dashboard', methods=['GET'])
+def get_owners_bookings():
+    connection = get_flask_database_connection(app)
+    
+    user_id = 1 
+    # change this later to get id from user logged in
+
+
+    rows = connection.execute(f'SELECT * FROM bookings JOIN spaces ON bookings.space_id=spaces.id WHERE spaces.owner_id={user_id}')
+    bookings = [Booking(row['id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
+    
+
+    return render_template('ownerbookings.html', bookings=bookings)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
