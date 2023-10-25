@@ -35,31 +35,26 @@ def test_get_index(page, test_web_address):
 #         )
 
 def test_get_new_space(page, test_web_address):
-    page.goto(f"http://{test_web_address}/new-space")
+    page.goto(f"http://{test_web_address}/spaces/new")
 
     h1_tag = page.locator("h1")
 
     expect(h1_tag).to_have_text("Add a new space")
 
-
-# TO DO - Once show page is created, can add the test below and ensure expected id match
-
 # def test_create_space(page, test_web_address):
-#     page.goto(f"http://{test_web_address}/")
+#     page.goto(f"http://{test_web_address}/spaces/new")
 #     page.fill("input[name='name']", "Beach house")
 #     page.fill("input[name='description']", "Relaxing place")
 #     page.fill("input[name='size']", "210")
 #     page.fill("input[name='price']", "80")
 #     page.click("text=Add space")
 
-#     page.screenshot(path="screenshot.png", full_page=True)
-#     print(page.content())
+#     expect(page.locator("#space-name")).to_have_text("Beach house")
+#     expect(page.locator("#space-description")).to_have_text("Relaxing place")
+#     expect(page.locator("#space-size")).to_have_text("210")
+#     expect(page.locator("#space-price")).to_have_text("80")
 
-#     expect(page.locator("#name")).to_have_text("Beach house")
-#     expect(page.locator("#description")).to_have_text("Relaxing place")
-#     expect(page.locator("#size")).to_have_text("210")
-#     expect(page.locator("#price")).to_have_text("80")
 def test_get_space(page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces/1")
-    strong_tag = page.locator(".space_page > h1")
-    expect(strong_tag).to_have_text("Beach House")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Beach House")

@@ -6,33 +6,15 @@ from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
-from lib.userRepository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
 
-# GET /
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/
 @app.route('/', methods=['GET'])
-def get_spaces():
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    
-    return render_template('spaces.html', spaces=spaces)
-
-# individual space page
-@app.route('/spaces/<id>', methods=['GET'])
-def get_space(id):
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    space = repository.find(id)
-    
-    return render_template('space.html', space=space, id=id)
+def get_index():
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET'])
 def get_signup_page():
@@ -59,7 +41,6 @@ def register():
     user = repository.create(user)
 
     return redirect("/login")
-    
 
 @app.route('/login', methods=['GET'])
 def get_login_page():
@@ -82,6 +63,27 @@ def login():
         return render_template('login.html', errors='Password is incorrect')
     else:
         return redirect('/') 
+    
+# GET /
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000
+@app.route('/', methods=['GET'])
+def get_spaces():
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    
+    return render_template('spaces.html', spaces=spaces)
+
+# individual space page
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    space = repository.find(id)
+    
+    return render_template('space.html', space=space, id=id)
 
 # GET /spaces/new
 # Returns the new space page with a form to add a space
@@ -120,8 +122,7 @@ def create_space():
     )
 
     repository.create(space)
-    print("testing repository")
-    print(space)
+
     return redirect(f'spaces/{space.id}')
 
 # These lines start the server if you run this file directly
