@@ -60,6 +60,10 @@ def account_page():
     else:
         # The user is logged in, display their account page.
         return render_template('account_page.html')
+    
+@app.route('/list_space')
+def list_space():
+    return render_template('list_space.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
