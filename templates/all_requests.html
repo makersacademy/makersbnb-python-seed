@@ -8,11 +8,14 @@
         <p>
             <h1>Viewing {{user.name}}'s pending Requests:</h1>
             <!--  [TO IMPLEMENT - IF REQUEST LIST IS EMPTY THEN SAY 'NO REQUESTS TO APPROVE'] -->
-            
+            {% if pending_requests==[] %}
+                No requests to approve. <br><br>
+                <a href="/">Back to home?</a>
+            {% endif %}
             {% for request in pending_requests%}<br>
             <p>
             {{request.username}} has requested {{request.name}} on {{request.date_not_available}}<br>
-            APPROVE / DENY
+            VIEW
             </p>
             {% endfor %}
         </p>
