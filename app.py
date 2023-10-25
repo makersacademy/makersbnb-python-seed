@@ -43,6 +43,10 @@ def post_register():
 def get_owners_booking_requests():
     return render_template('owner_booking_requests.html')
 
+@app.route('/add-a-space', methods=['GET'])
+def get_add_a_space():
+    return render_template('add_a_space.html')
+
   
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
