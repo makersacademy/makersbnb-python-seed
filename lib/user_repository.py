@@ -30,6 +30,6 @@ class UserRepository():
         return len(rows) > 0
 
     def find_by_email(self, email):
-        rows = self._connection. execute('SELECT * FROM users WHERE email = %s', [email])
+        rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
         user = User(rows[0]['id'], rows[0]['email'], rows[0]['password'])
         return user
