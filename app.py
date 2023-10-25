@@ -47,9 +47,10 @@ def post_login():
     else:
         return redirect('/login')
     
-    
-    
-
+@app.route('/signout')
+def get_signout():
+    session['user_id']= None
+    return redirect('/')
 
 @app.route('/account_page')
 def account_page():
@@ -59,8 +60,6 @@ def account_page():
     else:
         # The user is logged in, display their account page.
         return render_template('account_page.html')
-
-
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
