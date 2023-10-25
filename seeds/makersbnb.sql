@@ -14,7 +14,7 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq; 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username TEXT,
+    username TEXT UNIQUE,
     spaces TEXT
 );
 
