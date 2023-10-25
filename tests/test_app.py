@@ -45,7 +45,7 @@ Test adding new space using webpage, then view all spaces once added
 """
 
 def test_add_new_space(page, test_web_address, db_connection):
-    page.goto(f"http://{test_web_address}/add_a_space_form")
+    page.goto(f"http://{test_web_address}/spaces/add_a_space_form")
     db_connection.seed('seeds/makersbnb.sql')
 
     page.fill("input[name=space_name]", "Test New Space Name")

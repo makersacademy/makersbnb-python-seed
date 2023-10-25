@@ -31,30 +31,35 @@ def get_spaces():
     spaces = repo_instance.all()
     return render_template('/spaces/index.html.jinja', spaces=spaces)
 
-@app.route('/spaces/index', methods=['POST'])
+@app.route('/spaces/add_a_space_form', methods=['GET'])
+def get_space_form():
+    return render_template('/spaces/add_a_space_form.html.jinja')
+
+### create a space post method
+@app.route('/spaces', methods=['POST'])
 def post_spaces():
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
+
     space_name = request.form['space_name']
     description = request.form['description']
     user_id = request.form['user_id']
     price = request.form['price']
-    new_space = Space(None, space_name, description, price, user_id)
+
+    new_space = Space(None, space_name, description,
+                      price, user_id)
+
     repo_instance.create(new_space)
     spaces = repo_instance.all()
-    return render_template('/spaces/index.html.jinja', spaces=spaces)
- 
-@app.route('/spaces/add_a_space_form', methods=['GET'])
+
+    return render_template('spaces/index.html.jinja', spaces=spaces)
+
 def get_space_form():
     return render_template('/spaces/add_a_space_form.html.jinja')
 ## Signup
 @app.route('/sign_up', methods=['GET'])
 def get_sign_up():
     return render_template('sign_up.html.jinja')
-
-@app.route('/spaces/add_space', methods=['GET'])
-def add_space():
-    return render_template('add_space.html.jinja')
 
 @app.route('/add_available_date', methods=['GET'])
 def add_available_date():
