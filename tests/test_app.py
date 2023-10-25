@@ -15,7 +15,6 @@ from playwright.sync_api import Page, expect
 #     # We assert that it has the text "This is the homepage."
 #     expect(strong_tag).to_have_text("This is the homepage.")
 
-
 """
 Get home
 Returns page with title
@@ -82,29 +81,31 @@ def test_create_new_user(page, test_web_address, db_connection):
     page.goto(f"http://{test_web_address}/")
     page.fill("input[name='email']", "test-email-4")
     page.fill("input[name='password']", "testpassword4")
-    # page.click("text=Sign Up")
     page.get_by_role("button", name="Sign Up").click()
     expect(page).to_have_url(f"http://{test_web_address}/login")
-    # h3_tag = page.locator("h3")
-    # expect(h3_tag).to_have_text("Congratulations, you have signed in!")
-
-
 
 def test_correct_login(page,test_web_address,db_connection):
     db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name='email']", "test-email-1")
     page.fill("input[name='password']", "test-password-1")
-    # page.click("text='Log In'")
     page.get_by_role("button", name="Log In").click()
     expect(page).to_have_url(f"http://{test_web_address}/account_page")
-
 
 def test_incorrect_login(page,test_web_address,db_connection):
     db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name='email']", "asdfg")
     page.fill("input[name='password']", "jkjkj")
-    # page.click("text='Log In'")
     page.get_by_role("button", name="Log In").click()
     expect(page).to_have_url(f"http://{test_web_address}/login")
+
+def test_signout_button(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makers_bnb.sql")
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='email']", "test-email-1")
+    page.fill("input[name='password']", "test-password-1")
+    page.get_by_role("button", name="Log In").click()
+    expect(page).to_have_url(f"http://{test_web_address}/account_page")
+    page.click("text='Sign Out'")
+    expect(page).to_have_url(f"http://{test_web_address}/")

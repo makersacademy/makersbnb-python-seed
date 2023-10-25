@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <div><a name="home" href="/">Home</a></div>
+        <div><a name="signout" href="/signout">Sign Out</a></div>
+        <div><a name="book_space" href="/book_space">Book a space</a></div>
+        <h1>List a space</h1>
+        <p>Fill in the form to list a space for booking</p>
+        <form action="list_space" methods="POST">
+            <p>
+                <label for="name">Name</label>
+                <br>
+                <input type="text" name="name" id="name">
+                <br>
+            </p>
+            <p>
+                <label for="description">Description</label>
+                <br>
+                <input type="text" name="description" id="description">
+            </p>
+            <p>
+                <label for="cost">Cost per night</label>
+                <br>
+                <input type="number" name="cost" id="cost">
+            </p>
+            <p>
+                <label for="avail-from">Available from</label>
+                <br>
+                <input type="date" name="avail-from" id="avail-from">
+            </p>
+            <p>
+                <label for="avail-to">Available to</label>
+                <br>
+                <input type="date" name="avail-to" id="avail-to">
+            </p>
+            <input type="submit" value="List my space!">
+        </form>
+    </body>
+</html>
