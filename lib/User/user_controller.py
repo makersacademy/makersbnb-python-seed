@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
-from lib.User.user import User
-from lib.User.user_repository import UserRepository
+from lib.user.user import User
+from lib.user.user_repository import UserRepository
+
 
 class UserController:
     def __init__(self, user_repository):
@@ -8,13 +9,13 @@ class UserController:
 
     def signup(self, data):
         user = User(
-            data.get("username"),
-            data.get("email"),
-            data.get("phonenumber"),
-            data.get("password")
+            data.form.get("username"),
+            data.form.get("email"),
+            data.form.get("phonenumber"),
+            data.form.get("password"),
         )
 
-        if (len(self.user_repository.check(user.username)) > 0):
+        if len(self.user_repository.check(user.username)) > 0:
             return "User already exists", 409
         else:
             self.user_repository.create(user)
@@ -24,9 +25,7 @@ class UserController:
         username = data.get("username")
         passwordhash = hash(data.get("password"))
 
-        if(self.user_repository.verify(username, passwordhash)):
+        if self.user_repository.verify(username, passwordhash):
             return None
 
         return None
-    
-  

@@ -1,79 +1,74 @@
 import os
 from flask import Flask, request, render_template, g, session
 from lib.database_connection import get_flask_database_connection
-from lib.User.user_controller import UserController
-from lib.User.user_repository import UserRepository
+from lib.user.user_controller import UserController
+from lib.user.user_repository import UserRepository
 import secrets
 
 app = Flask(__name__)
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 
-@app.route('/index', methods=['GET'])
+
+@app.route("/index", methods=["GET"])
 def get_index():
-    return render_template('index.html')
+    return render_template("index.html")
+
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
-    user_controller = UserController(
-        UserRepository(
-            get_flask_database_connection(app)
-        )
-    )
+    user_controller = UserController(UserRepository(get_flask_database_connection(app)))
 
-    userid = user_controller.signup(
-        request.get_json()
-    )
+    userid = user_controller.signup(request)
 
-    session['user_id'] = userid
+    session["user_id"] = userid
 
     return userid
+
 
 @app.route("/login", methods=["POST"])
 def login():
-    user_controller = UserController(
-        UserRepository(
-            get_flask_database_connection(app)
-        )
-    )
+    user_controller = UserController(UserRepository(get_flask_database_connection(app)))
 
-    userid = user_controller.login(
-        request.get_json()
-    )
+    userid = user_controller.login(request)
 
-    session['user_id'] = userid
+    session["user_id"] = userid
 
     return userid
 
-if __name__ == '__main__':
-    app.run(debug=True, port=int(os.environ.get('PORT', 5003)))
+
+if __name__ == "__main__":
+    app.run(debug=True, port=int(os.environ.get("PORT", 5003)))
 
 
+#  ''' this is the the frontend team's tests '''
 
-#  ''' this is the the frontend team's tests '''   
-    
-@app.route('/loginFrontend', methods=['GET'])
+
+@app.route("/loginFrontend", methods=["GET"])
 def get_login():
-    return render_template('login.html')
+    return render_template("login.html")
 
-@app.route('/spacesFrontend', methods=['GET'])
+
+@app.route("/spacesFrontend", methods=["GET"])
 def get_spaces():
-    return render_template('spaces.html')
+    return render_template("spaces.html")
 
-@app.route('/spaces/newFrontend', methods=['GET'])
+
+@app.route("/spaces/newFrontend", methods=["GET"])
 def get_new_space():
-    return render_template('new.html')
+    return render_template("new.html")
 
-@app.route('/requestsFrontend', methods=['GET'])
+
+@app.route("/requestsFrontend", methods=["GET"])
 def get_requests():
-    return render_template('requests.html')
+    return render_template("requests.html")
 
-@app.route('/indexFrontend', methods=['POST'])
+
+@app.route("/indexFrontend", methods=["POST"])
 def post_index():
-    email = request.form['email'] 
-    phone = request.form['phone']
-    password = request.form['password']
-    password_confirm = request.form['password_confirm']
+    email = request.form["email"]
+    phone = request.form["phone"]
+    password = request.form["password"]
+    password_confirm = request.form["password_confirm"]
 
-    return '', 200
-
+    return "", 200
