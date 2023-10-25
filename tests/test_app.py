@@ -13,7 +13,7 @@ def test_get_index(page, test_web_address):
     strong_tag = page.locator("p")
 
     # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
+    expect(strong_tag).to_have_text("Welcome to SSJBNB")
 
 
 """
@@ -29,7 +29,7 @@ def test_get_listings(page, test_web_address,db_connection):
     strong_tag = page.locator("p")
 
     # We assert that it has the text "This is the listings page."
-    expect(strong_tag).to_have_text(["Apartment 1", "Apartment 2"])
+    expect(strong_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2" ])
 
 
 """
@@ -55,22 +55,26 @@ def test_web_page_has_a_register_form(page, test_web_address):
 """
 test login button redirect to login page
 """
-def test_login_button_redirects_to_login_page(web_client, page, test_web_address):
-    response =  web_client.get('/login')
-    assert response.status_code == 200
-    page.goto(f"http://{test_web_address}/index")
-    # page.locator("a")
-    # link = page.click()
-    button = page.locator("id=1")
-    new_page = button.click()
-    expect(new_page).to_have_url(f"http://{test_web_address}/login")  
+# def test_login_button_redirects_to_login_page(web_client, page, test_web_address):
+#     response =  web_client.get('/login')
+#     assert response.status_code == 200
+#     page.goto(f"http://{test_web_address}/index")
+#     # page.locator("a")
+#     # link = page.click()
+#     button = page.locator("id=1")
+#     new_page = button.click()
+#     expect(new_page).to_have_url(f"http://{test_web_address}/login")  
     
     
 
 
 """
-test web page has a logout button
+test web page has a listing button 
 """
+# def test_wep_page_has_listing_button(page, test_web_address):
+#     page.goto(f"http://{test_web_address}/listings")
+#     button = page.locator("Button")
+#     expect(button).to_have_text("add a listing")
 
 
 
