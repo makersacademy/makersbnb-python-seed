@@ -25,3 +25,12 @@ def test_get_spaces(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(heading).to_have_text("Book a space")
 
+def test_signup_user(db_connection, page, test_web_address):
+    db_connection.seed('seeds/bnb.sql')
+    page.goto(f"http://{test_web_address}/index")
+
+    page.fill("input[name='username']", "testuser")
+    page.fill("input[name='email']", "testuser@email.com")
+    page.fill("input[name='password']", "testpassword")
+
+    page.click("text=Sign Up")
