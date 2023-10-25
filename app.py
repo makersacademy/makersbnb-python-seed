@@ -45,17 +45,17 @@ def login():
 #  ''' this is the the frontend team's tests '''
 
 
-@app.route("/spacesFrontend", methods=["GET"])
+@app.route("/spaces", methods=["GET"])
 def get_spaces():
     return render_template("spaces.html")
 
 
-@app.route("/spaces/newFrontend", methods=["GET"])
+@app.route("/spaces/new", methods=["GET"])
 def get_new_space():
     return render_template("new.html")
 
 
-@app.route("/requestsFrontend", methods=["GET"])
+@app.route("/requests", methods=["GET"])
 def get_requests():
     return render_template("requests.html")
 
@@ -68,6 +68,7 @@ def post_index():
     password_confirm = request.form["password_confirm"]
 
     return "", 200
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5003)))

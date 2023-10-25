@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>All Spaces | MakersBnB</title>
+  <head>
+    <title>All Spaces | MakersBnB</title>
 
-        <!--
+    <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <header align="right">
-        <a href="/spaces">Spaces</a> | <a href="/requests">Requests</a> | <a href="/index">Sign Out</a>
-    </header>
-    <body>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <header align="right">
+    <a href="/spaces">Spaces</a> | <a href="/requests">Requests</a> |
+    <a href="/index">Sign Out</a>
+  </header>
+  <body>
     <center>
-        <h1>Book a Space</h1>
-        <br>
-        <br>
-        <a href="/spaces/new">List a Space Instead</a> 
-        <br>
-        <form action="/spaces" method="POST">
-        <p>Available From (DD/MM/YY)</p>
-            <input type="text" name="date_from">
+      <h1>Book a Space</h1>
+      <br />
+      <br />
+      <a href="/spaces/new">List a Space Instead</a>
+      <br />
+      <form action="/spaces" method="POST">
+        <label for="date_from"> Available From</label>
+        <input type="date" name="date_from" />
 
-        <p>Available To (DD/MM/YY)</p>
-            <input type="text" name="date_to">
-        </form>
-        <br>
-        <br>
-        <input type="submit" value="List Spaces">
+        <label for="date_to"></label>
+        <input type="date" name="date_to" />
+        <input type="submit" value="List Spaces" />
+      </form>
+      <br />
+      <br />
     </center>
     {% for space in spaces %}
-      <article>
-        <h2 class="place_name_holder">{{ place.name }}</h2>
-        <p class="description_place_holder">{{ place.description }}</p>
-      </article>
+    <article>
+      <h2 class="place_name_holder">{{ place.name }}</h2>
+      <p class="description_place_holder">{{ place.description }}</p>
+    </article>
     {% endfor %}
-
-
-
-    </body>
+  </body>
 </html>
