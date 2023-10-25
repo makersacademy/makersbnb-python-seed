@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
 
 
- ''' this is the the frontend team's tests '''   
+#  ''' this is the the frontend team's tests '''   
     
 @app.route('/loginFrontend', methods=['GET'])
 def get_login():
