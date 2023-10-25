@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Requests</title>
+        <title>Makers BnB: Pending Requests</title>
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
         <p>
-            Page for requests
+            <h1>Viewing {{user.name}}'s pending Requests:</h1>
+            <!--  [TO IMPLEMENT - IF REQUEST LIST IS EMPTY THEN SAY 'NO REQUESTS TO APPROVE'] -->
+            
+            {% for request in pending_requests%}<br>
+            <p>
+            {{request.username}} has requested {{request.name}} on {{request.date_not_available}}<br>
+            APPROVE / DENY
+            </p>
+            {% endfor %}
         </p>
     </body>
 </html>
