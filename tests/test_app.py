@@ -75,3 +75,25 @@ def test_profile_page(page, test_web_address, db_connection):
     
     user_name = page.locator(".user-name")
     expect(user_name).to_have_text('username: user_1')
+
+
+"""
+we want to render sign up page
+"""
+def test_sign_up_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}/sign_up")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Sign up to MakersBNB")
+"""
+Test adding new username using webpage
+"""
+def test_add_new_username_on_sign_up(page, test_web_address, db_connection):
+    page.goto(f"http://{test_web_address}/sign_up")
+    db_connection.seed('seeds/makersbnb.sql')
+    page.fill("input[name=username]", "BILBO BAGGINS")
+    page.click("text=Sign up")
+
+
+
+
+
