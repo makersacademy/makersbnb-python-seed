@@ -6,6 +6,7 @@ CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 username varchar(255),
 password varchar(255),
+name text,
 email varchar(255),
 phone_number text
 );
@@ -32,17 +33,17 @@ constraint fk_spaces foreign key(spaces_id)
 
 );
 
-INSERT INTO users (username, password, email, phone_number) VALUES ('Magicman','782993a','Macicman@hotmail.com','01214960879');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Beata Ekkebert','A4$N61s','hir_ufizaxe52@yahoo.com','07700900186');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Rohese Clarity','j=95J6','duha-gudedo63@outlook.com','01154960210');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Adolfo Dalit','yuZY020#','jamixi_fajo87@yahoo.com','07700900191');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Apolónia Caelius','XRy#14H6','rofenen-eya82@aol.com','07700900625');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Basu Eugenijus','v9Q/l3~2','pizuye-xini98@aol.com','01314960681');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Inna Avital','^%41h6zW','reda-pajaru16@gmail.com','07700900485');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Anouk Verissimus',';628MGo','dox_epefize62@mail.com','03069990479');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Filipa Jyoti','uF#L6$89','gisuta-damo55@hotmail.com','07700900200');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Silas Narmer','PLd969;W','tule_piceyi54@yahoo.com','07700900239');
-INSERT INTO users (username, password, email, phone_number) VALUES ('Cornelio Rozenn','Zq07O0X','yaloki_saro39@aol.com','01214978789');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Naomi Bloggs', 'Silvakippy369','782993a','Macicman@hotmail.com','01214960879');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Beata Ekkebert', 'Tomantning1789','A4$N61s','hir_ufizaxe52@yahoo.com','07700900186');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Rohese Clarity','Vegetebuck360','j=95J6','duha-gudedo63@outlook.com','01154960210');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Adolfo Dalit', 'Draffbrot1708','yuZY020#','jamixi_fajo87@yahoo.com','07700900191');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Apolónia Caelius', 'Mentalves26','XRy#14H6', 'rofenen-eya82@aol.com','07700900625');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Basu Eugenijus', 'Ajje04Mome','v9Q/l3~2', 'pizuye-xini98@aol.com','01314960681');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Inna Avital', 'Jockoman10245','^%41h6zW', 'reda-pajaru16@gmail.com','07700900485');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Anouk Verissimus', 'Bicornlian166',';628MGo', 'dox_epefize62@mail.com','03069990479');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Filipa Jyoti', 'Tiradepi280','uF#L6$89', 'gisuta-damo55@hotmail.com','07700900200');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Silas Narmer', 'Vaultynius39','PLd969;W', 'tule_piceyi54@yahoo.com','07700900239');
+INSERT INTO users (name, username, password, email, phone_number) VALUES ('Cornelio Rozenn', 'Jossja0104','Zq07O0X', 'yaloki_saro39@aol.com','01214978789');
 
 INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('Mill Lodge', 'This large town is located near the coast and has a futuristic look.  It is best-known for its haunted house, a tumultuous history, and for being the home of a famous painter.  Also, there are all sorts of old artifacts still lying around the area.', 00000.00, 1);
 INSERT INTO spaces (name, description, price_per_night, host_id) VALUES ('River View', 'This large town is located in the hills and has a rustic atmosphere.  It is best-known for its diverse population.  Also, rumor has it that many of the towns citizens are involved in some sort of secret project.', 00025.20, 1);
