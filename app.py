@@ -47,4 +47,33 @@ def login():
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5003)))
+
+
+
+ ''' this is the the frontend team's tests '''   
     
+@app.route('/loginFrontend', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+@app.route('/spacesFrontend', methods=['GET'])
+def get_spaces():
+    return render_template('spaces.html')
+
+@app.route('/spaces/newFrontend', methods=['GET'])
+def get_new_space():
+    return render_template('new.html')
+
+@app.route('/requestsFrontend', methods=['GET'])
+def get_requests():
+    return render_template('requests.html')
+
+@app.route('/indexFrontend', methods=['POST'])
+def post_index():
+    email = request.form['email'] 
+    phone = request.form['phone']
+    password = request.form['password']
+    password_confirm = request.form['password_confirm']
+
+    return '', 200
+
