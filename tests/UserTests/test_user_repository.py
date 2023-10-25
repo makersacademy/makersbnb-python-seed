@@ -8,3 +8,4 @@ def test_user_exists(db_connection):
     repository = UserRepository(db_connection)
     assert repository.check('benhurst') == True
     assert repository.check('benhurst1234') == False
+
