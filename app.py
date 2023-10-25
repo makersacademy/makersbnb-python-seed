@@ -88,7 +88,7 @@ def get_space_request_page(id):
     connection = get_flask_database_connection(app)
     repo_instance = SpaceRepository(connection)
     space = repo_instance.find(id)
-    return render_template('request_space.html.jinja', space = space)
+    return render_template('spaces/request_space.html.jinja', space = space)
 
 @app.route('/profile_page/<id>', methods=['GET'])
 def profile_page(id):

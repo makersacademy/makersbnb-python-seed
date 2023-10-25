@@ -14,7 +14,7 @@
         <h1>Spaces available.</h1>
         {% for space in spaces %}
         <div class="space-div">
-            <a href="spaces/{{space.id}}">{{space.space_name}}</a>
+            <a href="{{space.id}}">{{space.space_name}}</a>
             <li class="space-id">id: {{space.id}}</li>
             <li>
                 Description: {{space.description}} 
