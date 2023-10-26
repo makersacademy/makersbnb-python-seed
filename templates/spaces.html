@@ -21,12 +21,11 @@
                 <input type="date" id="to_date" name="to_date">
             </div>
             
-            <button><a href="/spaces">List spaces</a></button>
         </div>
 
         <div class="space_cards">
             {% for space in spaces %}
-                <a href="/spaces/{{space.space_id}}">
+                <a href="/spaces/{{space.id}}">
                     <article class="space_card">
                         <p>{{space.name}}</p>
                         <p>{{space.description}}</p>

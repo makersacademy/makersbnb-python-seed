@@ -1,3 +1,5 @@
+
+
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
@@ -46,5 +48,8 @@ INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('Beach Hou
 INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('Lake House', 'The most quiet place', 157, 879, 3);
 INSERT INTO spaces (name, description, size, price, owner_id) VALUES ('City Centre House', 'The most popular place', 55, 276, 3);
 
+INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (3, 2, '2024-10-10', '2024-10-12', False);
+INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (1, 3, '2024-08-07', '2024-08-15', False);
+INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (2, 4, '2024-12-25', '2024-12-31', False);
 
 
