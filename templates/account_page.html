@@ -20,6 +20,15 @@
         </div>
         <div>
             <!-- Insert spaces table here -->
+            {% for item in items %}
+            <TR>
+                <TD class="c1"><IMG src="favicon.ico"></TD>
+                <TD class="c2">{{date}}</TD>
+                <TD class="c3">{{id}}</TD>
+                <TD class="c4"><SPAN>{{position}}</SPAN></TD>
+                <TD class="c5"><SPAN>{{status}}</SPAN></TD>
+            </TR>
+            {% endfor %}
         </div>
     </body>
 </html>
