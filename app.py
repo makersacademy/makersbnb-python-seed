@@ -14,7 +14,6 @@ app = Flask(__name__)
 
 Mike =User('Mike Jones','Jonesy','Password','mail@gmail.com','07752838475',1)
 #logged_in = Mike
-
 logged_in = None
 
 # == Your Routes Here ==
@@ -67,13 +66,15 @@ def get_register():
 
 @app.route('/register', methods= ['POST'])
 def send_register():
+    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
-    name = request.form['Username']
-    username = request.form['Name']
+    username = request.form['Username']
+    name = request.form['Name']
     password = request.form['Password']
     email = request.form['Email']
     phone_number = request.form['Phone Number']
-    user_repo.create (username, name, password, email, phone_number)
+    user_repo.create (name, username, password, email, phone_number)
+    logged_in = user_repo.find_by_username(username)
     return redirect ('/')
 
 

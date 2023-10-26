@@ -27,7 +27,6 @@ class UserRepository:
         else:
             user=User(ReturnedUser[0]['name'],ReturnedUser[0]['username'],ReturnedUser[0]['password'],ReturnedUser[0]['email'],ReturnedUser[0]['phone_number'],ReturnedUser[0]['id'])
             return user
-        
 
     # Create a user
     def create(self,name,username,password,email,phone_number):
