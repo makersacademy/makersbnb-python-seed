@@ -2,14 +2,29 @@
 <html>
     <head>
         <title>MakersBnB</title>
-
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <h1>Welcome to MakersBnB</h1>
+        <!-- Navigation Bar -->
+        <a href="/register">Register an Account </a> <br>
+        <a href="/login">Log in </a><br>
+        <a href="/spaces/new"> List a new Property</a><br>
+        <a href="/requests"> Requests for your properties</a>
+        <!-- End of Navigation bar -->
+
+        
+        <br>
+        <br>
+
+        <strong> Fancy Staying somewhere else? Here's our global network of properties...</strong>
+        <br>
+        {% for space in spaces %}
+        <p>
+        <b><a href="/spaces/{{space.id}}"></b> {{ space.name }} </a><br>
+        <b>Description:</b> {{ space.description }}<br>
+        <b>Price Per Night:</b> £{{ space.price_per_night }}<br>
+        </p>
+    {% endfor %}
     </body>
 </html>
