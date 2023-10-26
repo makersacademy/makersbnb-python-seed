@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Spaces</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/style.css"> 
+    <link rel="stylesheet" href="/static/spaces.css"> 
+    </head>
+    <body>
+            <!-- Brand Logo -->
+    <div class="brand-logo">
+        <h1>MakersBnB</h1>
+    </div>
+    <div class="spaces-container">
+    <h2>Book a Space</h2>
+    <br>
+    {% for space in spaces %}
+    <div class="space-listing">
+        <div class="space-item">
+            <h3>{{space.space_name}}</h3>
+            <p>{{space.space_description}}</p>
+            <p>{{space.available_from}}</p>
+            <p>{{space.available_to}}</p>
+            <p>£{{space.price_per_night}}</p>
+            <button class= "space-button">Book Now</button>
+        </div>
+        <br>
+
+    {% endfor %}
+    
+        
+        <!-- Duplicate the above .space div for each listing -->
+    </div>
+    <br>
+    <br>
+    <div>
+        <div>
+            <a href="/my-spaces">View my spaces</a>
+        </div>
+    
+    </div>
+
+    <div>
+        <a href="/logout">LOGOUT</a>
+    </div>
+
+    </body>
+</html>
