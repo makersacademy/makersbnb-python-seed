@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g, session
+from flask import Flask, request, render_template, g, session, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user.user_controller import UserController
 from lib.user.user_repository import UserRepository
@@ -29,6 +29,12 @@ def signup():
     return userid
 
 
+@app.route("/logout")
+def get_logout():
+    session["user_id"] = False
+    return redirect("/index")
+
+
 @app.route("/login")
 def get_login():
     return render_template("login.html")
@@ -42,7 +48,7 @@ def login():
 
     session["user_id"] = userid
 
-    return userid
+    return redirect("/spaces")
 
 
 #  ''' this is the the frontend team's tests '''

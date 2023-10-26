@@ -5,21 +5,30 @@
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
+    {% if session['user_id'] == False %}
     <a href="/login">Log In</a>
+    {% else %}
+    <a href="/spaces">Spaces</a>
+    <a href="/logout">Log out</a>
+    {% endif %}
     <h1>Feel at home, anywhere</h1>
     <h2>Sign up to Makers BnB</h2>
-    <form action="/signup" method="POST">
-      <label for="username">Username</label>
-      <input type="text" name="username" />
-      <label for="email">Email</label>
-      <input type="email" name="email" />
-      <label for="phonenumber">Phone Number</label>
-      <input type="tel" name="phonenumber" />
-      <label for="password">Password</label>
-      <input type="password" name="password" />
-      <label for="password_confirm">Password Confirm</label>
-      <input type="password" name="password_confirm" />
-      <input type="submit" value="Sign Up" name="signup" />
-    </form>
+    <center>
+      <form action="/signup" method="POST">
+        <center>
+          <label for="username">Username</label>
+          <input type="text" name="username" />
+          <label for="email">Email</label>
+          <input type="email" name="email" />
+          <label for="phonenumber">Phone Number</label>
+          <input type="tel" name="phonenumber" />
+          <label for="password">Password</label>
+          <input type="password" name="password" />
+          <label for="password_confirm">Password Confirm</label>
+          <input type="password" name="password_confirm" />
+          <input type="submit" value="Sign Up" name="signup" />
+        </center>
+      </form>
+    </center>
   </body>
 </html>
