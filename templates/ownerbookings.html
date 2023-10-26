@@ -10,9 +10,10 @@
     <div class="space_cards">
         {% for booking in bookings %}
         <article class="space_card">
+            <h3>Booking ID {{booking.id}}:</h3>
             <p>Space ID: {{booking.space_id}}</p>
             <p>Customer ID: {{booking.booker_id}}</p>
-            <p>Booking From: {{booking.start_date}}</p>
+            <p>From: {{booking.start_date}}</p>
             <p>To: {{booking.end_date}}</p>
             <p>Confirmed? {{booking.confirmed}}</p>
         </article>
