@@ -14,7 +14,7 @@ class ListingRepository():
         return listings
     
     def find_by_user(self, user_id):
-        rows = self._connection.execute('SELECT * FROM LISTINGS WHERE user_id = %s', [user_id])
+        rows = self._connection.execute('SELECT * FROM listings WHERE user_id = %s', [user_id])
         listings = []
         for row in rows:
             listing = Listing(row["id"], row["name"], row["description"], row["cost"], row["user_id"])
