@@ -48,6 +48,7 @@ def post_login():
     user = repo.get_user_by_username(username)
     if user.username == username and user.password == password:
         session['logged_in'] = True
+        session['username'] = username
         return redirect('/spaces')
     else:
         flash('Invalid username or password', 'error')
@@ -57,6 +58,8 @@ def post_login():
 def logout():
     session['logged_in'] = False
     return redirect('/login')
+
+
 
 
 
