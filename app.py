@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from flask import Flask, request, render_template, redirect, redirect
+from flask import Flask, request, render_template, redirect, redirect, session, url_for
 from lib.database_connection import get_flask_database_connection
 from lib.space import *
 from lib.space_repository import *
@@ -12,6 +12,8 @@ from lib.unavailable_dates import *
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = "secret"
+app.permanent_session_lifetime = timedelta(days=1)
 
 # == Your Routes Here ==
 
@@ -87,7 +89,6 @@ def get_login_page():
 def login():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
-
     email = request.form['useremail']
     password = request.form['password']
 
@@ -99,8 +100,34 @@ def login():
     if user.password != password:
         return render_template('login.html', errors='Password is incorrect')
     else:
-        return redirect('/spaces') 
+        session.permanent = True
+        session['user'] = email
+        return redirect(url_for("get_spaces"))
+    
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for("login"))
 
+@app.route('/profile')
+def user():
+    if "user" in session:
+        user = session["user"]
+        return f"<h1>{user}'s profile</h1>"
+    else:
+        return (redirect(url_for("login")))
+    
+# GET /
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    
+    return render_template('spaces.html', spaces=spaces)
 
 # individual space page
 @app.route('/spaces/<id>', methods=['GET'])
@@ -119,11 +146,16 @@ def get_space(id):
 # get new space
 @app.route('/spaces/new', methods=['GET'])
 def get_new_space():
-    return render_template('new_space.html')
-
-
-# create new space
-@app.route('/spaces/new', methods=['POST'])
+    if "user" in session:      
+        return render_template('new_space.html')
+    else:
+        return (redirect(url_for("login")))
+    
+# POST /
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000/
+@app.route('/spaces', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
