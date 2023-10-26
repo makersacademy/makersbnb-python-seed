@@ -44,16 +44,16 @@ header .links {
     margin-bottom: 1rem;
 }
 
-.signup_section, .login_section {
+.signup_section, .login_section, .new_space_section {
     margin: 3rem auto 0 auto;
     width: 70%;
 }
 
-.signup_section p, .login_section p {
+.signup_section p, .login_section h2, .new_space_section h2 {
     text-align: center;
 }
 
-.signup_form, .space_cards {
+.signup_form, .login_form, .new_space_form, .space_cards {
     margin-top: 1rem;
     border: 1px solid purple;
     display: flex;
@@ -62,11 +62,11 @@ header .links {
     padding: 1rem;
 }
 
-.signup_form input {
+.signup_form input, .login_form input, .new_space_form input {
     padding: 0.4rem;
 }
 
-.signup_form button {
+.signup_form button, .login_form button, .new_space_form button {
     margin-top: 1rem;
     padding: 0.4rem;
     cursor: pointer;

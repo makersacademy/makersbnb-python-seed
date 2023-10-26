@@ -65,7 +65,7 @@ def login():
     if user.password != password:
         return render_template('login.html', errors='Password is incorrect')
     else:
-        return redirect('/') 
+        return redirect('/spaces') 
 
 
 # spaces page
