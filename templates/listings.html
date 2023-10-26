@@ -41,6 +41,15 @@
             <p>{{space.description}}</p>
         </div>
     {% endfor %}
+
+    <h3>This are the spaces available within your specified availability</h3>
+
+    {% for space in filtered_spaces %}
+        <div> 
+            <h3>{{space.name}}</h3>
+            <p>{{space.description}}</p>
+        </div>
+    {% endfor %}
     </body>
 </html>
 

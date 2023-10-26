@@ -29,7 +29,7 @@ add new spaces
 
 def test_add_new_space_listing(db_connection):
     db_connection.seed("seeds/spaces.sql")
-    new_listing = Space(3, 'Apartment 3', 'Description 3', 100, datetime.date(2024, 1, 1), datetime.date(2024, 2, 3),3)
+    new_listing = Space(3, 'Apartment 3', 'Description 3', 100, datetime.date(2024, 1, 1), datetime.date(2024, 2, 3), 1)
     repository =  SpacesRepository(db_connection)
     repository.create_listing(new_listing)
     assert new_listing.price == repository.all_listings()[2].price
@@ -41,4 +41,11 @@ def test_add_new_space_listing(db_connection):
     #     Space(3, 'Apartment 3', 'Description 3', 100, datetime.date(2024, 1, 1), datetime.date(2024, 2, 3),3)
     #                         ]
 
+    
+def test_listing_of_spaces_within_a_date_range(db_connection):
+    db_connection.seed("seeds/spaces.sql")
+    repository =  SpacesRepository(db_connection)
+    result = repository.filtered_listing(datetime.date(2024, 1, 1), datetime.date(2024, 4, 1))
+    assert result ==  [Space(1, 'Apartment 1', 'Description 1', 100, datetime.date(2024, 1, 1), datetime.date(2024, 4, 1),1),
+        Space(2, 'Apartment 2', 'Description 2', 200, datetime.date(2024, 1, 1), datetime.date(2024, 4, 1),2)]
     

@@ -24,8 +24,6 @@ def get_listings():
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
     all_spaces = repository.all_listings()
-    print("test")
-    print(all_spaces[0].name)
     return render_template('listings.html', all_spaces=all_spaces)
 
 
@@ -49,8 +47,12 @@ def post_new_listing():
         date_to_filter_input = request.form['date_to_filter']
         date_from_filter = datetime.datetime.strptime(date_from_filter_input, "%Y-%m-%d").date()
         date_to_filter = datetime.datetime.strptime(date_to_filter_input, "%Y-%m-%d").date()
-        return render_template('index.html')
-    
+        connection = get_flask_database_connection(app)
+        repository =  SpacesRepository(connection)
+        filtered_spaces = repository.filtered_listing(date_from_filter, date_to_filter)
+        return render_template('listings.html', filtered_spaces=filtered_spaces)
+
+
     if request.method == 'POST' and request.form['name']:
         connection = get_flask_database_connection(app)
         repository = SpacesRepository(connection)
