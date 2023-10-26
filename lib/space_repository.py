@@ -50,11 +50,10 @@ class SpaceRepository:
     
     # Return all_unavailable_dates
     def unavailable_days(self,spaces_id):
-        response = self._connection.execute('SELECT date_not_available FROM availability JOIN spaces ON spaces.id = availability.spaces_id WHERE availability.approved = TRUE AND availability.spaces_id = (%s)',[spaces_id])
+        response = self._connection.execute("SELECT date_not_available FROM availability JOIN spaces ON spaces.id = availability.spaces_id WHERE availability.approved IN ('approved', 'unavailable') AND availability.spaces_id = (%s)",[spaces_id])
         DaysUnavailable = [x['date_not_available'] for x in response]
         return DaysUnavailable
 
     #Change status of stay:
     def change_status (self,status,booking_id):
         self._connection.execute ('UPDATE availability SET approved = (%s) WHERE id = (%s)',[status,booking_id])
-        print(f'Booking id {booking_id} set as {status}')

@@ -11,8 +11,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
-Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
-logged_in = Magicman
+logged_in = None
 # == Your Routes Here ==
 
 # GET /index
@@ -97,7 +96,7 @@ def mark_date_as_unavailable(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
     unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
     for date in unavailabledateslist:
-        spacerepo.request_a_stay(date,id,logged_in.id,True) 
+        spacerepo.request_a_stay(date,id,logged_in.id,'unavailable') 
     return redirect(f'/spaces/{id}')
 
 @app.route('/requests')
