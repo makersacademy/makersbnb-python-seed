@@ -84,7 +84,6 @@ def test_signup_user(db_connection, page, test_web_address):
     page.fill("input[name='username']", "testuser")
     page.fill("input[name='email']", "testuser@email.com")
     page.fill("input[name='password']", "testpassword")
-   
     
     page.click("#signup-button")
     assert "/spaces" in page.url
