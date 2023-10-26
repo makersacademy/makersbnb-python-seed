@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, flash, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.listing_repo import *
 from lib.user import *
@@ -7,6 +7,8 @@ from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = 'thisisasupersecretkey'
+
 
 # == Your Routes Here ==
 
@@ -18,6 +20,7 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+#sign up page
 @app.route('/index', methods=['POST'])
 def post_index():
     username = request.form['username']
@@ -28,6 +31,34 @@ def post_index():
     repo = UserRepository(connection)
     repo.create(user)
     return redirect(f"/spaces")
+
+#log in page get
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
+
+#log in page post - log in a user with username and password
+@app.route('/login', methods=['POST'])
+def post_login():
+    username = request.form['username']
+    password = request.form['password']
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    user = repo.get_user_by_username(username)
+    if user.username == username and user.password == password:
+        session['logged_in'] = True
+        return redirect('/spaces')
+    else:
+        flash('Invalid username or password', 'error')
+        return redirect('/login')
+    
+@app.route('/logout',methods=['POST'])
+def logout():
+    session['logged_in'] = False
+    return redirect('/login')
+
+
+
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
