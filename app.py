@@ -74,9 +74,9 @@ def send_register():
 @app.route('/spaces/new')
 def get_new_space():
     global logged_in
-    if logged_in != None:
+    if hasattr(logged_in, '__dict__'):
         return render_template('new_space.html')
-    if logged_in == None:
+    else:
         return render_template('need_login.html')
 
 @app.route('/spaces/new', methods=['POST'])
