@@ -13,8 +13,8 @@ class UserRepository():
         self._connection.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)',
                                 [user.username, user.email, user.password])
         
-    def get_user_by_id(self, user_id):
-        rows = self._connection.execute('SELECT id, username, email FROM users WHERE id = %s',[user_id])
+    def get_user_by_username(self, username):
+        rows = self._connection.execute('SELECT id, username, email, password FROM users WHERE username = %s',[username])
         row = rows[0]
-        return User(row['id'], row['username'], row['email'], None)
+        return User(row['id'], row['username'], row['email'], row['password'])
 

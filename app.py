@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, flash, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.listing_repo import *
 from lib.user import *
@@ -7,6 +7,8 @@ from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = 'thisisasupersecretkey'
+
 
 # == Your Routes Here ==
 
@@ -35,12 +37,26 @@ def post_index():
 def get_login():
     return render_template('login.html')
 
-# #log in page post
-# @app.route('/login', methods=['POST'])
-# def post_login():
-#     username = request.form['username']
-#     password = request.form['password']
-#     user = 
+#log in page post - log in a user with username and password
+@app.route('/login', methods=['POST'])
+def post_login():
+    username = request.form['username']
+    password = request.form['password']
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    user = repo.get_user_by_username(username)
+    if user.username == username and user.password == password:
+        session['logged_in'] = True
+        return redirect('/spaces')
+    else:
+        flash('Invalid username or password', 'error')
+        return redirect('/login')
+    
+@app.route('/logout',methods=['GET'])
+def logout():
+    session.clear()
+    return redirect('/login')
+
 
 
 

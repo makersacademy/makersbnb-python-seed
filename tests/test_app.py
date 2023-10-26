@@ -95,14 +95,25 @@ def test_get_login(page, test_web_address):
     heading = page.locator("h1")
     expect(heading).to_have_text("Log in")
 
-# def test_post_login_registered_user(db_connection, page, test_web_address):
-#     db_connection.seed("seeds/bnb.sql")
+def test_post_login_registered_user_fail_like_us(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bnb.sql")
     
-#     page.goto(f"http://{test_web_address}/login")
-#     page.fill("input[name='username']","testuser")
-#     page.fill("input[name='password']","testpassword")
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='username']","testuser")
+    page.fill("input[name='password']","testpassword")
 
-#     page.click("#login-button")
+    page.click("#login-button")
 
-#     assert "/spaces" in page.url
+    assert "/login" in page.url
+
+def test_post_login_registered_user_success(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bnb.sql")
+    
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='username']",'user1')
+    page.fill("input[name='password']",'password1')
+
+    page.click("#login-button")
+
+    assert "/spaces" in page.url
     
