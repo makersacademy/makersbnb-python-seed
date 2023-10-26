@@ -11,8 +11,12 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
+
 Mike =User('Mike Jones','Jonesy','Password','mail@gmail.com','07752838475',1)
-logged_in = Mike
+#logged_in = Mike
+
+logged_in = None
+
 # == Your Routes Here ==
 
 # GET /index
@@ -31,12 +35,11 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
-    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
     username = request.form['Username']
     password = request.form['Password']
     current_user = user_repo.find_by_username(username)
-    if current_user==None:
+    if not hasattr(current_user, '__dict__'):
         return render_template('login.html',errors='errors')
     if current_user.password == password:
         logged_in = current_user
@@ -46,7 +49,26 @@ def post_login():
 
 @app.route('/register')
 def get_register():
-    return render_template('register.html')
+    #return render_template('register.html')
+
+    if logged_in != None:
+        return render_template('logged_in.html')
+    
+    if logged_in == None:
+        return render_template('register.html')
+
+@app.route('/register', methods= ['POST'])
+def send_register():
+    user_repo = UserRepository(get_flask_database_connection(app))
+    name = request.form['Username']
+    username = request.form['Name']
+    password = request.form['Password']
+    email = request.form['Email']
+    phone_number = request.form['Phone Number']
+    user_repo.create (username, name, password, email, phone_number)
+    return redirect ('/')
+
+
 
 @app.route('/spaces/new')
 def get_new_space():
@@ -64,11 +86,15 @@ def post_new_space():
     description = request.form['Description']
     ppn = request.form['Price per night']
     host_id = logged_in.id
-    spaces_repo.create(name, host_id, description, ppn)
+    NewSpaceId=spaces_repo.create(name, host_id, description, ppn)
+    unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
+    for date in unavailabledateslist:
+        spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,True) 
     return redirect('/')
 
 @app.route('/spaces/<id>')
 def get_space(id):
+
     spacerepo = SpaceRepository(get_flask_database_connection(app))
     singlespace = spacerepo.find_by_id(id)
     #This is a list of datetime.date objects
@@ -84,11 +110,26 @@ def get_space(id):
     return render_template('space_by_id.html',date_list=date_list,space=singlespace)
 
 @app.route('/spaces/<id>', methods=['POST'])
-def request_sapce(id):
+def request_space(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
     date = request.form['selected_date']
     spacerepo.request_a_stay(date,id,logged_in.id,'pending')
     return redirect('/')
+
+@app.route('/spaces/<id>/delete')
+def delete_space(id):
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    spacerepo.delete_by_id(id)
+    print (f'Deleted space with id {id}')
+    return redirect('/')
+
+@app.route('/spaces/<id>/unavailable', methods=['POST'])
+def mark_date_as_unavailable(id):
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
+    for date in unavailabledateslist:
+        spacerepo.request_a_stay(date,id,logged_in.id,'unavailable') 
+    return redirect(f'/spaces/{id}')
 
 @app.route('/requests')
 def get_requests():
@@ -97,11 +138,33 @@ def get_requests():
         return render_template('need_login.html')
     else:
         userrepo = UserRepository(get_flask_database_connection(app))
-        requestlist = userrepo.show_bookings(False,logged_in.id)
+        requestlist = userrepo.show_bookings('pending',logged_in.id)
         return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
+
+
+@app.route('/approve/<id>/<date>', methods=['POST'])
+def approve_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('approved', id, date)
+        return redirect('/requests')
+
+@app.route('/deny/<id>/<date>', methods=['POST'])
+def deny_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('denied', id, date)
+        return redirect('/requests')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
+

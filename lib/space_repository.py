@@ -30,12 +30,17 @@ class SpaceRepository:
 
     # Create a space
     def create(self, name, host_id, description, price_per_night):
-        self._connection.execute('INSERT INTO spaces (name, host_id, description, price_per_night) VALUES (%s, %s, %s, %s)',[name, host_id, description, price_per_night])
-        return None
+        CreatedSpace=self._connection.execute('INSERT INTO spaces (name, host_id, description, price_per_night) VALUES (%s, %s, %s, %s) RETURNING id;',[name, host_id, description, price_per_night])
+        return CreatedSpace[0]['id']
 
     # Delete a space by its name
     def delete_by_name(self, name):
         self._connection.execute('DELETE FROM spaces WHERE name = %s', [name])
+        return None
+    
+    # Delete a space by its id
+    def delete_by_id(self, id):
+        self._connection.execute('DELETE FROM spaces WHERE id = %s', [id])
         return None
     
     # Request a space
@@ -50,10 +55,11 @@ class SpaceRepository:
                                                 JOIN spaces ON spaces.id = availability.spaces_id
                                                 WHERE availability.approved IN ('approved', 'unavailable')
                                                 AND availability.spaces_id = %s; ''',[spaces_id])
+
         DaysUnavailable = [x['date_not_available'] for x in response]
         return DaysUnavailable
 
-    #Change status of stay:
-    def change_status (self,status,booking_id):
-        self._connection.execute ('UPDATE availability SET approved = (%s) WHERE id = (%s)',[status,booking_id])
-        print(f'Booking id {booking_id} set as {status}')
+
+    def change_status (self,status,id, date):
+        self._connection.execute ('UPDATE availability SET approved = (%s) WHERE id = (%s) AND date_not_available = (%s)',[status,id,date])
+

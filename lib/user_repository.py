@@ -40,7 +40,7 @@ class UserRepository:
     
     #Show Owners property Bookings
     def show_bookings(self, approval,host_id):
-        response = self._connection.execute('''SELECT availability.id, availability.date_not_available, users.username, spaces.name 
+        response = self._connection.execute('''SELECT availability.id, availability.date_not_available, availability.spaces_id, users.username, spaces.name
                                             FROM availability 
                                             JOIN spaces ON spaces.id = availability.spaces_id 
                                             JOIN users ON users.id = availability.requested_by_user_id 
