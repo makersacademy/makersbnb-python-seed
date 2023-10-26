@@ -87,7 +87,6 @@ def test_signup_user(db_connection, page, test_web_address):
     
     page.click("#signup-button")
     assert "/spaces" in page.url
-  
 
 def test_listings(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
