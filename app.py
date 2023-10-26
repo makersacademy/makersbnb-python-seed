@@ -5,17 +5,18 @@ from lib.space_class import Space
 from lib.space_repository import SpaceRepository
 from lib.user_class import User
 from lib.user_repository import UserRepository
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
 
-#Magicman = User(1,'Magicman','magic man', '782993a','Macicman@hotmail.com','01214960879')
-#logged_in = Magicman
+Mike =User('Mike Jones','Jonesy','Password','mail@gmail.com','07752838475',1)
+#logged_in = Mike
 
 logged_in = None
+
 # == Your Routes Here ==
 
 # GET /index
@@ -93,17 +94,26 @@ def post_new_space():
 
 @app.route('/spaces/<id>')
 def get_space(id):
-    spacerepo=SpaceRepository(get_flask_database_connection(app))
-    SingleSpace=spacerepo.find_by_id(id)
-    unavailable_dates=spacerepo.unavailable_days(id)
-    return render_template('space_by_id.html',current_date=datetime.now(),space=SingleSpace,unavailable_dates=unavailable_dates,user=logged_in)
+
+    spacerepo = SpaceRepository(get_flask_database_connection(app))
+    singlespace = spacerepo.find_by_id(id)
+    #This is a list of datetime.date objects
+    current_day=datetime.now()
+    unavailable_dates = spacerepo.unavailable_days(id)
+    end_date = current_day + timedelta(days=365)
+    # date_range=create_date_range(start_date, end_date)
+    date_range =[]
+    while current_day <= end_date:
+        date_range.append(current_day.date())
+        current_day += timedelta(days=1)
+    date_list=[date for date in date_range if date not in unavailable_dates]
+    return render_template('space_by_id.html',date_list=date_list,space=singlespace)
 
 @app.route('/spaces/<id>', methods=['POST'])
 def request_space(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
-    SingleSpace=spacerepo.find_by_id(id)
-    date = request.form['date']
-    spacerepo.request_a_stay(date,id,logged_in.id,False)
+    date = request.form['selected_date']
+    spacerepo.request_a_stay(date,id,logged_in.id,'pending')
     return redirect('/')
 
 @app.route('/spaces/<id>/delete')
