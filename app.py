@@ -5,7 +5,6 @@ from lib.space_class import Space
 from lib.space_repository import SpaceRepository
 from lib.user_class import User
 from lib.user_repository import UserRepository
-from lib.booking_repository import BookingRepository
 from datetime import datetime
 
 # Create a new Flask app
