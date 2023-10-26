@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MakersBNB - {{space.name}}</title>
+
+    </head>
+    <body>
+        <p>
+            <h1> {{ space.name }}</h1><br>
+
+            {% if space.host_id == user.id %}
+            <p>This is your Property - Would you like to add more dates as being unavailable? 
+                <form action="/spaces/{{space.id}}/unavailable" method="POST">
+                <label for="unavailable"> Enter them in the box below: (format YYYY-MM-DD)<br> Seperate each date with a comma</label><br>
+                <input type="text" name="unavailable" id="unavailable">
+                <input type="submit" value="Mark dates as unavailable">
+                </form>
+            </p>
+            {% endif %}
+
+
+            <b>Description:</b> {{ space.description }}<br>
+            <b>Price Per Night:</b> £{{ space.price_per_night }}<br>
+<br>
+<br>
+<br>
+Viewing availability at {{space.name}}:
+<form action="/spaces/{{ space.id }}" method="post">
+    <select name="selected_date">
+        {% for date in date_list %}
+            <option value="{{ date }}">{{ date.strftime('%d-%m-%Y') }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    Select the date for you stay and hit submit to request a stay<br>
+    (Stays will have to be approved by hosts before they are confirmed)<br>
+    <input type="submit" value="Submit">
+</form>
+    </body>
+</html>
