@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--positioning and styling-->
+    <title>Login | MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Login to MakersBnB!</h1>
+
+        <!-- Form to collect address and password details  -->
+        <form action="/login" method="POST">
+            {% if errors %}
+            <p class="errors"> Details are incorrect. Try again!</p>
+            {% endif %}
+            <p>
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required>
+            </p>
+            <p>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <!-- button to submit username and password  -->
+            <input type="submit" value="Login">
+        </form>
+        <!-- errors generated when login not valid -->
+
+    <div class="link">
+        <!-- doesnt do anything atm  -->
+        <a href="/about">About</a>
+    </div>
+</body>
+</html>
