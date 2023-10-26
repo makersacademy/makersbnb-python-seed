@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MakersBNB - {{space.name}}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    </head>
+    <body>
+        <p>
+            <h1> {{ space.name }}</h1><br>
+            <b>Description:</b> {{ space.description }}<br>
+            <b>Price Per Night:</b> £{{ space.price_per_night }}<br>
+<br>
+{% if unavailable_dates|length == 0 %}
+    {{ space.name }} has full availability
+{% else %}
+    {{ space.name }} is currently unavailable on these dates:<br>
+    {% for date in unavailable_dates %}
+        {{ date }}<br>
+    {% endfor %}
+{% endif %}
+
+<br>
+<br>
+Request a reservation at {{space.name}}:
+<form action="/spaces/{{space.id}}" method="post">
+    <input type="date" name='date'> 
+    <input type="submit" value="Request Reservation">
+</form>
+
+    </body>
+</html>
