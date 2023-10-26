@@ -1,9 +1,8 @@
 from flask import Flask, request, render_template
-from lib.user.user import User
-from lib.user.user_repository import UserRepository
+from lib.User.user import User
+from lib.User.user_repository import UserRepository
 
 from hashlib import sha256
-
 
 class UserController:
     def __init__(self, user_repository):

@@ -48,7 +48,28 @@ def login():
 
     session["user_id"] = userid
 
-    return redirect("/spaces")
+    return userid
+
+@app.route("/spaces/new", methods=['POST'])
+def add_space():
+    name = request.form['name']
+    description = request.form['DescriptioN']
+    owner_id = request.form['Owner_iD']
+    price = request.form['price']
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+    
+    new_space = Space(name, description, price, owner_id, date_from, date_to)
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    date_repo = DateRepository(get_flask_database_connection(app))
+
+    if(space_repo.exists_already(name)):
+        return 'space name exists already'
+    
+    space_repo.add(new_space)
+    date_repo.add(new_space)
+
+    return 'ok', 200
 
 
 #  ''' this is the the frontend team's tests '''
