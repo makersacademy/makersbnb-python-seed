@@ -1,14 +1,18 @@
 import os
-from flask import Flask, request, render_template, redirect, redirect
+from flask import Flask, request, render_template, redirect, redirect, session, url_for
 from lib.database_connection import get_flask_database_connection
 from lib.space import *
 from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
+from datetime import timedelta
+
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = "secret"
+app.permanent_session_lifetime = timedelta(days=1)
 
 # == Your Routes Here ==
 
@@ -50,7 +54,6 @@ def get_login_page():
 def login():
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
-
     email = request.form['useremail']
     password = request.form['password']
 
@@ -62,7 +65,22 @@ def login():
     if user.password != password:
         return render_template('login.html', errors='Password is incorrect')
     else:
-        return redirect('/') 
+        session.permanent = True
+        session['user'] = email
+        return redirect(url_for("get_spaces"))
+    
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for("login"))
+
+@app.route('/profile')
+def user():
+    if "user" in session:
+        user = session["user"]
+        return f"<h1>{user}'s profile</h1>"
+    else:
+        return (redirect(url_for("login")))
     
 # GET /
 # Returns the homepage
@@ -91,8 +109,11 @@ def get_space(id):
 #   ; open http://localhost:5000/spaces/new
 @app.route('/spaces/new', methods=['GET'])
 def get_new_space():
-    return render_template('new_space.html')
-
+    if "user" in session:      
+        return render_template('new_space.html')
+    else:
+        return (redirect(url_for("login")))
+    
 # POST /
 # Returns the homepage
 # Try it:

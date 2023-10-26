@@ -4,10 +4,17 @@
 {% block content %}
     <section class="spaces_page">
         <div class="spaces_blurb">
+            {% if "user" in session %}
+                <h2>Hi {{session["user"]}}</h2>
+            {% endif %}
             <h2>Book a space</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, expedita.</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <button><a href="/spaces/new">List a space</a></button>
+            <button>
+                <a href="/spaces/new">
+                    List a space
+                </a>
+            </button>
         </div>
 
         <div class="filter">
