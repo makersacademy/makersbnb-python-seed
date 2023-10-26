@@ -13,16 +13,18 @@
         <div><a name="home" href="/">Home</a></div>
         <div><a name="signout" href="/signout">Sign Out</a></div>
         <h1>Makers B&B</h1>
-        <h2>Welcome {{user_name}}</h2>
+        <h2>Welcome {{user_name}}!</h2>
         <div>
             <button type="button" onclick="window.location.href = '/list_space';">List a space</button>
             <button type="button" href="/book_space">Book a space</button>
         </div>
+        <br>
+        <h3> Your Listed Spaces</h3>
         <div>
             <table >
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Listing Name</th>
                         <th>Description</th>
                         <th>Cost</th>
                     </tr>
