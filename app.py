@@ -173,6 +173,18 @@ def deny_request(id, date):
         spacerepo=SpaceRepository(get_flask_database_connection(app))
         spacerepo.change_status('denied', id, date)
         return redirect('/requests')
+    
+@app.route('/submitted_requests')
+def see_status_of_submitted_requests():
+    if hasattr(logged_in, '__dict__'):
+        userrepo=UserRepository(get_flask_database_connection(app))
+        pending_requests=userrepo.show_submissions('pending',logged_in.id)
+        approved_requests=userrepo.show_submissions('approved',logged_in.id)
+        denied_requests=userrepo.show_submissions('denied',logged_in.id)
+        return render_template('submitted_requests.html',user=logged_in,pending=pending_requests,approved=approved_requests,denied=denied_requests)
+    else:
+        return render_template('need_login.html')
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

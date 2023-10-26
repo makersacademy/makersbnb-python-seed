@@ -46,3 +46,11 @@ class UserRepository:
                                             JOIN users ON users.id = availability.requested_by_user_id 
                                             WHERE availability.approved = %s AND spaces.host_id = %s''', [approval,host_id])
         return (response)
+    
+    def show_submissions(self, approval,requested_by_user_id):
+        response = self._connection.execute('''SELECT date_not_available,approved,spaces.name,spaces.id
+                                                FROM availability 
+                                                JOIN spaces ON spaces.id = availability.spaces_id 
+                                                JOIN users ON users.id = availability.requested_by_user_id 
+                                                WHERE availability.approved = %s AND requested_by_user_id = %s''', [approval,requested_by_user_id])
+        return (response)

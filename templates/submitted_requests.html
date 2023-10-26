@@ -1,0 +1,34 @@
+<head>
+    <title>MakersBNB - Your Requests...</title>
+
+</head>
+<body>
+    <p>
+        <h1> Viewing {{ user.name }}'s requests...</h1><br>
+
+
+<b>Your Current Approved Requests</b>
+<p>
+    {% for request in approved %}
+    Your stay at <a href="/spaces/{{request.id}}">{{request.name}}</a> on {{request.date_not_available.strftime("%d/%m/%y")}} has been {{request.approved}}<br>
+{% endfor %}
+</p>
+
+<b>Your Current pending requests</b>
+<p>
+    {% for request in pending %}
+    Your stay at <a href="/spaces/{{request.id}}">{{request.name}}</a> on {{request.date_not_available.strftime("%d/%m/%y")}} is still {{request.approved}}<br>
+{% endfor %}
+</p>
+
+<b>Your denied requests</b>
+<p>
+    {% for request in denied %}
+    Your stay at <a href="/spaces/{{request.id}}">{{request.name}}</a> on {{request.date_not_available.strftime("%d/%m/%y")}} has been  {{request.approved}} by the host <br>
+{% endfor %}
+</p>
+
+
+
+
+(<a href="/">Back to Homepage</a>)<br><br>
