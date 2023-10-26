@@ -3,15 +3,25 @@
 {% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
 {% block content %}
     <section class="space_page">        
-        <h1 id="space-name">{{space['name']}}</h1>
-        <p id="space-description">{{space['description']}}</p>
-        <p id="space-size">{{space['size']}}</p>
-        <p id="space-price">{{space['price']}}</p>
-
-        <form action="/requests" method="post">
-            <p>Pick a night</p>
-            <input type="date" id="booking_date" name="booking_date" value="2023-10-23" min="2023-10-23" max="2023-10-30" required />
-            <button type="submit">Request to book</button>
-        </form>
+        <h1 id="space-name">{{ space['name'] }}</h1>
+        <p id="space-description">{{ space['description'] }}</p>
+        <p id="space-size">{{ space['size'] }}</p>
+        <p id="space-price">{{ space['price'] }}</p>
+        <p>{{unavailableDates}}</p>
+        <p>Pick a night</p>
+        <input type="text" id="booking_date" name="booking_date" data-input />
+        <br />
+        <br />
+        <button>Request to book</button>
     </section>
+    <script>
+        flatpickr("#booking_date", {
+            mode: "multiple", 
+            disable:unavailableDates,
+            dateFormat: "Y-m-d", 
+        });
+    </script>
+
+
 {% endblock %}
+

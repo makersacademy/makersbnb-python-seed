@@ -1,7 +1,70 @@
+<style>
+    .hero-image {
+        background-image: url(https://www.abercrombiekent.com/-/media/ak/media-for-prod/product-lines-and-travel-interests/mastheads/europe-ak-villas-palazzo-bolbe-mh.jpg?h=660&w=1920&la=en&hash=E3149B4764570A269A8BA2DAB5BA130D);
+        background-repeat: no-repeat;
+        background-size: contain; 
+        background-position: center;
+        position: relative;
+        height: 50%;
+        align-items: center; 
+
+    }
+    .hero-text{
+        color: white;
+        text-align: center;
+        justify-content: center;
+        
+
+    }
+    .property-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+    gap: 20px; /* Gap between cards */
+}
+
+.property-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.property-card h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.property-card p {
+    font-size: 14px;
+    color: #666;
+}
+</style>
+
 {% extends "base.html" %}
 {% block title %}MakersBnB{% endblock %}
 {% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
 {% block content %}
-    <p>This is the homepage.</p>
-    <button><a href="/spaces">List of spaces</a></button>
+    <section class="hero">
+        <div class="hero-image">
+            <div class="hero-text">
+                <h1>Welcome to MakersBnB</h1>
+                <p>Find your perfect place to stay</p>
+            </div>
+        </div>
+    </section>
+    <section class="latest-properties">
+        <h2>Latest Properties</h2>
+        <div class="property-grid">
+            {% for property in properties[:6] %}
+                <div class="property-card">
+                    <a href="/spaces/{{property.id}}">
+                        <h3>{{ property.name }}</h3>
+                    </a>
+                    <p>{{ property.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <button><a href="/spaces">See all spaces</a></button>
 {% endblock %}

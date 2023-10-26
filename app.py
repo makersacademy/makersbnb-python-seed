@@ -6,6 +6,8 @@ from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
+from lib.unavailable_dates_repository import *
+from lib.unavailable_dates import *
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -15,7 +17,10 @@ app = Flask(__name__)
 # index page
 @app.route('/', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app) 
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    return render_template('index.html', properties=spaces)
 
 # regsiter
 @app.route('/signup', methods=['GET'])
@@ -81,10 +86,12 @@ def get_spaces():
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
     connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    space = repository.find(id)
+    Space_repository = SpaceRepository(connection)
+    Dates_repository = unavailable_dates_repository(connection)
+    space = Space_repository.find(id)
+    dates = Dates_repository.find_all_unavailable_dates(id)
     
-    return render_template('space.html', space=space, id=id)
+    return render_template('space.html', space=space, id=id, unavailableDates = dates)
 
 # get new space
 @app.route('/spaces/new', methods=['GET'])
@@ -96,12 +103,14 @@ def get_new_space():
 @app.route('/spaces', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
+    Space_repository = SpaceRepository(connection)
+    Dates_repository = unavailable_dates_repository(connection)
 
     name = request.form['name']
     description = request.form['description']
     size = request.form['size']
     price = request.form['price']
+    dates = request.form.getlist('unavailable_dates')
 
     validator = SpaceParametersValidator(name, description, size, price)
     if not validator._is_valid():
@@ -116,10 +125,17 @@ def create_space():
         validator.get_valid_price(),
         1 #Change last number to owner_id once we have access to current user
     )
+    
+    dates = dates[0].split(",")
+    unavailable_dates = [unavailable_date(space.id, date) for date in dates] 
 
-    repository.create(space)
 
-    return redirect(f'spaces/{space.id}')
+    for entry in unavailable_dates:
+        Dates_repository.create(entry)
+
+    Space_repository.create(space)
+
+    return str(Dates_repository.all())
 
 
 # request to book
