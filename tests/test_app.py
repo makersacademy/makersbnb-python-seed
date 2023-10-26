@@ -25,12 +25,18 @@ def test_get_listings(page, test_web_address,db_connection):
     # We load a virtual browser and navigate to the /listings page
     page.goto(f"http://{test_web_address}/listings")
 
-    # We look at the <p> tag
-    strong_tag = page.locator("p")
+    # We look at the <h3> tag
+    h3_tag = page.locator("h3")
 
     # We assert that it has the text "This is the listings page."
-    expect(strong_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2"])
+    expect(h3_tag).to_have_text(["Apartment 1", "Apartment 2"])
 
+    
+    # We look at the <p> tag
+    p_tag = page.locator("p")
+
+    # We assert that it has the text "This is the listings page."
+    expect(p_tag).to_have_text(["Description 1", "Description 2"])
 
 """
 test web page has a login form
@@ -93,10 +99,23 @@ def test_add(page, test_web_address, db_connection):
     page.fill("input[name=date_to]", "25/10/2023")
 
     page.click("text='add a listing'")
-    
+
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text(["Apartment 1", "Apartment 2", "Apartment 3"])
     p_tag = page.locator("p")
-    expect(p_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2", "Apartment 3", "Description 3"])
+    expect(p_tag).to_have_text(["Description 1", "Description 2", "Description 3"])
 
 #retrieving user_id after someone has logged in and 
 #using that to add user_id field for the Space object
 #When someone has logged in, we need to store their user_id somewhere
+
+# Test if user can filter by date
+def test_user_can_filter_by_date(page, test_web_address, db_connection):
+    db_connection.seed("seeds/spaces.sql")
+    page.goto(f"http://{test_web_address}/listings") 
+    page.fill("input[name=date_from_filter]", "01/01/2024")
+    page.fill("input[name=date_to_filter]", "01/04/2024")
+    page.click("text='apply filter'")
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text(["Apartment 1", "Apartment 2"])
+

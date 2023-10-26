@@ -11,25 +11,33 @@
     </head>
     
     <body>
-        
-        <div> <form action="/listings" method = "POST">
-            <label for="name">Name</label>
-            <input type="text" name="name">
-            <label for="description">Description</label>
-            <input type="text" name="description">
-            <label for="price">Price</label>
-            <input type="text" name="price">
-            <label for="date_from">Date from</label>
-            <input type="text" name="date_from">
-            <label for="date_from">Date to</label>
-            <input type="text" name="date_to">
+        <div id="applying_date_filter"> <form action="/listings" method = "POST">
+            <label for="date_from_filter">Date from:</label>
+            <input type="date" id="date_from_filter" name="date_from_filter">
+            <label for="date_to_filter">Date from:</label>
+            <input type="date" id="date_from_filter" name="date_to_filter">
+            <input type="submit" value="apply filter">
+        </div>
+
+
+        <div id="adding_listing_div"> <form action="/listings" method = "POST">
+            <label for="name" class="example">Name</label><br>
+            <input type="text" name="name"><br>
+            <label for="description">Description</label><br>
+            <input type="text" name="description"><br>
+            <label for="price">Price</label><br>
+            <input type="text" name="price"><br>
+            <label for="date_from">Date from</label><br>
+            <input type="text" name="date_from"><br>
+            <label for="date_from">Date to</label><br>
+            <input type="text" name="date_to"><br>
             <input type="submit" value="add a listing">
             </form>
         </div>
 
     {% for space in all_spaces %}
         <div> 
-            <p>{{space.name}}</p>
+            <h3>{{space.name}}</h3>
             <p>{{space.description}}</p>
         </div>
     {% endfor %}
