@@ -44,13 +44,22 @@ def post_login():
     else:
         return render_template('login.html',errors='errors')
 
-@app.route('/register')
+@app.route('/register', methods= ['POST'])
 def get_register():
     global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
+    name = request.form['Username']
+    username = request.form['Name']
+    password = request.form['Password']
+    email = request.form['Email']
+    phone_number =request.form['Phone Number']
+
+
     if logged_in != None:
-        return render_template('register.html')
+        return render_template('logged_in.html')
+    
     if logged_in == None:
+        user_repo.create (username, name, password, email, phone_number, id = None)
         return render_template('register.html')
 
 @app.route('/spaces/new')
