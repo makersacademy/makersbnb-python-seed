@@ -7,7 +7,11 @@
     <body>
         <div><a name="home" href="/">Home</a></div>
         <h1>Log in to Makers B&B</h1>
-
+        {% if valid_password == False %}
+        <p style="color:red;">
+            Username or password is incorrect!
+        </p>
+        {% endif %}
         <div>
             <form action="/login" method="POST">
                 <p>

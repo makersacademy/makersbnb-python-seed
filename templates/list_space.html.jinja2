@@ -15,9 +15,9 @@
         <div><a name="book_space" href="/book_space">Book a space</a></div>
         <h1>List a space</h1>
         <p>Fill in the form to list a space for booking</p>
-        <form action="list_space" methods="POST">
+        <form action="/list_space" method="POST">
             <p>
-                <label for="name">Name</label>
+                <label for="name">Listing Name</label>
                 <br>
                 <input type="text" name="name" id="name">
                 <br>
@@ -32,7 +32,7 @@
                 <br>
                 <input type="number" name="cost" id="cost">
             </p>
-            <p>
+            <!-- <p>
                 <label for="avail-from">Available from</label>
                 <br>
                 <input type="date" name="avail-from" id="avail-from">
@@ -41,7 +41,7 @@
                 <label for="avail-to">Available to</label>
                 <br>
                 <input type="date" name="avail-to" id="avail-to">
-            </p>
+            </p> -->
             <input type="submit" value="List my space!">
         </form>
     </body>

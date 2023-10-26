@@ -4,6 +4,7 @@ from lib.user_repository import UserRepository
 from lib.database_connection import get_flask_database_connection
 from dotenv import load_dotenv
 from lib.listing_repository import ListingRepository
+from jinja2 import Environment, FileSystemLoader
 
 load_dotenv()
 
@@ -11,7 +12,10 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ["APP_SECRET_KEY"]
 
-
+env = Environment(
+    loader=FileSystemLoader("templates/"),
+    autoescape=True
+)
 # == Your Routes Here ==
 
 # GET /index
@@ -20,7 +24,11 @@ app.secret_key = os.environ["APP_SECRET_KEY"]
 #   ; open http://localhost:5000/index
 @app.route('/', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    if 'user_id' not in session:
+        template = env.get_template('index.html.jinja2')
+        return render_template(template)
+    else:
+        return redirect('/account_page')
 
 @app.route('/', methods=['POST'])
 def create_user():
@@ -34,12 +42,14 @@ def create_user():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    template = env.get_template('login.html.jinja2')
+    return render_template(template)
 
 @app.route('/login', methods=['POST'])
 def post_login():
     email = request.form['email']
     password_attempt = request.form['password']
+    valid_password = None
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
     if repository.check_password(email, password_attempt):
@@ -48,11 +58,14 @@ def post_login():
         session['user_name'] = user.user_name
         return redirect('/account_page')
     else:
-        return redirect('/login')
+        valid_password = False
+        template = env.get_template('login.html.jinja2')
+        return render_template(template, valid_password = valid_password)
     
 @app.route('/signout')
 def get_signout():
-    session['user_id']= None
+    session.pop('user_id', None)
+    session.pop('user_name', None)
     return redirect('/')
 
 @app.route('/account_page')
@@ -66,11 +79,24 @@ def account_page():
         repository = ListingRepository(connection)
         listings = repository.find_by_user(session['user_id'])
         user_name = session['user_name']
-        return render_template('account_page.html', listings = listings, user_name = user_name)
+        template = env.get_template('account_page.html.jinja2')
+        return render_template(template, listings = listings, user_name = user_name)
     
 @app.route('/list_space')
 def list_space():
-    return render_template('list_space.html')
+    template = env.get_template('list_space.html.jinja2')
+    return render_template(template)
+
+@app.route('/list_space', methods=['POST'])
+def list_new_space():
+    name = request.form['name']
+    description = request.form['description']
+    cost = request.form['cost']
+    user_id = session['user_id']
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    repository.create(name,description,cost,user_id)
+    return redirect("/account_page")
 
 
 
