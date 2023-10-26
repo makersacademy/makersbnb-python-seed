@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Makersbnb</title>
+    <!-- LINK CSS STYLESHEET FOR LATER -->
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <!-- HEADER -- copy to every page once this image is figured out -->
+    <div class="header">
+        <!-- TODO: This image doesn't work -->
+        <img src="/makersbnb-python-seed/static/makers_logo.png" alt="Makers Logo">
+        <a class="about_link" href="/about">About</a>
+        <a class="login_link" href="/login">Login</a>
+    </div>
+    <!-- HEADER -->
+
+    <br>
+    <br>
+
+    <!-- LOG IN FORM -->
+    <div class="login_form">
+        <h2 class="login_form_header">Log in to Makersbnb</h2>
+        <form class="login_form_fields" action="/login" method="post">
+
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+            <!-- If so, we show them. -->
+            <p class="t-errors">
+                Login Error: <br>{{ errors }}
+            </p>
+        {% endif %}
+
+        <!-- FORM FIELDS -->
+        <p>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+        </p>
+
+        <!-- SUBMIT BUTTON -->
+        <p>
+            <input type="submit" value="Log in">
+        </p>
+
+
+        </form>
+    </div>
+    <!-- LOG IN FORM -->
+
+
+    
+    
+
+    
+</body>
+</html>
