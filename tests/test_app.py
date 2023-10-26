@@ -58,3 +58,8 @@ def test_get_space(page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces/1")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Beach House")
+
+
+# def test_get_rented_spaces(page, test_web_address):
+#     page.goto(f"http://{test_web_address}/spaces/rented")
+#     rented_spaces_element = page.locator()
