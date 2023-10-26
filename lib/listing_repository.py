@@ -9,7 +9,7 @@ class ListingRepository():
         rows = self._connection.execute('SELECT * FROM listings')
         listings = []
         for row in rows:
-            listing = Listing(row["id"], row["name"], row["cost"], row["user_id"])
+            listing = Listing(row["id"], row["name"], row["description"], row["cost"], row["user_id"])
             listings.append(listing)
         return listings
     
@@ -17,13 +17,13 @@ class ListingRepository():
         rows = self._connection.execute('SELECT * FROM LISTINGS WHERE user_id = %s', [user_id])
         listings = []
         for row in rows:
-            listing = Listing(row["id"], row["name"], row["cost"], row["user_id"])
+            listing = Listing(row["id"], row["name"], row["description"], row["cost"], row["user_id"])
             listings.append(listing)
         return listings
     
-    def create(self, id, name, cost, user_id):
-        self._connection.execute('INSERT INTO listings (name, cost, user_id) VALUES (%s, %s, %s)', 
-                                [name, cost, user_id])
+    def create(self, id, name, description, cost, user_id):
+        self._connection.execute('INSERT INTO listings (name, cost, user_id) VALUES (%s, %s, %s, %s)', 
+                                [name, description, cost, user_id])
         return None
     
     def delete(self, id):
