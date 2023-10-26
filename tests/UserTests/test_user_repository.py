@@ -1,18 +1,34 @@
-from lib.User.user_repository import UserRepository
+from lib.user.user_repository import UserRepository
 
-'''
+"""
 Check if user exists by username
-'''
+"""
+
+
 def test_user_exists(db_connection):
     db_connection.seed("seeds/usertable_connection.sql")
     repository = UserRepository(db_connection)
-    assert repository.check('benhurst') == True
-    assert repository.check('benhurst1234') == False
+    assert repository.check("benhurst") == [
+        {
+            "email": "benhurst@email.com",
+            "id": "4r8e9ujfoiuriej",
+            "passwordhash": "password",
+            "phonenumber": "0123456789",
+            "username": "benhurst",
+        }
+    ]
 
 
 def test_user_verify_sql(db_connection):
     db_connection.seed("seeds/usertable_connection.sql")
-    repository = UserRepository(db_connection) 
+    repository = UserRepository(db_connection)
 
-    assert repository.verify('ovie1234', '12345678') == {'id': 'rut9ehif', 'username': 'ovie1234', 'email': 'ovie@icloud.com', 'password': '12345678', 'phonenumber': '07764793090'}
-
+    assert repository.verify("ovie1234", "12345678") == [
+        {
+            "id": "rut9ehif",
+            "username": "ovie1234",
+            "email": "ovie@icloud.com",
+            "passwordhash": "12345678",
+            "phonenumber": "07764793090",
+        }
+    ]

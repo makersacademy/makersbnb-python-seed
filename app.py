@@ -3,15 +3,20 @@ from flask import Flask, request, render_template, g, session
 from lib.database_connection import get_flask_database_connection
 from lib.user.user_controller import UserController
 from lib.user.user_repository import UserRepository
+from lib.space.space_controller import SpaceController
+from lib.space.space_repository import SpaceRepository
+from lib.date.DateRepository import DateRepository
 import secrets
 
 app = Flask(__name__)
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 
+
 @app.route("/index", methods=["GET"])
 def get_index():
     return render_template("index.html")
+
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
@@ -45,7 +50,12 @@ def login():
 
 @app.route("/spaces", methods=["GET"])
 def get_spaces():
-    return render_template("spaces.html")
+    space_controller = SpaceController(
+        SpaceRepository(get_flask_database_connection(app)),
+        DateRepository(get_flask_database_connection(app)),
+    )
+    spaces = space_controller.list_all()
+    return render_template("spaces.html", spaces=spaces)
 
 
 @app.route("/spaces/new", methods=["GET"])

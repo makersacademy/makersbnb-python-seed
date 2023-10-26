@@ -63,3 +63,18 @@ def test_integrated_sign_up(db_connection, page, test_web_address):
     repo = UserRepository(db_connection)
     row = repo.check("Username1")
     assert row[0]["username"] == "Username1"
+
+
+def test_get_spaces(db_connection, page, test_web_address):
+    db_connection.seed("seeds/spacetable_connection.sql")
+    page.goto(f"http://{test_web_address}/spaces")
+    h2_tag = page.locator("h2")
+    h3_tag = page.locator("h3")
+    expect(h2_tag).to_have_text([
+        "this is a name of a space",
+        "second space"
+    ])
+    expect(h3_tag).to_have_text([
+        "description",
+        "description"
+    ])

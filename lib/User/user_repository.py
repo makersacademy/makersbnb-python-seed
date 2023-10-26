@@ -3,10 +3,12 @@ class UserRepository:
         self._connection = connection
     
     def check(self, username):
+        print(self._connection.execute(
+            'SELECT * FROM users WHERE username=%s', [username]
+        ))
         return self._connection.execute(
             'SELECT * FROM users WHERE username=%s', [username]
         )
-        
     def create(self, user):
         self._connection.execute(
             "INSERT INTO users " +
