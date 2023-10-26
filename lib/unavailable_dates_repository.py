@@ -11,7 +11,7 @@ class UnavailableDatesRepository:
         return unavailable_dates
     
     def find_all_unavailable_dates(self, space_id):
-        return self._connection.execute(f'SELECT unavailable_date FROM unavailable_dates WHERE space_id = {space_id}')
+        return self._connection.execute(f'SELECT * FROM unavailable_dates WHERE space_id = {space_id}')
 
     
     def create(self, unavailable_date):

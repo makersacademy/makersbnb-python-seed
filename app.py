@@ -21,7 +21,35 @@ def get_index():
     connection = get_flask_database_connection(app) 
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    return render_template('index.html', properties=spaces)
+    
+    return render_template('index.html', spaces=spaces)
+
+# filter spaces
+@app.route('/', methods=['POST'])
+def post_index():
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    dates_repository = UnavailableDatesRepository(connection)
+
+    # Get start_date and end_date from the form
+    start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d')
+    end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d')
+
+    date_range = []
+    current_date = start_date
+    while current_date <= end_date:
+        date_range.append(current_date.date())
+        current_date += timedelta(days=1)
+        
+    # get only spaces that satisfy the avaialable date range
+    spaces = space_repository.all()
+    dates = [dates_repository.find_all_unavailable_dates(space.id) for space in spaces]
+    
+    filtered_ids = list(set([date['space_id'] for lst in dates for date in lst if not date['unavailable_date'] in date_range]))
+    
+    filtered_spaces = [space_repository.find(id) for id in filtered_ids]
+
+    return render_template('index.html', spaces=filtered_spaces)
 
 # regsiter
 @app.route('/signup', methods=['GET'])
@@ -73,44 +101,6 @@ def login():
     else:
         return redirect('/spaces') 
 
-
-# spaces page
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    
-    return render_template('spaces.html', spaces=spaces)
-
-
-# filter spaces
-@app.route('/spaces', methods=['POST'])
-def post_spaces():
-    connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(connection)
-    dates_repository = UnavailableDatesRepository(connection)
-
-    # Get start_date and end_date from the form
-    start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d')
-    end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d')
-
-    date_range = []
-    current_date = start_date
-    while current_date <= end_date:
-        date_range.append(current_date.date())
-        current_date += timedelta(days=1)
-        
-    # get only spaces that satisfy the avaialable date range
-    spaces = space_repository.all()
-    dates = [dates_repository.find_all_unavailable_dates(space.id) for space in spaces]
-    
-    filtered_dates = [date['unavailable_date'] for lst in dates for date in lst]
-
-    print(dates)
-
-    return str(filtered_dates)
-    # return redirect('/spaces')
 
 # individual space page
 @app.route('/spaces/<id>', methods=['GET'])

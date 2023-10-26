@@ -20,15 +20,14 @@
         </form>
 
         <div class="property-grid">
-            {% for property in properties[:6] %}
+            {% for space in spaces %}
                 <div class="property-card">
-                    <a href="/spaces/{{property.id}}">
-                        <h3>{{ property.name }}</h3>
+                    <a href="/spaces/{{space.id}}">
+                        <h3>{{ space.name }}</h3>
                     </a>
-                    <p>{{ property.description }}</p>
+                    <p>{{ space.description }}</p>
                 </div>
             {% endfor %}
         </div>
     </section>
-    
 {% endblock %}
