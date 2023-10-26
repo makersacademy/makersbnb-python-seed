@@ -7,10 +7,10 @@
         <p>{{space['description']}}</p>
         <p>{{space['size']}}</p>
 
-        <p>Pick a night</p>
-        <input type="date" id="booking_date" name="booking_date" value="2023-10-23" min="2023-10-23" max="2023-10-30" />
-        <br />
-        <br />
-        <button>Request to book</button>
+        <form action="/requests" method="post">
+            <p>Pick a night</p>
+            <input type="date" id="booking_date" name="booking_date" value="2023-10-23" min="2023-10-23" max="2023-10-30" required />
+            <button type="submit">Request to book</button>
+        </form>
     </section>
 {% endblock %}

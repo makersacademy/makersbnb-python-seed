@@ -82,7 +82,13 @@ def login():
     if user.password != password:
         return render_template('login.html', errors='Password is incorrect')
     else:
-        return render_template('index.html') 
+        return render_template('index.html')
+    
+    
+# request to book
+@app.route('/requests', methods=['POST'])
+def post_request():
+    return render_template('login.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
