@@ -1,8 +1,12 @@
 import os
 from flask import Flask, request, render_template, g, session
 from lib.database_connection import get_flask_database_connection
-from lib.user.user_controller import UserController
-from lib.user.user_repository import UserRepository
+from lib.User.user_controller import UserController
+from lib.User.user_repository import UserRepository
+from lib.Space.space import Space
+from lib.Space.space_repository import SpaceRepository
+from lib.Date.Date import Date
+from lib.Date.DateRepository import DateRepository
 import secrets
 
 app = Flask(__name__)
@@ -38,6 +42,27 @@ def login():
     session["user_id"] = userid
 
     return userid
+
+@app.route("/spaces/new", methods=['POST'])
+def add_space():
+    name = request.form['name']
+    description = request.form['DescriptioN']
+    owner_id = request.form['Owner_iD']
+    price = request.form['price']
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+    
+    new_space = Space(name, description, price, owner_id, date_from, date_to)
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    date_repo = DateRepository(get_flask_database_connection(app))
+
+    if(space_repo.exists_already(name)):
+        return 'space name exists already'
+    
+    space_repo.add(new_space)
+    date_repo.add(new_space)
+
+    return 'ok', 200
 
 
 #  ''' this is the the frontend team's tests '''
