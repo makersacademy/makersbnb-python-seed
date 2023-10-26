@@ -35,6 +35,7 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
+    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
     username = request.form['Username']
     password = request.form['Password']
@@ -49,12 +50,11 @@ def post_login():
 
 @app.route('/register')
 def get_register():
-    #return render_template('register.html')
-
-    if logged_in != None:
+    global logged_in
+    if hasattr(logged_in, '__dict__'):
         return render_template('logged_in.html')
     
-    if logged_in == None:
+    else:
         return render_template('register.html')
 
 @app.route('/register', methods= ['POST'])
@@ -73,9 +73,9 @@ def send_register():
 @app.route('/spaces/new')
 def get_new_space():
     global logged_in
-    if logged_in != None:
+    if hasattr(logged_in, '__dict__'):
         return render_template('new_space.html')
-    if logged_in == None:
+    else:
         return render_template('need_login.html')
 
 @app.route('/spaces/new', methods=['POST'])
@@ -107,14 +107,18 @@ def get_space(id):
         date_range.append(current_day.date())
         current_day += timedelta(days=1)
     date_list=[date for date in date_range if date not in unavailable_dates]
-    return render_template('space_by_id.html',date_list=date_list,space=singlespace)
+    return render_template('space_by_id.html',date_list=date_list,space=singlespace, user = logged_in)
+
 
 @app.route('/spaces/<id>', methods=['POST'])
 def request_space(id):
-    spacerepo=SpaceRepository(get_flask_database_connection(app))
-    date = request.form['selected_date']
-    spacerepo.request_a_stay(date,id,logged_in.id,'pending')
-    return redirect('/')
+    if hasattr(logged_in, '__dict__'):
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        date = request.form['selected_date']
+        spacerepo.request_a_stay(date,id,logged_in.id,'pending')
+        return redirect('/')
+    else:
+        return render_template('/need_login.html')
 
 @app.route('/spaces/<id>/delete')
 def delete_space(id):
