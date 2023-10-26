@@ -53,6 +53,7 @@ def post_new_listing():
     date_to_input = request.form['date_to']
     date_from = datetime.datetime.strptime(date_from_input, "%d/%m/%Y").date()
     date_to = datetime.datetime.strptime(date_to_input, "%d/%m/%Y").date()
+    #user_id = ????
     listing = Space(None, name, description, price, date_from, date_to)
     repository.create_listing(listing)
     return redirect('/listings')

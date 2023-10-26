@@ -96,3 +96,7 @@ def test_add(page, test_web_address, db_connection):
     
     p_tag = page.locator("p")
     expect(p_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2", "Apartment 3", "Description 3"])
+
+#retrieving user_id after someone has logged in and 
+#using that to add user_id field for the Space object
+#When someone has logged in, we need to store their user_id somewhere
