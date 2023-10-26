@@ -46,7 +46,12 @@ def post_login():
 
 @app.route('/register')
 def get_register():
-    return render_template('register.html')
+    global logged_in
+    user_repo = UserRepository(get_flask_database_connection(app))
+    if logged_in != None:
+        return render_template('register.html')
+    if logged_in == None:
+        return render_template('register.html')
 
 @app.route('/spaces/new')
 def get_new_space():
