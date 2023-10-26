@@ -9,11 +9,9 @@ app = Flask(__name__)
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 
-
 @app.route("/index", methods=["GET"])
 def get_index():
     return render_template("index.html")
-
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
