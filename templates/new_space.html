@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Add a Space - MakersBnB</title>
+<head>
+    <title>Add a Space - MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Include the Flatpickr CSS and JavaScript files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <h1>Add a new space</h1>
+    <form action="/spaces", method="POST">
+        {% if errors %}
+        <p class="errors">
+            Your submission contains errors:
+            {{ errors | join(', ') }}
+        </p>
+        {% endif %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+        <label for="description">Description:</label>
+        <input type="textarea" name="description" id="description">
+        <label for="size">Size of the space (in m2):</label>
+        <input type="text" name="size" id="size">
+        <label for="price">Price per night:</label>
+        <input type="text" name="price" id="price">
+        
+        <label for="unavailable_dates">Unavailable Dates:</label>
+        <input type="text" name="unavailable_dates" id="unavailable_dates">
+        
+        <input type="submit" value="Add space">
+    </form>
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <h1>Add a new space</h1>
-        <form action="/spaces", method="POST">
-            {% if errors %}
-            <p class="errors">
-                Your submission contains errors:
-                {{ errors | join(', ') }}
-            </p>
-            {% endif %}
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name">
-            <label for="description">Description:</label>
-            <input type="textarea" name="description" id="description">
-            <label for="size">Size of the space (in m2):</label>
-            <input type="text" name="size" id="size">
-            <label for="price">Price per night:</label>
-            <input type="text" name="price" id="price">
-            <input type="submit" value="Add space">
-        </form>
-    </body>
+    <script>
+        flatpickr("#unavailable_dates", {
+            mode: "multiple", 
+            dateFormat: "Y-m-d", 
+        });
+    </script>
+</body>
 </html>
