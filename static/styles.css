@@ -150,3 +150,11 @@ header .links {
     border: 1px solid purple;
     padding: 1rem;
 }
+
+.button-container {
+    display: flex;
+}
+
+.accept-button, .decline-button {
+    margin-right: 10px; 
+}

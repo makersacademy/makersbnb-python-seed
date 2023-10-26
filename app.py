@@ -8,6 +8,7 @@ from lib.userRepository import UserRepository
 from lib.user import User
 from datetime import timedelta
 from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 
 
 # Create a new Flask app
@@ -150,16 +151,47 @@ def create_space():
 @app.route('/owners-bookings-dashboard', methods=['GET'])
 def get_owners_bookings():
     connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    if "user" in session:
+        user = session["user"]
+    else:
+        return (redirect(url_for("login")))
+
     
-    user_id = 1 
-    # change this later to get id from user logged in
-
-
-    rows = connection.execute(f'SELECT * FROM bookings JOIN spaces ON bookings.space_id=spaces.id WHERE spaces.owner_id={user_id}')
-    bookings = [Booking(row['id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
+    id = connection.execute('SELECT id FROM users WHERE email= (%s)', (user,))
     
+    id = id[0]['id']
+    rows = connection.execute('SELECT bookings.id AS booking_id, spaces.id AS space_id, bookings.booker_id, bookings.start_date, bookings.end_date, bookings.confirmed FROM bookings JOIN spaces ON bookings.space_id = spaces.id WHERE spaces.owner_id = %s', (id,))
+    bookings = [Booking(row['booking_id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
 
+    # rows = connection.execute('SELECT * FROM bookings JOIN spaces ON bookings.space_id=spaces.id WHERE spaces.owner_id=(%s)', (id,))
+    # bookings = [Booking(row['id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
+    print(bookings)
+        
     return render_template('ownerbookings.html', bookings=bookings)
+
+@app.route('/process-bookings', methods=['POST'])
+def process_bookings():
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    
+    action = request.form.get('action')
+    booking_id  = request.form.get('booking_id')
+    
+    print(booking_id)
+    
+    if action == 'Accept':
+        repository.update(booking_id, 'confirmed', 'True')
+        
+    elif action =='Decline':
+        repository.delete(booking_id)
+        
+    
+    return redirect(url_for('get_owners_bookings'))
+   
+
+
+
 
 
 # These lines start the server if you run this file directly
