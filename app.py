@@ -35,6 +35,7 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
+    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
     username = request.form['Username']
     password = request.form['Password']
