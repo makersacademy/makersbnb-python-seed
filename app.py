@@ -20,7 +20,7 @@ booking_date = None
 # GET /index
 # Returns the homepage
 # Try it:
-#   ; open http://localhost:5000/index
+#   ; open http://localhost:5001
 @app.route('/', methods=['GET'])
 def get_index():
     spacerepo=SpaceRepository(get_flask_database_connection(app))
