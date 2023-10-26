@@ -12,9 +12,8 @@
             <ul>
                 {% for listing in requests_made %}
                 <li>
-                    <a href="/requests/{{listing['listing_id']}}">
-                        <p>{{listing['listing']}}</p>
-                        <p>{{listing['date']}}</p>
+                    <p>{{listing['listing']}}</p>
+                    <p>{{listing['date']}}</p>
                     </a>
                 </li>
                 {% endfor %}
