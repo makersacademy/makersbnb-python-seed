@@ -5,6 +5,7 @@ from lib.space_class import Space
 from lib.space_repository import SpaceRepository
 from lib.user_class import User
 from lib.user_repository import UserRepository
+from lib.booking_repository import BookingRepository
 from datetime import datetime
 
 # Create a new Flask app
@@ -12,6 +13,8 @@ app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
 logged_in = None
+booking_id = None
+booking_date = None
 # == Your Routes Here ==
 
 # GET /index
@@ -35,7 +38,7 @@ def post_login():
     username = request.form['Username']
     password = request.form['Password']
     current_user = user_repo.find_by_username(username)
-    if current_user==None:
+    if not hasattr(current_user, '__dict__'):
         return render_template('login.html',errors='errors')
     if current_user.password == password:
         logged_in = current_user
@@ -90,18 +93,32 @@ def get_requests():
         return render_template('need_login.html')
     else:
         userrepo = UserRepository(get_flask_database_connection(app))
-        requestlist = userrepo.show_bookings(False,logged_in.id)
+        requestlist = userrepo.show_bookings('pending',logged_in.id)
         return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
 
-############# CURRENTLY WORKING ON THIS BIT ####
-@app.route('/requests/<BOOKINGID>', methods=['POST'])
-def approve_request():
-    status = request.form['status']
-    return status
+@app.route('/approve/<id>/<date>', methods=['POST'])
+def approve_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('approved', id, date)
+        return redirect('/requests')
 
+@app.route('/deny/<id>/<date>', methods=['POST'])
+def deny_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('denied', id, date)
+        return redirect('/requests')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
+
