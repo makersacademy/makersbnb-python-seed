@@ -3,12 +3,8 @@
 DROP TABLE IF EXISTS spaces CASCADE;
 DROP TABLE IF EXISTS availabilities;
 DROP TABLE IF EXISTS bookings;
-DROP TABLE IF EXISTS users;
-
--- DROP TABLE IF EXISTS spaces CASCADE;
--- DROP TABLE IF EXISTS availabilities CASCADE;
--- DROP TABLE IF EXISTS bookings CASCADE;
--- DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS booking_requests CASCADE;
 
 -- DROP SEQUENCE IF EXISTS peeps_id_seq;  
 -- DROP SEQUENCE IF EXISTS users_id_seq;  
@@ -44,8 +40,14 @@ CREATE TABLE bookings (
     user_id INTEGER REFERENCES users(id),
     space_id INTEGER REFERENCES spaces(id),
     checkin_date DATE,
-    -- checkout_date DATE,
     is_approved BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE booking_requests (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    space_id INTEGER REFERENCES spaces(id),
+    date DATE
 );
 
 -- Finally, we add any records that are needed for the tests to run

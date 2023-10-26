@@ -1,3 +1,23 @@
 body {
     font-size: 18px;
 }
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(232, 242, 229);
+    padding: 20px;
+    border: 1px solid #cccaca;
+    box-shadow: 0 0 5px rgb(0, 0, 0, 0.2);
+    border-radius: 7px;
+}
+
+.close-button {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+}

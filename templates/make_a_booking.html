@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <title>Booking Page</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Make your booking</h1>
+        <p>Space</p>
+            
+
+            <p>Choose a date</p>
+            <form action="date">
+                Date: <input type="date" name="date">
+                <input type="submit">
+            </form>
+    </body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Make your booking</h1>
+    <p>Space: {{ space_name }}</p>
+
+    <p>Choose a date</p>
+    <form action="/make_a_booking" method="POST">
+        Date: <input type="date" name="date">
+        <input type="hidden" name="space_name" value="{{ space_name }}">
+        <input type="submit" value="Submit">
+    </form>
+    <div class="popup" id="popupMessage">
+        <span class="close-button" onclick="closePopup()">&times;</span>
+        <p>Thank you for your booking request! We'll let you know in 24 hours if it's successful 😊</p>
+    </div>
+    <script>
+        function showPopup() {
+            const popup = document.getElementById('popupMessage');
+            popup.style.display = 'block';
+        }
+        function closePopup() {
+            const popup = document.getElementById('popupMessage');
+            popup.style.display = 'none';
+        }
+
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            showPopup(); // Show the pop-up
+        });
+    </script>
+</body>
+</html>
