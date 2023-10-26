@@ -79,8 +79,9 @@ Test creates new user
 def test_create_new_user(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/")
+    page.fill("input[name='user_name']", "Test User 4")
     page.fill("input[name='email']", "test-email-4")
-    page.fill("input[name='password']", "testpassword4")
+    page.fill("input[name='password']", "test-password-4")
     page.get_by_role("button", name="Sign Up").click()
     expect(page).to_have_url(f"http://{test_web_address}/login")
 
