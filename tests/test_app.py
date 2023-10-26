@@ -29,7 +29,7 @@ def test_get_listings(page, test_web_address,db_connection):
     strong_tag = page.locator("p")
 
     # We assert that it has the text "This is the listings page."
-    expect(strong_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2" ])
+    expect(strong_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2"])
 
 
 """
@@ -78,3 +78,25 @@ test web page has a listing button
 
 
 
+# def test_adding_a_listing_to_table_via_post_request(web_client):
+#     response =  web_client.post('/listings', data={"Apartment 1", "Description 1", "Apartment 2", "Description 2"})
+#     assert response.status_code == 200
+#     assert response.data.decode == '"Apartment 1", "Description 1", "Apartment 2", "Description 2"'
+
+def test_add(page, test_web_address, db_connection):
+    db_connection.seed("seeds/spaces.sql")
+    page.goto(f"http://{test_web_address}/listings") 
+    page.fill("input[name=name]", "Apartment 3")
+    page.fill("input[name=description]", "Description 3")
+    page.fill("input[name=price]", "100")
+    page.fill("input[name=date_from]", "25/10/2023")
+    page.fill("input[name=date_to]", "25/10/2023")
+
+    page.click("text='add a listing'")
+    
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text(["Apartment 1", "Description 1", "Apartment 2", "Description 2", "Apartment 3", "Description 3"])
+
+#retrieving user_id after someone has logged in and 
+#using that to add user_id field for the Space object
+#When someone has logged in, we need to store their user_id somewhere
