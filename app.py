@@ -11,8 +11,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
-Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
-logged_in = Magicman
+#Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
+logged_in = None
 # == Your Routes Here ==
 
 # GET /index
@@ -31,7 +31,6 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
-    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
     username = request.form['Username']
     password = request.form['Password']
@@ -44,23 +43,28 @@ def post_login():
     else:
         return render_template('login.html',errors='errors')
 
-@app.route('/register', methods= ['POST'])
+@app.route('/register')
 def get_register():
-    global logged_in
-    user_repo = UserRepository(get_flask_database_connection(app))
-    name = request.form['Username']
-    username = request.form['Name']
-    password = request.form['Password']
-    email = request.form['Email']
-    phone_number =request.form['Phone Number']
-
+    return render_template('register.html')
 
     if logged_in != None:
         return render_template('logged_in.html')
     
     if logged_in == None:
-        user_repo.create (username, name, password, email, phone_number, id = None)
         return render_template('register.html')
+
+@app.route('/register', methods= ['POST'])
+def send_register():
+    user_repo = UserRepository(get_flask_database_connection(app))
+    name = request.form['Username']
+    username = request.form['Name']
+    password = request.form['Password']
+    email = request.form['Email']
+    phone_number = request.form['Phone Number']
+    user_repo.create (username, name, password, email, phone_number)
+    return redirect ('/')
+
+
 
 @app.route('/spaces/new')
 def get_new_space():
