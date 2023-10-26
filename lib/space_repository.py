@@ -51,6 +51,5 @@ class SpaceRepository:
         return DaysUnavailable
 
     #Change status of stay:
-    def change_status (self,status,booking_id):
-        self._connection.execute ('UPDATE availability SET approved = (%s) WHERE id = (%s)',[status,booking_id])
-        print(f'Booking id {booking_id} set as {status}')
+    def change_status (self,status,id, date):
+        self._connection.execute ('UPDATE availability SET approved = (%s) WHERE id = (%s) AND date_not_available = (%s)',[status,id,date])
