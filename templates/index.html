@@ -7,16 +7,17 @@
     <body>
         <h1>Welcome to MakersBnB</h1>
         <!-- Navigation Bar -->
-        <a href="/register">Register an Account </a> <br>
-        <a href="/login">Log in </a><br>
+        {%if user is not none%}
+        Logged in as: {{user.name}} (<a href="/logout"> Log Out</a>)<br>
         <a href="/spaces/new"> List a new Property</a><br>
         <a href="/requests"> Requests for your properties</a>
+        {%else%}
+        <a href="/register">Register an Account </a> <br>
+        <a href="/login">Log in </a><br>
+        {%endif%}
         <!-- End of Navigation bar -->
-
-        
         <br>
         <br>
-
         <strong> Fancy Staying somewhere else? Here's our global network of properties...</strong>
         <br>
         {% for space in spaces %}

@@ -27,11 +27,18 @@ logged_in = None
 def get_index():
     spacerepo=SpaceRepository(get_flask_database_connection(app))
     allspaces=spacerepo.all()
-    return render_template('index.html',spaces=allspaces)
+    return render_template('index.html',spaces=allspaces,user=logged_in)
 
 @app.route('/login')
 def get_login():
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    global logged_in
+    logged_in=None
+    return redirect('/')
+
 
 @app.route('/login', methods=['POST'])
 def post_login():
