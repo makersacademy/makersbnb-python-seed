@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    
+    <body>
+        <div id="applying_date_filter"> <form action="/listings" method = "POST">
+            <label for="date_from_filter">Date from:</label>
+            <input type="date" id="date_from_filter" name="date_from_filter">
+            <label for="date_to_filter">Date to:</label>
+            <input type="date" id="date_from_filter" name="date_to_filter">
+            <input type="submit" value="apply filter">
+        </div>
+
+
+        <div id="adding_listing_div"> <form action="/listings" method = "POST">
+            <label for="name" class="example">Name</label><br>
+            <input type="text" name="name"><br>
+            <label for="description">Description</label><br>
+            <input type="text" name="description"><br>
+            <label for="price">Price</label><br>
+            <input type="text" name="price"><br>
+            <label for="date_from">Date from</label><br>
+            <input type="text" name="date_from"><br>
+            <label for="date_from">Date to</label><br>
+            <input type="text" name="date_to"><br>
+            <input type="submit" value="add a listing">
+            </form>
+        </div>
+
+    {% for space in all_spaces %}
+        <div> 
+            <h3>{{space.name}}</h3>
+            <p>{{space.description}}</p>
+        </div>
+    {% endfor %}
+
+    <h3>This are the spaces available within your specified availability</h3>
+
+    {% for space in filtered_spaces %}
+        <div> 
+            <h3>{{space.name}}</h3>
+            <p>{{space.description}}</p>
+        </div>
+    {% endfor %}
+    </body>
+</html>
+
+
