@@ -24,9 +24,12 @@ connection.seed("seeds/makersbnb.sql")
 def get_index():
     return render_template('index.html')
 
+
 @app.route('/register', methods=['GET'])
 def new_registration():
+
     return render_template('register.html')
+
 
 @app.route('/register', methods=['POST'])
 def post_register():
@@ -38,6 +41,25 @@ def post_register():
     password = request.form("password")
     
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET'])
+def get_login():
+
+    return render_template('login.html')
+
+
+@app.route('/login', methods=['POST'])
+def post_login():
+
+    connection = get_flask_database_connection(app)
+
+    username = request.form("username")
+    password = request.form("password")
+
+    return render_template('index.html')
+
+
 
 @app.route('/booking-requests', methods=['GET'])
 def get_owners_booking_requests():
@@ -51,6 +73,16 @@ def get_add_a_space():
 def post_space_added():
     pass
   
+
+@app.route('/space', methods=['GET'])
+def get_individual_space():
+
+    connection = get_flask_database_connection(app)
+
+    return render_template('space.html')
+
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
