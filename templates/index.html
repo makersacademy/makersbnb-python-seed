@@ -11,6 +11,14 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <header>
+            {% if session.logged_in %}
+                <!-- Show the logout button when the user is logged in -->
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            {% endif %}
+        </header>
         <h1>Sign Up</h1>
         <form action="/index" method="post">
             <fieldset>

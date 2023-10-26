@@ -8,8 +8,17 @@
             If you're wondering how the CSS file below is being loaded.
         -->
         <link rel="stylesheet" href="/static/style.css" >
+
     </head>
     <body>
+        <header>
+            {% if session.logged_in %}
+                <!-- Show the logout button when the user is logged in -->
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            {% endif %}
+        </header>
         <h1>Book a space</h1>
         <button><a href="/spaces/new">List a space</a></button>
         <div>

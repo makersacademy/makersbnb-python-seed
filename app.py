@@ -52,9 +52,9 @@ def post_login():
         flash('Invalid username or password', 'error')
         return redirect('/login')
     
-@app.route('/logout',methods=['GET'])
+@app.route('/logout',methods=['POST'])
 def logout():
-    session.clear()
+    session['logged_in'] = False
     return redirect('/login')
 
 
