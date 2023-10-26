@@ -151,7 +151,8 @@ def create_space():
 @app.route('/owners-bookings-dashboard', methods=['GET'])
 def get_owners_bookings():
     connection = get_flask_database_connection(app)
-    repository = BookingRepository(connection)
+    spaceRepository = SpaceRepository(connection)
+
     if "user" in session:
         user = session["user"]
     else:
@@ -161,12 +162,32 @@ def get_owners_bookings():
     id = connection.execute('SELECT id FROM users WHERE email= (%s)', (user,))
     
     id = id[0]['id']
-    rows = connection.execute('SELECT bookings.id AS booking_id, spaces.id AS space_id, bookings.booker_id, bookings.start_date, bookings.end_date, bookings.confirmed FROM bookings JOIN spaces ON bookings.space_id = spaces.id WHERE spaces.owner_id = %s', (id,))
-    bookings = [Booking(row['booking_id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
+    rows = connection.execute('''
+        SELECT bookings.id AS booking_id, bookings.space_id, bookings.booker_id, bookings.start_date, bookings.end_date, bookings.confirmed,
+        spaces.id AS space__id, spaces.name, spaces.owner_id, 
+        users.id AS user_id, users.first_name, users.last_name, users.email
+        FROM bookings 
+        JOIN spaces ON bookings.space_id = spaces.id 
+        JOIN users ON bookings.booker_id = users.id
+        WHERE spaces.owner_id = %s''', (id,))
+                              
+    bookings = [
+        {
+            'bookingID':row['booking_id'], 
+            'spaceID':row['space_id'], 
+            'userID':row['booker_id'],
+            'startDate':row['start_date'], 
+            'endDate':row['end_date'],
+            'confirmed':row['confirmed'], 
+            'spaceName':row['name'], 
+            'userFirstName':row['first_name'],
+            'userLastName':row['last_name'],
+            'userEmail':row['email']
+        }
+        for row in rows
+    ]
 
-    # rows = connection.execute('SELECT * FROM bookings JOIN spaces ON bookings.space_id=spaces.id WHERE spaces.owner_id=(%s)', (id,))
-    # bookings = [Booking(row['id'], row['space_id'], row['booker_id'], row['start_date'], row['end_date'], row['confirmed']) for row in rows]
-    print(bookings)
+        
         
     return render_template('ownerbookings.html', bookings=bookings)
 
@@ -178,7 +199,6 @@ def process_bookings():
     action = request.form.get('action')
     booking_id  = request.form.get('booking_id')
     
-    print(booking_id)
     
     if action == 'Accept':
         repository.update(booking_id, 'confirmed', 'True')

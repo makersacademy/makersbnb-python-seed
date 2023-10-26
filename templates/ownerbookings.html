@@ -14,19 +14,22 @@
             <form action="/process-bookings" method="post">
             {% for booking in bookings %}
             <article class="space_card">
-                <h3>Booking ID {{booking.id}}:</h3>
-                <p>Space ID: {{booking.space_id}}</p>
-                <p>Customer ID: {{booking.booker_id}}</p>
-                <p>From: {{booking.start_date}}</p>
-                <p>To: {{booking.end_date}}</p> 
-                <p>Confirmed: {{booking.confirmed}}</p>
+                <h3>Booking ID {{booking['bookingID']}}:</h3>
+                <p>Space ID: {{booking['spaceID']}}</p>
+                <p>Space Name: {{booking['spaceName']}}</p>
+                <p>Customer ID: {{booking['userID']}}</p>
+                <p>Customer Name: {{booking['userFirstName']}} {{booking['userLastName']}}</p>
+                <p>Customer Email: {{booking['userEmail']}}</p>
+                <p>From: {{booking['startDate']}}</p>
+                <p>To: {{booking['endDate']}}</p> 
+                <p>Confirmed: {{booking['confirmed']}}</p>
                 <br>
                 {% if booking.confirmed == False %}
                     <p>Confirm this request:</p>
                     <div class="button-container">
                     <button type="submit" name="action" class="accept-button" value="Accept">Accept</button>
                     <button type="submit" name="action" class="decline-button" value="Decline">Decline</button>
-                    <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                    <input type="hidden" name="booking_id" value="{{ booking['bookingID'] }}">
                     </div>
                 {% endif %}
             </article>
