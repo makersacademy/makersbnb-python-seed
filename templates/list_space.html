@@ -13,6 +13,7 @@
         <div><a name="home" href="/">Home</a></div>
         <div><a name="signout" href="/signout">Sign Out</a></div>
         <div><a name="book_space" href="/book_space">Book a space</a></div>
+        <img src="/static/original.png" alt="Maker's logo">
         <h1>List a space</h1>
         <p>Fill in the form to list a space for booking</p>
         <form action="/list_space" method="POST">
@@ -25,7 +26,7 @@
             <p>
                 <label for="description">Description</label>
                 <br>
-                <input type="text" name="description" id="description">
+                <textarea name="description" id="description" rows="5" columns="50"></textarea>
             </p>
             <p>
                 <label for="cost">Cost per night</label>
@@ -42,7 +43,7 @@
                 <br>
                 <input type="date" name="avail-to" id="avail-to">
             </p> -->
-            <input type="submit" value="List my space!">
+            <input class="btn" type="submit" value="List my space!">
         </form>
     </body>
 </html>
