@@ -12,10 +12,6 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ["APP_SECRET_KEY"]
 
-env = Environment(
-    loader=FileSystemLoader("templates/"),
-    autoescape=True
-)
 # == Your Routes Here ==
 
 # GET /index
@@ -25,8 +21,7 @@ env = Environment(
 @app.route('/', methods=['GET'])
 def get_index():
     if 'user_id' not in session:
-        template = env.get_template('index.html.jinja2')
-        return render_template(template)
+        return render_template('index.html')
     else:
         return redirect('/account_page')
 
@@ -35,15 +30,16 @@ def create_user():
     email = request.form['email']
     password = request.form['password']
     user_name = request.form['user_name']
-    connection = get_flask_database_connection(app)
-    repository = UserRepository(connection)
-    repository.create(email, password, user_name)
-    return redirect("/login")
+    password_confirmation = request.form['password_confirmation']
+    if password == password_confirmation:
+        connection = get_flask_database_connection(app)
+        repository = UserRepository(connection)
+        repository.create(email, password, user_name)
+        return redirect("/login")
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    template = env.get_template('login.html.jinja2')
-    return render_template(template)
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def post_login():
@@ -59,8 +55,7 @@ def post_login():
         return redirect('/account_page')
     else:
         valid_password = False
-        template = env.get_template('login.html.jinja2')
-        return render_template(template, valid_password = valid_password)
+        return render_template('login.html', valid_password = valid_password)
     
 @app.route('/signout')
 def get_signout():
@@ -71,21 +66,17 @@ def get_signout():
 @app.route('/account_page')
 def account_page():
     if 'user_id' not in session:
-        # No user id in the session so the user is not logged in.
         return redirect('/login')
     else:
-        # The user is logged in, display their account page.
         connection = get_flask_database_connection(app)
         repository = ListingRepository(connection)
         listings = repository.find_by_user(session['user_id'])
         user_name = session['user_name']
-        template = env.get_template('account_page.html.jinja2')
-        return render_template(template, listings = listings, user_name = user_name)
+        return render_template('account_page.html', listings = listings, user_name = user_name)
     
 @app.route('/list_space')
 def list_space():
-    template = env.get_template('list_space.html.jinja2')
-    return render_template(template)
+    return render_template('list_space.html')
 
 @app.route('/list_space', methods=['POST'])
 def list_new_space():
@@ -97,9 +88,6 @@ def list_new_space():
     repository = ListingRepository(connection)
     repository.create(name,description,cost,user_id)
     return redirect("/account_page")
-
-
-
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

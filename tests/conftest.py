@@ -48,3 +48,4 @@ def web_client():
     app.config['TESTING'] = True # This gets us better errors
     with app.test_client() as client:
         yield client
+
