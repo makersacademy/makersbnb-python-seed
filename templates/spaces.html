@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}MakersBnB{% endblock %}
+{% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
+{% block content %}
+    <section class="spaces_page">
+        <div class="spaces_blurb">
+            <h2>Book a space</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, expedita.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <button><a href="/spaces/new">List a space</a></button>
+        </div>
+
+        <div class="filter">
+            <div>
+                <label for="from_date">Available from</label>
+                <input type="date" id="from_date" name="from_date">
+            </div>
+
+            <div>
+                <label for="to_date">Available to</label>
+                <input type="date" id="to_date" name="to_date">
+            </div>
+            
+        </div>
+
+        <div class="space_cards">
+            {% for space in spaces %}
+                <a href="/spaces/{{space.id}}">
+                    <article class="space_card">
+                        <p>{{space.name}}</p>
+                        <p>{{space.description}}</p>
+                        <p>{{space.size}}</p>
+                        <p>{{space.price}}</p>
+                    </article>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
