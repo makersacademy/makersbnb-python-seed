@@ -11,13 +11,17 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
+
+#Magicman = User(1,'Magicman','magic man', '782993a','Macicman@hotmail.com','01214960879')
+#logged_in = Magicman
+
 logged_in = None
 # == Your Routes Here ==
 
 # GET /index
 # Returns the homepage
 # Try it:
-#   ; open http://localhost:5000/index
+#   ; open http://localhost:5001
 @app.route('/', methods=['GET'])
 def get_index():
     spacerepo=SpaceRepository(get_flask_database_connection(app))
@@ -30,14 +34,13 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
-    global logged_in
     user_repo = UserRepository(get_flask_database_connection(app))
     username = request.form['Username']
     password = request.form['Password']
     current_user = user_repo.find_by_username(username)
-    if current_user==None:
+    if not hasattr(current_user, '__dict__'):
         return render_template('login.html',errors='errors')
-    elif current_user.password == password:
+    if current_user.password == password:
         logged_in = current_user
         return redirect('/')
     else:
@@ -45,7 +48,26 @@ def post_login():
 
 @app.route('/register')
 def get_register():
-    return render_template('register.html')
+    #return render_template('register.html')
+
+    if logged_in != None:
+        return render_template('logged_in.html')
+    
+    if logged_in == None:
+        return render_template('register.html')
+
+@app.route('/register', methods= ['POST'])
+def send_register():
+    user_repo = UserRepository(get_flask_database_connection(app))
+    name = request.form['Username']
+    username = request.form['Name']
+    password = request.form['Password']
+    email = request.form['Email']
+    phone_number = request.form['Phone Number']
+    user_repo.create (username, name, password, email, phone_number)
+    return redirect ('/')
+
+
 
 @app.route('/spaces/new')
 def get_new_space():
@@ -101,14 +123,38 @@ def mark_date_as_unavailable(id):
 
 @app.route('/requests')
 def get_requests():
-    userrepo = UserRepository(get_flask_database_connection(app))
-    requestlist = userrepo.show_bookings(False,logged_in.id)
-    print(requestlist)
-    return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        userrepo = UserRepository(get_flask_database_connection(app))
+        requestlist = userrepo.show_bookings('pending',logged_in.id)
+        return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
 
+
+@app.route('/approve/<id>/<date>', methods=['POST'])
+def approve_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('approved', id, date)
+        return redirect('/requests')
+
+@app.route('/deny/<id>/<date>', methods=['POST'])
+def deny_request(id, date):
+    global logged_in
+    if not hasattr(logged_in, '__dict__'):
+        return render_template('need_login.html')
+    else:
+        spacerepo=SpaceRepository(get_flask_database_connection(app))
+        spacerepo.change_status('denied', id, date)
+        return redirect('/requests')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
+
