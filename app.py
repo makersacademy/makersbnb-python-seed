@@ -11,8 +11,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Trial Log in account for testing purposes below 
-#Magicman = User(1,'Magicman','782993a','Macicman@hotmail.com','01214960879')
-logged_in = None
+Magicman = User(1,'Magicman','magic man', '782993a','Macicman@hotmail.com','01214960879')
+logged_in = Magicman
 # == Your Routes Here ==
 
 # GET /index
@@ -45,7 +45,7 @@ def post_login():
 
 @app.route('/register')
 def get_register():
-    return render_template('register.html')
+    #return render_template('register.html')
 
     if logged_in != None:
         return render_template('logged_in.html')
