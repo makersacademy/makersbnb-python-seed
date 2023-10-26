@@ -1,5 +1,5 @@
 import os
-from datetime import date
+from datetime import datetime, timedelta
 from flask import Flask, request, render_template, redirect, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space import *
@@ -83,6 +83,35 @@ def get_spaces():
     
     return render_template('spaces.html', spaces=spaces)
 
+
+# filter spaces
+@app.route('/spaces', methods=['POST'])
+def post_spaces():
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    dates_repository = UnavailableDatesRepository(connection)
+
+    # Get start_date and end_date from the form
+    start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d')
+    end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%d')
+
+    date_range = []
+    current_date = start_date
+    while current_date <= end_date:
+        date_range.append(current_date.date())
+        current_date += timedelta(days=1)
+        
+    # get only spaces that satisfy the avaialable date range
+    spaces = space_repository.all()
+    dates = [dates_repository.find_all_unavailable_dates(space.id) for space in spaces]
+    
+    filtered_dates = [date['unavailable_date'] for lst in dates for date in lst]
+
+    print(dates)
+
+    return str(filtered_dates)
+    # return redirect('/spaces')
+
 # individual space page
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
@@ -94,9 +123,8 @@ def get_space(id):
     dates = dates_repository.find_all_unavailable_dates(id)
     
     unavailable_dates = [str(date['unavailable_date']) for date in dates]
-    test = ['2023-10-23', '2023-10-24', '2023-10-25']
         
-    return render_template('space.html', space=space, id=id, unavailable_dates=test)
+    return render_template('space.html', space=space, id=id, unavailable_dates=unavailable_dates)
 
 # get new space
 @app.route('/spaces/new', methods=['GET'])
@@ -105,7 +133,7 @@ def get_new_space():
 
 
 # create new space
-@app.route('/spaces', methods=['POST'])
+@app.route('/spaces/new', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)

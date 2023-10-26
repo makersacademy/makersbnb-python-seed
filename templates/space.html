@@ -8,15 +8,15 @@
         <p id="space-size">{{ space['size'] }}</p>
         <p id="space-price">{{ space['price'] }}</p>
         <p>Pick a night</p>
-        <input type="text" id="booking_date" name="booking_date" data-input />
+        <input type="date" id="booking_date" name="booking_date" data-input />
         <br />
         <br />
         <button>Request to book</button>
     </section>
 
     <script>
-        alert({{ unavailable_dates|safe }});
         flatpickr("#booking_date", {
+            mode: "multiple", 
             disable: {{ unavailable_dates|safe }},
             dateFormat: "Y-m-d",
         });
