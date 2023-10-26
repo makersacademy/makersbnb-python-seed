@@ -1,7 +1,6 @@
 
 -- First, we must delete (drop) all our tables and their dependent objects
 DROP TABLE IF EXISTS spaces CASCADE;
-DROP TABLE IF EXISTS availabilities;
 DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS booking_requests CASCADE;
@@ -53,7 +52,7 @@ CREATE TABLE booking_requests (
 -- Finally, we add any records that are needed for the tests to run
 -- Insert sample users here.
 
-INSERT INTO users (username, email, password) VALUES ('liza_77', 'liza@liza.com', 'password123');
+INSERT INTO users (username, email, password) VALUES ('Liza L', 'liza@liza.com', 'password123');
 
 -- Insert sample peeps (messages) here.
 
