@@ -27,7 +27,7 @@ def test_find_by_user_returns_given_users_listings(db_connection):
 def test_create_adds_new_listing(db_connection):
     db_connection.seed('seeds/makers_bnb.sql')
     repository = ListingRepository(db_connection)
-    repository.create(None, 'seventh-test-listing', 'Description 7', 38, 3)
+    repository.create('seventh-test-listing', 'Description 7', 38, 3)
     result = repository.all()
     assert result == [
                     Listing(1, 'first-test-listing', 'Description 1', 45, 1),

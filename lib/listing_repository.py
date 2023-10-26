@@ -21,7 +21,7 @@ class ListingRepository():
             listings.append(listing)
         return listings
     
-    def create(self, id, name, description, cost, user_id):
+    def create(self, name, description, cost, user_id):
         self._connection.execute('INSERT INTO listings (name, description, cost, user_id) VALUES (%s, %s, %s, %s)', 
                                 [name, description, cost, user_id])
         return None

@@ -72,6 +72,17 @@ def account_page():
 def list_space():
     return render_template('list_space.html')
 
+@app.route('/list_space', methods=['POST'])
+def list_new_space():
+    name = request.form['name']
+    description = request.form['description']
+    cost = request.form['cost']
+    user_id = session['user_id']
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    repository.create(name,description,cost,user_id)
+    return render_template('list_space.html')
+
 
 
 
