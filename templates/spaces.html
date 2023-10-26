@@ -22,12 +22,24 @@
         <h1>Book a space</h1>
         <button><a href="/spaces/new">List a space</a></button>
         <div>
+            <label for="start_date">Available from (DD/MM/YYYY)</label>
+            <input type="text" name="start_date" id="start_date">
+            
+            <label for="end_date">Available to (DD/MM/YYYY)</label>
+            <input type="text" name="end_date" id="end_date">
+
+            <input type="submit" value="List Spaces">
+
+        </div>
+        <div>
             <ul>
                 {% for listing in listings %}
-                <li>
-                    <p>{{listing.listing_name}}</p>
-                    <p>{{listing.listing_description}}</p>
-                </li>
+                    <a href="/spaces/{{listing.id}}">
+                        <li>
+                            <p>{{listing.listing_name}}</p>
+                            <p>{{listing.listing_description}}</p>
+                        </li>
+                    </a>
                 {% endfor %}
             </ul>
         </div>

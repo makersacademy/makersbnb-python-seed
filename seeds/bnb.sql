@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS dates;
+DROP SEQUENCE IF EXISTS dates_id_seq;
+
 DROP TABLE IF EXISTS listings;
 DROP SEQUENCE IF EXISTS listings_id_seq;
 
@@ -24,6 +27,16 @@ CREATE TABLE listings (
         on delete cascade
 );
 
+CREATE SEQUENCE IF NOT EXISTS dates_id_seq;
+CREATE TABLE dates (
+    id SERIAL PRIMARY KEY,
+    date TIMESTAMP,
+    listing_id INTEGER,
+    constraint fk_listing foreign key(listing_id)
+        references listings(id)
+        on delete cascade
+);
+
 INSERT INTO users (username, email, password) VALUES ('user1', 'user1email@example.com', 'password1');
 INSERT INTO users (username, email, password) VALUES ('user2', 'user2email@example.com', 'password2');
 INSERT INTO users (username, email, password) VALUES ('user3', 'user3email@example.com', 'password3');
@@ -46,3 +59,9 @@ INSERT INTO listings (listing_name, listing_description, listing_price, user_id)
 INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Countryside Retreat', 'Escape to the peaceful countryside in this cottage', 79.99, 8);
 INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Historic Mansion', 'Step back in time at this historic mansion', 349.99, 9);
 INSERT INTO listings (listing_name, listing_description, listing_price, user_id) VALUES ('Riverside Cabin', 'Cozy cabin with a river view, perfect for fishing', 109.75, 10);
+
+INSERT INTO dates (date, listing_id) VALUES ('2024-06-12', 1);
+INSERT INTO dates (date, listing_id) VALUES ('2024-06-13', 1);
+INSERT INTO dates (date, listing_id) VALUES ('2024-06-14', 1);
+INSERT INTO dates (date, listing_id) VALUES ('2024-06-15', 1);
+INSERT INTO dates (date, listing_id) VALUES ('2024-06-16', 1);

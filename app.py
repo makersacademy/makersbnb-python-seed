@@ -82,7 +82,14 @@ def post_spaces():
     repo = ListingRepo(connection)
     repo.add(listing_name, listing_description, float(listing_price), int(user_id))
     return redirect(f"/spaces")
-    
+
+@app.route('/spaces/<id>', methods=['GET'])
+def get_spaces_id(id):
+    connection = get_flask_database_connection(app)
+    repo = ListingRepo(connection)
+    listing = repo.find_with_listing_id(id)
+    return render_template('booking.html', listing=listing)
+
 
 
 # These lines start the server if you run this file directly

@@ -86,9 +86,10 @@ def test_signup_user(db_connection, page, test_web_address):
     page.fill("input[name='username']", "testuser")
     page.fill("input[name='email']", "testuser@email.com")
     page.fill("input[name='password']", "testpassword")
-
+    
     page.click("#signup-button")
     assert "/spaces" in page.url
+
 
 def test_get_login(page, test_web_address):
     page.goto(f"http://{test_web_address}/login")
@@ -117,3 +118,20 @@ def test_post_login_registered_user_success(db_connection, page, test_web_addres
 
     assert "/spaces" in page.url
     
+
+  
+
+def test_listings(db_connection, page, test_web_address):
+    db_connection.seed('seeds/bnb.sql')
+    page.goto(f"http://{test_web_address}/spaces")
+
+    # sense check
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Book a space")
+
+    page.click("text=Cozy Cottage\nA charming cottage for a peaceful retreat")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Cozy Cottage") 
+
+
