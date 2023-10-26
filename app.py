@@ -26,9 +26,10 @@ def get_index():
 def create_user():
     email = request.form['email']
     password = request.form['password']
+    user_name = request.form['user_name']
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
-    repository.create(email, password)
+    repository.create(email, password, user_name)
     return redirect("/login")
 
 @app.route('/login', methods=['GET'])
@@ -44,8 +45,7 @@ def post_login():
     if repository.check_password(email, password_attempt):
         user = repository.find_by_email(email)
         session['user_id'] = user.id
-        session['user_name'] = user.name
-
+        session['user_name'] = user.user_name
         return redirect('/account_page')
     else:
         return redirect('/login')
