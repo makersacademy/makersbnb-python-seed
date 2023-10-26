@@ -78,7 +78,12 @@ def get_add_a_space():
 
 @app.route('/add-a-space', methods=['POST'])
 def post_space_added():
-    pass
+
+    connection = get_flask_database_connection(app)
+    name = request.form("name")
+    description = request.form("description")
+    price = request.form("price")
+    return render_template('index.html')
 
 
 @app.route('/space', methods=['GET'])
