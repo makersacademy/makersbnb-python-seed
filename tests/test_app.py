@@ -101,3 +101,20 @@ def test_listings(db_connection, page, test_web_address):
     heading = page.locator("h1")
     expect(heading).to_have_text("Cozy Cottage") 
 
+def test_requests(db_connection, page, test_web_address):
+    db_connection.seed('seeds/bnb.sql')
+    page.goto(f"http://{test_web_address}/spaces")
+
+    # sense check
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Book a space")
+
+    page.click("text=Cozy Cottage\nA charming cottage for a peaceful retreat")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Cozy Cottage") 
+
+    page.click("text=Request to book")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Requests") 

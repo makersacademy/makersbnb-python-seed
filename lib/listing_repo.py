@@ -15,7 +15,6 @@ class ListingRepo():
     
     def find_with_listing_id(self, id):
         data = self._connection.execute('SELECT * FROM listings WHERE id = %i' % (int(id)))
-        print(data)
         listing = Listing(data[0]['id'],data[0]['listing_name'], data[0]['listing_description'], data[0]['listing_price'], data[0]['user_id'])
         return listing
     

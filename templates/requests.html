@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset ="utf-8">
+        <title>Requests</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Requests</h1>
+        <div>
+            <h2>Requests I've made</h2>
+            <ul>
+                {% for listing in requests_made %}
+                <li>
+                    <a href="/requests/{{listing['listing_id']}}">
+                        <p>{{listing['listing']}}</p>
+                        <p>{{listing['date']}}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <h2>Requests I've received</h2>
+            <ul>
+                {% for listing in requests_received%}
+                <li>
+                    <a href="/requests/{{listing['listing_id']}}">
+                        <p>{{listing['listing']}}</p>
+                        <p>{{listing['date']}}</p>
+                        <p>{{listing['username']}}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </body>
+</html>

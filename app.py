@@ -4,6 +4,7 @@ from lib.database_connection import get_flask_database_connection
 from lib.listing_repo import *
 from lib.user import *
 from lib.user_repository import UserRepository
+from lib.request_repo import *
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -59,7 +60,13 @@ def get_spaces_id(id):
     listing = repo.find_with_listing_id(id)
     return render_template('booking.html', listing=listing)
 
-
+@app.route('/requests', methods=['GET'])
+def get_requests():
+    connection = get_flask_database_connection(app)
+    repo = RequestRepo(connection)    
+    requests_made = repo.get_all_outgoing_requests(5)
+    requests_received = repo.get_all_incoming_requests(5)
+    return render_template('requests.html', requests_made = requests_made, requests_received = requests_received)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

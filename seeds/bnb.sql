@@ -44,21 +44,18 @@ CREATE SEQUENCE IF NOT EXISTS requests_id_seq;
 CREATE TABLE requests (
     id SERIAL PRIMARY KEY,
     date TIMESTAMP,
-    -- constraint fk_date foreign key(date_id)
-    --     references dates(id)
-    --     on delete cascade,
     listing_id INTEGER,
-    -- constraint fk_listing foreign key(listing_id)
-    --     references listings(id)
-    --     on delete cascade,
-    requested_by INTEGER,
-    -- constraint fk_requested_by foreign key(requested_by_id)
-    --     references users(id)
-    --     on delete cascade
-    requested_from INTEGER
-    -- constraint fk_requested_from foreign key(requested_from_id)
-    --     references users(id)
-    --     on delete cascade
+    constraint fk_listing foreign key(listing_id)
+        references listings(id)
+        on delete cascade,
+    requested_by_id INTEGER,
+    constraint fk_requested_by foreign key(requested_by_id)
+        references users(id)
+        on delete cascade,
+    requested_from_id INTEGER,
+    constraint fk_requested_from foreign key(requested_from_id)
+        references users(id)
+        on delete cascade
 );
 
 INSERT INTO users (username, email, password) VALUES ('user1', 'user1email@example.com', 'password1');
@@ -90,13 +87,13 @@ INSERT INTO dates (date, listing_id) VALUES ('2024-06-14', 1);
 INSERT INTO dates (date, listing_id) VALUES ('2024-06-15', 1);
 INSERT INTO dates (date, listing_id) VALUES ('2024-06-16', 1);
 
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-07-12', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-07-13', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-07-14', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-07-15', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-07-16', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-05-12', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-05-13', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-05-14', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-05-15', 5, 6, 5);
-INSERT INTO requests (date, listing_id, requested_by, requested_from) VALUES ('2024-05-16', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-07-12', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-07-13', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-07-14', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-07-15', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-07-16', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-05-12', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-05-13', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-05-14', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-05-15', 5, 6, 5);
+INSERT INTO requests (date, listing_id, requested_by_id, requested_from_id) VALUES ('2024-05-16', 5, 6, 5);
