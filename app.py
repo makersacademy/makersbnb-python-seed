@@ -66,6 +66,11 @@ def get_owners_booking_requests():
     return render_template('owner_booking_requests.html')
 
 
+@app.route('/guest-booking-requests', methods=['GET'])
+def get_guests_booking_requests():
+    return render_template('guest_booking_requests.html')
+  
+
 @app.route('/add-a-space', methods=['GET'])
 def get_add_a_space():
     return render_template('add_a_space.html')
