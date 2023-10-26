@@ -39,8 +39,7 @@ class SpaceRepository:
         return None
     
     # Request a space
-    def request_a_stay(self,date,spaces_id,requested_by_user_id):
-        approved=False
+    def request_a_stay(self,date,spaces_id,requested_by_user_id,approved):
         self._connection.execute('INSERT INTO availability (date_not_available,approved,requested_by_user_id,spaces_id) VALUES (%s,%s,%s,%s)',[date,approved,requested_by_user_id,spaces_id])
         return None
     

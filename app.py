@@ -6,7 +6,6 @@ from lib.space_repository import SpaceRepository
 from lib.user_class import User
 from lib.user_repository import UserRepository
 from datetime import datetime, timedelta
-import pandas as pd
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -70,31 +69,25 @@ def post_new_space():
 
 @app.route('/spaces/<id>')
 def get_space(id):
-    spacerepo=SpaceRepository(get_flask_database_connection(app))
-    SingleSpace=spacerepo.find_by_id(id)
-    return render_template('space_by_id.html',space=SingleSpace)
-
-@app.route('/spaces/<id>/<year>')
-def get_per_month (id,year):
     spacerepo = SpaceRepository(get_flask_database_connection(app))
     singlespace = spacerepo.find_by_id(id)
+    #This is a list of datetime.date objects
+    current_day=datetime.now()
     unavailable_dates = spacerepo.unavailable_days(id)
-    start_date = datetime((int(year)),1, 1)
-    end_date = datetime((int(year)),1, 30)
-    date_range = pd.date_range(start_date, end_date, freq='D')
-    date_list =[]
-    print (type(date_range[0]))
-    print (type(unavailable_dates[0]))
-
-    # [date for date in date_range if date not in unavailable_dates]
-    return render_template('request_stay.html',date_list=date_list,space=singlespace)
+    end_date = current_day + timedelta(days=365)
+    # date_range=create_date_range(start_date, end_date)
+    date_range =[]
+    while current_day <= end_date:
+        date_range.append(current_day.date())
+        current_day += timedelta(days=1)
+    date_list=[date for date in date_range if date not in unavailable_dates]
+    return render_template('space_by_id.html',date_list=date_list,space=singlespace)
 
 @app.route('/spaces/<id>', methods=['POST'])
 def request_sapce(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
-    SingleSpace=spacerepo.find_by_id(id)
-    date = request.form['date']
-    spacerepo.request_a_stay(date,id,logged_in.id)
+    date = request.form['selected_date']
+    spacerepo.request_a_stay(date,id,logged_in.id,'pending')
     return redirect('/')
 
 @app.route('/requests')
