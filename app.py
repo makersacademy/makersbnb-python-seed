@@ -50,8 +50,9 @@ def post_login():
 
 @app.route('/register')
 def get_register():
+    #return render_template('register.html')
     global logged_in
-    if hasattr(logged_in, '__dict__'):
+    if hasattr(logged_in, '__dict__':
         return render_template('logged_in.html')
     
     else:
