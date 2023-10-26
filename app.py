@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, session, redirect
 from lib.user_repository import UserRepository
 from lib.database_connection import get_flask_database_connection
 from dotenv import load_dotenv
+from lib.listing_repository import ListingRepository
 
 load_dotenv()
 
@@ -43,6 +44,8 @@ def post_login():
     if repository.check_password(email, password_attempt):
         user = repository.find_by_email(email)
         session['user_id'] = user.id
+        session['user_name'] = user.name
+
         return redirect('/account_page')
     else:
         return redirect('/login')
@@ -59,11 +62,18 @@ def account_page():
         return redirect('/login')
     else:
         # The user is logged in, display their account page.
-        return render_template('account_page.html')
+        connection = get_flask_database_connection(app)
+        repository = ListingRepository(connection)
+        listings = repository.find_by_user(session['user_id'])
+        user_name = session['user_name']
+        return render_template('account_page.html', listings = listings, user_name = user_name)
     
 @app.route('/list_space')
 def list_space():
     return render_template('list_space.html')
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
