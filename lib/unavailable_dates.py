@@ -1,4 +1,4 @@
-class unavailable_date:
+class UnavailableDate:
     def __init__(self, space_id, date):
         self.space_id = space_id
         self.date  = date 

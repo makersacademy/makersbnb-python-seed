@@ -21,18 +21,5 @@
     <main>
         {% block content %}{% endblock %}
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Retrieve the list of unavailable dates from the server or your data source
-
-            flatpickr("#booking_date", {
-                dateFormat: "Y-m-d",
-                disable: unavailableDates,
-                minDate: "2023-10-23", // Set the minimum date
-                maxDate: "2023-10-30", // Set the maximum date
-            });
-        });
-    </script>
 </body>
 </html>

@@ -26,7 +26,7 @@
         <input type="text" name="price" id="price">
         
         <label for="unavailable_dates">Unavailable Dates:</label>
-        <input type="text" name="unavailable_dates" id="unavailable_dates">
+        <input type="date" name="unavailable_dates" id="unavailable_dates">
         
         <input type="submit" value="Add space">
     </form>
@@ -34,7 +34,7 @@
     <script>
         flatpickr("#unavailable_dates", {
             mode: "multiple", 
-            dateFormat: "Y-m-d", 
+            dateFormat: "Y-m-d",
         });
     </script>
 </body>
