@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Playwright, Page, expect
 
 # Tests for your routes go here
 
@@ -21,9 +21,7 @@ Returns page with title
 """
 def test_request_returns_homepage(page, test_web_address):
     page.goto(f"http://{test_web_address}/")
-    
     strong_tag = page.locator("h2")
-
     expect(strong_tag).to_have_text("Welcome to MakersB&B")
 
 """
@@ -31,16 +29,12 @@ Homepage has user sign up UI
 """
 def test_request_homepage_has_correct_ui(page, test_web_address):
     page.goto(f"http://{test_web_address}/")
-
     email_input = page.locator('input[name="email"]')
     assert email_input.is_visible()
-
     password_input = page.locator('input[name="password"]')
     assert password_input.is_visible()
-
-    # password_confirmation_input = page.locator('input[name="password_confirmation"]')
-    # assert password_confirmation_input.is_visible()
-
+    password_confirmation_input = page.locator('input[name="password_confirmation"]')
+    assert password_confirmation_input.is_visible()
     submit_button = page.locator('input[type="submit"]')
     assert submit_button.is_visible()
 
@@ -49,15 +43,10 @@ Log-in page has user log-in UI
 """
 def test_request_login_page_has_correct_ui(page, test_web_address):
     page.goto(f"http://{test_web_address}/login")
-    # page.get_by_role("button", name="login").click()
-    # expect(page.goto(f"http://{test_web_address}/login"))
-
     email_input = page.locator('input[name="email"]')
     assert email_input.is_visible()
-
     password_input = page.locator('input[name="password"]')
     assert password_input.is_visible()
-
     submit_button = page.locator('input[type="submit"]')
     assert submit_button.is_visible()
 
@@ -67,10 +56,8 @@ Takes us to log in page
 """
 def test_log_in_link_takes_us_to_login_page(page, test_web_address):
     page.goto(f"http://{test_web_address}/")
-
     page.click("text='Log In'")
     h1_tag = page.locator('h1')
-
     expect(h1_tag).to_have_text("Log in to Makers B&B")
 
 """
@@ -82,6 +69,7 @@ def test_create_new_user(page, test_web_address, db_connection):
     page.fill("input[name='user_name']", "Test User 4")
     page.fill("input[name='email']", "test-email-4")
     page.fill("input[name='password']", "test-password-4")
+    page.fill("input[name='password_confirmation']", "test-password-4")
     page.get_by_role("button", name="Sign Up").click()
     expect(page).to_have_url(f"http://{test_web_address}/login")
 
