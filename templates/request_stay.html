@@ -1,0 +1,14 @@
+<title>MakersBNB - {{space.name}}</title>
+
+<h1> {{ space.name }}</h1><br>
+<b>Description:</b> {{ space.description }}<br>
+<b>Price Per Night:</b> £{{ space.price_per_night }}<br>
+
+
+<select name="selected_date">
+    {% for date in date_list %}
+        <option value="{{ date }}">{{ date.strftime('%d-%m-%Y') }}</option>
+    {% endfor %}
+</select>
+<br>
+<input type="submit" value="Submit"
