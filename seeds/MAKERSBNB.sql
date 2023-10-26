@@ -67,4 +67,5 @@ INSERT INTO availability (date_not_available, approved, requested_by_user_id, sp
 INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-02-24', 'pending', 7, 1);
 INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-08-24', 'denied', 2, 1);
 INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2027-04-24', 'pending', 8, 1);
+INSERT INTO availability (date_not_available, approved, requested_by_user_id, spaces_id) VALUES ('2023-09-24', 'approved', 9, 1);
 
