@@ -12,7 +12,6 @@ class SpaceController:
         rows = self.space_repository.all()
         spaces = [
             Space(
-                row["id"],
                 row["name"],
                 row["description"],
                 row["ownerid"],
