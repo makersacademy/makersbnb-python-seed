@@ -47,8 +47,8 @@ def post_new_listing():
     if request.method == 'POST' and request.form['date_from_filter']:
         date_from_filter_input = request.form['date_from_filter']
         date_to_filter_input = request.form['date_to_filter']
-        date_from_filter = datetime.datetime.strptime(date_from_filter_input, "%d/%m/%Y").date()
-        date_to_filter = datetime.datetime.strptime(date_to_filter_input, "%d/%m/%Y").date()
+        date_from_filter = datetime.datetime.strptime(date_from_filter_input, "%Y-%m-%d").date()
+        date_to_filter = datetime.datetime.strptime(date_to_filter_input, "%Y-%m-%d").date()
         return render_template('index.html')
     
     if request.method == 'POST' and request.form['name']:

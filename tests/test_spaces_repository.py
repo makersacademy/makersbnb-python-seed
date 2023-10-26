@@ -40,3 +40,5 @@ def test_add_new_space_listing(db_connection):
     #     Space(2, 'Apartment 2', 'Description 2', 200, datetime.date(2024, 1, 1), datetime.date(2024, 4, 1),2),
     #     Space(3, 'Apartment 3', 'Description 3', 100, datetime.date(2024, 1, 1), datetime.date(2024, 2, 3),3)
     #                         ]
+
+    
