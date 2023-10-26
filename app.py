@@ -85,25 +85,41 @@ def post_new_space():
     description = request.form['Description']
     ppn = request.form['Price per night']
     host_id = logged_in.id
-    spaces_repo.create(name, host_id, description, ppn)
+    NewSpaceId=spaces_repo.create(name, host_id, description, ppn)
+    unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
+    for date in unavailabledateslist:
+        spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,True) 
     return redirect('/')
 
-
-# This loads t
 @app.route('/spaces/<id>')
 def get_space(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
     SingleSpace=spacerepo.find_by_id(id)
     unavailable_dates=spacerepo.unavailable_days(id)
-    return render_template('space_by_id.html',current_date=datetime.now(),space=SingleSpace,unavailable_dates=unavailable_dates)
+    return render_template('space_by_id.html',current_date=datetime.now(),space=SingleSpace,unavailable_dates=unavailable_dates,user=logged_in)
 
 @app.route('/spaces/<id>', methods=['POST'])
-def request_sapce(id):
+def request_space(id):
     spacerepo=SpaceRepository(get_flask_database_connection(app))
     SingleSpace=spacerepo.find_by_id(id)
     date = request.form['date']
-    spacerepo.request_a_stay(date,id,logged_in.id)
+    spacerepo.request_a_stay(date,id,logged_in.id,False)
     return redirect('/')
+
+@app.route('/spaces/<id>/delete')
+def delete_space(id):
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    spacerepo.delete_by_id(id)
+    print (f'Deleted space with id {id}')
+    return redirect('/')
+
+@app.route('/spaces/<id>/unavailable', methods=['POST'])
+def mark_date_as_unavailable(id):
+    spacerepo=SpaceRepository(get_flask_database_connection(app))
+    unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
+    for date in unavailabledateslist:
+        spacerepo.request_a_stay(date,id,logged_in.id,'unavailable') 
+    return redirect(f'/spaces/{id}')
 
 @app.route('/requests')
 def get_requests():
@@ -114,6 +130,7 @@ def get_requests():
         userrepo = UserRepository(get_flask_database_connection(app))
         requestlist = userrepo.show_bookings('pending',logged_in.id)
         return render_template('all_requests.html',user=logged_in,pending_requests=requestlist)
+
 
 @app.route('/approve/<id>/<date>', methods=['POST'])
 def approve_request(id, date):
