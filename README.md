@@ -15,6 +15,9 @@ Everyone in the team should then clone this fork to their local machine to work 
 # Activate the virtual environment
 ; pipenv shell
 
+# Install jinja partials for html partials like the nav bar
+; pip install jinja-partials
+
 # Install the virtual browser we will use for testing
 ; playwright install
 # If you have problems with the above, contact your coach
@@ -28,6 +31,9 @@ Everyone in the team should then clone this fork to their local machine to work 
 
 # Run the tests (with extra logging)
 ; pytest -sv
+
+# Seed the dev database 
+; psql -d YOUR_PROJECT_NAME < seeds/seedfile.sql
 
 # Run the app
 ; python app.py
