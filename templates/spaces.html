@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Book a space.</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Book a space</h1>
+        <button><a href="/spaces/new">List a space</a></button>
+        <div>
+            <label for="start_date">Available from (DD/MM/YYYY)</label>
+            <input type="text" name="start_date" id="start_date">
+            
+            <label for="end_date">Available to (DD/MM/YYYY)</label>
+            <input type="text" name="end_date" id="end_date">
+
+            <input type="submit" value="List Spaces">
+
+        </div>
+        <div>
+            <ul>
+                {% for listing in listings %}
+                    <a href="/spaces/{{listing.id}}">
+                        <li>
+                            <p>{{listing.listing_name}}</p>
+                            <p>{{listing.listing_description}}</p>
+                        </li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+</html>
