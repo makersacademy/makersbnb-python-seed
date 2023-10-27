@@ -8,6 +8,14 @@
         <h1>Enter Account Details</h1>
         <form action="/register" method="POST">
 
+            {% if errors == 'username error' %}
+            <p>Username is not available</p>
+            {% endif %}
+
+            {% if errors == 'password error' %}
+            <p>Passwords do not match</p>
+            {% endif %}            
+
             <label for="Username">Username</label><br>
             <input type="text" name="Username" id="Username"><br><br>
 
@@ -16,6 +24,9 @@
 
             <label for="Password">Password</label><br>
             <input type="password" name="Password" id="Password"><br><br>
+
+            <label for="Password2">Re-enter Password</label><br>
+            <input type="password" name="Password2" id="Password2"><br><br>
 
             <label for="Email">Email</label><br>
             <input type="text" name="Email" id="Email"><br><br>
