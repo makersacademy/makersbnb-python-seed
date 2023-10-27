@@ -88,27 +88,28 @@ def post_space_added():
     return render_template('index.html')
 
 
-@app.route('/space', methods=['GET'])
-def get_individual_space():
-
+@app.route('/index/<int:id>', methods=['GET'])
+def get_individual_space(id):
     connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    space = repository.find(id)
 
-    return render_template('space.html')
+    return render_template('space.html', space=space)
 
 # Root for session
 
 
-@app.route('/login', methods=['POST'])
-def post_login():
-    connection = get_flask_database_connection(app)
-    username = request.form["username"]
-    password = request.form["password"]
+# @app.route('/login', methods=['POST'])
+# def post_login():
+#     connection = get_flask_database_connection(app)
+#     username = request.form["username"]
+#     password = request.form["password"]
 
-    user_object = UserRepository.get_user_by_username(username)
-    session['logged_in'] = True
-    session['username'] = username
-    session['user_id'] = user_object.id
-    return redirect('/spaces')
+#     user_object = UserRepository.get_user_by_username(username)
+#     session['logged_in'] = True
+#     session['username'] = username
+#     session['user_id'] = user_object.id
+#     return redirect('/spaces')
 
 # This root we use for to get the list of all spaces on the main page
 # @app.route('/index', methods=['GET'])

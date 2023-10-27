@@ -57,7 +57,8 @@ INSERT INTO users (username, email, password) VALUES ('Liza L', 'liza@liza.com',
 -- Insert sample peeps (messages) here.
 
 INSERT INTO spaces (name, description, price, owner_id) VALUES ('The Devonshire Laisure & Spa', 'This is a calm, quiet place where you can completely relax and gain strength', 180, 1);
-INSERT INTO spaces (name, description, price, owner_id) VALUES ('Helmsley Black Swan Appartments', 'this apartment is located in the city centre', 250, 1);
+INSERT INTO spaces (name, description, price, owner_id) VALUES ('Helmsley Black Swan Appartments', 'This apartment is located in the city centre', 250, 1);
+INSERT INTO spaces (name, description, price, owner_id) VALUES ('Hampstead White Swan Appartments', 'This apartment is located in the nice area', 550, 1);
 
 
 -- INSERT INTO availabilities (space_id, available_date) VALUES (2, '2023-12-21');
