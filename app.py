@@ -6,6 +6,9 @@ from lib.space_repository import *
 from lib.space_parameters_validator import *
 from lib.userRepository import UserRepository
 from lib.user import User
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
+from lib.booking_parameters_validator import BookingParametersValidator
 from datetime import timedelta
 from lib.booking import Booking
 from lib.booking_repository import BookingRepository
@@ -79,8 +82,8 @@ def logout():
 @app.route('/profile')
 def user():
     if "user" in session:
-        user = session["user"]
-        return f"<h1>{user}'s profile</h1>"
+        email = session["user"]
+        return f"<h1>{email}'s profile</h1>"
     else:
         return (redirect(url_for("login")))
     
@@ -116,14 +119,12 @@ def get_new_space():
     else:
         return (redirect(url_for("login")))
     
-# POST /
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/
+# POST /spaces
 @app.route('/spaces', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
+    space_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
 
     name = request.form['name']
     description = request.form['description']
@@ -133,20 +134,64 @@ def create_space():
     validator = SpaceParametersValidator(name, description, size, price)
     if not validator._is_valid():
         errors = validator.generate_errors()
-        return render_template('/spaces/new', errors=errors)
+        return render_template('/space.html', errors=errors)
 
-    space = Space(
-        None, 
-        validator.get_valid_name(),
-        validator.get_valid_description(),
-        validator.get_valid_size(),
-        validator.get_valid_price(),
-        1 #Change last number to owner_id once we have access to current user
-    )
+    if "user" in session:
+        email = session["user"]
+        owner = user_repository.find(email)
 
-    repository.create(space)
+        space = Space(
+            None, 
+            validator.get_valid_name(),
+            validator.get_valid_description(),
+            validator.get_valid_size(),
+            validator.get_valid_price(),
+            owner.id
+        )
 
-    return redirect(f'spaces/{space.id}')
+        space_repository.create(space)
+
+        return redirect(f'spaces/{space.id}')
+    else:
+        return (redirect(url_for("login")))
+
+# POST /bookings
+@app.route('/bookings', methods=['POST'])
+def create_booking():
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    user_repository = UserRepository(connection)
+
+    space_id = request.form["space_id"]
+    dates_list = (request.form["booking_dates"]).split(',')
+    start_date = dates_list[0]
+    end_date = (dates_list[-1]).strip()
+
+    if "user" in session:
+        email = session["user"]
+        booker = user_repository.find(email)
+
+        validator = BookingParametersValidator(space_id, start_date, end_date, booker.id)
+
+        if not validator._is_valid():
+            errors = validator.generate_errors()
+            return redirect(f'/spaces/{space_id}', errors=errors)
+
+        booking = Booking(
+            None, 
+            validator.get_valid_space_id(),
+            booker.id,
+            validator.get_valid_start_date(),
+            validator.get_valid_end_date(),
+            False
+        )
+
+        booking_repository.create(booking)
+
+        return redirect(f'/reservations')
+    
+    else:
+        redirect(f'spaces/{space_id}')
 
 @app.route('/owners-bookings-dashboard', methods=['GET'])
 def get_owners_bookings():

@@ -14,15 +14,15 @@
             <form action="/process-bookings" method="post">
             {% for booking in bookings %}
             <article class="space_card">
-                <h3>Booking ID {{booking['bookingID']}}:</h3>
+                <h3>Booking ID: {{booking['bookingID']}}</h3>
                 <p>Space ID: {{booking['spaceID']}}</p>
                 <p>Space Name: {{booking['spaceName']}}</p>
-                <p>Customer ID: {{booking['userID']}}</p>
+                <br>
                 <p>Customer Name: {{booking['userFirstName']}} {{booking['userLastName']}}</p>
                 <p>Customer Email: {{booking['userEmail']}}</p>
+                <br>
                 <p>From: {{booking['startDate']}}</p>
                 <p>To: {{booking['endDate']}}</p> 
-                <p>Confirmed: {{booking['confirmed']}}</p>
                 <br>
                 {% if booking.confirmed == False %}
                     <p>Confirm this request:</p>

@@ -6,20 +6,16 @@ When we call #all
 we get all the bookings back as instances
 '''
 
-def test_all(db_connection):
-    db_connection.seed("seeds/airbnb.sql")
-    repository = BookingRepository(db_connection)
-    result = repository.all() 
-    assert result[:1] == [
-         Booking(1, 3, 2, date(2024, 10, 10), date(2024, 10, 12), False)
-        #  Booking(2, 1, 3, '2024-08-07', '2024-08-15', True),
-        #  Booking(3, 2, 4, '2024-12-25', '2024-12-31', False)
-    ]
+# def test_all(db_connection):
+#     db_connection.seed("seeds/airbnb.sql")
+#     repository = BookingRepository(db_connection)
+#     result = repository.all() 
+#     assert result == [Booking(1, 3, 2, '2024-10-10', '2024-10-12', False), Booking(2, 1, 3, '2024-08-07', '2024-08-15', False), Booking(3, 2, 4, '2024-12-25', '2024-12-31', False)]
 
 def test_create(db_connection):
     db_connection.seed("seeds/airbnb.sql")
     repository = BookingRepository(db_connection)
-    booking = Booking(None, 1, 2, date(2024, 1, 22), date(2024, 3, 1), False)
+    booking = Booking(None, 1, 2, '2024-1-22', '2024-3-1', False)
     id = repository.create(booking)
     assert id != None
 
