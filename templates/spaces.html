@@ -17,38 +17,35 @@
             </button>
             <button>
                 <a href="/owners-bookings-dashboard">
-                    Reservations of spaces you own
+                    Reservations of Spaces you own
                 </a>
-            </button>
-            <button>
-                <a href="reservations">
-                    Your Bookings
-                </a>
+
             </button>
         </div>
 
-        <form class="filter" action="/" method="post">
+        <div class="filter">
             <div>
-                <label for="start_date">Available from</label>
-                <input type="date" id="start_date" name="start_date" required>
+                <label for="from_date">Available from</label>
+                <input type="date" id="from_date" name="from_date">
+            </div>
+
+            <div>
+                <label for="to_date">Available to</label>
+                <input type="date" id="to_date" name="to_date">
             </div>
             
-            <div>
-                <label for="end_date">Available to</label>
-                <input type="date" id="end_date" name="end_date" required>
-            </div>
+        </div>
 
-            <button>Filter spaces</button>
-        </form>
-
-        <div class="property-grid">
+        <div class="space_cards">
             {% for space in spaces %}
-                <div class="property-card">
-                    <a href="/spaces/{{space.id}}">
-                        <h3>{{ space.name }}</h3>
-                    </a>
-                    <p>{{ space.description }}</p>
-                </div>
+                <a href="/spaces/{{space.id}}">
+                    <article class="space_card">
+                        <p>{{space.name}}</p>
+                        <p>{{space.description}}</p>
+                        <p>{{space.size}}</p>
+                        <p>{{space.price}}</p>
+                    </article>
+                </a>
             {% endfor %}
         </div>
     </section>

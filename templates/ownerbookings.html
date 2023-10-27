@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}MakersBnB{% endblock %}
+{% block content %}
+    <section class="spaces_page">
+        <div class="spaces_blurb">
+            {% if "user" in session %}
+                <h2>Hi {{session["user"]}}</h2>
+            {% endif %}
+            <h2>Owner's Booking Dashboard: Your Space Reservations</h2>
+            <p>Here is a list of reservations made under a space you own.</p>
+        </div>
+
+        <div class="space_cards">
+            <form action="/process-bookings" method="post">
+            {% for booking in bookings %}
+            <article class="space_card">
+                <h3>Booking ID: {{booking['bookingID']}}</h3>
+                <p>Space ID: {{booking['spaceID']}}</p>
+                <p>Space Name: {{booking['spaceName']}}</p>
+                <br>
+                <p>Customer Name: {{booking['userFirstName']}} {{booking['userLastName']}}</p>
+                <p>Customer Email: {{booking['userEmail']}}</p>
+                <br>
+                <p>From: {{booking['startDate']}}</p>
+                <p>To: {{booking['endDate']}}</p> 
+                <br>
+                {% if booking.confirmed == False %}
+                    <p>Confirm this request:</p>
+                    <div class="button-container">
+                    <button type="submit" name="action" class="accept-button" value="Accept">Accept</button>
+                    <button type="submit" name="action" class="decline-button" value="Decline">Decline</button>
+                    <input type="hidden" name="booking_id" value="{{ booking['bookingID'] }}">
+                    </div>
+                {% endif %}
+            </article>
+            {% endfor %}
+            </form>
+        </div>
+    </section>
+{% endblock %}
