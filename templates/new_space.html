@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Makers BnB: List a new Space</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Create a New Space</h1>
+        <form action="/spaces/new" method="POST">
+            <label for="Name">Name</label><br>
+            <input type="text" name="name" id="Name"><br>
+            <label for="Description">Description</label><br>
+            <input type="text" name="Description" id="Description"><br>
+            <label for="Price per night">Price Per Night</label><br>
+            <input type="number" name="Price per night" id="Price Per Night"><br><br>
+            <label for="unavailable">Are there any dates that this property will not be available? Enter them in the box below: (format YYYY-MM-DD)<br> Seperate each date with a comma</label><br>
+            <input type="text" name="unavailable" id="unavailable">
+            <input type="submit" value="List your Property">
+        </form>
+    </body>
+</html>
