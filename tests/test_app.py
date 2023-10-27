@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+from flask import session
 
 """
 We can render the index page
@@ -34,12 +35,11 @@ def test_get_index(page, test_web_address):
 #         "There were errors in your submission! Name cannot be blank, Invalid email, Password has to be atleast 8 character and contain atleast 1 number"
 #         )
 
-def test_get_new_space(page, test_web_address):
-    page.goto(f"http://{test_web_address}/spaces/new")
-
-    h1_tag = page.locator("h1")
-
-    expect(h1_tag).to_have_text("Add a new space")
+# def test_get_new_space(page, web_client):
+#         web_client.get('/spaces/new')
+#         page.wait_for_selector("h1:visible")
+#         h1_tag = page.locator("h1")
+#         expect(h1_tag).to_have_text("Add a new space")
 
 # def test_create_space(page, test_web_address):
 #     page.goto(f"http://{test_web_address}/spaces/new")

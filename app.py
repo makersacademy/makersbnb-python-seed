@@ -9,6 +9,10 @@ from lib.userRepository import UserRepository
 from lib.user import User
 from lib.unavailable_dates_repository import *
 from lib.unavailable_dates import *
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
+from lib.booking_parameters_validator import BookingParametersValidator
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -112,8 +116,8 @@ def logout():
 @app.route('/profile')
 def user():
     if "user" in session:
-        user = session["user"]
-        return f"<h1>{user}'s profile</h1>"
+        email = session["user"]
+        return f"<h1>{email}'s profile</h1>"
     else:
         return (redirect(url_for("login")))
 
@@ -138,13 +142,14 @@ def get_new_space():
         return render_template('new_space.html')
     else:
         return (redirect(url_for("login")))
-    
-# POST /
+
+
 @app.route('/spaces/new', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
     dates_repository = UnavailableDatesRepository(connection)
+    user_repository = UserRepository(connection)
 
     name = request.form['name']
     description = request.form['description']
@@ -155,36 +160,76 @@ def create_space():
     validator = SpaceParametersValidator(name, description, size, price)
     if not validator._is_valid():
         errors = validator.generate_errors()
-        return render_template('/spaces/new', errors=errors)
-
-    # since we don't put id when creating space object,
-    # we first need to create space and then get the same one from the db
-    # with the id, wo we can use it to create date object
-    space = Space(
-        None, 
-        validator.get_valid_name(),
-        validator.get_valid_description(),
-        validator.get_valid_size(),
-        validator.get_valid_price(),
-        1 #Change last number to owner_id once we have access to current user
-    )
+        return render_template('/space.html', errors=errors)
     
-    space_repository.create(space)
-    created_space = space_repository.all()[-1]
     
-    dates = dates[0].split(",")
-    unavailable_dates = [UnavailableDate(created_space.id, date) for date in dates] 
+    if "user" in session:
+        email = session["user"]
+        owner = user_repository.find(email)
 
-    for unavailable_date in unavailable_dates:
-        dates_repository.create(unavailable_date)
+        # since we don't put id when creating space object,
+        # we first need to create space and then get the same one from the db
+        # with the id, wo we can use it to create date object
+        space = Space(
+            None, 
+            validator.get_valid_name(),
+            validator.get_valid_description(),
+            validator.get_valid_size(),
+            validator.get_valid_price(),
+            owner.id
+        )
 
-    return redirect('/')
+        space_repository.create(space)
+        created_space = space_repository.all()[-1]
+        
+        dates = dates[0].split(",")
+        unavailable_dates = [UnavailableDate(created_space.id, date) for date in dates] 
+
+        for unavailable_date in unavailable_dates:
+            dates_repository.create(unavailable_date)
+
+        return redirect('/')
+    else:
+        return (redirect(url_for("login")))
 
 
-# request to book
-@app.route('/requests', methods=['POST'])
-def post_request():
-    return redirect('/') 
+# POST /bookings
+@app.route('/bookings', methods=['POST'])
+def create_booking():
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    user_repository = UserRepository(connection)
+
+    space_id = request.form["space_id"]
+    dates_list = (request.form["booking_dates"]).split(',')
+    start_date = dates_list[0]
+    end_date = (dates_list[-1]).strip()
+
+    if "user" in session:
+        email = session["user"]
+        booker = user_repository.find(email)
+
+        validator = BookingParametersValidator(space_id, start_date, end_date, booker.id)
+
+        if not validator._is_valid():
+            errors = validator.generate_errors()
+            return redirect(f'/spaces/{space_id}', errors=errors)
+
+        booking = Booking(
+            None, 
+            validator.get_valid_space_id(),
+            booker.id,
+            validator.get_valid_start_date(),
+            validator.get_valid_end_date(),
+            False
+        )
+
+        booking_repository.create(booking)
+
+        return redirect(f'/reservations')
+    
+    else:
+        redirect(f'spaces/{space_id}')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

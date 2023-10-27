@@ -1,4 +1,5 @@
 from lib.booking import Booking
+from datetime import datetime
 
 
 class BookingRepository:
@@ -14,7 +15,14 @@ class BookingRepository:
         return bookings
     
     def create(self, booking):
-        return self._connection.execute("INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (%s, %s, %s, %s, %s) RETURNING id", [booking.space_id, booking.booker_id, booking.start_date, booking.end_date, booking.confirmed])
+        return self._connection.execute(
+            "INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (%s, %s, %s, %s, %s) RETURNING id", 
+            [
+                booking.space_id, 
+                booking.booker_id, 
+                datetime.strptime(booking.start_date, '%Y-%m-%d').date(), 
+                datetime.strptime(booking.end_date, '%Y-%m-%d').date(), 
+                False])
         
     def find(self, booking_id):
         rows = self._connection.execute("SELECT * FROM bookings WHERE id = %s", [booking_id])

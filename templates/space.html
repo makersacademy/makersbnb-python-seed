@@ -2,24 +2,25 @@
 {% block title %}MakersBnB{% endblock %}
 {% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
 {% block content %}
-    <section class="space_page">        
+    <section class="space_page">   
         <h1 id="space-name">{{ space['name'] }}</h1>
         <p id="space-description">{{ space['description'] }}</p>
         <p id="space-size">{{ space['size'] }}</p>
         <p id="space-price">{{ space['price'] }}</p>
-        <p>Pick a night</p>
-        <input type="date" id="booking_date" name="booking_date" data-input />
-        <br />
-        <br />
-        <button>Request to book</button>
+        
+        <form action="{{ url_for('create_booking') }}" method="post">
+            <input type="hidden" id="space_id" name="space_id" value="{{space['id']}}" />
+            <label for="booking_start_date">Select your dates</label>
+            <input type="date" id="booking_dates" name="booking_dates" />
+            <button type="submit">Request to book</button>
+        </form>
     </section>
 
     <script>
-        flatpickr("#booking_date", {
+        flatpickr("#booking_dates", {
             mode: "multiple", 
             disable: {{ unavailable_dates|safe }},
             dateFormat: "Y-m-d",
         });
     </script>
 {% endblock %}
-
