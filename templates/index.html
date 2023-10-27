@@ -28,6 +28,13 @@
         <div class="container">
             <h3>Sign up to Makers B&B</h3>
             <br>
+            <div class="container text-center">
+                {% if password_match == False %}
+                <p style="color:red;">
+                    Passwords do not match!
+                </p>
+                {% endif %}
+            </div>
             <form action="/" method="POST">
                 <div class="form-group">
                     <label for="user_name">Username</label>

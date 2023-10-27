@@ -31,11 +31,16 @@ def create_user():
     password = request.form['password']
     user_name = request.form['user_name']
     password_confirmation = request.form['password_confirmation']
+    password_match = None
     if password == password_confirmation:
+        password_match = True
         connection = get_flask_database_connection(app)
         repository = UserRepository(connection)
         repository.create(email, password, user_name)
         return redirect("/login")
+    else:
+        password_match = False
+        return render_template('index.html', password_match=password_match)
 
 @app.route('/login', methods=['GET'])
 def get_login():
