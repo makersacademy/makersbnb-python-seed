@@ -232,7 +232,7 @@ def create_booking():
     else:
         redirect(f'spaces/{space_id}')
 
-@app.route('/owners-bookings-dashboard', methods=['GET'])
+@app.route('/bookings', methods=['GET'])
 def get_owners_bookings():
     connection = get_flask_database_connection(app)
     
@@ -295,10 +295,6 @@ def process_bookings():
         
     
     return redirect(url_for('get_owners_bookings'))
-   
-
-
-
 
 
 # @app.route('/rented-spaces', methods=['GET'])
@@ -328,6 +324,7 @@ def rented_spaces():
         rented_spaces = []
 
     return render_template('rented_spaces.html', spaces=rented_spaces)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

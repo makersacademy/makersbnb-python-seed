@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}MakersBnB{% endblock %}
+{% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
+{% block content %}
+
+    <section class="requests_blurb">
+        {% if "user" in session %}
+            <h2>Hi {{session["user"]}}</h2>
+        {% endif %}
+
+        <h3>Requests</h3>
+        <p>This page shows you an overview of the requests you have made</p>
+        <p>and the ones you received on your own listings</p>
+    </section>
+    
+    <section class="requests_section">
+        <section class="requests_made">
+            <h4>Requests i have made</h4>
+          
+            <div class="space_cards">
+            {% for space in spaces %}
+                <a href="/spaces/{{ space.id }}">
+                    <article class="space_card">
+                        <h2>{{ space.name }}</h2>
+                        <p>{{ space.description }}</p>
+                        <p>Size: {{ space.size }} sq ft</p>
+                        <p>Price: ${{ space.price }}</p>
+                        <p>Owner ID: {{ space.owner_id }}</p>
+                    </article>
+                    <hr />
+                </a>
+            {% endfor %}
+            </div>
+        </section>
+
+        <section class="requests_received">
+            <h4>Requests i have received</h4>
+    
+            <div class="space_cards">
+                <form action="/process-bookings" method="post">
+                    {% for booking in bookings %}
+                        <article class="space_card">
+                            <h3>Booking ID: {{booking['bookingID']}}</h3>
+                            <p>Space ID: {{booking['spaceID']}}</p>
+                            <p>Space Name: {{booking['spaceName']}}</p>
+                            <br>
+                            <p>Customer Name: {{booking['userFirstName']}} {{booking['userLastName']}}</p>
+                            <p>Customer Email: {{booking['userEmail']}}</p>
+                            <br>
+                            <p>From: {{booking['startDate']}}</p>
+                            <p>To: {{booking['endDate']}}</p> 
+                            <br>
+                            {% if booking.confirmed == False %}
+                                <p>Confirm this request:</p>
+                                <div class="button-container">
+                                <button type="submit" name="action" class="accept-button" value="Accept">Accept</button>
+                                <button type="submit" name="action" class="decline-button" value="Decline">Decline</button>
+                                <input type="hidden" name="booking_id" value="{{ booking['bookingID'] }}">
+                                </div>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                </form>
+            </div>
+        </section>
+
+    </section>
+{% endblock %}

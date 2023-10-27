@@ -105,9 +105,14 @@ header .links {
     flex-direction: column;
 }
 
-.space_card {
+/* .space_card {
     border: 1px solid black;
     padding: 0.3rem;
+} */
+
+.space_cards a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* space page */
@@ -158,7 +163,6 @@ header .links {
 
 .requests_made, .requests_received {
     margin-top: 1rem;
-    border: 1px solid purple;
     padding: 1rem;
 }
 
@@ -170,18 +174,6 @@ header .links {
     margin-right: 10px; 
 }
 
-
-/* homepage - jonapxr */
-/* .hero-image {
-    background-image: url(https://www.abercrombiekent.com/-/media/ak/media-for-prod/product-lines-and-travel-interests/mastheads/europe-ak-villas-palazzo-bolbe-mh.jpg?h=660&w=1920&la=en&hash=E3149B4764570A269A8BA2DAB5BA130D);
-    background-repeat: no-repeat;
-    background-size: contain; 
-    background-position: center;
-    position: relative;
-    height: 50%;
-    align-items: center; 
-
-} */
 .hero-text{
     color: white;
     text-align: center;
@@ -211,4 +203,10 @@ margin: 0;
 .property-card p {
 font-size: 14px;
 color: #666;
+}
+
+
+.requests_section {
+    display: flex;
+    justify-content: space-between;
 }
