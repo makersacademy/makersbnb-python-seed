@@ -21,7 +21,7 @@ class UserController:
             return "User already exists", 409
         else:
             self.user_repository.create(user)
-            return user.id, 200
+            return user.id
 
     def login(self, request):
         username = request.form.get("username")

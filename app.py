@@ -14,7 +14,7 @@ secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 
 
-@app.route("/index", methods=["GET"])
+@app.route("/", methods=["GET"])
 def get_index():
     return render_template("index.html")
 
@@ -33,7 +33,7 @@ def signup():
 @app.route("/logout")
 def get_logout():
     session["user_id"] = False
-    return redirect("/index")
+    return redirect("/")
 
 
 @app.route("/login")
