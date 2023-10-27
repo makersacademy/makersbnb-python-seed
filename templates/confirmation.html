@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Request for {{listing.listing_name}}'</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>List a space</h1>
+        <div>
+
+        
+
+                <p>
+                <!-- These `label` tags are important for accessibility -->
+                    <label for="name">Name</label>
+            
+                <!-- The `type` attribute says what kind of field this is -->
+                    <!-- The `name` attribute says what parameter name should be sent to the server -->
+                <!-- The `id` field here is used to link it to the `for` tag in the label -->
+                    <input type="text" name="name" id="name">
+                </p>
+                <p>
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description">
+                </p>
+                <p>
+                    <label for="price">Price per night (£)</label>
+                    <input type="text" name="price" id="price">
+                    </p>
+                <p>
+                    <p>
+                        <label for="user_id">Enter User ID</label>
+                        <input type="text" name="user_id" id="user_id">
+                        </p>
+                    <p>
+                <!-- `type` is submit here, to indicate it is a button -->
+                <!-- `value` is used as the button's text -->
+                <input type="submit" value="List my space">
+                </p>
+            </form>
+        </div>
+    </body>
+</html>
