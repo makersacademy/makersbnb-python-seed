@@ -5,11 +5,13 @@ name = "pypi"
 
 [packages]
 pytest = "*"
-psycopg = "*"
+psycopg = {extras = ["pool", "binary"], version = "*"}
+psycopg2-binary = "*"
 flask = "*"
 pytest-playwright = "*"
 pytest-xprocess = "*"
 py = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"
