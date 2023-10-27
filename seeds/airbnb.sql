@@ -60,3 +60,5 @@ INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALU
 INSERT INTO bookings (space_id, booker_id, start_date, end_date, confirmed) VALUES (2, 4, '2024-12-25', '2024-12-31', False);
 
 
+
+

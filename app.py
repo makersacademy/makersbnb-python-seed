@@ -12,6 +12,7 @@ from lib.unavailable_dates import *
 from lib.booking import Booking
 from lib.booking_repository import BookingRepository
 from lib.booking_parameters_validator import BookingParametersValidator
+from datetime import timedelta
 
 
 # Create a new Flask app
@@ -230,6 +231,72 @@ def create_booking():
     
     else:
         redirect(f'spaces/{space_id}')
+
+@app.route('/owners-bookings-dashboard', methods=['GET'])
+def get_owners_bookings():
+    connection = get_flask_database_connection(app)
+    spaceRepository = SpaceRepository(connection)
+
+    if "user" in session:
+        user = session["user"]
+    else:
+        return (redirect(url_for("login")))
+
+    
+    id = connection.execute('SELECT id FROM users WHERE email= (%s)', (user,))
+    
+    id = id[0]['id']
+    rows = connection.execute('''
+        SELECT bookings.id AS booking_id, bookings.space_id, bookings.booker_id, bookings.start_date, bookings.end_date, bookings.confirmed,
+        spaces.id AS space__id, spaces.name, spaces.owner_id, 
+        users.id AS user_id, users.first_name, users.last_name, users.email
+        FROM bookings 
+        JOIN spaces ON bookings.space_id = spaces.id 
+        JOIN users ON bookings.booker_id = users.id
+        WHERE spaces.owner_id = %s''', (id,))
+                              
+    bookings = [
+        {
+            'bookingID':row['booking_id'], 
+            'spaceID':row['space_id'], 
+            'userID':row['booker_id'],
+            'startDate':row['start_date'], 
+            'endDate':row['end_date'],
+            'confirmed':row['confirmed'], 
+            'spaceName':row['name'], 
+            'userFirstName':row['first_name'],
+            'userLastName':row['last_name'],
+            'userEmail':row['email']
+        }
+        for row in rows
+    ]
+
+        
+        
+    return render_template('ownerbookings.html', bookings=bookings)
+
+@app.route('/process-bookings', methods=['POST'])
+def process_bookings():
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    
+    action = request.form.get('action')
+    booking_id  = request.form.get('booking_id')
+    
+    
+    if action == 'Accept':
+        repository.update(booking_id, 'confirmed', 'True')
+        
+    elif action =='Decline':
+        repository.delete(booking_id)
+        
+    
+    return redirect(url_for('get_owners_bookings'))
+   
+
+
+
+
 
 # @app.route('/rented-spaces', methods=['GET'])
 # def get_rented_spaces():
