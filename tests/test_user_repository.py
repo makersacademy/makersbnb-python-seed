@@ -44,6 +44,6 @@ def test_get_user_by_username(db_connection):
     db_connection.seed('seeds/bnb.sql')
     repository = UserRepository(db_connection)
     result = repository.get_user_by_username('user2')
-    assert result == User(2,'user2', 'user2email@example.com', None)
+    assert result == User(2,'user2', 'user2email@example.com', 'password2')
 
 

@@ -31,7 +31,7 @@ def post_index():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
     repo.create(user)
-    return redirect(f"/spaces")
+    return redirect(f"/login")
 
 #log in page get
 @app.route('/login', methods=['GET'])
@@ -48,6 +48,7 @@ def post_login():
     user = repo.get_user_by_username(username)
     if user.username == username and user.password == password:
         session['logged_in'] = True
+        session['username'] = username
         return redirect('/spaces')
     else:
         flash('Invalid username or password', 'error')
