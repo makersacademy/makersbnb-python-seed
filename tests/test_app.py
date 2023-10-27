@@ -22,7 +22,7 @@ Returns page with title
 def test_request_returns_homepage(page, test_web_address, db_connection):
     db_connection.seed("seeds/makers_bnb.sql")
     page.goto(f"http://{test_web_address}/")
-    strong_tag = page.locator("h2")
+    strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Welcome to MakersB&B")
 
 """
