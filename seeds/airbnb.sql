@@ -1,11 +1,11 @@
-
-
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP TABLE IF EXISTS bookings;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
+DROP TABLE IF EXISTS unavailable_dates;
+DROP SEQUENCE IF EXISTS unavailable_dates_id_seq;
 
 -- Then, we recreate them
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
@@ -35,6 +35,13 @@ CREATE TABLE bookings (
     start_date date,
     end_date date,
     confirmed boolean
+);
+
+CREATE SEQUENCE IF NOT EXISTS unavailable_dates_id_seq;
+CREATE TABLE unavailable_dates (
+    id SERIAL PRIMARY KEY,
+    space_id INTEGER,
+    unavailable_date date
 );
 
 

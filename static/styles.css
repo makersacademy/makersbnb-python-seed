@@ -44,16 +44,16 @@ header .links {
     margin-bottom: 1rem;
 }
 
-.signup_section, .login_section {
+.signup_section, .login_section, .new_space_section {
     margin: 3rem auto 0 auto;
     width: 70%;
 }
 
-.signup_section p, .login_section p {
+.signup_section p, .login_section h2, .new_space_section h2, .spaces_page h2 {
     text-align: center;
 }
 
-.signup_form, .space_cards {
+.signup_form, .login_form, .new_space_form, .space_cards {
     margin-top: 1rem;
     border: 1px solid purple;
     display: flex;
@@ -62,11 +62,11 @@ header .links {
     padding: 1rem;
 }
 
-.signup_form input {
+.signup_form input, .login_form input, .new_space_form input {
     padding: 0.4rem;
 }
 
-.signup_form button {
+.signup_form button, .login_form button, .new_space_form button {
     margin-top: 1rem;
     padding: 0.4rem;
     cursor: pointer;
@@ -94,7 +94,7 @@ header .links {
 }
 
 .filter {
-    margin-top: 2rem;
+    margin: 2rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -113,6 +113,17 @@ header .links {
 /* space page */
 .space_page {
     margin-top: 2rem;
+}
+
+.space_page form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 20%;
+}
+
+.space_page form input, .space_page form button {
+    padding: 0.3rem;
 }
 
 /* new space page */
@@ -149,4 +160,47 @@ header .links {
     margin-top: 1rem;
     border: 1px solid purple;
     padding: 1rem;
+}
+
+
+/* homepage - jonapxr */
+/* .hero-image {
+    background-image: url(https://www.abercrombiekent.com/-/media/ak/media-for-prod/product-lines-and-travel-interests/mastheads/europe-ak-villas-palazzo-bolbe-mh.jpg?h=660&w=1920&la=en&hash=E3149B4764570A269A8BA2DAB5BA130D);
+    background-repeat: no-repeat;
+    background-size: contain; 
+    background-position: center;
+    position: relative;
+    height: 50%;
+    align-items: center; 
+
+} */
+.hero-text{
+    color: white;
+    text-align: center;
+    justify-content: center;
+    
+
+}
+.property-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+gap: 20px; /* Gap between cards */
+}
+
+.property-card {
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+background-color: #fff;
+}
+
+.property-card h3 {
+font-size: 18px;
+margin: 0;
+}
+
+.property-card p {
+font-size: 14px;
+color: #666;
 }

@@ -1,4 +1,3 @@
-
 class SpaceParametersValidator:
     def __init__(self, name, description, size, price):
         self.name = name
