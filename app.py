@@ -98,11 +98,13 @@ def post_new_space():
     name = request.form['name']
     description = request.form['Description']
     ppn = request.form['Price per night']
+    unavailabledates=request.form['unavailable']
     host_id = logged_in.id
     NewSpaceId=spaces_repo.create(name, host_id, description, ppn)
-    unavailabledateslist=[x.strip() for x in (request.form['unavailable']).split(",")]
-    for date in unavailabledateslist:
-        spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,True) 
+    if unavailabledates != '':
+        unavailabledateslist=[x.strip() for x in unavailabledates.split(",")]
+        for date in unavailabledateslist:
+            spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,True) 
     return redirect('/')
 
 @app.route('/spaces/<id>')
