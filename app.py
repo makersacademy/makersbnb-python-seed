@@ -103,6 +103,19 @@ def get_spaces_id(id):
     listing = repo.find_with_listing_id(id)
     return render_template('booking.html', listing=listing)
 
+
+@app.route('/confirmation/<id>', methods=['GET'])
+def get_confirmation_id(id):
+    connection = get_flask_database_connection(app)
+    print("hello")
+    repo = ListingRepo(connection)
+    print(repo.all())
+    listing = repo.find_with_listing_id(int(id))
+    return render_template('confirmation.html', listing=listing)
+
+
+
+
 @app.route('/requests', methods=['GET'])
 def get_requests():
     connection = get_flask_database_connection(app)
@@ -111,6 +124,7 @@ def get_requests():
         username = session.get('username')
         user = UserRepository(connection)
         user_object = user.get_user_by_username(username)
+
 
         repo = RequestRepo(connection)    
         requests_made = repo.get_all_outgoing_requests(user_object.id)
