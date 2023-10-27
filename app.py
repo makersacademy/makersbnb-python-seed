@@ -235,14 +235,17 @@ def create_booking():
 @app.route('/owners-bookings-dashboard', methods=['GET'])
 def get_owners_bookings():
     connection = get_flask_database_connection(app)
-    spaceRepository = SpaceRepository(connection)
+    
+    repository = UserRepository(connection)
 
     if "user" in session:
         user = session["user"]
     else:
         return (redirect(url_for("login")))
 
-    
+    # userC = repository.find(user)
+    # id = userC.id
+
     id = connection.execute('SELECT id FROM users WHERE email= (%s)', (user,))
     
     id = id[0]['id']

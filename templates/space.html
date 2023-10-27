@@ -3,10 +3,10 @@
 {% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
 {% block content %}
     <section class="space_page">   
-        <h1 id="space-name">{{ space['name'] }}</h1>
-        <p id="space-description">{{ space['description'] }}</p>
-        <p id="space-size">{{ space['size'] }}</p>
-        <p id="space-price">{{ space['price'] }}</p>
+        <h1 id="space-name">Name: {{ space['name'] }}</h1>
+        <p id="space-description">Description: {{ space['description'] }}</p>
+        <p id="space-size">Size: {{ space['size'] }}m</p>
+        <p id="space-price">Price: ${{ space['price'] }}</p>
         
         <form action="{{ url_for('create_booking') }}" method="post">
             <input type="hidden" id="space_id" name="space_id" value="{{space['id']}}" />
