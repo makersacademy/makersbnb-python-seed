@@ -1,3 +1,60 @@
-body {
-    font-size: 18px;
+* {
+  margin: 0;
 }
+
+body {
+  font-size: 18px;
+}
+
+#navbar {
+  display: flex;
+  justify-content: end;
+  margin: 10px 30px 0px 0px;
+}
+
+.form {
+  margin-top: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 50%;
+}
+
+form {
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: azure;
+  gap: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.spaces {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.item-listing {
+  height: 200px;
+  width: 60%;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: azure;
+}
+
+.item-listing:hover {
+  cursor: pointer;
+}
+
+/* .space-name {
+}
+
+.space-description {
+} */
