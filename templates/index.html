@@ -3,20 +3,32 @@
 {% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
 {% block content %}
     <section class="spaces_page">
-        <h2>Latest Properties</h2>
+        <div class="spaces_blurb">
+            {% if "user" in session %}
+                <h2>Hi {{session["user"]}}</h2>
+            {% endif %}
+            <h2>Book a space</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, expedita.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <button>
+                <a href="/spaces/new">
+                    List a space
+                </a>
+            </button>
+        </div>
 
-        <form class="filter" action="/spaces" method="post">
+        <form class="filter" action="/" method="post">
             <div>
                 <label for="start_date">Available from</label>
                 <input type="date" id="start_date" name="start_date" required>
             </div>
-
+            
             <div>
                 <label for="end_date">Available to</label>
                 <input type="date" id="end_date" name="end_date" required>
             </div>
 
-            <button>List spaces</button>
+            <button>Filter spaces</button>
         </form>
 
         <div class="property-grid">

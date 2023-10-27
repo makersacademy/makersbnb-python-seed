@@ -23,7 +23,7 @@ def get_index():
     connection = get_flask_database_connection(app) 
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    
+
     return render_template('index.html', spaces=spaces)
 
 # filter spaces
@@ -102,7 +102,7 @@ def login():
     else:
         session.permanent = True
         session['user'] = email
-        return redirect(url_for("get_spaces"))
+        return redirect(url_for("get_index"))
     
 @app.route('/logout')
 def logout():
@@ -116,18 +116,6 @@ def user():
         return f"<h1>{user}'s profile</h1>"
     else:
         return (redirect(url_for("login")))
-    
-# GET /
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    
-    return render_template('spaces.html', spaces=spaces)
 
 # individual space page
 @app.route('/spaces/<id>', methods=['GET'])
@@ -152,10 +140,7 @@ def get_new_space():
         return (redirect(url_for("login")))
     
 # POST /
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/
-@app.route('/spaces', methods=['POST'])
+@app.route('/spaces/new', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
@@ -183,6 +168,7 @@ def create_space():
         validator.get_valid_price(),
         1 #Change last number to owner_id once we have access to current user
     )
+    
     space_repository.create(space)
     created_space = space_repository.all()[-1]
     
@@ -192,7 +178,7 @@ def create_space():
     for unavailable_date in unavailable_dates:
         dates_repository.create(unavailable_date)
 
-    return redirect('/spaces')
+    return redirect('/')
 
 
 # request to book
