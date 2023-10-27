@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, email text, password te
 CREATE SEQUENCE IF NOT EXISTS listing_id_sequence;
 CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY, name text, description text, cost int, user_id int);
 
-INSERT INTO users (email, password, user_name) VALUES ('test-email-1', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42', 'Charles Boyle');
-INSERT INTO users (email, password, user_name) VALUES ('test-email-2', '6eee3a5257a1329afe1dceb4ce1ebe0018e63a0788313253d3ec023228521ff2', 'Amy Santiago');
-INSERT INTO users (email, password, user_name) VALUES ('test-email-3', '187154941ec7f71e45f09cc85f5dc956329cee757bd1f8e1b1b2f34a4d7e0600', 'Gina Linetti');
+INSERT INTO users (email, password, user_name) VALUES ('testemail1@example.com', 'c2852cf707649f8392a055b4598e84206f13628b6f5807b1c8a6711b2598ef42', 'Charles Boyle');
+INSERT INTO users (email, password, user_name) VALUES ('testemail2@example.com', '6eee3a5257a1329afe1dceb4ce1ebe0018e63a0788313253d3ec023228521ff2', 'Amy Santiago');
+INSERT INTO users (email, password, user_name) VALUES ('testemail3@example.com', '187154941ec7f71e45f09cc85f5dc956329cee757bd1f8e1b1b2f34a4d7e0600', 'Gina Linetti');
 
 INSERT INTO listings (name, description, cost, user_id) VALUES ('Cosy Woodland Lodge', 'Embrace the quirky, cosy interiors in this romantic getaway. Open the doors to the terrace, and let the sounds of nature waft through the lodge.', 45, 1);
 INSERT INTO listings (name, description, cost, user_id) VALUES ('Barn with a Vineyard View', 'Nestled in open countryside next to our vineyard on the outskirts of Bishops Stortford, an ideal base to explore East Herts & North Essex or visit London & Cambridge.', 70, 1);
