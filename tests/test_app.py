@@ -16,6 +16,21 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("Sign Up")
 
+def test_get_error(page, test_web_address):
+    # We load a virtual browser and navigate to the /index page
+    page.goto(f"http://{test_web_address}/error")
+
+    # We look at the <p> tag
+    strong_tag = page.locator("h1")
+
+    # We assert that it has the text "This is the homepage."
+    expect(strong_tag).to_have_text("Please go to the sign up page")
+
+    page.click("text=Please go to the sign up page")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Sign Up")
+
 
 def test_get_spaces(page, test_web_address):
 
@@ -66,7 +81,7 @@ def test_create_listing(db_connection, page, test_web_address):
 
     page.fill("input[name='price']", "11.99")
 
-    page.fill("input[name='user_id']", "1")
+    # page.fill("input[name='user_id']", "1")
 
     # Finally we click the button with the text 'Create Book'
     page.click("text=List my space")
@@ -74,8 +89,10 @@ def test_create_listing(db_connection, page, test_web_address):
     # Just as before, the virtual browser acts just like a normal browser and
     # goes to the next page without us having to tell it to.
 
-    title_element = page.locator("h1")
-    expect(title_element).to_have_text("Book a space")
+    heading = page.locator('h1')
+    expect(heading).to_have_text("Please go to the sign up page")
+
+    page.click("text=Please go to the sign up page")
 
 
 #Testing sign up a new user and redirecting to /spaces
@@ -149,6 +166,8 @@ def test_requests(db_connection, page, test_web_address):
 
     page.click("text=Request to book")
 
-    heading = page.locator("h1")
-    expect(heading).to_have_text("Requests") 
+    # We assert that it has the text "This is the homepage."
+    heading = page.locator('h1')
+    expect(heading).to_have_text("Please go to the sign up page")
+
 

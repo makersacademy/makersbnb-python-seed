@@ -17,4 +17,5 @@ class UserRepository():
         rows = self._connection.execute('SELECT id, username, email, password FROM users WHERE username = %s',[username])
         row = rows[0]
         return User(row['id'], row['username'], row['email'], row['password'])
+    
 
