@@ -104,7 +104,7 @@ def post_new_space():
     if unavailabledates != '':
         unavailabledateslist=[x.strip() for x in unavailabledates.split(",")]
         for date in unavailabledateslist:
-            spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,True) 
+            spaces_repo.request_a_stay(date,NewSpaceId,logged_in.id,'unavailable') 
     return redirect('/')
 
 @app.route('/spaces/<id>')
