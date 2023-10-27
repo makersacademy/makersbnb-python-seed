@@ -1,8 +1,9 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for
 from lib.database_connection import get_flask_database_connection
 from lib.database_connection import DatabaseConnection
-
+from lib.space_repository import SpaceRepository
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -13,17 +14,18 @@ connection.connect()
 connection.seed("seeds/makersbnb.sql")
 
 # == Your Routes Here ==
-
 # GET /index
 # Returns the homepage
 # Try it:
-
 # open http://localhost:5000/index
 
 
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    return render_template('index.html', spaces=spaces)
 
 
 @app.route('/register', methods=['GET'])
@@ -69,7 +71,7 @@ def get_owners_booking_requests():
 @app.route('/guest-booking-requests', methods=['GET'])
 def get_guests_booking_requests():
     return render_template('guest_booking_requests.html')
-  
+
 
 @app.route('/add-a-space', methods=['GET'])
 def get_add_a_space():
@@ -87,6 +89,29 @@ def get_individual_space():
     connection = get_flask_database_connection(app)
 
     return render_template('space.html')
+
+# Root for session
+
+
+@app.route('/login', methods=['POST'])
+def post_login():
+    connection = get_flask_database_connection(app)
+    username = request.form["username"]
+    password = request.form["password"]
+
+    user_object = UserRepository.get_user_by_username(username)
+    session['logged_in'] = True
+    session['username'] = username
+    session['user_id'] = user_object.id
+    return redirect('/spaces')
+
+# This root we use for to get the list of all spaces on the main page
+# @app.route('/index', methods=['GET'])
+# def get_list_of__spaces():
+#     connection = get_flask_database_connection(app)
+#     repository = SpaceRepository(connection)
+#     spaces = repository.all()
+#     return render_template('spaces/index.html', spaces=spaces)
 
 
 @app.route('/make_a_booking', methods=['GET'])  # Liza
