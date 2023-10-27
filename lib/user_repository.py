@@ -1,4 +1,5 @@
 from lib.user import User
+from flask import flash
 
 class UserRepository():
     def __init__(self, connection):
@@ -15,7 +16,10 @@ class UserRepository():
         
     def get_user_by_username(self, username):
         rows = self._connection.execute('SELECT id, username, email, password FROM users WHERE username = %s',[username])
-        row = rows[0]
-        return User(row['id'], row['username'], row['email'], row['password'])
+        if len(rows) == 0:
+            flash('Invalid username or password', 'error')
+        else:
+            row = rows[0]
+            return User(row['id'], row['username'], row['email'], row['password'])
     
 

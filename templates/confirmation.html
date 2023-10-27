@@ -10,6 +10,19 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <header>
+            <ul class="navbar">
+                <li><a href="/spaces">Listings</a></li>
+                <li><a href="/requests">Requests</a></li>
+            </ul>
+            {% if session.logged_in %}
+                <!-- Show the logout button when the user is logged in -->
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            {% endif %}
+            
+        </header>
         <h1>Request for {{listing.listing_name}}</h1>
         <div>
                 <p>
