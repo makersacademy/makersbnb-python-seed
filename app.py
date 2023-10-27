@@ -169,7 +169,7 @@ def create_space():
 
         # since we don't put id when creating space object,
         # we first need to create space and then get the same one from the db
-        # with the id, wo we can use it to create date object
+        # with the id, which we can use it to create date object
         space = Space(
             None, 
             validator.get_valid_name(),

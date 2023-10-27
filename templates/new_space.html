@@ -6,22 +6,26 @@
         <h2>Add a new space</h2>
         <form class="new_space_form" action="/spaces/new", method="POST">
             {% if errors %}
-            <p class="errors">
-                Your submission contains errors:
-                {{ errors | join(', ') }}
-            </p>
+                <p class="errors">
+                    Your submission contains errors:
+                    {{ errors | join(', ') }}
+                </p>
             {% endif %}
+
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" required>
+
             <label for="description">Description:</label>
-            <input type="textarea" name="description" id="description">
+            <input type="textarea" name="description" id="description" required>
+
             <label for="size">Size of the space (in m2):</label>
-            <input type="text" name="size" id="size">
+            <input type="text" name="size" id="size" required>
+
             <label for="price">Price per night:</label>
             <input type="text" name="price" id="price">
 
             <label for="unavailable_dates">Unavailable Dates:</label>
-            <input type="date" name="unavailable_dates" id="unavailable_dates">
+            <input type="date" name="unavailable_dates" id="unavailable_dates" required>
 
             <input type="submit" value="Add space">
         </form>

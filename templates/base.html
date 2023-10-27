@@ -13,12 +13,13 @@
     <header>
         <img src="https://media.istockphoto.com/id/1313644269/vector/gold-and-silver-circle-star-logo-template.jpg?s=612x612&w=0&k=20&c=hDqCI9qTkNqNcKa6XS7aBim7xKz8cZbnm80Z_xiU2DI=" alt="a dummy lorem logo image">
         <ul class="links">
-            <li><a href="/">Home</a></li>
             <li>
                 {% if "user" in session %}
-                    <a href="/logout">Logout</a>
+                    <li><a href="/">Spaces</a></li>
+                    <li><a href="/requests">Requests</a></li>
+                    <li><a href="/logout">Logout</a></li>
                 {% else %}
-                    <a href="/login">Login</a>
+                    <li><a href="/login">Login</a></li>
                 {% endif %}
             </li>
         </ul>
