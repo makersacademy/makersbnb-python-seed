@@ -5,16 +5,27 @@
 {% block login_signup %}{% endblock %}
 
 {% block content %}
-  <h1>Rented Spaces by me</h1>
-  <div class="space-list">
-    {% for space in spaces %}
-      <section class="space-page">
-        <h2>{{ space.name }}</h2>
-        <p>{{ space.description }}</p>
-        <p>Size: {{ space.size }} sq ft</p>
-        <p>Price: ${{ space.price }}</p>
-        <p>Owner ID: {{ space.owner_id }}</p>
-      </section>
-    {% endfor %}
-  </div>
+  <section class="spaces_page">
+    <div class="spaces_blurb">
+      {% if "user" in session %}
+        <h2>Hi {{ session["user"] }}</h2>
+      {% endif %}
+      <h2>Rented Spaces</h2>
+      <p>Here are the spaces you have rented:</p>
+    </div>
+
+    <div class="space_cards">
+      {% for space in spaces %}
+        <a href="/spaces/{{ space.id }}">
+          <article class="space_card">
+            <h2>{{ space.name }}</h2>
+            <p>{{ space.description }}</p>
+            <p>Size: {{ space.size }} sq ft</p>
+            <p>Price: ${{ space.price }}</p>
+            <p>Owner ID: {{ space.owner_id }}</p>
+          </article>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}

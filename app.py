@@ -146,12 +146,32 @@ def create_space():
 
     return redirect(f'spaces/{space.id}')
 
+# @app.route('/rented-spaces', methods=['GET'])
+# def get_rented_spaces():
+#     connection = get_flask_database_connection(app)
+#     repository = SpaceRepository(connection)
+#     if "user" in session:
+#         user = User(id=1, firstName="Leonardo", lastName="Leonardopoulos", email="leonar364@net.com", password="pug3&")
+#     else:
+#         rented_spaces = []
+#         return render_template('rented_spaces.html', spaces=rented_spaces)
 
-@app.route('/spaces/rented', methods=['GET'])
-def get_rented_spaces():
-    connection = get_flask_database_connection(app) 
-    repository = SpaceRepository(connection)
-    rented_spaces = repository.get_rented_spaces() 
+#     rented_spaces = repository.get_rented_spaces(user)
+
+#     return render_template('rented_spaces.html', spaces=rented_spaces)
+
+@app.route('/rented-spaces', methods=['GET'])
+def rented_spaces():
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+
+    if "user" in session:
+        user_email = session["user"]  
+        user = UserRepository(connection).find(user_email)
+        rented_spaces = space_repository.get_rented_spaces(user)
+    else:
+        rented_spaces = []
+
     return render_template('rented_spaces.html', spaces=rented_spaces)
 
 # These lines start the server if you run this file directly
