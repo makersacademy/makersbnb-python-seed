@@ -103,8 +103,8 @@ def test_listings(db_connection, page, test_web_address):
 
 def test_confirmation(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
-    page.goto(f"http://{test_web_address}/confirmation")
+    page.goto(f"http://{test_web_address}/confirmation/1")
 
     # sense check
-    title = page.locator("title")
-    expect(title).to_have_text("Request for Cozy Cottage")
+    title = page.locator("p")
+    expect(title).to_have_text("Thanks for booking")

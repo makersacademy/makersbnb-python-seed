@@ -62,8 +62,10 @@ def get_spaces_id(id):
 @app.route('/confirmation/<id>', methods=['GET'])
 def get_confirmation_id(id):
     connection = get_flask_database_connection(app)
+    print("hello")
     repo = ListingRepo(connection)
-    listing = repo.find_with_listing_id(id)
+    print(repo.all())
+    listing = repo.find_with_listing_id(int(id))
     return render_template('confirmation.html', listing=listing)
 
 
