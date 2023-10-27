@@ -16,6 +16,21 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("Sign Up")
 
+def test_get_error(page, test_web_address):
+    # We load a virtual browser and navigate to the /index page
+    page.goto(f"http://{test_web_address}/error")
+
+    # We look at the <p> tag
+    strong_tag = page.locator("h1")
+
+    # We assert that it has the text "This is the homepage."
+    expect(strong_tag).to_have_text("Please go to the sign up page")
+
+    page.click("text=Please go to the sign up page")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Sign Up")
+
 
 def test_get_spaces(page, test_web_address):
 
@@ -66,7 +81,7 @@ def test_create_listing(db_connection, page, test_web_address):
 
     page.fill("input[name='price']", "11.99")
 
-    page.fill("input[name='user_id']", "1")
+    # page.fill("input[name='user_id']", "1")
 
     # Finally we click the button with the text 'Create Book'
     page.click("text=List my space")
@@ -74,9 +89,13 @@ def test_create_listing(db_connection, page, test_web_address):
     # Just as before, the virtual browser acts just like a normal browser and
     # goes to the next page without us having to tell it to.
 
-    title_element = page.locator("h1")
-    expect(title_element).to_have_text("Book a space")
+    heading = page.locator('h1')
+    expect(heading).to_have_text("Please go to the sign up page")
 
+    page.click("text=Please go to the sign up page")
+
+
+#Testing sign up a new user and redirecting to /spaces
 def test_signup_user(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
     page.goto(f"http://{test_web_address}/index")
@@ -86,7 +105,36 @@ def test_signup_user(db_connection, page, test_web_address):
     page.fill("input[name='password']", "testpassword")
 
     page.click("#signup-button")
+    assert "/login" in page.url
+
+
+def test_get_login(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Log in")
+
+def test_post_login_registered_user_fail_like_us(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bnb.sql")
+    
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='username']","testuser")
+    page.fill("input[name='password']","testpassword")
+
+    page.click("#login-button")
+
+    assert "/login" in page.url
+
+def test_post_login_registered_user_success(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bnb.sql")
+    
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='username']",'user1')
+    page.fill("input[name='password']",'password1')
+
+    page.click("#login-button")
+
     assert "/spaces" in page.url
+
 
 def test_listings(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
@@ -101,6 +149,7 @@ def test_listings(db_connection, page, test_web_address):
     heading = page.locator("h1")
     expect(heading).to_have_text("Cozy Cottage") 
 
+
 def test_confirmation(db_connection, page, test_web_address):
     db_connection.seed('seeds/bnb.sql')
     page.goto(f"http://{test_web_address}/confirmation/1")
@@ -108,3 +157,25 @@ def test_confirmation(db_connection, page, test_web_address):
     # sense check
     title = page.locator("p")
     expect(title).to_have_text("Thanks for booking")
+
+
+def test_requests(db_connection, page, test_web_address):
+    db_connection.seed('seeds/bnb.sql')
+    page.goto(f"http://{test_web_address}/spaces")
+
+    # sense check
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Book a space")
+
+    page.click("text=Cozy Cottage\nA charming cottage for a peaceful retreat")
+
+    heading = page.locator("h1")
+    expect(heading).to_have_text("Cozy Cottage") 
+
+    page.click("text=Request to book")
+
+    # We assert that it has the text "This is the homepage."
+    heading = page.locator('h1')
+    expect(heading).to_have_text("Please go to the sign up page")
+
+

@@ -10,6 +10,19 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <header>
+            <ul class="navbar">
+                <li><a href="/spaces">Listings</a></li>
+                <li><a href="/requests">Requests</a></li>
+            </ul>
+            {% if session.logged_in %}
+                <!-- Show the logout button when the user is logged in -->
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            {% endif %}
+            
+        </header>
         <h1>List a space</h1>
         <div>
             <form action="/spaces" method="post">
@@ -34,11 +47,11 @@
                     <input type="text" name="price" id="price">
                     </p>
                 <p>
-                    <p>
+                    <!-- <p>
                         <label for="user_id">Enter User ID</label>
                         <input type="text" name="user_id" id="user_id">
                         </p>
-                    <p>
+                    <p> -->
                 <!-- `type` is submit here, to indicate it is a button -->
                 <!-- `value` is used as the button's text -->
                 <input type="submit" value="List my space">
