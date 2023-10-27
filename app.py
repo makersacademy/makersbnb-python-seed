@@ -47,6 +47,10 @@ def post_login():
         return redirect('/')
     else:
         return render_template('login.html',errors='errors')
+    
+@app.route('/login_needed')
+def need_login():
+    return render_template('need_login.html')
 
 @app.route('/register')
 def get_register():
@@ -77,7 +81,7 @@ def get_new_space():
     if hasattr(logged_in, '__dict__'):
         return render_template('new_space.html')
     else:
-        return render_template('need_login.html')
+        return redirect('/login_needed')
 
 @app.route('/spaces/new', methods=['POST'])
 def post_new_space():
@@ -119,7 +123,7 @@ def request_space(id):
         spacerepo.request_a_stay(date,id,logged_in.id,'pending')
         return redirect('/')
     else:
-        return render_template('/need_login.html')
+        return redirect('/login_needed')
 
 @app.route('/spaces/<id>/delete')
 def delete_space(id):
@@ -140,7 +144,7 @@ def mark_date_as_unavailable(id):
 def get_requests():
     global logged_in
     if not hasattr(logged_in, '__dict__'):
-        return render_template('need_login.html')
+        return redirect('/login_needed')
     else:
         userrepo = UserRepository(get_flask_database_connection(app))
         requestlist = userrepo.show_bookings('pending',logged_in.id)
@@ -151,7 +155,7 @@ def get_requests():
 def approve_request(id, date):
     global logged_in
     if not hasattr(logged_in, '__dict__'):
-        return render_template('need_login.html')
+        return redirect('/login_needed')
     else:
         spacerepo=SpaceRepository(get_flask_database_connection(app))
         spacerepo.change_status('approved', id, date)
@@ -161,7 +165,7 @@ def approve_request(id, date):
 def deny_request(id, date):
     global logged_in
     if not hasattr(logged_in, '__dict__'):
-        return render_template('need_login.html')
+        return redirect('/login_needed')
     else:
         spacerepo=SpaceRepository(get_flask_database_connection(app))
         spacerepo.change_status('denied', id, date)
