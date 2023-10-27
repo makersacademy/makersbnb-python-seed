@@ -82,7 +82,7 @@ def send_register():
     if password != password2:
         return render_template ('/register.html',errors ='password error')
     
-    elif user_repo.find_by_username(username) != None:
+    elif hasattr(user_repo.find_by_username(username), '__dict__'):
             return render_template ('register.html',errors= 'username error')
         
     else:
