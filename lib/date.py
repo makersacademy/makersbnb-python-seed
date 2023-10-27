@@ -9,7 +9,6 @@ class Date():
     
     def __repr__(self):
         return f"LISTING {self.listing_id} date: {self.formatted_time()}"
-
     
     def formatted_time(self):
         return self.date.strftime("%d/%m/%Y")
