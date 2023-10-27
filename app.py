@@ -60,8 +60,6 @@ def logout():
     return redirect('/login')
 
 
-
-
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
@@ -74,12 +72,25 @@ def get_spaces():
 def get_new():
     return render_template('new.html')
 
+@app.route('/error', methods=['GET'])
+def get_error():
+    return render_template('error.html')
+
 @app.route('/spaces', methods=['POST'])
 def post_spaces():
     listing_name = request.form['name']
     listing_description = request.form['description']
     listing_price = request.form['price']
-    user_id = request.form['user_id']
+
+    if session.get('username'):
+        connection = get_flask_database_connection(app)
+        username = session.get('username')
+        user = UserRepository(connection)
+        user_object = user.get_user_by_username(username)
+        user_id = user_object.id
+    else:
+        return redirect(f"/error")
+
     connection = get_flask_database_connection(app)
     repo = ListingRepo(connection)
     repo.add(listing_name, listing_description, float(listing_price), int(user_id))
@@ -95,10 +106,18 @@ def get_spaces_id(id):
 @app.route('/requests', methods=['GET'])
 def get_requests():
     connection = get_flask_database_connection(app)
-    repo = RequestRepo(connection)    
-    requests_made = repo.get_all_outgoing_requests(5)
-    requests_received = repo.get_all_incoming_requests(5)
-    return render_template('requests.html', requests_made = requests_made, requests_received = requests_received)
+
+    if session.get('username'):
+        username = session.get('username')
+        user = UserRepository(connection)
+        user_object = user.get_user_by_username(username)
+
+        repo = RequestRepo(connection)    
+        requests_made = repo.get_all_outgoing_requests(user_object.id)
+        requests_received = repo.get_all_incoming_requests(user_object.id)
+        return render_template('requests.html', requests_made = requests_made, requests_received = requests_received)
+    else:
+        return redirect('/error')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
