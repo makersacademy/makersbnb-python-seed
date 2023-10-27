@@ -43,5 +43,12 @@
         <p> These links will only be accesible when logged in </p>
         <a href="/add-a-space" class="adding-a-space"> Add Your Space</a> <br>
         <a href="/booking-requests" class="booking-requests"> Manage Your Booking Requests</a>
+        <ul>
+            {for space in spaces}
+                <div>
+                    <p>{{spase.description}}</p>
+                        <a href="/spaces/{{space.id}}">{{space.name}}</a>
+                </div>
+        </ul>
     </body>
 </html>

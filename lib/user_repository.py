@@ -19,3 +19,9 @@ class UserRepository:
             item = User(row["id"], row["username"], ["email"], ["password"])
             users.append(item)
             return users
+
+    def get_user_by_username(self, username):
+        rows = self._connection.execute(
+            "SELECT * FROM users WHERE username=%s;",  [username])
+        row = rows[0]
+        return User(row["id"], row["username"], row["email"], row["password"])
