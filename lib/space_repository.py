@@ -26,3 +26,16 @@ class SpaceRepository:
     
     def delete(self, space_id):
         self._connection.execute(f'DELETE FROM spaces WHERE id = {space_id}')
+
+
+    def get_rented_spaces(self, user):
+        query = '''
+        SELECT s.id, s.name, s.description, s.size, s.price, s.owner_id
+        FROM spaces s
+        INNER JOIN bookings b ON s.id = b.space_id
+        AND b.booker_id = %s
+        '''
+        params = (user.id,)
+        rows = self._connection.execute(query, params)
+        rented_spaces = [Space(row['id'], row['name'], row['description'], row['size'], row['price'], row['owner_id']) for row in rows]
+        return rented_spaces
