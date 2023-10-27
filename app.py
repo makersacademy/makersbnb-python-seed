@@ -160,7 +160,7 @@ def create_space():
 
 #     return render_template('rented_spaces.html', spaces=rented_spaces)
 
-@app.route('/reservations', methods=['GET'])
+@app.route('/rented-spaces', methods=['GET'])
 def rented_spaces():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
