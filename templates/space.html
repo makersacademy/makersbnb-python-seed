@@ -1,31 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Add a Space - MakersBnB</title>
-        <link rel="stylesheet" href="/static/style.css">
-        <!-- Include the Flatpickr CSS and JavaScript files -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    </head>
-    <body>
-        <section class="space_page">        
-            <h1 id="space-name">{{space['name']}}</h1>
-            <p id="space-description">{{space['description']}}</p>
-            <p id="space-size">{{space['size']}}</p>
-            <p id="space-price">{{space['price']}}</p>
+{% extends "base.html" %}
+{% block title %}MakersBnB{% endblock %}
+{% block login_signup %}<a href="/signup">Sign Up</a>{% endblock %}
+{% block content %}
+    <section class="space_page">   
+        <h1 id="space-name">{{ space['name'] }}</h1>
+        <p id="space-description">{{ space['description'] }}</p>
+        <p id="space-size">{{ space['size'] }}</p>
+        <p id="space-price">{{ space['price'] }}</p>
+        
+        <form action="{{ url_for('create_booking') }}" method="post">
+            <input type="hidden" id="space_id" name="space_id" value="{{space['id']}}" />
+            <label for="booking_start_date">Select your dates</label>
+            <input type="date" id="booking_dates" name="booking_dates" />
+            <button type="submit">Request to book</button>
+        </form>
+    </section>
 
-            <form action="{{ url_for('create_booking') }}" method="post">
-                <input type="hidden" id="space_id" name="space_id" value="{{space['id']}}" />
-                <label for="booking_start_date">Select your dates</label>
-                <input type="date" id="booking_dates" name="booking_dates" />
-                <button type="submit">Request to book</button>
-            </form>
-            <script>
-                flatpickr("#booking_dates", {
-                    mode: "multiple",
-                    dateFormat: "Y-m-d",
-                });
-            </script>
-        </section>
-    </body>
-</html>
+    <script>
+        flatpickr("#booking_dates", {
+            mode: "multiple", 
+            disable: {{ unavailable_dates|safe }},
+            dateFormat: "Y-m-d",
+        });
+    </script>
+{% endblock %}
