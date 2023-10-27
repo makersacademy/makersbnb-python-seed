@@ -11,6 +11,7 @@
                 <li><a href="/spaces">Listings</a></li>
                 <li><a href="/spaces/new">Make a Listing</a></li>
             </ul>
+
                 {% if session.logged_in %}
                     <!-- Show the logout button when the user is logged in -->
                     <form action="/logout" method="post">
