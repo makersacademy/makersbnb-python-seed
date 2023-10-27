@@ -6,6 +6,19 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <header>
+            <ul class="navbar">
+                <li><a href="/spaces">Listings</a></li>
+                <li><a href="/spaces/new">Make a Listing</a></li>
+            </ul>
+
+                {% if session.logged_in %}
+                    <!-- Show the logout button when the user is logged in -->
+                    <form action="/logout" method="post">
+                        <input type="submit" value="Logout">
+                    </form>
+                {% endif %}
+        </header>
         <h1>{{listing.listing_name}}</h1>
         <div>{{listing.listing_description}}</div>
         <div>CALENDAR PLACEHOLDER</div>
