@@ -27,7 +27,6 @@ class UserRepository:
         else:
             user=User(ReturnedUser[0]['name'],ReturnedUser[0]['username'],ReturnedUser[0]['password'],ReturnedUser[0]['email'],ReturnedUser[0]['phone_number'],ReturnedUser[0]['id'])
             return user
-        
 
     # Create a user
     def create(self,name,username,password,email,phone_number):
@@ -45,4 +44,12 @@ class UserRepository:
                                             JOIN spaces ON spaces.id = availability.spaces_id 
                                             JOIN users ON users.id = availability.requested_by_user_id 
                                             WHERE availability.approved = %s AND spaces.host_id = %s''', [approval,host_id])
+        return (response)
+    
+    def show_submissions(self, approval,requested_by_user_id):
+        response = self._connection.execute('''SELECT date_not_available,approved,spaces.name,spaces.id
+                                                FROM availability 
+                                                JOIN spaces ON spaces.id = availability.spaces_id 
+                                                JOIN users ON users.id = availability.requested_by_user_id 
+                                                WHERE availability.approved = %s AND requested_by_user_id = %s''', [approval,requested_by_user_id])
         return (response)

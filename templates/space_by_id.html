@@ -7,20 +7,22 @@
     <body>
         <p>
             <h1> {{ space.name }}</h1><br>
-
+            (<a href="/">Back to Homepage</a>)<br><br>
             {% if space.host_id == user.id %}
-            <p>This is your Property - Would you like to add more dates as being unavailable? 
+            <p><b>This is your Property</b><br>
+                Would you like to add more dates as being unavailable? 
                 <form action="/spaces/{{space.id}}/unavailable" method="POST">
                 <label for="unavailable"> Enter them in the box below: (format YYYY-MM-DD)<br> Seperate each date with a comma</label><br>
                 <input type="text" name="unavailable" id="unavailable">
                 <input type="submit" value="Mark dates as unavailable">
                 </form>
-            </p>
+            </p><br><br>
             {% endif %}
 
-
-            <b>Description:</b> {{ space.description }}<br>
             <b>Price Per Night:</b> £{{ space.price_per_night }}<br>
+            <b>Description:</b><br>
+            {{ space.description }}<br>
+            
 <br>
 <br>
 <br>
