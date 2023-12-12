@@ -18,4 +18,13 @@ def test_get_all_spaces(db_connection):
         Space(3, 'Minas Tirith', 'Big White City', 200)
     ]
 
-
+"""
+When we call #find function
+we get single space returned 
+"""
+def test_find_since_space(db_connection):
+    db_connection.seed('seeds/bnb.sql')
+    repository = SpaceRepository(db_connection)
+    space = repository.find(2)
+    assert space == Space(2, 'Isengard', 'Wizards Tower', 150)
+    
