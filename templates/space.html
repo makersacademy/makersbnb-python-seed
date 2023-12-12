@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            /** This is CSS, it is used for styling the page **/
+            body {
+              background-color: white;
+              color: hotpink;
+              font-size: 5em;
+            }
+          </style>
+    </head>
+    <body>
+        <h2>Hello World</h2>
+        {% for space in spaces %}
+        <h1>{{space.name}}</h1>
+        {% endfor %}
+    </body>
+</html>

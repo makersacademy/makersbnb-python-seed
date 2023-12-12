@@ -14,3 +14,15 @@ def test_get_index(page, test_web_address):
 
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("This is the homepage.")
+
+"""
+We can get spaces from the /space page
+"""
+
+def test_get_space(page, test_web_address, db_connection):
+    db_connection.seed("seeds/bnb.sql")
+    #we load a virtual browser and navigate to the /space page
+    page.goto(f"http://{test_web_address}/spaces")
+    #we look at the h1 tag
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text(['Bagend', 'Isengard', 'Minas Tirith'] )
