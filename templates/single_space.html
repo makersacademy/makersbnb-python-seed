@@ -4,22 +4,22 @@
         <style type="text/css">
             /** This is CSS, it is used for styling the page **/
             body {
-              background-color: white;
-              color: rgb(0, 0, 0);
-              font-size: 5em;
+            background-color: white;
+            color: rgb(0, 0, 0);
+            font-size: 5em;
             }
-          </style>
+        </style>
     </head>
     <body>
 
-      <h1>MakersBnB</h1>
-      <h2>Available spaces:</h2>
-        {% for spaces in spaces_list %}
+    <h1>MakersBnB</h1>
+    <h2>Available spaces:</h2>
+        {% for space in spaces_list %}
         <a href="single_space/{{ space.id }}">
         <h3>{{space.name}}</h3>
         </a>
-        <!-- <p>Description: {{space.description}}</p>
-        <p>Price: £{{space.price}}</p> -->
+        <p>Description: {{space.description}}</p>
+        <p>Price: £{{space.price}}</p>
         {% endfor %}
     </body>
 </html>

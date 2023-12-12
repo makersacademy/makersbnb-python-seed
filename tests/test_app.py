@@ -26,7 +26,30 @@ def test_get_space(page, test_web_address, db_connection):
     #we look at the h1 tag
     h3_tag = page.locator("h3")
     expect(h3_tag).to_have_text(['Bagend', 'Isengard', 'Minas Tirith'] )
+    # p_tag = page.locator("p")
+    # expect(p_tag).to_have_text(['Hobbit Hole', 'Wizards Tower', 'Big White City'])
+    # p_tag = page.locator("p")
+    # expect(p_tag).to_have_text([50, 150, 200])
+
+"""
+When calling /spaces/space_id
+Takes user to page with space information
+"""
+
+def test_get_single_space(page, test_web_address, db_connection):
+    db_connection.seed("seeds/bnb.sql")
+    page.goto(f"http://{test_web_address}/spaces/1")
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text(['Bagend'])
     p_tag = page.locator("p")
-    expect(p_tag).to_have_text(['Hobbit Hole', 'Wizards Tower', 'Big White City'])
+    expect(p_tag).to_have_text(['Hobbit Hole'])
     p_tag = page.locator("p")
-    expect(p_tag).to_have_text([50, 150, 200])
+    expect(p_tag).to_have_text([50])
+
+    page.goto(f"http://{test_web_address}/spaces/2")
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text(['Isengard'])
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text(['Wizards Tower'])
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([150])
