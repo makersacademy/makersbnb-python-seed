@@ -18,7 +18,7 @@ So that I can choose what to book
 ```
 Nouns:
 
-space, space_name, space_description, space_price
+space, space_name, description, price
 ```
 
 ## 2. Infer the Table Name and Columns
@@ -32,7 +32,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 
 1. Name of the first table (always plural): `spaces` 
 
-    Column names: `space_name`, `space_description`, `space_price`
+    Column names: `space_name`, `description`, `price`
 
 <!-- 2. Name of the second table (always plural): `artists` 
 
@@ -108,8 +108,8 @@ CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name text,
-    space_description text,
-    space_price int
+    description text,
+    price int
     -- date_id date
 );
 
