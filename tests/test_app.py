@@ -38,15 +38,15 @@ Takes user to page with space information
 
 def test_get_single_space(page, test_web_address, db_connection):
     db_connection.seed("seeds/bnb.sql")
-    page.goto(f"http://{test_web_address}/spaces/1")
+    page.goto(f"http://{test_web_address}/single_space/1")
     h3_tag = page.locator("h3")
-    expect(h3_tag).to_have_text(['Bagend'])
+    expect(h3_tag).to_have_text('Bagend')
     p_tag = page.locator("p")
     expect(p_tag).to_have_text(['Hobbit Hole'])
     p_tag = page.locator("p")
     expect(p_tag).to_have_text([50])
 
-    page.goto(f"http://{test_web_address}/spaces/2")
+    page.goto(f"http://{test_web_address}/single_space/2")
     h3_tag = page.locator("h3")
     expect(h3_tag).to_have_text(['Isengard'])
     p_tag = page.locator("p")

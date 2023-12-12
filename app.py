@@ -30,7 +30,7 @@ def get_single_space(id):
     connection = get_flask_database_connection(app)
     spaces_repo = SpaceRepository(connection)
     spaces_data = spaces_repo.find(id)
-    return render_template('single_space.html', spaces_list = spaces_data)
+    return render_template('single_space.html', space = spaces_data)
 
 
 # These lines start the server if you run this file directly

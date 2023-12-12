@@ -14,12 +14,10 @@
 
     <h1>MakersBnB</h1>
     <h2>Available spaces:</h2>
-        {% for space in spaces_list %}
         <a href="single_space/{{ space.id }}">
         <h3>{{space.name}}</h3>
         </a>
         <p>Description: {{space.description}}</p>
         <p>Price: £{{space.price}}</p>
-        {% endfor %}
     </body>
 </html>
