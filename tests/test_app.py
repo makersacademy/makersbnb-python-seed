@@ -42,7 +42,7 @@ def test_get_single_space(page, test_web_address, db_connection):
     h3_tag = page.locator("h3")
     expect(h3_tag).to_have_text('Bagend')
     p_tag = page.locator("p")
-    expect(p_tag).to_have_text(['Description: Hobbit Hole'])
+    expect(p_tag).to_have_text(['Description: Hobbit Hole', 'Price: £50' ])
     # p_tag = page.locator("p")
     # expect(p_tag).to_have_text(['Price: £50'])
 
@@ -50,6 +50,6 @@ def test_get_single_space(page, test_web_address, db_connection):
     h3_tag = page.locator("h3")
     expect(h3_tag).to_have_text(['Isengard'])
     p_tag = page.locator("p")
-    expect(p_tag).to_have_text(['Description: Wizards Tower'])
+    expect(p_tag).to_have_text(['Description: Wizards Tower', 'Price: £150'])
     # p_tag = page.locator("p")
     # expect(p_tag).to_have_text('Price: £'[150])
