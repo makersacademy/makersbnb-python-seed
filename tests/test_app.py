@@ -24,5 +24,9 @@ def test_get_space(page, test_web_address, db_connection):
     #we load a virtual browser and navigate to the /space page
     page.goto(f"http://{test_web_address}/spaces")
     #we look at the h1 tag
-    h1_tag = page.locator("h1")
-    expect(h1_tag).to_have_text(['Bagend', 'Isengard', 'Minas Tirith'] )
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text(['Bagend', 'Isengard', 'Minas Tirith'] )
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text(['Hobbit Hole', 'Wizards Tower', 'Big White City'])
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text([50, 150, 200])

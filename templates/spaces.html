@@ -11,8 +11,12 @@
           </style>
     </head>
     <body>
+      <h1>MakersBnB</h1>
+      <h2>Available spaces:</h2>
         {% for space in spaces %}
-        <h1>{{space.name}}</h1>
+        <h3>Property: {{space.name}}</h3>
+        <p>Description: {{space.description}}</p>
+        <p>Price: £{{space.price}}</p>
         {% endfor %}
     </body>
 </html>
