@@ -66,3 +66,7 @@ def test_post_new_space(page, test_web_address, db_connection, web_client):
         })
     assert response.status_code == 200
     assert response.data.decode("utf-8") == ""
+
+    # get_response = web_client.get("/new_space")
+    # assert get_response.status_code == 200
+    # assert get_response.data.decode("utf-8") == ""

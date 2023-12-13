@@ -32,6 +32,7 @@ def get_single_space(id):
     spaces_data = spaces_repo.find(id)
     return render_template('single_space.html', space = spaces_data)
 
+
 @app.route('/new_space', methods=['POST'])
 def post_new_space():
     connection = get_flask_database_connection(app)
