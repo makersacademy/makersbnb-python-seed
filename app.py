@@ -32,6 +32,18 @@ def get_single_space(id):
     spaces_data = spaces_repo.find(id)
     return render_template('single_space.html', space = spaces_data)
 
+@app.route('/new_space', methods=['POST'])
+def post_new_space():
+    connection = get_flask_database_connection(app)
+    spaces_repo = SpaceRepository(connection)
+    arg1 = request.form["name"]
+    arg2 = request.form["description"]
+    arg3 = request.form["price"]
+    arg4 = request.form["start_date"]
+    arg5 = request.form["end_date"]
+    spaces_repo.create(Space(None, arg1, arg2, arg3, arg4, arg5))
+    return ""
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
