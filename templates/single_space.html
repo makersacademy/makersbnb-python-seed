@@ -4,13 +4,36 @@
         <style type="text/css">
             /** This is CSS, it is used for styling the page **/
             body {
-            background-color: white;
-            color: rgb(0, 0, 0);
-            font-size: 5em;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            }
+            /* Navigation Bar */
+            .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            }
+            .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+}
+            .topnav a.active {
+            background-color: #eb51d4;
+            color: white;
             }
         </style>
     </head>
     <body>
+
+        <div class="topnav">
+        <a class="active" href="#spaces">Spaces</a>
+        <a href="/spaces/new_space">Add Space</a>
+        </div>
 
     <h1>MakersBnB</h1>
         <h3>{{space.name}}</h3>
