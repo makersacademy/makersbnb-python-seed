@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS spaces;
+ALTER SEQUENCE spaces_id_seq RESTART WITH 4;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
+
 
 CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (

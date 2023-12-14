@@ -70,4 +70,6 @@ def test_add_new_space(page, test_web_address, db_connection, web_client):
     
 
     assert redirected_response.status_code == 200
-    assert redirected_response.data.decode("utf-8").strip() == ""
+    page.goto(f"http://{test_web_address}/spaces")
+    locator = page.locator('h3').last
+    expect(locator).to_contain_text("No Orcs Allowed")

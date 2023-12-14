@@ -55,6 +55,13 @@
             padding: 10px;
             }
 
+            .grid-item img {
+            width: 200px; 
+            height: 150px; 
+            object-fit: cover; 
+            }
+
+            /* Logo */
             .image-container {
                 max-width: 600px;
                 margin: 20px auto;
@@ -92,7 +99,9 @@
       <h2>Available spaces:</h2>
       <div class="grid-container">
         {% for space in spaces_list %}
-          <a href="single_space/{{ space.id }}" class="grid-item">
+          <a href="single_space/{{ space.id }}" 
+          class="grid-item">
+          <img src="/static/images/{{ space.id}}.jpg">
             <h3>{{ space.name }}</h3>
           </a>
           <!-- Additional information can be added here -->
