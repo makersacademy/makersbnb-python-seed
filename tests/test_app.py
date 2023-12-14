@@ -53,3 +53,20 @@ def test_get_single_space(page, test_web_address, db_connection):
     expect(p_tag).to_have_text(['Description: Wizards Tower', 'Price: £150', 'Availability: 25-12-23 to 30-12-23'])
     # p_tag = page.locator("p")
     # expect(p_tag).to_have_text('Price: £'[150])
+
+def test_post_new_space(page, test_web_address, db_connection, web_client):
+    db_connection.seed("seeds/bnb.sql")
+    page.goto(f"http://{test_web_address}/new_space")
+    response = web_client.post('/new_space', data = {
+        "name": "No Orcs Allowed",
+        "description": "What it says on the tin",
+        "price": 525,
+        "start_date": "13-12-23",
+        "end_date": "14-12-23"
+        })
+    assert response.status_code == 200
+    assert response.data.decode("utf-8") == ""
+
+    # get_response = web_client.get("/new_space")
+    # assert get_response.status_code == 200
+    # assert get_response.data.decode("utf-8") == ""
