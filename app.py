@@ -46,7 +46,7 @@ def add_new_space():
         spaces_repo.create(Space(None, arg1, arg2, arg3, arg4, arg5))
         return redirect('/spaces/new_space')
     else:
-        return render_template('new_space.html')
+        return render_template('/new_space.html')
 
 
 # These lines start the server if you run this file directly
