@@ -28,7 +28,7 @@ class UserRepository():
     def validate_specfic_username(self, username):
         rows = self.connection.execute('SELECT password FROM users WHERE username = %s', [username])
         row = rows[0]
-        return row['password']
+        return row['password'] #return password1
     
     """
     Check to see if we can validate a password
@@ -36,21 +36,87 @@ class UserRepository():
     def validate_specfic_password(self, password):
         rows = self.connection.execute('SELECT username FROM users WHERE password = %s', [password])
         row = rows[0]
-        return row['username']
+        return row['username'] #should return user1
     
     """
     Check and validate to see if the username is connected to password
     """
     def check_if_username_and_password_are_connected(self, username, password):
-        rows = self.connection.execute('SELECT username FROM users WHERE password = %s', [password])
+        rows = self.connection.execute('SELECT username, password FROM users WHERE username = %s', [username])
+        if not rows:
+            return 'Username not found'
+
         row = rows[0]
-        entered_username = row['password']
-        rows = self.connection.execute('SELECT password FROM users WHERE username = %s', [username])
-        row = rows[0]
-        entered_password = row['username']
-        if entered_username == 'user1' and entered_password == 'password1':
+        entered_password = row['password']
+
+        if entered_password == password:
             return 'This password is correct!'
         else:
-            return 'Incorrect password! Try again.'
+            return 'Incorrect password! Please try again.'
+
+
+
+
+
+
+
+        # rows = self.connection.execute('SELECT username FROM users WHERE password = %s', [password])
+        
+        # row = rows[0]
+        # entered_username = row['username']
+        # print(entered_username)
+
+        # if username not in rows:
+        #     return 'Incorrect Username!'
+
+        # rows = self.connection.execute('SELECT password FROM users WHERE username = %s', [username])
+        
+        # row = rows[0]
+        # entered_password = row['password']
+        # print(entered_password)
+
+        # if password not in rows:
+        #     return 'Incorrect password!'
+
+        # if entered_username == username and entered_password == password:
+        #     return 'This password is correct!'
+        # else:
+        #     return 'This password is incorrect! Please try again.'
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # rows = self.connection.execute('SELECT username FROM users WHERE password = %s', [password])
+        # row = rows[0]
+        # entered_password = row['password']
+        # print(entered_password)
+        # rows = self.connection.execute('SELECT password FROM users WHERE username = %s', [username])
+        # row = rows[0]
+        # entered_username = row['username']
+        # print(entered_username)
+        # if entered_username == 'user1' and entered_password == 'password1':
+        #     return 'This password is correct!'
+        # else:
+        #     return 'Incorrect password! Try again.'
     
 
+"""
+get username from database 
+
+if user input(username) is in users(database):
+    if user input(password) is username[password]:
+        return "link to login page"
+    else return "password is inccorrect:
+else return "username inccorect"
+"""
