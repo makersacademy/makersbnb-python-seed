@@ -41,18 +41,18 @@ class UserRepository():
     """
     Check and validate to see if the username is connected to password
     """
-    def check_if_username_and_password_are_connected(self, username, password):
+    def check_user_login(self, username, password):
         rows = self.connection.execute('SELECT username, password FROM users WHERE username = %s', [username])
         if not rows:
-            return 'Username not found'
+            return False
 
         row = rows[0]
         entered_password = row['password']
 
         if entered_password == password:
-            return 'This password is correct!'
+            return True #'This password is correct!' #acvtiates link to move to .../spaces/user_account
         else:
-            return 'Incorrect password! Please try again.'
+            return False
 
 
 

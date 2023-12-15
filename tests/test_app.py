@@ -73,3 +73,20 @@ def test_add_new_space(page, test_web_address, db_connection, web_client):
     page.goto(f"http://{test_web_address}/spaces")
     locator = page.locator('h3').last
     expect(locator).to_contain_text("No Orcs Allowed")
+
+
+def test_user_login(page, test_web_address, db_connection, web_client):
+    db_connection.seed("seeds/bnb.sql")
+    page.goto(f"http://{test_web_address}/spaces/login")
+    response = web_client.post('/spaces/login', data = {
+        'username' : 'user1',
+        'password' : 'password1'
+    })
+    assert response.status_code == 302
+    assert response.data.decode("utf-8") == ""
+
+
+
+    # get_response = web_client.get("/new_space")
+    # assert get_response.status_code == 200
+    # assert get_response.data.decode("utf-8") == ""
