@@ -43,19 +43,19 @@ def test_validate_specfic_password(db_connection):
 def test_check_if_username_and_password_are_connected(db_connection):
     db_connection.seed('seeds/bnb.sql')
     repository = UserRepository(db_connection)
-    result = repository.check_if_username_and_password_are_connected('user1', 'password1')
+    result = repository.check_user_login('user1', 'password1')
     assert result == 'This password is correct!'
 
 def test_check_if_password_is_incorrect(db_connection):
     db_connection.seed('seeds/bnb.sql')
     repository = UserRepository(db_connection)
-    result = repository.check_if_username_and_password_are_connected('user1', 'password15')
+    result = repository.check_user_login('user1', 'password15')
     assert result == 'Incorrect password! Please try again.'
 
 def test_check_if_username_is_incorrect(db_connection):
     db_connection.seed('seeds/bnb.sql')
     repository = UserRepository(db_connection)
-    result = repository.check_if_username_and_password_are_connected('user15', 'password1')
+    result = repository.check_user_login('user15', 'password1')
     assert result == 'Username not found'
 
 # def test_get_user_login(db_connection):
