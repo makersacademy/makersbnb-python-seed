@@ -101,3 +101,18 @@ button {
     color: #fff;
     cursor: pointer;
 }
+
+.wrapper {
+  display: flex; /* Use flexbox for layout */
+}
+
+.left-column {
+  flex: 1; /* Take up as much space as available */
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
+.right-column {
+  flex: 1; /* Adjust the ratio between left and right columns as needed */
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
