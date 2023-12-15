@@ -69,6 +69,14 @@ def user_login():
     return render_template('/login.html')
 
 
+@app.route('/spaces/user_account', methods=['GET'])
+def get_user_account():
+    # connection = get_flask_database_connection(app)
+    # user_repo = UserRepository(connection)
+    return render_template('user_account.html')
+
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.

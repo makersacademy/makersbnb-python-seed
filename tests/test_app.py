@@ -64,8 +64,15 @@ def test_get_single_space(page, test_web_address, db_connection):
 #         "start_date": "13-12-23",
 #         "end_date": "14-12-23"
 #         })
-#     assert response.status_code == 200
-#     assert response.data.decode("utf-8") == ""
+#     assert response.status_code == 302
+#     redirected_url = response.headers["Location"]
+#     redirected_response = web_client.get(redirected_url)
+    
+
+#     assert redirected_response.status_code == 200
+#     page.goto(f"http://{test_web_address}/spaces")
+#     locator = page.locator('h3').last
+#     expect(locator).to_contain_text("No Orcs Allowed")
 
 
 def test_user_login(page, test_web_address, db_connection, web_client):
@@ -75,7 +82,7 @@ def test_user_login(page, test_web_address, db_connection, web_client):
         'username' : 'user1',
         'password' : 'password1'
     })
-    #assert response.status_code == 200
+    assert response.status_code == 302
     assert response.data.decode("utf-8") == ""
 
 
