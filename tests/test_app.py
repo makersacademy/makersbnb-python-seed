@@ -54,25 +54,25 @@ def test_get_single_space(page, test_web_address, db_connection):
     # p_tag = page.locator("p")
     # expect(p_tag).to_have_text('Price: £'[150])
 
-# def test_post_new_space(page, test_web_address, db_connection, web_client):
-#     db_connection.seed("seeds/bnb.sql")
-#     page.goto(f"http://{test_web_address}/new_space")
-#     response = web_client.post('/new_space', data = {
-#         "name": "No Orcs Allowed",
-#         "description": "What it says on the tin",
-#         "price": 525,
-#         "start_date": "13-12-23",
-#         "end_date": "14-12-23"
-#         })
-#     assert response.status_code == 302
-#     redirected_url = response.headers["Location"]
-#     redirected_response = web_client.get(redirected_url)
+def test_add_new_space(page, test_web_address, db_connection, web_client):
+    db_connection.seed("seeds/bnb.sql")
+    page.goto(f"http://{test_web_address}/spaces/new_space")
+    response = web_client.post('/spaces/new_space', data = {
+        "name": "No Orcs Allowed",
+        "description": "What it says on the tin",
+        "price": 525,
+        "start_date": "13-12-23",
+        "end_date": "14-12-23"
+        })
+    assert response.status_code == 302
+    redirected_url = response.headers["Location"]
+    redirected_response = web_client.get(redirected_url)
     
 
-#     assert redirected_response.status_code == 200
-#     page.goto(f"http://{test_web_address}/spaces")
-#     locator = page.locator('h3').last
-#     expect(locator).to_contain_text("No Orcs Allowed")
+    assert redirected_response.status_code == 200
+    page.goto(f"http://{test_web_address}/spaces")
+    locator = page.locator('h3').last
+    expect(locator).to_contain_text("No Orcs Allowed")
 
 
 def test_user_login(page, test_web_address, db_connection, web_client):
