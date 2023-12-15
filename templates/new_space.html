@@ -12,14 +12,17 @@
         <a class="login" href="#spaces">Login</a>
     </div>
 
-<h1>Add New Space</h1>
-
+<h1>
+    <img class="logo-img" src="/static/images/airbnb.png" alt="Logo">
+    Add Your Space
+</h1>
+<br>
 <form method="post" action="/spaces/new_space">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" required></textarea>
+    <input id="description" name="description" required></input>
 
     <label for="price">Price:</label>
     <input type="number" id="price" name="price" required>

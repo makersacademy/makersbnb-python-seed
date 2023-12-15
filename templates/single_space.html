@@ -2,6 +2,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-GLhlTQ8i7uFkGY5zrYmkWipF5FSVdl+I8ePLv9sdN5pa5CvqPxfoLBydIbe5F5I3" crossorigin="anonymous">
+
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
     </head>
     <body>
 
@@ -13,19 +17,27 @@
         </div>
     
         <!-- Content -->
-        <div class="content">
-            <h1>MakersBnB</h1>
-            <div class="left-column">
-                <!-- Add your photos or any other content here -->
-            </div>
-            <div class="right-column">
-                <h3>{{space.name}}</h3>
-                <p>Description: {{space.description}}</p>
-                <p>Price: £{{space.price}} Per Night</p> 
-                <p>Availability: {{space.start_date}} to {{space.end_date}}</p>
-                <img src="/static/images/{{ space.id}}.jpg">
-            </div>
-        </div>
+
+        <h1>
+            <img class="logo-img" src="/static/images/airbnb.png" alt="Logo">
+            MakersBnB
+          </h1>
+          <br>
+            <div class="wrapper">
+                <div class="left-column">
+                    <img src="/static/images/{{ space.id}}.jpg">
+                </div>
+                <div class="right-column">
+                    <h3>{{space.name}}</h3>
+                    <p>{{space.description}}</p>
+                    <p>£{{space.price}} Per Night</p> 
+                    <p>Availabile from {{space.start_date}} to {{space.end_date}}</p>
+                    <form method="post" action="#">
+                        <button type="submit">Book This Space</button>
+                    </form>
+                </div>
+              </div>
     
     </body>
+    
 </html>
