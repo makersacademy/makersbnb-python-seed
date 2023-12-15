@@ -5,17 +5,27 @@
     </head>
     <body>
 
-        <!--Navigation Div-->
+        <!-- Navigation Div -->
         <div class="topnav">
-        <a href="/spaces">Spaces</a>
-        <a href="/spaces/new_space">Add Space</a>
-        <a class="login" href="#spaces">Login</a>
+            <a href="/spaces">Spaces</a>
+            <a href="/spaces/new_space">Add Space</a>
+            <a class="login" href="#spaces">Login</a>
         </div>
-
-    <h1>MakersBnB</h1>
-        <h3>{{space.name}}</h3>
-        <p>Description: {{space.description}}</p>
-        <p>Price: £{{space.price}}</p> 
-        <p>Availability: {{space.start_date}} to {{space.end_date}}</p>
+    
+        <!-- Content -->
+        <div class="content">
+            <h1>MakersBnB</h1>
+            <div class="left-column">
+                <!-- Add your photos or any other content here -->
+            </div>
+            <div class="right-column">
+                <h3>{{space.name}}</h3>
+                <p>Description: {{space.description}}</p>
+                <p>Price: £{{space.price}}</p> 
+                <p>Availability: {{space.start_date}} to {{space.end_date}}</p>
+                <img src="/static/images/{{ space.id}}.jpg">
+            </div>
+        </div>
+    
     </body>
 </html>
