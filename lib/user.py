@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 @dataclass()
-class Users:
+class User:
     id: int
     email: str
     passw: str
