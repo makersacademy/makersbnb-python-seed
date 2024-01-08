@@ -9,6 +9,6 @@ CREATE TABLE users (
 );
 
 
-INSERT INTO users (email, passw) VALUES ('user_1@mail.com', 'makersbnb2')
-INSERT INTO users (email, passw) VALUES ('user_2@mail.com', 'qwerty123')
-INSERT INTO users (email, passw) VALUES ('user_3@mail.com', 'makersbnb1')
+INSERT INTO users (email, passw) VALUES ('user_1@mail.com', 'makersbnb2');
+INSERT INTO users (email, passw) VALUES ('user_2@mail.com', 'qwerty123');
+INSERT INTO users (email, passw) VALUES ('user_3@mail.com', 'makersbnb1');

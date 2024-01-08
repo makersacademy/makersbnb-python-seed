@@ -1,7 +1,12 @@
 import os
 from flask import Flask, request, render_template,redirect
 from lib.database_connection import get_flask_database_connection
+
+from lib.user import User
+from lib.user_repository import UserRepository
+
 from lib.SpacesRepository import SpacesRepository
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -30,12 +35,30 @@ def get_login():
 def get_new_space():
     return render_template('newspace.html')
 
+
+@app.route('/login', methods=['POST'])
+def create_user():
+    # Set up the database connection and repository
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+
+    # Get the fields from the request form
+    email = request.form['email']
+    passw = request.form['passw']
+
+        # Create a user object
+    user = User(None, email, passw)
+    
+    user = repository.create(user)
+    return render_template('log_in.html')
+
 @app.route('/spaces', methods=['GET'])
 def list_spaces():
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
     spaces = repository.list_all()
     return render_template('spaces.html',spaces = spaces)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
