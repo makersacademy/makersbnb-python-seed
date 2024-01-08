@@ -12,8 +12,11 @@ def test_user_initialized():
     assert user.password == "abcd123"
 
 """
-When two user items are identical
+When we compare two identical users
 They evaluate as equal
 """
-
+def test_user_equal():
+    user_1 = User(1, "test_user", "test_email@test.com", "abcd123")
+    user_2 = User(1, "test_user", "test_email@test.com", "abcd123")
+    assert user_1 == user_2
 
