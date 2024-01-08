@@ -32,12 +32,30 @@ def submit_signup():
 def login_page():
     return render_template('login.html')
 
-@app.route('/testlogin', methods=["POST"])
+@app.route('/loggedin', methods=["POST"])
 def submit_login():
     connection = get_flask_database_connection(app)
     email = request.form['email']
     password = request.form['password']
     return render_template('test_loggedin.html', email=email, password=password)
+
+@app.route('/adminlogin', methods=['GET'])
+def loggedin_page():
+    return render_template('test_loggedin.html')
+#----------------------------------------------#
+#Bookings
+
+@app.route('/book', methods=['GET'])
+def booking_page():
+    #testing authentication
+    email = request.args['email']
+    return render_template('booking.html', email=email)
+
+@app.route('/requests', methods=['GET'])
+def request_page():
+    #testing authentication
+    email = request.args['email']
+    return render_template('requests.html', email=email)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
