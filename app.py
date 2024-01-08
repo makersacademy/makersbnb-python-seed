@@ -6,7 +6,7 @@ from lib.database_connection import get_flask_database_connection
 app = Flask(__name__)
 
 # == Your Routes Here ==
-
+  
 # GET /index
 # Returns the homepage
 # Try it:
