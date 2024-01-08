@@ -8,5 +8,5 @@ class SpaceRepository:
     def find(self, id):
         row = self._conn.execute(f"SELECT * FROM spaces WHERE id={id}")
         row = row[0]
-        space = Space(row['id'], row['name'], row['desc'], row['price'])
+        space = Space(row['id'], row['name'], row['description'], row['price'])
         return space
