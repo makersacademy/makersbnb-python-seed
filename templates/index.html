@@ -2,14 +2,28 @@
 <html>
     <head>
         <title>MakersBnB</title>
-
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>MakersBnB</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="/static/css/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <div id="wrapper">
+            <div id="nav">
+                <div id="logo">LOGO</div>
+                <div id="menu">
+                    <p><a href="/about">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/account/login">Login</a></p>
+                </div>
+            </div>
+            <div id="main">
+                <p>CONTENT</p>
+            </div>
+        </div>
     </body>
 </html>
