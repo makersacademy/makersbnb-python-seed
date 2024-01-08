@@ -10,15 +10,12 @@
     /* border:1px solid black; */
 }
 
-html, body, h1 {
+html, body, h1, h3, hr {
     padding: 0px;
     margin: 0px;
 }
 
 body {
-    /* background-image: url(test.png); */
-    /* background-image: url(test3.jpg); */
-    /* background-image: url(test4.jpg); */
     background-image: url(body-background.png);
 }
 
