@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def is_valid(password):
     if password is not None:
-        valid_length = len(password)
+        valid_length = len(password) >= 8
         has_special_char = any(char in '!@#$%?' for char in password)
         has_digit = any(char.isdigit() for char in password)
         return valid_length and has_special_char and has_digit
@@ -28,7 +28,7 @@ def register():
 
             # # password check function
             if not is_valid(password):
-                return 'Invalid Password', 400
+                return 'Invalid Password', 400 # TODO - html page?
             # # create userRepo instance
             connection = get_flask_database_connection(app)
             user_repo = UserRepository(connection)
