@@ -84,30 +84,48 @@ Can one user have many spaces? Yes (one item can be in many orders)
 
 Can one space have many users? no
 
+Can one space have many bookings? Yes
+
+Can one user have many bookings? Yes
+
 
 # 5. Write the SQL
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username text,
-    
+    email text,
+    password text,
+    bookings int[]
 );
 
-CREATE TABLE items (
+CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
-    item_name text,
-    unit_price int,
-    quantity int
+    space_name text,
+    description text,
+    price money,
+    dates_booked date[],
+    dates_available date[],
+    user_id int, 
+    constraint fk_user foreign key(user_id)
+        references users(id)
+        on delete cascade
 );
 
--- Create the join table.
-CREATE TABLE orders_items (
-    order_id int,
-    item_id int,
-    constraint fk_order foreign key(order_id) references orders(id) on delete cascade,
-    constraint fk_item foreign key(item_id) references items(id) on delete cascade,
-    PRIMARY KEY (order_id, item_id)
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    date date,
+    user_id int,
+    constraint fk_user foreign key(user_id)
+        references users(id)
+        on delete cascade
+    space_id int,
+    constraint fk_space foreign key(space_id)
+        references spaces(id)
+        on delete cascade 
 );
+
+
 
 6. Create the tables
-psql -h 127.0.0.1 shop_manager < seeds/shop.sql
+psql -h 127.0.0.1 bnb < seeds/bnb.sql
