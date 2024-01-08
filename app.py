@@ -1,6 +1,7 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template,redirect
 from lib.database_connection import get_flask_database_connection
+from lib.SpacesRepository import SpacesRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -11,6 +12,10 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
+@app.route('/',methods=['GET'])
+def homepage():
+    return redirect('/index')
+
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
@@ -24,6 +29,13 @@ def get_login():
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
     return render_template('newspace.html')
+
+@app.route('/spaces', methods=['GET'])
+def list_spaces():
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    spaces = repository.list_all()
+    return render_template('spaces.html',spaces = spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
