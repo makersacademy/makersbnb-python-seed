@@ -10,6 +10,9 @@ def test_creation_of_user():
     user2 = User(1, 'testuser', 'test@user.com', 'pass123', None)
     assert user == user2
 
+
+
+
 # UserRepo class tests
 
 def test_get_all_users(db_connection):
@@ -38,3 +41,24 @@ def test_create_user(db_connection):
         User(3, 'newuser', 'newuser@test.com', 'newpass', None)
     ]
     assert id == 3
+    
+def test_check_user(db_connection):
+    db_connection.seed('seeds/bnb.sql')
+    user_repo = UserRepo(db_connection)
+    user = User(None, 'newuser', 'newuser@test.com', 'newpass', None) 
+    assert user_repo.check_user(user)== []
+    
+def test_check_user_when_username_already_used(db_connection):
+    db_connection.seed('seeds/bnb.sql')
+    user_repo = UserRepo(db_connection)
+    user = User(None, 'test_username2', 'newuser@test.com', 'newpass', None) 
+    assert user_repo.check_user(user) == ['username: test_username2 is already in use']
+    
+def test_username_and_email_already_in_use(db_connection):
+    db_connection.seed('seeds/bnb.sql')
+    user_repo = UserRepo(db_connection)
+    user = User(1, 'test_username', 'test@test.com', 'password123', None)
+    assert user_repo.check_user(user) == ['username: test_username is already in use', "email: 'test@test.com' is already registered."]
+    
+    
+    

@@ -34,3 +34,18 @@ class UserRepo:
             [user.username, user.email, user.password, user.bookings]
         )
         return rows[0]['id']
+    
+    def check_user(self, user):
+        """Check if a user exists by their username and password."""
+        errors =[]
+        all_users = self.get_all_users()
+        usernames = [user.username for user in all_users]
+        emails = [user.email for user in all_users]
+        if user.username in usernames:
+            errors.append(f'username: {user.username} is already in use')
+        if user.email in emails:
+            errors.append(f"email: '{user.email}' is already registered.")
+        return errors
+            
+        
+        
