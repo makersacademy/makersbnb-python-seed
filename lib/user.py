@@ -5,3 +5,5 @@ class User:
     id: int
     email: str
     passw: str
+
+    
