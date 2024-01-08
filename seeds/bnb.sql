@@ -38,6 +38,7 @@ CREATE TABLE bookings (
 );
 
 INSERT INTO users (username, email, password) VALUES ('test_username', 'test@test.com', 'password123');
+INSERT INTO users (username, email, password) VALUES ('test_username2', 'test2@test.com', 'password123');
 INSERT INTO spaces (space_name, description, price, user_id) VALUES ('London', 'city', 200, 1);
 INSERT INTO bookings (date, user_id, space_id) VALUES ('2024-01-01' ,1, 1);
 
