@@ -1,0 +1,67 @@
+:root {
+    --colour-1: #C5FFF8;
+    --colour-2: #96EFFF;
+    --colour-3: #5FBDFF;
+    --colour-4: rgb(0, 162, 255);
+    --colour-5: #FFFFFF;
+}
+
+* {
+    /* border:1px solid black; */
+}
+
+html, body, h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    /* background-image: url(test.png); */
+    /* background-image: url(test3.jpg); */
+    /* background-image: url(test4.jpg); */
+    background-image: url(body-background.png);
+}
+
+.page-title {
+    width: 100%;
+    text-align: center;
+    background-color: var(--colour-4);
+    opacity: 0.8;
+    color: var(--colour-1);
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--colour-3);
+    opacity: 0.8;
+}
+
+.navbar > div {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    color: var(--colour-1);
+}
+
+.navbar > div:hover{
+    background-color: var(--colour-4);
+    transition: 1s;
+    cursor: pointer;
+}
+
+.example-container {
+    border: white 2px solid;
+    width: 40%;
+    text-align: center;
+    margin: auto;
+    margin-top: 60px;
+    background-color: var(--colour-3);
+    opacity: 0.9;
+    color: #FFFFFF;
+    border-radius: 10px;
+    max-height: 600px;
+    overflow: scroll;
+}
+
