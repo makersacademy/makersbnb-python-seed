@@ -13,6 +13,7 @@ class DatabaseConnection:
     DEV_DATABASE_NAME = "MakersBNB"
     TEST_DATABASE_NAME = "MakersBNB_test"
 
+
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
 

@@ -13,6 +13,7 @@ def test_get_index(page, test_web_address):
     strong_tag = page.locator("h1")
 
     # We assert that it has the text "This is the homepage."
+
     expect(strong_tag).to_have_text("Welcome to MakersBnB.")
     
 
@@ -25,3 +26,11 @@ def test_get_login(page, test_web_address):
     
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Please log in.")
+
+    expect(strong_tag).to_have_text("This is the homepage.")
+
+def test_get_add_spaces(page, test_web_address):
+    page.goto(f"http://{test_web_address}/newspace")
+    strong_tag = page.locator("p")
+    expect(strong_tag).to_have_text("This is for adding spaces.")
+
