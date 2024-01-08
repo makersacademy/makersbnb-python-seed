@@ -19,16 +19,16 @@ def get_index():
 # def get_test():
 #     return render_template('test.html')
 
-@app.route('/testsubmit', methods=["POST"])
+@app.route('/login', methods=["POST"])
 def submit_signup():
     connection = get_flask_database_connection(app)
     name = request.form['name']
     email = request.form['email']
     password = request.form['password']
-    return render_template('test.html', name=name, email=email, password=password)
+    return render_template('login.html', name=name, email=email, password=password)
 # The above function gathers all of the details for sign up
 
-@app.route('/login', methods=['GET'])
+@app.route('/login2', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
