@@ -6,17 +6,19 @@ from lib.user_repository import UserRepository
 # Create a new Flask app
 app = Flask(__name__)
 
+
 def is_valid(password):
     if password is not None:
         valid_length = len(password) >= 8
-        has_special_char = any(char in '!@#$%?' for char in password)
+        has_special_char = any(char in "!@#$%?" for char in password)
         has_digit = any(char.isdigit() for char in password)
         return valid_length and has_special_char and has_digit
 
 
 # == Your Routes Here ==
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route("/", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form.get("username")
@@ -25,38 +27,47 @@ def register():
         password_confirmation = request.form.get("password_confirmation")
 
         if password == password_confirmation:
-
             # # password check function
             if not is_valid(password):
-                return 'Invalid Password', 400 # TODO - html page?
+                return "Invalid Password", 400  # TODO - html page?
             # # create userRepo instance
             connection = get_flask_database_connection(app)
             user_repo = UserRepository(connection)
             user_repo.create_user(username, email, password)
-            return redirect('success.html') # with button to login
-        
-        else: 
-            return 'passwords do not match'
+            return redirect("success")  # with button to login
 
-    return render_template('index.html')
+        else:
+            return "passwords do not match"
 
-@app.route('/success')
-def success():
-    return render_template('success.html')
-
-@app.route('/login', methods=['GET'])
-def get_login():
-    return render_template('login.html')
-
+    return render_template("index.html")
 
 
 # success page route / html
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
 
 # login page
+@app.route("/login", methods=["GET", "POST"])
+def get_login():
+    # Retrieve credentials from the form
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        connection = get_flask_database_connection(app)
+        user_repo = UserRepository(connection)
+
+        # validate credentials
+        user = user_repo.login(username, password)  # TODO
+        if user is not None:
+            return redirect("/spaces")
+        else:
+            return render_template("/login.html", error="Invalid credentials")
+
+    return render_template("login.html")
 
 
-
-
-if __name__ == '__main__':
-    app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+if __name__ == "__main__":
+    app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
