@@ -23,7 +23,7 @@ CREATE TABLE spaces (
     price INTEGER,
     image_path text,
     description text,
-    date_added text,
+    date_added date,
     user_id int,
     constraint fk_user foreign key(user_id) references users(id)
 );
