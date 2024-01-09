@@ -58,3 +58,20 @@ Space(7, '444 Lakeside Drive', 'Tranquil Lake Cottage', 80, '/images/lake_cottag
     ]
 
 # # test update space
+def test_update_space(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    repository = SpaceRepository(db_connection)
+    repository.update(2, {"address" : "one two three four"})
+    assert repository.find(2) == Space(2, 'one two three four', 'Zootropolis', 124, '/images/zoos.jpg', 'A nice warm bed amongst the animals', datetime.date(2019,8,21), 2)
+
+def test_update_price_space(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    repository = SpaceRepository(db_connection)
+    repository.update(2, {"price" : 200})
+    assert repository.find(2) == Space(2, '5 Zoo lane', 'Zootropolis', 200, '/images/zoos.jpg', 'A nice warm bed amongst the animals', datetime.date(2019,8,21), 2)
+
+def test_update_datetime_space(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    repository = SpaceRepository(db_connection)
+    repository.update(2, {"date_added" : datetime.date(2024,1,5)})
+    assert repository.find(2) == Space(2, '5 Zoo lane', 'Zootropolis', 124, '/images/zoos.jpg', 'A nice warm bed amongst the animals', datetime.date(2024,1,5), 2)

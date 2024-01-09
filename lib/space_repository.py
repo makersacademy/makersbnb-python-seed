@@ -25,9 +25,18 @@ class SpaceRepository:
     def delete(self, id):
         self.connection.execute("DELETE FROM spaces WHERE id = %s", [id])
         return None
-    
 
 
+    def update(self, space_id, new_values):
+        if isinstance(new_values, str):
+            new_values = {"": new_values}
+        existing_space = self.find(space_id)
+        for field, value in new_values.items():
+            setattr(existing_space, field, value)
+        set_clause = ', '.join([f'{field} = %s' for field in new_values.keys()])
+        query = f'UPDATE spaces SET {set_clause} WHERE id = %s'
+        self.connection.execute(query, list(new_values.values()) + [space_id])
+        return None
 
 
 
