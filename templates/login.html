@@ -8,6 +8,9 @@
 <body>
     <div>
         <h1>Log In</h1>
+        {% if message %}
+        {{message}}
+        {% endif %}
         <form method="POST" action="/loggedin">
                 <label for="email" id="email">Email Address: 
                     <input id="email" type="text" name="email" required placeholder="Enter your email address">

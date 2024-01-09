@@ -13,7 +13,7 @@ CREATE TABLE users (
     password VARCHAR(255)
 );
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO users (email, password) VALUES (%s, %s)
+INSERT INTO users (email, password) VALUES ('hello@gmail.com', 'asgduhasfiavisfh')
 
 
 
