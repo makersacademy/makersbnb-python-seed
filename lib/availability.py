@@ -1,3 +1,5 @@
+
+
 class Availability:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
