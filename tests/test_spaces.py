@@ -17,8 +17,8 @@ they can create multiple spaces.
 """
 
 def test_multiple_space_created():
-    tempSpace1 = Space(1, "TestSpace1", "test", 1.5, 1)
-    tempSpace2 = Space(2, "TestSpace2", "test", 1.5, 1)
+    tempSpace1 = Space(1, "testspace1", "test", 1.5, 1)
+    tempSpace2 = Space(2, "testspace2", "test", 1.5, 1)
     assert(type(tempSpace1) is not None)
     assert(type(tempSpace2) is not None)
 

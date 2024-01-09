@@ -38,7 +38,7 @@ CREATE TABLE dates (
     date DATE,
     space_id INT,
     constraint fk_space foreign key(space_id)
-      references users(id)
+      references spaces(id)
       on delete cascade
 );
 

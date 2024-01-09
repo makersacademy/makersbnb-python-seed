@@ -7,18 +7,18 @@ Host_ID - Integer
 """
 
 class Space:
-    def __init__(self, id, name, description, price, host_ID):
+    def __init__(self, id, name, description, price, host_id):
         self.id = id
         self.name = name
         self.description = description
         self.price = price
-        self.host_ID = host_ID
+        self.host_id = host_id
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
  
     def __repr__(self):
-        return f"Space({self.id}, {self.name}, {self.description}, {self.price}, {self.host_ID})"
+        return f"Space({self.id}, {self.name}, {self.description}, {self.price}, {self.host_id})"
     
     def is_valid(self):
         if self.name == None or self.name.strip() == '':
@@ -27,7 +27,7 @@ class Space:
             return False
         if self.price == None:
             return False
-        if self.host_ID == None:
+        if self.host_id == None:
             return False
         return True
         
