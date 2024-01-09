@@ -4,13 +4,15 @@ from lib.space import Space
 test can construct space
 '''
 def test_can_construct():
-    space = Space(1, "12 Norm Street N10 6MR", "2 Bedroom Cottage", 120, "static/image1.jpeg", "A 2 bedroom cottage in a quiet area with lots of nature", "08/01/2023", 1)
+    space = Space(1, '123 Horse Lane', 'Wild horses', 56, '/images/lilkim.jpg', 'A light, warm, and modern space for a gathering.', '2020-10-22', '2024-06-22', 1)
     assert space.id == 1
-    assert space.address == "12 Norm Street N10 6MR"
-    assert space.price == 120
-    assert space.description == "A 2 bedroom cottage in a quiet area with lots of nature"
-    assert space.date_added == "08/01/2023"
-    assert space.image_path == "static/image1.jpeg"
+    assert space.address == "123 Horse Lane"
+    assert space.name == 'Wild horses'
+    assert space.description == "A light, warm, and modern space for a gathering."
+    assert space.price == 56
+    assert space.date_added == "2020-10-22"
+    assert space.date_available == "2024-06-22"
+    assert space.image_path == "/images/lilkim.jpg"
     assert space.user_id == 1
 
 
@@ -18,5 +20,5 @@ def test_can_construct():
 test can format space
 '''
 def test_can_format():
-    space = Space(1, "12 Norm Street N10 6MR", "2 Bedroom Cottage", 120, "static/image1.jpeg", "A 2 bedroom cottage in a quiet area with lots of nature", "08/01/2023", 1)
-    assert str(space) == "Space(1, 12 Norm Street N10 6MR, 2 Bedroom Cottage, 120, static/image1.jpeg, A 2 bedroom cottage in a quiet area with lots of nature, 08/01/2023, 1)"
+    space = Space(1, '123 Horse Lane', 'Wild horses', 56, '/images/lilkim.jpg', 'A light, warm, and modern space for a gathering.', '2020-10-22', '2024-06-22', 1)
+    assert str(space) == "Space(1, 123 Horse Lane, Wild horses, 56, /images/lilkim.jpg, A light, warm, and modern space for a gathering., 2020-10-22, 2024-06-22, 1)"
