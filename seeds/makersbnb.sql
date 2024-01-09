@@ -102,8 +102,8 @@ INSERT INTO dates (date, space_id) VALUES ('2024-01-15', 5);
 
 -- Bookings
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 1, 2, NULL);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 2, 1, NULL);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-21', 3, 5, 1);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 5, 1);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 1, 4, NULL);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 4, 0);
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 2, 2, NULL);
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-21', 3, 3, '1');
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 3, '1');
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 1, 2, NULL);
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 1, '0');
