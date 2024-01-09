@@ -33,7 +33,7 @@ def signup():
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     email = request.form['email']
-    phone_number = request.form['phone_number']
+    telephone_number = request.form['telephone_number']
     password = request.form['password']
 
     # Check if the email already exists
@@ -46,7 +46,7 @@ def signup():
         'first_name': first_name,
         'last_name': last_name,
         'email': email,
-        'phone_number': phone_number,
+        'telephone_number': telephone_number,
         'password': password,
     }
     users.append(user)

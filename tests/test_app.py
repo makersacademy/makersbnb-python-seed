@@ -21,7 +21,7 @@ def test_signup_successful(page, test_web_address):
     page.fill('input[name="first_name"]', 'John')
     page.fill('input[name="last_name"]', 'Doe')
     page.fill('input[name="email"]', 'john.doe@example.com')
-    page.fill('input[name="phone_number"]', '1234567890')
+    page.fill('input[name="telephone_number"]', '1234567890')
     page.fill('input[name="password"]', 'testpassword')
         # Click the "Sign Up" button
     page.click("input[type='submit']")
@@ -45,7 +45,7 @@ def test_email_exists(page, test_web_address):
     page.fill('input[name="first_name"]', 'John')
     page.fill('input[name="last_name"]', 'Doe')
     page.fill('input[name="email"]', 'john.doe@example.com')
-    page.fill('input[name="phone_number"]', '1234567890')
+    page.fill('input[name="telephone_number"]', '1234567890')
     page.fill('input[name="password"]', 'testpassword')
     page.click("input[type='submit']")
     fail_message = page.locator('body:has-text("Email already exists. Please use a different Email.")')
