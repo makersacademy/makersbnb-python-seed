@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.spaces_repository import *
 
@@ -27,12 +27,19 @@ def get_all_spaces():
 def get_new_space():
     return render_template('/spaces/new.html')
 
-# connection = get_flask_database_connection(app)
-# repository = SpaceRepository(connection)
-# spaces = repository.list_all_spaces()
-# for space in spaces:
-#     @app.route("/spaces/"+str(space.id),)
-
+@app.route('/create_space',methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    host = 1
+    new_space = Space(
+        None, request.form['name'], 
+        request.form['description'], 
+        float(request.form['pricePerNight']), 
+        host)
+    repository.add_space(new_space)
+    repository.add_date(request.form['availableFrom'],request.form['availableTo'], new_space.id)
+    return redirect('/spaces')
 
 @app.route('/spaces/<int:space_id>')
 def space(space_id):
