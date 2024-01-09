@@ -18,3 +18,7 @@ class UserRepository:
         self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s)', [
             user.user_name, user.email, user.password])
         return None
+    
+    def find(self, email, password_attempt):
+        rows = self._connection.execute('SELECT email, password FROM users WHERE email = %s AND password = %s', [email, password_attempt])
+        return len(rows) > 0

@@ -33,5 +33,15 @@ def test_create_user(db_connection):
                     User(4, 'Alan', 'test_email@test.com', '1Bcdefgh@')
     ]
 
+"""
+When we call UserRepository.find() with email and password
+it returns true if in database, false if not
+"""
+def test_find_user(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = UserRepository(db_connection)
 
+    user = repository.find('dreamteam@barbiemail.com', 'ImjustKen123%*')
+
+    assert user == True
 
