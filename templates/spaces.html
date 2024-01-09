@@ -11,5 +11,11 @@
     </head>
     <body>
         <h1>Stay at any of these spaces.</h1>
+            
+        {% for artist in artists %}
+            <div>
+                <a href="/spaces/{{space.id}}">{{space.name}}</a> <br>
+            </div>
+        {% endfor %}
     </body>
 </html>

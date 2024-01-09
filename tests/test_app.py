@@ -26,3 +26,13 @@ def test_get_spaces_page(page, test_web_address):
 """
 The spaces page contains a list of spaces
 """
+def test_spaces_page_shows_list(page, test_web_address):
+    page.goto(f"http://{test_web_address}/spaces")
+    div_tags = page.locator("div")
+
+    expect(div_tags).to_have_text([
+        "Cozy Corner",
+        "Serene Spot",
+        "Tranquil Haven",
+        "Peaceful Retreat"
+    ])
