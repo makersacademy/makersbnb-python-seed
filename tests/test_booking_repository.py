@@ -9,10 +9,8 @@ def test_find_single_user(db_connection):
     
     assert user == [
         Booking(1, 1, 3,'2024-02-01'),
-        Booking(2, 1, 5, '2024-03-05'),
-        Booking(3, 1, 2, '2024-04-10'),
+        Booking(2, 1, 2, '2024-04-10'),
     ]
-    
     
 def test_create_booking(db_connection):
     db_connection.seed('seeds/makersbnb.sql')
@@ -24,7 +22,6 @@ def test_create_booking(db_connection):
     
     assert user == [
         Booking(1, 1, 3,'2024-02-01'),
-        Booking(2, 1, 5, '2024-03-05'),
-        Booking(3, 1, 2, '2024-04-10'),
-        Booking(11, 1, 1, '2022-01-01')
+        Booking(2, 1, 2, '2024-04-10'),
+        Booking(8, 1, 1, '2022-01-01')
     ]
