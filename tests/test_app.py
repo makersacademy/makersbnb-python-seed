@@ -30,8 +30,10 @@ def test_get_login(page, test_web_address):
 
 def test_get_add_spaces(page, test_web_address):
     page.goto(f"http://{test_web_address}/newspace")
-    strong_tag = page.locator("p")
-    expect(strong_tag).to_have_text("This is for adding spaces.")
+    strong_tag = page.locator("h1")
+    expect(strong_tag).to_have_text("Create new listing")
+
+
 
 def test_create_user(db_connection, page, test_web_address):
     db_connection.seed("seeds/user_details.sql")

@@ -10,11 +10,19 @@
   align-items: center;
   flex-direction: column;
   outline: none;}
+  .flex-box2 {
+  display:flex;
+  justify-content:space-between;
+  width: 700px;
+  margin-left: 30%;
+  align-items: center;
+  
+  outline: none;}
   .input-symbol-pound {
     position: relative;
 }
 .input-symbol-pound input {
-    padding-left:0px;
+    padding-left:15px;
 }
 .input-symbol-pound:before {
     position: absolute;
@@ -33,8 +41,17 @@
     </head>
     <body>
         <div>
-            <form class="flex-box">
+            <span class="flex-box2"><a href="/spaces">Spaces</a>|<a href="/requests">Requests</a>|<a href='/dashboard'>Dashboard</a>
+            </span>
+                <p align="right" class="t-current_user">Signed in as {{ username }}</p>
+                <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out.</button></p>
+                
+            
+            <form class="flex-box" method="post" action="/newspace">
             <h1>Create new listing</h1>
+            {% for error in errors %}
+            <p><strong><FONT COLOR="#ff0000"> {{error}}</FONT></strong></p>
+            {% endfor %}
             <label for="title" align="center">Listing title:</label>
             <input type="text" id="title" name="title"><br>
             <label for="space_desc" align="center">Brief Description:</label>
