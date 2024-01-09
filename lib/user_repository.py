@@ -17,3 +17,5 @@ class UserRepository:
             "INSERT INTO users (email, passw) VALUES (%s, %s)",
             [user.email, user.passw]
         )
+
+    
