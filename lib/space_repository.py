@@ -1,5 +1,4 @@
 from lib.space import Space
-from lib.database_connection import DatabaseConnection
 
 class SpaceRepository():
     def __init__(self, connection):
@@ -13,7 +12,6 @@ class SpaceRepository():
             list_to_return.append(space)
         if len(list_to_return):
             return list_to_return
-        return False
         
     def find(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])

@@ -24,29 +24,24 @@
                   {% else %}
                       <a href="/about">About</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/login">Login</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/register">Register</a></p>
                   {% endif %}
-                  
               </div>
           </div>
           <div id="main">
-            {% if data['space_list'] %}
-            gjkgjjkh
-            {% endif %}
-              {% if session['email_address'] and data['space_list'] %}
-                <p>USer Logged in</p>
-                <ul>
+            {% if session['email_address'] and data['spaces_list'] %}
+              <p>User: {{ session['fullname'] }}</p>
+              <ul>
                 {% for space in data['spaces_list'] %}
-                  <li>user id: {{ space['user_id'] }}<br>
-                    Space name: {{ space['name'] }}<br>
-                    {{ space['desc'] }}<br>
-                    cost per night: {{ space['price'] }}<br>
-                  </li>
+                <a href=""><li>
+                  <div class="title">User: {{ space.user_id }}</div>
+                  <div class="space">Space: {{ space.name }}</div>
+                  <div class="descr">Descr: {{ space.desc }}</div><br>
+                  <div class="descr">cost per night: {{ space['price'] }}</div><br>
+                </li></a>
                 {% endfor %}
               </ul>
-              {% else %}
-                <p>Please log in first</p>
-              {% endif %}
-
-
+            {% else %}
+              <p>Please log in first</p>
+            {% endif %}
           </div>
       </div>
   </body>
