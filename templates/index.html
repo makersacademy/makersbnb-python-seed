@@ -10,6 +10,28 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <p>This is the homepage.</p>
+        <a href="/login2">Log In</a>
+            <div>
+                Sign Up
+                <form method="POST" action="/login">
+                    <label for="name" id="name">Name: 
+                        <input id="name" name="name" type="text" required placeholder="Enter your name">
+                        </label>
+                        <br>
+                        <label for="email" id="email">Email Address: 
+                            <input id="email" type="text" name="email" required placeholder="Enter your email address">
+                            </label>
+                            <br>
+                            <label for="password" id="password">Password: 
+                                <input id="password" name="password" type="password" required placeholder="Enter your password">
+                                </label>
+                                <br>
+                            <input type="submit">
+                </form>
+            </div>
+            <br>
+            <br>
+        
     </body>
 </html>
