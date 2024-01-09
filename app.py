@@ -33,8 +33,9 @@ def index():
 def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(_connection)
+    rows = ['2','3']
     if 'id' in session:
-        rows = space_repository.find(1) #session['id'])
+        rows = space_repository.find(session['id'])
     else:
         rows = space_repository.all()   
     data = {

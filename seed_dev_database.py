@@ -9,5 +9,11 @@ test_mode = False
 connection = DatabaseConnection(test_mode)
 connection.connect()
 connection.seed("seeds/makersbnb_db_data.sql")
-# Add your own seed lines below...
-# E.g.connection.seed("seeds/your_seed.sql")
+
+
+# comment the next line to set: DEBUG MODE OFF   (change in conftest.py too!!!)
+test_mode = True
+#######
+connection = DatabaseConnection(test_mode)
+connection.connect()
+connection.seed("seeds/makersbnb_db_data.sql")

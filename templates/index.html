@@ -28,12 +28,18 @@
               </div>
           </div>
           <div id="main">
-
-              {% if session['email_address'] %}
+            {% if data['space_list'] %}
+            gjkgjjkh
+            {% endif %}
+              {% if session['email_address'] and data['space_list'] %}
                 <p>USer Logged in</p>
-              <ul>
+                <ul>
                 {% for space in data['spaces_list'] %}
-                  <li>{{ space }}</li>
+                  <li>user id: {{ space['user_id'] }}<br>
+                    Space name: {{ space['name'] }}<br>
+                    {{ space['desc'] }}<br>
+                    cost per night: {{ space['price'] }}<br>
+                  </li>
                 {% endfor %}
               </ul>
               {% else %}

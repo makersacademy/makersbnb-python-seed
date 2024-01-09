@@ -37,6 +37,6 @@ INSERT INTO users (fullname, email_address, passcode) VALUES ('Jenny Mill', 'not
 INSERT INTO users (fullname, email_address, passcode) VALUES ('kevin Tosh', 'kevin-90', 'linux456789!');
 
 INSERT INTO spaces (name, descr, price, user_id) VALUES ('Villa kitty', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Lovely walks', 70, 1);
-INSERT INTO spaces (name, descr, price, user_id) VALUES ('Perro house', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Lovely walks', 35, 1);
-INSERT INTO spaces (name, descr, price, user_id) VALUES ('Parrot delight', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Lovely ', 80, 1);
+INSERT INTO spaces (name, descr, price, user_id) VALUES ('Perro house', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Lovely walks', 35, 3);
+INSERT INTO spaces (name, descr, price, user_id) VALUES ('Parrot delight', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Lovely ', 80, 2);
 INSERT INTO spaces (name, descr, price, user_id) VALUES ('Casa Burro', 'A light, warm, and modern space for a gathering.  Wonderful outdoor living.  Beautiful gardens in Area of Outstanding Natural Beauty in the High Weald . Love', 45, 1);
