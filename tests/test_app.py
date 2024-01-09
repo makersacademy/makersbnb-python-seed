@@ -1,4 +1,8 @@
 from playwright.sync_api import Page, expect
+import hashlib
+#Code to de-crypt password
+# binary_password_attempt = password_attempt.encode("utf-8")
+# hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest()
 
 # Tests for your routes go here
 
@@ -36,8 +40,9 @@ def test_get_login_page(page, test_web_address):
     expect(strong_tag).to_have_text("Log In")
 
 
-def test_login_redirect_when_submit_clicked(page, test_web_address):
+def test_login_redirect_when_submit_clicked(page, test_web_address, db_connection):
     # We load a virtual browser and navigate to the /index page
+    db_connection.seed("seeds/user.sql")
     page.goto(f"http://{test_web_address}/index")
     page.fill("input[name = 'name']", "Test Name")
     page.fill("input[name = 'email']", "Test Email")
@@ -56,26 +61,21 @@ def test_login_redirect_when_hyperlink_clicked(page, test_web_address):
 
     expect(strong_tag).to_have_text("Log In")
 
-def test_get_loggedin_homepage(page, test_web_address):
+def test_get_loggedin_homepage(page, test_web_address, db_connection):
+    db_connection.seed("seeds/user.sql")
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name = 'email']", "Test Email")
-    page.fill("input[name = 'password']", "TestPassword")
+    page.fill("input[name = 'email']", "hello@gmail.com")
+    page.fill("input[name = 'password']", "asgduhasfiavisfh")
     page.click("text=submit")
-
+    print(page.url)
     strong_tag = page.locator("p")
 
     expect(strong_tag).to_have_text("Logged in homepage")
 
-def test_get_book_space(page, test_web_address):
-    #Sign Up
-    page.goto(f"http://{test_web_address}/index")
-    page.fill("input[name = 'name']", "Test Name")
-    page.fill("input[name = 'email']", "Test Email")
-    page.fill("input[name = 'password']", "TestPassword")
-    #Submit New User
-    page.click("text=submit")
-
+def test_get_book_space(page, test_web_address, db_connection):
+    db_connection.seed("seeds/user.sql")
     #Sign In
+    page.goto(f"http://{test_web_address}/login")
     page.fill("input[name = 'email']", "Test Email")
     page.fill("input[name = 'password']", "TestPassword")
     #Submit Details
@@ -88,16 +88,10 @@ def test_get_book_space(page, test_web_address):
 
     expect(strong_tag).to_have_text("Book your space")
 
-def test_get_requests(page, test_web_address):
-    #Sign Up
-    page.goto(f"http://{test_web_address}/index")
-    page.fill("input[name = 'name']", "Test Name")
-    page.fill("input[name = 'email']", "Test Email")
-    page.fill("input[name = 'password']", "TestPassword")
-    #Submit New User
-    page.click("text=submit")
-
+def test_get_requests(page, test_web_address, db_connection):
+    db_connection.seed("seeds/user.sql")
     #Sign In
+    page.goto(f"http://{test_web_address}/login")
     page.fill("input[name = 'email']", "Test Email")
     page.fill("input[name = 'password']", "TestPassword")
     #Submit Details
