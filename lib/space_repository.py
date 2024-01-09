@@ -1,14 +1,13 @@
 from lib.space import Space
 
 class SpaceRepository:
-    pass
-    # def __init__(self, connection):
-    #     self._connection = connection
+    def __init__(self, connection):
+        self._connection = connection
 
-    # def all(self):
-    #     rows = self._connection.execute('SELECT * from albums')
-    #     albums = []
-    #     for row in rows:
-    #         item = Album(row["id"], row['title'], row['release_year'], row['artist_id'])
-    #         albums.append(item)
-    #     return albums
+    def all(self):
+        rows = self._connection.execute('SELECT * from spaces')
+        spaces = []
+        for row in rows:
+            item = Space(row["id"], row['name'], row['location'], row['price'], row['size'], row['description'])
+            spaces.append(item)
+        return spaces
