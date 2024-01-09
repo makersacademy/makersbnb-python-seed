@@ -64,3 +64,12 @@ def test_hashed_passwords(db_connection):
                     User(4, 'Alan', 'test_email@test.com', '706c2f621a4d2a3502767b51abbbf21b0d96d085c6d3cce3e28946fece3bb12a')
     ]
 
+"""
+Test search by id 
+"""
+
+def test_search_users_by_id(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = UserRepository(db_connection)
+
+    assert repository.find_by_id(1) == User(1, 'Lil kim', 'femalerappers@femalerappers.com', '14d7d63e53c91431cb5b4a2e62dbb80881736ae7f228d5b4894935a108b1bfab')
