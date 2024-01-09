@@ -84,7 +84,7 @@ def create_user():
     user = User(None, email, passw)
     
     user = repository.create(user)
-    return redirect('/log_in')
+    return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])
 def list_spaces():
