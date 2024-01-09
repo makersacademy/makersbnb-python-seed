@@ -5,7 +5,7 @@ from lib.user_repository import UserRepository
 import jwt
 import datetime
 from functools import wraps
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, session
 
 
 def token_required(f):
@@ -14,7 +14,7 @@ def token_required(f):
         token = request.cookies.get("token")  # Get token from cookies
 
         if not token:
-            return jsonify({"message": "Token is missing!"}), 403
+            return redirect("login"), 403
 
         try:
             data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
@@ -108,6 +108,17 @@ def get_login():
             return render_template("/login.html", error="Invalid credentials")
 
     return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    # Create a response object for redirection
+    response = make_response(redirect("/"))
+
+    # Clear the token cookie
+    response.set_cookie("token", "", expires=0)
+
+    return response
 
 
 # placeholder - remove on merge

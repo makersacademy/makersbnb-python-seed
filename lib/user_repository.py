@@ -49,8 +49,5 @@ class UserRepository:
             print("User not found")
             return None
 
-    def logout():
-        pass
-
     def request_space():
         pass
