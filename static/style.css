@@ -3,11 +3,17 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    margin: 0px;
 }
 
 header {
     display: flex;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+    background-color: #27374D;
+    margin-top: 0px;
+    align-items: center;
+    color: #DDE6ED;
+    padding: 10px;
 
 }
 
@@ -17,7 +23,41 @@ header h1 {
 
 header a {
     text-decoration: none;
-    padding: 5px;
+    padding-left: 10px;
+    color: #DDE6ED;
+}
+
+.description-container {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.description-container div:nth-of-type(1) {
+    flex-grow: 2;
+    flex-basis: 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    
+}
+
+.description-container div:nth-of-type(1) p,
+.description-container div:nth-of-type(1) h1 {
+    max-width: 100%;
+    flex-wrap: wrap;
+    align-self: flex-start;
+}
+
+.description-container div:nth-of-type(2) {
+    flex-grow: 1;
+    display: flex;
+    max-width: 300px;
+    
 }
 
 header a:nth-of-type(1) {
@@ -29,10 +69,19 @@ header a:nth-of-type(1) {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 footer {
-    margin-top: auto;
+    margin-top: 50px;
+    background-color: #27374D;
+    align-items: center;
+    color: #DDE6ED;
+    padding: 10px;
+    text-align: center;
+
 }
 
 
