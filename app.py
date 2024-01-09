@@ -15,6 +15,41 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+
+users = []
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    # user input from the form
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+    phone_number = request.form['phone_number']
+    password = request.form['password']
+
+    # Check if the email already exists
+    if any(user['email'] == email for user in users):
+        return render_template('signup.html', error_message="Email already exists. Please choose a different email.")
+
+    user_id = len(users) + 1
+    user = {
+        'user_id': user_id,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'phone_number': phone_number,
+        'password': password,
+    }
+    users.append(user)
+    print(f"User '{email}' signed up with user_id {user_id}.")
+    return render_template('signup.html', success_message="Sign-up successful!")
+
+@app.route('/signup')
+def show_signup():
+    return render_template('signup.html')
+    
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
