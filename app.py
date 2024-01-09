@@ -5,15 +5,30 @@ from lib.database_connection import get_flask_database_connection
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
 
+users = []
 # == Your Routes Here ==
 
 # GET /index
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+# @app.route('/index', methods=['GET'])
+# def get_index():
+#     return render_template('index.html')
+
+@app.route('/spaces', methods=['GET'])
+def get_space():
+    return render_template('spaces.html')
+
+
+@app.route('/template', methods=['GET'])
+def get_template():
+    return render_template('template.html')
+
+
+@app.route('/addnewspace', methods=['GET'])
+def get_addnewspace():
+    return render_template('addnewspace.html')
 
 
 @app.route('/template', methods=['GET'])
@@ -23,9 +38,6 @@ def get_template():
 @app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login.html')
-
-
-users = []
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -56,8 +68,14 @@ def signup():
 @app.route('/signup')
 def show_signup():
     return render_template('signup.html')
-    
 
+@app.route('/addnewspace')
+def get_addnewspace():
+    return render_template('addnewspace.html')
+    
+@app.route('/spaces')
+def get_spaces():
+    return render_template('spaces.html')
 
 
 # These lines start the server if you run this file directly
