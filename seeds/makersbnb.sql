@@ -20,7 +20,7 @@ CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
 	address text,
 	name text,
-    price float,
+    price int,
     image_path text,
     description text,
     date_added date,
