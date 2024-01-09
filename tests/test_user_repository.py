@@ -1,4 +1,4 @@
-from lib.user_repository import User_repository
+from lib.user_repository import UserRepository
 from lib.user import User
 
 """
@@ -7,7 +7,7 @@ returns the right list of users
 """
 def test_returns_list_of_users(db_connection):
     db_connection.seed("seeds/makersbnb_db_data.sql")
-    user_repository = User_repository(db_connection)
+    user_repository = UserRepository(db_connection)
     
     expected = [
         User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
@@ -26,7 +26,7 @@ returns instance of 1 user
 """
 def test_given_user_id_return_user(db_connection):
     db_connection.seed("seeds/makersbnb_db_data.sql")
-    user_repository = User_repository(db_connection)
+    user_repository = UserRepository(db_connection)
     
     # corrent user_id return USER class
     username = "notsoFar"
@@ -56,7 +56,7 @@ check for DB integrity
 """
 def test_add_1_user_and_check_db(db_connection):
     db_connection.seed("seeds/makersbnb_db_data.sql")
-    user_repository = User_repository(db_connection)
+    user_repository = UserRepository(db_connection)
     
     result = user_repository.add(0, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
     expected = True
@@ -78,7 +78,7 @@ returns some "error message" accordingly
 """
 def test_check_error_messages(db_connection):
     db_connection.seed("seeds/makersbnb_db_data.sql")
-    user_repository = User_repository(db_connection)
+    user_repository = UserRepository(db_connection)
     
     result = user_repository.add(0, "Peter Pan", "pn", "password123")
     expected = False

@@ -2,7 +2,7 @@ import os, copy
 from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
-from lib.user_repository import User_repository
+from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
 
 # Create a new Flask app
@@ -69,7 +69,7 @@ def login(section):
 def user(section):
     query_result = (False, 'Generic Error')
     _connection = get_flask_database_connection(app)
-    user_repository = User_repository(_connection)
+    user_repository = UserRepository(_connection)
     if section == 'login':
         email_address = request.form['email_address']
         password = request.form['passcode']
