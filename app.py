@@ -35,7 +35,7 @@ def submit_signup():
     return render_template('login.html', name=name, email=email, password=password)
 # The above function gathers all of the details for sign up
 
-@app.route('/login2', methods=['GET'])
+@app.route('/login', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
