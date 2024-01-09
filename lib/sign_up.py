@@ -12,7 +12,7 @@ class UserRepository:
 
         # Store the email and hashed password in the database
         self._connection.execute(
-            'INSERT INTO DEFAULT_MAKERSBNB (email, password) VALUES (%s, %s)',
+            'INSERT INTO users (email, password) VALUES (%s, %s)',
             [email, hashed_password])
         
         #def generate_errors(self):
@@ -34,7 +34,7 @@ class UserRepository:
         # Check whether there is a user in the database with the given email
         # and a matching password hash, using a SELECT statement.
         rows = self._connection.execute(
-            'SELECT * FROM test_table WHERE email = %s AND password = %s',
+            'SELECT * FROM users WHERE email = %s AND password = %s',
             [email, hashed_password_attempt])
 
         # If that SELECT finds any rows, the password is correct.

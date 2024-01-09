@@ -28,9 +28,17 @@ def get_index():
 @app.route('/login', methods=["POST"])
 def submit_signup():
     connection = get_flask_database_connection(app)
+    userRepo = UserRepository(connection)
     name = request.form['name']
     email = request.form['email']
     password = request.form['password']
+    if email == "":
+        message="Please fill in your email"
+        return render_template('login.html', message=message)
+    if password == "":
+        message="Please fill in your password"
+        return render_template('login.html', message=message)
+    userRepo.create(email, password)
     return render_template('login.html', name=name, email=email, password=password)
 
 @app.route('/login2', methods=['GET'])
@@ -42,7 +50,13 @@ def submit_login():
     connection = get_flask_database_connection(app)
     email = request.form['email']
     password = request.form['password']
-    return render_template('test_loggedin.html', email=email, password=password)
+    userRepo = UserRepository(connection)
+    checker = userRepo.check_password(email, password)
+    if checker:
+        return render_template('test_loggedin.html', email=email, password=password)
+    else:
+        message = "Incorrect details" 
+        return render_template('login.html', message = message)
 
 @app.route('/adminlogin', methods=['GET'])
 def loggedin_page():
