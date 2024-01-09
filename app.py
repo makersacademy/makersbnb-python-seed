@@ -23,6 +23,22 @@ def get_login():
 def get_spaces():
     return render_template('spaces.html')
 
+@app.route('/new_space', methods=['GET'])
+def get_new_space():
+    return render_template('new_space.html')
+
+@app.route('/space', methods=['GET'])
+def get_space():
+    return render_template('space.html')
+
+@app.route('/requests', methods=['GET'])
+def get_requests():
+    return render_template('requests.html')
+
+@app.route('/request', methods=['GET'])
+def get_request():
+    return render_template('request.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
