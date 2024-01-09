@@ -1,3 +1,55 @@
 body {
     font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    margin-bottom: 100px;
+
+}
+
+header h1 {
+    font-size: 20px;
+}
+
+header a {
+    text-decoration: none;
+    padding: 5px;
+}
+
+header a:nth-of-type(1) {
+    margin-left: auto;
+}
+
+.image-container {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+footer {
+    margin-top: auto;
+}
+
+
+.price,
+.description,
+.name {
+    display: flex;
+    margin-top: 50px;
+    width: 50%;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+.price button {
+    margin-left: auto;
+    
 }
