@@ -63,6 +63,12 @@ a[tabindex]:focus {
     outline: none;
 }
 
+
 .list-space-button {
     text-align: center;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
 }

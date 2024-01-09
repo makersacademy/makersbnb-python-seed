@@ -1,11 +1,13 @@
 from playwright.sync_api import Page, expect
+import pytest
+from lib.user import User, UserRepo
+
 
 # Tests for your routes go here
 
 """
 We can render the index page
 """
-
 
 def test_get_index(page, test_web_address):
     # We load a virtual browser and navigate to the /index page

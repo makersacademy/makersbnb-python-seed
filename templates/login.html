@@ -17,8 +17,13 @@
 
         <form  method="post">
             <fieldset>
-            Email Address / Username: <input>
-            Password: <input>
+                {% if errors %}
+                {% for error in errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            <label for="username">User Name: <input type="text" name="username" id="username"></label>
+            <label for="password">Password: <input type="password" name="password" id="password"><label>
             <input type="submit" value="Log in">
             </fieldset>
         </form>
