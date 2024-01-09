@@ -33,10 +33,10 @@ def index():
 def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(_connection)
-    rows = ['2','3']
+    #rows = []
     if 'id' in session:
-        rows = space_repository.find(session['id'])
-    else:
+        #rows = space_repository.find(session['id'])
+        #####
         rows = space_repository.all()   
     data = {
          'home_page_section': home_page_section,
