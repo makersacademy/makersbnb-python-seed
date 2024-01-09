@@ -22,6 +22,14 @@
         <h1>Welcome to MakersBnB.</h1>
         <p>Sign up to MakersBnB or <a href="/log_in">login here.</a></p>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger alter-dismissable fade show" role="alter">
+            </div>    
+            {% end for %}
+        {% endwith %}
+
         <form class="flex-box" method="post" action="/signup">
         <!-- <label for="email">E-mail Address:</label><br>
         <input type="text" id="email" name="email"><br>
