@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 # == Your Routes Here ==
 
@@ -14,6 +14,15 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+
+@app.route('/template', methods=['GET'])
+def get_template():
+    return render_template('template.html')
+
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
 
 
 users = []
@@ -48,6 +57,7 @@ def signup():
 def show_signup():
     return render_template('signup.html')
     
+
 
 
 # These lines start the server if you run this file directly
