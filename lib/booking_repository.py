@@ -25,22 +25,31 @@ class BookingRepository:
         return bookings
     
     def find(self, id):
-        row = self._connection.execute(
-            """
-            SELECT * FROM bookings WHERE id=%s;
-            """, [id]
-        )[0]
-        if row['confirmed'] == '1':
-            confirmed = True
-        elif row['confirmed'] == '0':
-            confirmed = False
+        if id in [booking.id for booking in self.all()]:
+            row = self._connection.execute(
+                """
+                SELECT * FROM bookings WHERE id=%s;
+                """, [id]
+            )[0]
+            if row['confirmed'] == '1':
+                confirmed = True
+            elif row['confirmed'] == '0':
+                confirmed = False
+            else:
+                confirmed = None
+            return Booking(row['id'], row['date'], row['space_id'], row['guest_id'], confirmed)
         else:
-            confirmed = None
-        return Booking(row['id'], row['date'], row['space_id'], row['guest_id'], confirmed)
-    
+            raise Exception("Booking does not exist.")
+        
     def create(self, booking):
         date = booking.date
         space_id = booking.space_id
+        if confirmed:= booking.confirmed:
+            confirmed = '1'
+        elif confirmed == False:
+            confirmed = '0'
+        else:
+            confirmed = None
         date_rows = self._connection.execute(
             """
             SELECT * FROM dates where date=%s AND space_id=%s;
@@ -49,7 +58,41 @@ class BookingRepository:
         if len(date_rows) > 0:
             self._connection.execute(
                 """
-                INSERT INTO
-                """
+                INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES (%s, %s, %s, %s);
+                """, [date.isoformat(), space_id, booking.guest_id, confirmed]
             )
-        # Then insert booking into the bookings table
+        else:
+            raise Exception("That date is not available!")
+        return None
+    
+    def delete(self, id):
+        if id in [booking.id for booking in self.all()]:
+            self._connection.execute(
+                """
+                DELETE FROM bookings WHERE id=%s;
+                """, [id]
+            )
+            return None
+        else:
+            raise Exception("Booking does not exist.")
+        
+    
+    def update(self, booking):
+        
+        if booking.id not in [booking.id for booking in self.all()]:
+            raise Exception("Booking does not exist.")
+        if confirmed:= booking.confirmed:
+            confirmed = '1'
+        elif confirmed == False:
+            confirmed = '0'
+        else:
+            confirmed = None
+        self._connection.execute(
+            """
+            UPDATE bookings
+            SET date=%s, space_id=%s, guest_id=%s, confirmed=%s
+            WHERE id=%s;
+            """, [booking.date.isoformat(), booking.space_id, booking.guest_id, confirmed, booking.id]
+        )
+        return None
+    
