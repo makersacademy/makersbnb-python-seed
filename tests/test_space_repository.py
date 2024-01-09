@@ -7,7 +7,7 @@ def test_can_get_all_spaces(db_connection):
     db_connection.seed('seeds/makersbnb.sql')
     repository = SpaceRepository(db_connection)
     assert repository.all() == [
-        Space(1, '123 Horse Lane', 'Wild horses', 56, '/images/lilkim.jpg', 'A light, warm, and modern space for a gathering.', '2020-10-22', 1),
+Space(1, '123 Horse Lane', 'Wild horses', 56, '/images/lilkim.jpg', 'A light, warm, and modern space for a gathering.', '2020-10-22', 1),
 Space(2, '5 Zoo lane', 'Zootropolis', 124, '/images/zoos.jpg', 'A nice warm bed amongst the animals', '2019-08-21', 2),
 Space(3, '789 Starlight Street', 'Celestial Haven', 72, '/images/celestial_haven.jpg', 'Experience the tranquility under the stars in this celestial haven.', '2022-02-08', 3), 
 Space(4, '101 Mountain View', 'Mountain Hideaway', 110, '/images/mountain_hideaway.jpg', 'Escape to the serene mountains and enjoy the breathtaking views.', '2023-01-17', 2),

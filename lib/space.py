@@ -11,7 +11,7 @@ class Space:
         
     
     def __eq__(self, other):
-        return __dict__ == other.__dict__
+        return self.__dict__ == other.__dict__
     
     def __repr__(self):
         return f"Space({self.id}, {self.address}, {self.name}, {self.price}, {self.image_path}, {self.description}, {self.date_added}, {self.user_id})"

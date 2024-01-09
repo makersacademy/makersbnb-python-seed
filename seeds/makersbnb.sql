@@ -20,10 +20,10 @@ CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
 	address text,
 	name text,
-    price float,
+    price INTEGER,
     image_path text,
     description text,
-    date_added date,
+    date_added text,
     user_id int,
     constraint fk_user foreign key(user_id) references users(id)
 );
