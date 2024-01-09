@@ -1,4 +1,4 @@
-h1, h2, h3 {
+h1, h2, h3, h4 {
     margin: 1em auto;
     text-align: center;
 }
@@ -61,4 +61,8 @@ a:active {
 a[tabindex]:focus {
     color:blue;
     outline: none;
+}
+
+.list-space-button {
+    text-align: center;
 }

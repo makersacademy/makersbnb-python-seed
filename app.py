@@ -16,8 +16,12 @@ def get_index():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET'])
-def login():
+def get_login():
     return render_template('login.html')
+
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
+    return render_template('spaces.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
