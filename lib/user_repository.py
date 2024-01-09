@@ -11,3 +11,9 @@ class UserRepository:
             item = User(row["id"], row["email"], row["password"])
             users.append(item)
         return users
+    
+    def create(self, user):
+        rows = self._connection.execute('INSERT INTO users (email, password) VALUES (%s, %s) RETURNING id', [user.email, user.password])
+        row = rows[0]
+        user.id = row["id"]
+        return user

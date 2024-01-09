@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import *
 from lib.user_repository import *
@@ -26,6 +26,33 @@ def get_users():
     for user in users:
         users_string += f'{user.email} - {user.password}\n'
     return users_string
+
+@app.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
+def add_new_user():
+    # Set up the database connection and repository
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+
+        # Get the fields from the request form
+    email = request.form['email']
+    password = request.form['password']
+
+        # Create a book object
+    user = User(None, email, password)
+
+        # Check for validity and if not valid, show the form again with errors
+    if not user.is_valid():
+        return 400
+
+        # Save the book to the database
+    user = repository.create(user)
+
+        # Redirect to the book's show route to the user can see it
+    return redirect("/users")
 
 # login
 
