@@ -38,7 +38,7 @@ CREATE TABLE dates (
     date DATE,
     space_id INT,
     constraint fk_space foreign key(space_id)
-      references users(id)
+      references users(id) -- error - should this reference spaces(id)?
       on delete cascade
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE bookings (
     date DATE,
     space_id INT,
     guest_id INT,
-    confirmed BIT,
+    confirmed BIT, -- bool?
     constraint fk_guest foreign key(guest_id)
       references users(id)
       on delete cascade,
@@ -103,7 +103,7 @@ INSERT INTO dates (date, space_id) VALUES ('2024-01-15', 5);
 -- Bookings
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 1, 2, NULL);
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 2, 1, NULL);
-INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-21', 3, 5, 1);
+INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-21', 3, 5, 1); -- confirmed is a number - should this be BOOL instead of BIT?
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 5, 1);
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-02-01', 1, 4, NULL);
 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES ('2024-11-22', 3, 4, 0);
