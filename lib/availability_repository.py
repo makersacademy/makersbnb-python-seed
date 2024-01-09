@@ -1,5 +1,5 @@
 from lib.availability import Availability
-
+from datetime import date
 
 class AvailabilityRepository:
 

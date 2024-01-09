@@ -1,6 +1,6 @@
 from lib.availability import Availability
 from lib.availability_repository import AvailabilityRepository
-
+from datetime import date
 
 # CREATE TABLE availability (
 #     id SERIAL NOT NULL UNIQUE,
@@ -23,12 +23,12 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
 
     # Assert on the results
     assert availablespaces == [
-        Availability(1,"2025-01-01",True),
-        Availability(1,"2025-01-02",True),
-        Availability(1,"2025-01-03",True),
-        Availability(2,"2025-01-02",True),
-        Availability(3,"2025-01-02",True),
-        Availability(4,"2025-01-02",True),
-        Availability(5,"2025-01-02",True),
-        Availability(6,"2025-01-02",True)
+        Availability(1, date(2025,1,1), True),
+        Availability(1, date(2025,1,2), True),
+        Availability(1, date(2025,1,3), True),
+        Availability(2, date(2025,1,2), True),
+        Availability(3, date(2025,1,2), True),
+        Availability(4, date(2025,1,2), True),
+        Availability(5, date(2025,1,2), True),
+        Availability(6, date(2025,1,2), True)
     ]
