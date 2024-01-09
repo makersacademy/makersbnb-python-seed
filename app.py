@@ -1,8 +1,12 @@
 import os
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
+
+from lib.sign_up import *
+
 from lib.listing import *
 from lib.listing_repository import *
+
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -16,6 +20,7 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
 
 # @app.route('/test', methods=['GET'])
 # def get_test():
@@ -80,6 +85,7 @@ def get_listing(id):
     repo = ListingRepository(connection)
     listing = repo.select(id)
     return render_template('listing.html', listing = listing)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
