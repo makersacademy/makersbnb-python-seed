@@ -8,3 +8,4 @@ def test_construction():
     assert user.id == 1
     assert user.email == "Test Email"
     assert user.passw == "12345"
+

@@ -36,7 +36,7 @@ def get_new_space():
     return render_template('newspace.html')
 
 # POST route for creating new user and password.
-@app.route('/login', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def create_user():
     # Set up the database connection and repository
     connection = get_flask_database_connection(app)
@@ -45,12 +45,16 @@ def create_user():
     # Get the fields from the request form
     email = request.form['email']
     passw = request.form['passw']
+    passw_conf = request.form['passw_conf']
+    
+    if passw != passw_conf:
+        return "passwords must match"
 
     # Create a user object
     user = User(None, email, passw)
     
     user = repository.create(user)
-    return render_template('log_in.html')
+    return redirect('/log_in')
 
 @app.route('/spaces', methods=['GET'])
 def list_spaces():

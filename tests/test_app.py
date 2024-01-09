@@ -42,6 +42,8 @@ def test_create_user(db_connection, page, test_web_address):
     
     # And the field with the name attribute 'passw'
     page.fill("input[name='passw']", "testpassword123")
+
+    page.fill("input[name='passw_conf']", "testpassword123")
     
     page.click("#submit")
     
