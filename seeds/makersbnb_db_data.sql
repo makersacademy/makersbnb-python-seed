@@ -20,18 +20,20 @@ CREATE TABLE users (
   passcode VARCHAR(255)
 );
 
-/*CREATE SEQUENCE IF NOT EXISTS ..._id_seq;
-CREATE TABLE .... (
+CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
+CREATE TABLE spaces (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
-  descr VARCHAR(255),
-  time_stamp VARCHAR(255),
-  [...]
+  description VARCHAR(255),
+  price INTEGER,``
   user_id INTEGER
-);*/
+);
+
 
 
 -- Finally, we add any records that are needed for the tests to run
 INSERT INTO users (fullname, email_address, passcode) VALUES ('Peter Pan', 'peterpan', 'peter&1234');
 INSERT INTO users (fullname, email_address, passcode) VALUES ('Jenny Mill', 'notsoFar', 'docker&1234');
 INSERT INTO users (fullname, email_address, passcode) VALUES ('kevin Tosh', 'kevin-90', 'linux456789!');
+
+INSERT INTO users (name, descr, price, user_id) VALUES ('Yellow', '', '', 0);
