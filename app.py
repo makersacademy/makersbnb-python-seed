@@ -55,7 +55,8 @@ def submit_login():
     userRepo = UserRepository(connection)
     checker = userRepo.check_password(email, password)
     if checker:
-        return render_template('test_loggedin.html', email=email, password=password)
+        id = userRepo.get_userid(email, password)
+        return render_template('test_loggedin.html', id=id, email=email, password=password)
     else:
         message = "Incorrect details" 
         return render_template('login.html', message = message)
@@ -69,18 +70,19 @@ def loggedin_page():
 @app.route('/book', methods=['GET'])
 def booking_page():
     #testing authentication
-    email = request.args['email']
-    return render_template('booking.html', email=email)
+    id = request.args['id']
+    return render_template('booking.html', id=id)
 
 @app.route('/requests', methods=['GET'])
 def request_page():
     #testing authentication
-    email = request.args['email']
-    return render_template('requests.html', email=email)
+    id = request.args['id']
+    return render_template('requests.html', id=id)
 
 @app.route('/create', methods=['GET'])
 def get_data():
-    return render_template('create.html')
+    id = request.args['id']
+    return render_template('create.html', id=id)
 
 @app.route('/create', methods=['POST'])
 def post_data():
