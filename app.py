@@ -57,6 +57,11 @@ def signup():
 
     return render_template('signup.html', success_message="Sign-up successful!")
 
+@app.route('/signup')
+def show_signup():
+    return render_template('signup.html')
+
+
 
 
 # These lines start the server if you run this file directly
