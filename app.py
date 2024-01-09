@@ -44,7 +44,7 @@ def validate_new_space():
     
         
     try:
-        if (datetime.strptime(startdate,'%Y-%m-%d').date() > datetime.strptime(enddate,'%Y-%m-%d').date()) or (datetime.strptime(startdate,'%Y-%m-%d').date() == datetime.strptime(enddate,'%Y-%m-%d').date()):
+        if (datetime.strptime(startdate,'%Y-%m-%d').date() > datetime.strptime(enddate,'%Y-%m-%d').date()) or (datetime.strptime(startdate,'%Y-%m-%d').date() < datetime.now().date()):
             errors.append('Listing must be available from a valid start date.')
     except:
             errors.append('Please enter valid dates')
