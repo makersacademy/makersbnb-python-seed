@@ -17,3 +17,9 @@ class UserRepository:
         row = rows[0]
         user.id = row["id"]
         return user
+    
+    def verify_login(self, email, password):
+        rows = self._connection.execute(f'SELECT * from users WHERE email = {email} AND password = {password}')
+        if len(rows) > 0:
+            return
+

@@ -31,6 +31,16 @@ def get_users():
 def login_page():
     return render_template('login.html')
 
+@app.route('/login', methods=['POST'])
+def user_login():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+
+    email = request.form['email']
+    password = request.form['password']
+
+    
+
 @app.route('/signup', methods=['GET'])
 def signup_page():
     return render_template('signup.html')
