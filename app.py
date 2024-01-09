@@ -14,8 +14,8 @@ app = Flask(__name__)
 # Try it:
 #   ; open http://localhost:5000/index
 @app.route('/', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+def get_homepage():
+    return render_template('homepage.html')
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -26,6 +26,10 @@ def get_users():
     for user in users:
         users_string += f'{user.email} - {user.password}\n'
     return users_string
+
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
 
 @app.route('/signup', methods=['GET'])
 def signup_page():
