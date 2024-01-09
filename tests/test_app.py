@@ -19,6 +19,4 @@ def test_get_index(page, test_web_address):
 
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("This is the homepage.")
-    
-def test_for_signup(page, test_web_address, db_connection):
-    pass
+
