@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Title</title>
+    <link rel="stylesheet" href="/makersbnb-python-seed/static/stylesheet.css">
+</head>
+
+<body>
+    <header>
+        <div class="page-title">
+            <h1>Maker'sBNB</h1>
+        </div>
+    </header>
+    
+    <nav class ="navbar">
+        <div class="flex-nav"></div>
+        <div class="properties-listed">Property Listings</div>
+        <div class="my-listings"><a href="/my-listings">My Listings</a></div>
+        <div class="my-profile"><a href="/my-profile">My Profile</a></div>
+        <div class="my-requests"><a href="/my-rewquests">My Requests</a></div>
+    </nav>
+
+    <main>
+        <div class="example-container">
+            <div class="add-new-space">
+                <h3><a href="/add-new-space">Add New Space</a></h3>
+                <hr>
+            </div>
+            {% for space in spaces %}
+            <div class="property">
+                <h2><a href="/add-new-space/<int:{{space.id}}>">{{space.name}}</a></h2>
+                <p>Description: {{space.description}}</p>
+                <p>Price per night: £{{space.price_per_night}}</p>
+            </div>
+            <hr>
+            {% endfor %}
+        
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer"></div>>
+    </footer>
+</body>
+</html>
