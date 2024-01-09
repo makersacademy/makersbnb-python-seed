@@ -62,3 +62,8 @@ a[tabindex]:focus {
     color:blue;
     outline: none;
 }
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+}
