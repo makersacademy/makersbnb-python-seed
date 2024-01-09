@@ -1,7 +1,7 @@
 from lib.space import Space
 from lib.database_connection import DatabaseConnection
 
-class SpaceRepository:
+class SpaceRepository():
     def __init__(self, connection):
         self._connection = connection
     
@@ -15,11 +15,12 @@ class SpaceRepository:
             return list_to_return
         return False
         
-    def find(self, id_to_find):
-        rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id_to_find])
+    def find(self, id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
         if rows:
             row = rows[0]
-        return Space(row['id'], row['name'], row['descr'], row['price'])
+        space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+        return space
     
     def update(self, space: Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])

@@ -4,7 +4,7 @@ from lib.database_connection import DatabaseConnection
 # ; pipenv run python seed_dev_database.py
 #
 # comment the next line to set: DEBUG MODE OFF   (change in conftest.py too!!!)
-test_mode = True
+test_mode = False
 #######
 connection = DatabaseConnection(test_mode)
 connection.connect()

@@ -32,14 +32,15 @@ def index():
 @app.route('/<home_page_section>', methods=['GET'])
 def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
-    # ..._repository = ...._repository(_connection)
-    rows = []  # fetch listed rooms:         rows = ...._repository.find(session['id'])
-    # if request = /spaces
-    
+    space_repository = SpaceRepository(_connection)
+    if 'id' in session:
+        rows = space_repository.find(1) #session['id'])
+    else:
+        rows = space_repository.all()   
     data = {
-        'home_page_section': home_page_section,
-        'post_list': rows
-        }
+         'home_page_section': home_page_section,
+         'spaces_list': rows
+         }
     return render_template('index.html', data=data)
 
 

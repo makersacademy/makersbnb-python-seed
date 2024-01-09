@@ -55,6 +55,10 @@ body {
     padding: 10px;
     text-align: center;
 }
+    #main .ul {
+        list-style: none;
+    }
+
 #footer {
     width: auto;
     display: flex;
