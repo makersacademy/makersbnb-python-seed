@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+      <!--Navigation Div-->
+      <div class="topnav">
+        <a href="/spaces">Spaces</a>
+        <a href="/spaces/new_space">Add Space</a>
+        <a class="login" href="/spaces/login">Login</a>
+      </div>
+      <h1>
+        <img class="logo-img" src="/static/images/airbnb.png" alt="Logo">
+        MakersBnB
+      </h1>
+      <br>
+      <!-- <h2>Available spaces:</h2> -->
+      <div class="grid-container">
+        {% for space in spaces_list %}
+          <a href="single_space/{{ space.id }}" 
+          class="grid-item">
+          <img src="/static/images/{{ space.id}}.jpg">
+            <h3>{{ space.name }}</h3>
+          </a>
+          <!-- Additional information can be added here -->
+          <!-- <p>Description: {{ space.description }}</p>
+          <p>Price: £{{ space.price }}</p> -->
+        {% endfor %}
+      </div>
+
+    </body>
+    <footer>
+    
+    </footer>
+</html>

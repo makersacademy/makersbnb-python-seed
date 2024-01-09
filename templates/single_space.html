@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-GLhlTQ8i7uFkGY5zrYmkWipF5FSVdl+I8ePLv9sdN5pa5CvqPxfoLBydIbe5F5I3" crossorigin="anonymous">
+
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
+    </head>
+    <body>
+
+        <!-- Navigation Div -->
+        <div class="topnav">
+            <a href="/spaces">Spaces</a>
+            <a href="/spaces/new_space">Add Space</a>
+            <a class="login" href="#spaces">Login</a>
+        </div>
+    
+        <!-- Content -->
+
+        <h1>
+            <img class="logo-img" src="/static/images/airbnb.png" alt="Logo">
+            MakersBnB
+          </h1>
+          <br>
+            <div class="wrapper">
+                <div class="left-column">
+                    <img src="/static/images/{{ space.id}}.jpg">
+                </div>
+                <div class="right-column">
+                    <h3>{{space.name}}</h3>
+                    <p>{{space.description}}</p>
+                    <p>£{{space.price}} Per Night</p> 
+                    <p>Availabile from {{space.start_date}} to {{space.end_date}}</p>
+                    <form method="post" action="#">
+                        <button type="submit">Book This Space</button>
+                    </form>
+                </div>
+              </div>
+    
+    </body>
+    
+</html>
