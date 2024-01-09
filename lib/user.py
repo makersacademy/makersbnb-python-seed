@@ -36,7 +36,7 @@ class UserRepo:
         return rows[0]['id']
     
     def check_user(self, user):
-        """Check if a user exists by their username and password."""
+        """Check if a user exists by their username and email."""
         errors =[]
         all_users = self.get_all_users()
         usernames = [user.username for user in all_users]
@@ -47,5 +47,16 @@ class UserRepo:
             errors.append(f"email: '{user.email}' is already registered.")
         return errors
             
-        
-        
+    def find_user_by_username(self, username):
+        rows = self._connection.execute("SELECT * FROM users WHERE username = %s", [username])
+        row = rows[0]
+        return User(row['id'], row['username'], row['email'], row['password'], row['bookings'])
+
+    def add_booking(self, booking):
+        user = self.find_user_by_id(booking.user_id)
+        bookings = user.bookings
+        if bookings == None:
+            bookings = [booking.id]
+        else:
+            bookings.append(booking.id)
+        self._connection.execute("UPDATE users SET bookings = %s WHERE id = %s", [bookings, user.id])
