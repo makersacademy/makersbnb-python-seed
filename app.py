@@ -53,7 +53,7 @@ def signup():
         password=password
     )
 
-    created_user = repository.create(new_user)
+    repository.create(new_user)
 
     return render_template('signup.html', success_message="Sign-up successful!")
 
