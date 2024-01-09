@@ -11,8 +11,23 @@ def get_index():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET'])
-def login():
+def login_page():
     return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username'].strip().lower()
+    password = request.form['password']
+
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepo(connection)
+    if user_repo.check_password_correct(username, password):
+        user = user_repo.find_user_by_username(username)
+        session['user_id'] = user.id
+        return render_template('spaces.html')
+    else:
+        return render_template('login.html', errors=['Invalid username or password'])
+
 
 @app.route('/', methods=['POST'])
 def signup():
