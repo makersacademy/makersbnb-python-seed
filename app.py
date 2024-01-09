@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
+from lib.space_repository import *
+from lib.space import *
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
@@ -58,7 +60,36 @@ def show_signup():
     return render_template('signup.html')
     
 
+@app.route('/spaces', methods = ['GET'])
+def get_spaces():
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    spaces = repo.all()
+    return render_template('spaces.html', spaces = spaces)
 
+'''
+@app.route('/spaces/<int:id>', methods = ['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    space = repo.find(id)
+    return render_template {create template and then finish this}
+'''
+@app.route('/add-new-space', methods = ['GET'])
+def add_space_page():
+    return render_template('addnewspace.html')
+
+@app.route('/add-new-space', methods = ['POST'])
+def add_space():
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    userid = request.form['userID']
+    name = request.form['name']
+    description = request.form['description']
+    price = request.form['pricepernight']
+    space = Space(None,int(userid),name,description,int(price))
+    repo.create(space)
+    return redirect('/spaces')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
