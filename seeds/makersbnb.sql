@@ -26,7 +26,7 @@ CREATE TABLE spaces (
     date_added date,
     date_available date,
     user_id int,
-    constraint fk_user foreign key(user_id) references users(id)
+    constraint fk_user foreign key(user_id) references users(id) ON DELETE CASCADE
 );
 
 CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
@@ -35,8 +35,8 @@ CREATE TABLE bookings (
     date_booked text,
     user_id int,
     space_id int,
-    constraint fk_user foreign key(user_id) references users(id),
-    constraint fk_space foreign key(space_id) references spaces(id)
+    constraint fk_user foreign key(user_id) references users(id) ON DELETE CASCADE,
+    constraint fk_space foreign key(space_id) references spaces(id) ON DELETE CASCADE
 );
 
 
