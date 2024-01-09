@@ -19,7 +19,7 @@ app = Flask(__name__)
 #   ; open http://localhost:5000/index
 @app.route('/',methods=['GET'])
 def homepage():
-    return redirect('/index')
+    return redirect('/spaces')
 
 @app.route('/index', methods=['GET'])
 def get_index():
