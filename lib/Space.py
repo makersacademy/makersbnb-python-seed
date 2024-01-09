@@ -11,6 +11,5 @@ class Space:
  
     
 
-print(Space(1,'Test','Test desc',12.12,'somedates',1))
 
 
