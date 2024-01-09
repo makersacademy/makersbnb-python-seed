@@ -32,13 +32,17 @@ def index():
 @app.route('/<home_page_section>', methods=['GET'])
 def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
-    # ..._repository = ...._repository(_connection)
-    rows = []  # fetch listed rooms:         rows = ...._repository.find(session['id'])
-    # if request = /spaces
-    
+    space_repository = SpaceRepository(_connection)
+    ss = ''
+    if 'id' in session:
+        rows = space_repository.all()
+    else:
+        rows = []
+        #rows = space_repository.find(session['id'])
+        #####
     data = {
         'home_page_section': home_page_section,
-        'post_list': rows
+        'spaces_list': rows
         }
     return render_template('index.html', data=data)
 
@@ -62,6 +66,8 @@ def login(section):
         section == 'logout',
         'email_address' in session
         ]):
+        session.pop('id', None)
+        session.pop('fullname', None)
         session.pop('email_address', None)
     return redirect('/')
 
@@ -78,6 +84,7 @@ def user(section):
         #check for valid user entry
         if query_result[0]:
             session['id'] = query_result[1].id
+            session['fullname'] = query_result[1].fullname
             session['email_address'] = query_result[1].email_address
             return redirect('/')
     elif section == 'register':
