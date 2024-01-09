@@ -10,3 +10,6 @@ class SpaceRepository:
         row = row[0]
         space = Space(row['id'], row['name'], row['description'], row['price'])
         return space
+    
+    def update(self, space:Space):
+        self._conn.execute("UPDATE spaces SET name=%s, description=%s, price=%s WHERE id=%s", (space.name, space.desc, space.price, space.id))

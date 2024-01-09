@@ -4,6 +4,7 @@ from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
+from lib.space import Space
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -96,11 +97,25 @@ def user(section):
 #   
 # 
 @app.route('/spaces/edit/<id>')
-def get_spaces(id):
+def edit_spaces(id):
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-    
-    return str(space)
+
+    return render_template("space_edit.html", space=space)
+
+@app.route('/spaces/update', methods=['POST'])
+def update_spaces():
+    id = request.form['id']
+    name = request.form['name']
+    desc = request.form['desc']
+    price = request.form['price']
+
+    space = Space(id, name, desc, price)
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space_repo.update(space)
+
+    return "Successfully Edited!"
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
