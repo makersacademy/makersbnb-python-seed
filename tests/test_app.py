@@ -19,3 +19,10 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(heading_1).to_have_text("Space BnB")
 
+
+def test_get_login(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+
+    heading_3 = page.locator("h3")
+
+    expect(heading_3).to_have_text("Log in to SpaceBnB")
