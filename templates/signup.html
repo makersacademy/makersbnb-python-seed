@@ -21,15 +21,21 @@
         <label for="phone_number">Phone Number:</label>
         <input type="text" name="phone_number" required><br>
     
-        <!-- existing fields for username and password -->
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
-    
         <label for="password">Password:</label>
         <input type="password" name="password" required><br>
     
         <input type="submit" value="Sign Up">
     </form>
+</head>
+<body>
     
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if success_message %}
+    <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+    <a href="{{ url_for('get_index') }}">Go to Homepage</a>
 </body>
 </html>
