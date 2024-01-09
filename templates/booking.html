@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a space!</title>
+</head>
+<body>
+    {% if email %}
+    <h1>Book your space</h1>
+    <div>
+        <p>Choose from this unique selection of spaces:</p>
+        <a href="/space1">Flower Lane floor 2</a><br>
+        <a href="/space1">Flower Lane floor 2</a><br>
+        <a href="/space1">Flower Lane floor 2</a><br>
+        <a href="/space1">Flower Lane floor 2</a><br>
+    </div>
+    {% else %}
+        <div> Please log in to view content </div>
+        <a href="/login2">Login page</a>
+    {% endif %}
+</body>
+</html>
