@@ -1,12 +1,12 @@
 import os
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
-<<<<<<<<< Temporary merge branch 1
+
 from lib.sign_up import *
-=========
+
 from lib.listing import *
 from lib.listing_repository import *
->>>>>>>>> Temporary merge branch 2
+
 
 # Create a new Flask app
 app = Flask(__name__)
