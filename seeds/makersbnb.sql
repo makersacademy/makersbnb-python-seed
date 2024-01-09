@@ -41,6 +41,7 @@ CREATE TABLE bookings (
 
 
 INSERT INTO users (user_name, email, password) VALUES
+('gustavo', 'gustavo@gustavo.com', 'Gustavo123456!'),
 ('Lil kim', 'femalerappers@femalerappers.com', '14d7d63e53c91431cb5b4a2e62dbb80881736ae7f228d5b4894935a108b1bfab'),
 ('Curious George', 'fakemonkey@fakemonkey.com', 'Curiousgeorge2£'),
 ('Barbie', 'dreamteam@barbiemail.com', 'ImjustKen123%*');
