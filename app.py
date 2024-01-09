@@ -35,7 +35,7 @@ def list_spaces():
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
     spaces = repository.list_all()
-    return render_template('spaces.html',spaces = spaces)
+    return render_template('spaces.html',spaces = spaces,signedin =False)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
