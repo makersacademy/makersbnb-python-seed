@@ -30,7 +30,7 @@ def login():
     if request.method == 'POST':                      
         username = request.form['email']             
         session['email'] = username                   
-        return redirect('/user')
+        return redirect('/spaces')
     return render_template('/log_in.html')
 
 # @app.route('/log_in', methods=['GET'])
@@ -72,20 +72,13 @@ def create_user():
     passw = request.form['passw']
     passw_conf = request.form['passw_conf']
     
-    """
-    cursor = connection.execute("SELECT email FROM users")
-    email_list = cursor.fetchall()
-    """
-    
-    """
-    if email in email_list:
-        return"E-mail already in use."
-    """
-    
+    if not(repository.check_valid(email)):
+        flash("Email already in use.", "error")
+        return redirect('/index')
 
     if passw != passw_conf:
         flash("Passwords must match.", "error")
-    
+        return redirect('/index')
 
     # Create a user object
     user = User(None, email, passw)
@@ -101,11 +94,18 @@ def list_spaces():
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
     spaces = repository.list_all()
-    if session['email']:
+    try:
+        if session['email']:
         
-       return render_template('spaces.html',spaces = spaces,signedin =True, username = session['email'])
-    else:
-       return render_template('spaces.html',spaces = spaces,signedin =False) 
+            return render_template('spaces.html',spaces = spaces,signedin =True, username = session['email'])
+    except:
+        return render_template('spaces.html',spaces = spaces,signedin =False) 
+        
+
+@app.route('/sign_out')
+def logout():
+    session.clear()
+    return redirect('/spaces')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
