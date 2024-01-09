@@ -58,7 +58,7 @@ def signup():
         telephone_number=telephone_number,
         password=password
     )
-    created_user = repository.create(new_user)
+    repository.create(new_user)
     return render_template('signup.html', success_message="Sign-up successful!")
 
 @app.route('/signup')
