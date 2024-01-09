@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, render_template,redirect
 from lib.database_connection import get_flask_database_connection
-
+from datetime import datetime
 from lib.user import User
 from lib.user_repository import UserRepository
 
@@ -34,6 +34,31 @@ def get_login():
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
     return render_template('newspace.html')
+
+@app.route('/newspace',methods=['POST'])
+def validate_new_space():
+    errors = []
+    data = [title:=request.form['title'],space_description:=request.form['space_desc'],startdate:=request.form['startdate'],enddate:=request.form['enddate'],price:=request.form['price']]
+    if not(all(data)):
+        errors.append('One or more fields are blank. Please revise.')
+    
+        
+    try:
+        if (datetime.strptime(startdate,'%Y-%m-%d').date() > datetime.strptime(enddate,'%Y-%m-%d').date()) or (datetime.strptime(startdate,'%Y-%m-%d').date() == datetime.strptime(enddate,'%Y-%m-%d').date()):
+            errors.append('Listing must be available from a valid start date.')
+    except:
+            errors.append('Please enter valid dates')
+    
+    try:
+        price = float(price)
+    except:
+        errors.append('Please enter a valid price')
+
+    if not(errors):
+        connection = get_flask_database_connection(app)
+        repository = SpacesRepository(connection)
+        repository.add(title,space_description,price,f'{startdate}-{enddate}',1)
+    return render_template('newspace.html', errors = errors)
 
 # POST route for creating new user and password.
 @app.route('/signup', methods=['POST'])
