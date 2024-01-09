@@ -35,7 +35,7 @@ def get_login():
 def get_new_space():
     return render_template('newspace.html')
 
-
+# POST route for creating new user and password.
 @app.route('/login', methods=['POST'])
 def create_user():
     # Set up the database connection and repository
@@ -46,7 +46,7 @@ def create_user():
     email = request.form['email']
     passw = request.form['passw']
 
-        # Create a user object
+    # Create a user object
     user = User(None, email, passw)
     
     user = repository.create(user)

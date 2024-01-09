@@ -33,3 +33,18 @@ def test_get_add_spaces(page, test_web_address):
     strong_tag = page.locator("p")
     expect(strong_tag).to_have_text("This is for adding spaces.")
 
+def test_create_user(db_connection, page, test_web_address):
+    db_connection.seed("seeds/user_details.sql")
+    page.goto(f"http://{test_web_address}/index")
+    
+    # Then we fill out the field with the name attribute 'email'
+    page.fill("input[name='email']", "test_user@mail.com")
+    
+    # And the field with the name attribute 'passw'
+    page.fill("input[name='passw']", "testpassword123")
+    
+    page.click("#submit")
+    
+    strong_tag = page.locator("h1")
+    expect(strong_tag).to_have_text("Please log in.")
+    
