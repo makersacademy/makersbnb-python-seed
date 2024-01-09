@@ -37,7 +37,7 @@ def signup():
     email = request.form['email']
     telephone_number = request.form['telephone_number']
     password = request.form['password']
-
+    
     # Check if the email already exists in the database
     existing_user = repository.find_by_email(email)
     if existing_user:
