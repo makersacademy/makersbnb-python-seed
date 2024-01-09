@@ -15,7 +15,6 @@ class UserRepository:
             'INSERT INTO users (email, password) VALUES (%s, %s)',
             [email, hashed_password])
         
-        
         #def generate_errors(self):
         #errors = []
         #if self.title == None or self.title == "":
