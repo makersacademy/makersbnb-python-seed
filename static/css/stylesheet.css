@@ -9,7 +9,9 @@
 * {
     /* border:1px solid black; */
 }
-
+body {
+    font-size: 18px;
+}
 html, body, h1, h3, hr {
     padding: 0px;
     margin: 0px;
