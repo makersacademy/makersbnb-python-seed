@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <header>
+            <h1>MakersBnB</h1>
+            <a href="/sign_in">Sign in</a>
+            <a href="/create_account">Create account</a>
+        </header>
+        <div class="image-container"> <img src="https://placehold.co/600x400"> </div>
+        <div class="price">
+            <p>$ {{ space.price }} </p>
+            <button type="button">Book Now</button> 
+        </div>
+        <div class='name'>
+            <h1>{{ space.name }}</h1>
+        </div>
+        <div class='description'>
+            <p>{{ space.description }}</p>
+        </div>   
+            
+        <footer>Footer</footer>
+    </body>
+</html>

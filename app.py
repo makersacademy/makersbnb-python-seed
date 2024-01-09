@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.space_repository import *
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -14,6 +15,14 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+
+@app.route('/spaces/<int:id>', methods=['GET'])
+def get_space_page(id):
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    space = repo.find(id)
+    return render_template("space.html", space=space)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
