@@ -17,5 +17,12 @@ class UserRepository:
             "INSERT INTO users (email, passw) VALUES (%s, %s)",
             [user.email, user.passw]
         )
+        
+    def check_valid(self, username):
+        datalist = self.all()
+        for user in datalist:
+            if username == user.email:
+                return False
+        return True
 
     
