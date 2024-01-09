@@ -14,18 +14,25 @@ from lib.spaces import Space
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.cookies.get("token")  # Get token from cookies
+        # Retrieve the token from the cookies
+        token = request.cookies.get("token")
 
+        # If there is no token, redirect to login with 403 Forbidden status
         if not token:
             return redirect("login"), 403
 
         try:
+            # Decode the token to get user data
             data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
             current_user = data["user"]
         except:
+            # If token is invalid, return an error message with 403 Forbidden status
             return jsonify({"message": "Token is invalid!"}), 403
 
-        return f(current_user, *args, **kwargs)
+        # Pass 'current_user' as a keyword argument to avoid conflicts with
+        # positional arguments from the route
+        kwargs["current_user"] = current_user
+        return f(*args, **kwargs)
 
     return decorated
 
@@ -77,7 +84,7 @@ def register():
 # success page route / html
 @app.route("/success")
 @token_required
-def success():
+def success(current_user):
     return render_template("success.html")
 
 
@@ -125,7 +132,8 @@ def logout():
 
 
 @app.route("/spaces", methods=["GET"])
-def get_all_spaces():
+@token_required
+def get_all_spaces(current_user):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.list_all_spaces()
@@ -133,12 +141,14 @@ def get_all_spaces():
 
 
 @app.route("/spaces/new", methods=["GET"])
-def get_new_space():
+@token_required
+def get_new_space(current_user):
     return render_template("/spaces/new.html")
 
 
 @app.route("/create_space", methods=["POST"])
-def create_space():
+@token_required
+def create_space(current_user):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     host = 1
@@ -157,7 +167,11 @@ def create_space():
 
 
 @app.route("/spaces/<int:space_id>")
-def space(space_id):
+@token_required
+def space(space_id, current_user=None):
+    # 'current_user=None' is set to prevent argument conflicts.
+    # Without this default value, Flask would pass 'space_id' from the URL
+    # and 'current_user' from the decorator, leading to a TypeError.
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.get_space_by_id(space_id)
