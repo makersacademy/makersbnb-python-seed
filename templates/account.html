@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
   <head>
+      <title>MakersBnB</title>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Account Managment</title>
+      <title>MakersBnB</title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="static/css/style.css">
+      <!--
+          Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+          If you're wondering how the CSS file below is being loaded.
+      -->
+      <link rel="stylesheet" href="/static/css/style.css" >
   </head>
   <body>
-    {% if login_status=='login' %}
-    <h1 id="title">Please&nbsp;Login</h1>
-    <form action="/user/login" method="POST" id="login">
-      Email address:<input type="text" name="email_address" id="login"><br>
-      Password:<input type="text" name="passcode" id="login"><br>
-      <input type="submit" value="Submit" id="login" />
-    </form>
-    {% elif login_status=='register' %}
-    <h1 id="title">Register</h1>
-    <form action="/user/register" method="POST">
-      <label for="notsure">Register</label>
-        Full Name:<input type="text" name="name" id="notsure">
-        email address: <input type="text" name="username" id="notsure">
-        Password:<input type="text" name="passcode" id="notsure">
-      <input type="submit" value="Submit" />
-    </form>
-    {% else %}
-    <p>ERROR HERE</p>
-    {% endif %}
-    <a href="/">cancel</a>
+    <div id="wrapper">
+      <div id="nav">
+        <div id="logo"><img src="static/img/logo.png" /></div>
+        <div id="menu">
+          <a href="/">cancel</a>
+        </div>
+      </div>
+      <div id="main">
+        {% if login_status=='login' %}
+        <h1 id="title">Please&nbsp;Login</h1>
+        <form action="/user/login" method="POST" id="login">
+          Email address:<input type="text" name="email_address" id="login"><br>
+          Password:<input type="text" name="passcode" id="login"><br>
+          <input type="submit" value="Submit" id="login" />
+        </form>
+        {% elif login_status=='register' %}
+        <h1 id="title">Register</h1>
+        <form action="/user/register" method="POST">
+          <label for="notsure">Register</label>
+            Full Name:<input type="text" name="name" id="notsure"><br>
+            email address: <input type="text" name="username" id="notsure"><br>
+            Password:<input type="text" name="passcode" id="notsure"><br>
+          <input type="submit" value="Submit" />
+        </form>
+        {% else %}
+        <p>ERROR HERE</p>
+        {% endif %}
+      </div>
+    </div>
   </body>
 </html>
 

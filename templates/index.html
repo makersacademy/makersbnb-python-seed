@@ -16,11 +16,11 @@
     <body>
         <div id="wrapper">
             <div id="nav">
-                <div id="logo">LOGO</div>
+                <div id="logo"><img src="static/img/logo.png" /></div>
                 <div id="menu">
                     <p>
                     {% if session['email_address'] %}
-                        <a href="/spaces">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/loout">Sign out</a></p>
+                        <a href="/spaces">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
                     {% else %}
                         <a href="/about">About</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/login">Login</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/register">Register</a></p>
                     {% endif %}

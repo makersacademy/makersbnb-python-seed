@@ -34,7 +34,9 @@ body {
 }
 #logo {
     width: 100px;
-    height: auto;
+    height: 100px;
+    display: flex;
+    align-items: center;
 }
     #logo img {
         width: 55px;
