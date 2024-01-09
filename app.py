@@ -1,12 +1,9 @@
 import os
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
-
 from lib.sign_up import *
-
 from lib.listing import *
 from lib.listing_repository import *
-
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -17,15 +14,17 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
+
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-
 
 # @app.route('/test', methods=['GET'])
 # def get_test():
 #     return render_template('test.html')
 
+#AMY AND SEAN'S CODE
+# This function gathers all of the details for sign up
 @app.route('/login', methods=["POST"])
 def submit_signup():
     connection = get_flask_database_connection(app)
@@ -41,7 +40,6 @@ def submit_signup():
         return render_template('login.html', message=message)
     userRepo.create(email, password)
     return render_template('login.html', name=name, email=email, password=password)
-# The above function gathers all of the details for sign up
 
 @app.route('/login2', methods=['GET'])
 def login_page():
@@ -64,14 +62,19 @@ def submit_login():
 @app.route('/adminlogin', methods=['GET'])
 def loggedin_page():
     return render_template('test_loggedin.html')
+
+
+
 #----------------------------------------------#
 #Bookings
-
 @app.route('/book', methods=['GET'])
 def booking_page():
+    connection = get_flask_database_connection(app)
+    repo = ListingRepository(connection)
     #testing authentication
     id = request.args['id']
-    return render_template('booking.html', id=id)
+    listings = repo.get()
+    return render_template('booking.html', id=id, listings=listings)
 
 @app.route('/requests', methods=['GET'])
 def request_page():
@@ -79,6 +82,9 @@ def request_page():
     id = request.args['id']
     return render_template('requests.html', id=id)
 
+
+
+#ROBERT AND HARRY'S CODE
 @app.route('/create', methods=['GET'])
 def get_data():
     id = request.args['id']
