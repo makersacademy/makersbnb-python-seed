@@ -1,15 +1,24 @@
 from lib.space import Space
-from lib.database_connection import DatabaseConnection
 
-class SpaceRepository:
+class SpaceRepository():
     def __init__(self, connection):
-        self._conn = connection
+        self._connection = connection
     
+    def all(self):
+        rows = self._connection.execute('SELECT * FROM spaces')
+        list_to_return = []
+        for row in rows:
+            space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+            list_to_return.append(space)
+        if len(list_to_return):
+            return list_to_return
+        
     def find(self, id):
-        row = self._conn.execute(f"SELECT * FROM spaces WHERE id={id}")
-        row = row[0]
-        space = Space(row['id'], row['name'], row['description'], row['price'])
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
+        if rows:
+            row = rows[0]
+        space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
         return space
     
-    def update(self, space:Space):
-        self._conn.execute("UPDATE spaces SET name=%s, description=%s, price=%s WHERE id=%s", (space.name, space.desc, space.price, space.id))
+    def update(self, space: Space):
+        self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])

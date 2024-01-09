@@ -32,10 +32,10 @@
         {% elif login_status=='register' %}
         <h1 id="title">Register</h1>
         <form action="/user/register" method="POST">
-          <label for="notsure">Register</label>
-            Full Name:<input type="text" name="name" id="notsure"><br>
-            email address: <input type="text" name="username" id="notsure"><br>
-            Password:<input type="text" name="passcode" id="notsure"><br>
+          <label>Register</label>
+            Full Name:<input type="text" name="name"><br>
+            email address: <input type="text" name="email_address"><br>
+            Password:<input type="text" name="passcode"><br>
           <input type="submit" value="Submit" />
         </form>
         {% else %}
