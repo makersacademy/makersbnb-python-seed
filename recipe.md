@@ -28,7 +28,7 @@ Record	| Properties
 --------+-----------
 user    |  name, email, password, bookings
 space   |  name, description, price, dates_booked, dates_availible, user_id
-bookings|  date, user_id, space_id
+bookings|  date, user_id, space_id, confirmed
 
 
 Name of the first table (always plural): users
@@ -73,6 +73,7 @@ user_id: int
 Table: bookings
 id: SERIAL
 date: date
+confirmed: bool
 user_id: int
 space_id: int 
 
@@ -104,8 +105,6 @@ CREATE TABLE spaces (
     space_name text,
     description text,
     price money,
-    dates_booked date[],
-    dates_available date[],
     user_id int, 
     constraint fk_user foreign key(user_id)
         references users(id)
@@ -115,6 +114,7 @@ CREATE TABLE spaces (
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     date date,
+    confirmed boolean
     user_id int,
     constraint fk_user foreign key(user_id)
         references users(id)

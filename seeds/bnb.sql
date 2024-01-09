@@ -16,17 +16,20 @@ CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name text,
     description text,
-    price money,
+    price int,
     user_id int, 
     constraint fk_user foreign key(user_id)
         references users(id)
-        on delete cascade
+        on delete cascade,
+    start_date date,
+    end_date date
 );
 
 
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
-    date date,
+    date text,
+    confirmed boolean,
     user_id int,
     constraint fk_user foreign key(user_id)
         references users(id)
@@ -39,6 +42,8 @@ CREATE TABLE bookings (
 
 INSERT INTO users (username, email, password) VALUES ('test_username', 'test@test.com', 'password123');
 INSERT INTO users (username, email, password) VALUES ('test_username2', 'test2@test.com', 'password123');
-INSERT INTO spaces (space_name, description, price, user_id) VALUES ('London', 'city', 200, 1);
-INSERT INTO bookings (date, user_id, space_id) VALUES ('2024-01-01' ,1, 1);
+
+INSERT INTO spaces (space_name, description, price, user_id, start_date, end_date) VALUES ('London', 'city', 200, 1, '2024-02-01', '2025-02-01');
+
+INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-01', False, 1, 1);
 

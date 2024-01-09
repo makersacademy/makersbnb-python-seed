@@ -9,14 +9,13 @@ from lib.user import User, UserRepo
 We can render the index page
 """
 
-@pytest.mark.skip(reason ="Skipped as not part of our testing Neil+Joe")
 def test_get_index(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
     page.goto(f"http://{test_web_address}/")
 
     # We look at the <p> tag
-    strong_tag = page.locator("p")
+    heading_1 = page.locator("h1")
 
     # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
+    expect(heading_1).to_have_text("Space BnB")
 
