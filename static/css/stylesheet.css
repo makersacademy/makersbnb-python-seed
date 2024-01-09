@@ -16,7 +16,21 @@ html, body, h1, h3, hr {
 }
 
 body {
-    background-image: url(body-background.png);
+    background-image: url(../images/body-background.png);
+}
+
+.login_title {
+    color: var(--colour-1);
+    opacity: 0.8;
+    font-size: x-large;
+    margin: 5%;
+    padding: 5%;
+}
+
+.login_headers {
+    color: var(--colour-1);
+    opacity: 0.8;
+    font-size: large;
 }
 
 .page-title {
@@ -25,6 +39,18 @@ body {
     background-color: var(--colour-4);
     opacity: 0.8;
     color: var(--colour-1);
+}
+
+.form_input {
+    width: 120px;
+    opacity: 0.6;
+    background-color: var(--colour-2);
+}
+
+.button {
+    width: 60px;
+    opacity: 0.8;
+    background-color: var(--colour-4);
 }
 
 .navbar {
