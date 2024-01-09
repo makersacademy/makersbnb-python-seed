@@ -102,3 +102,46 @@ footer {
     margin-left: auto;
     
 }
+/* Create Account CSS */
+
+.forms_container {
+    padding: 100px;
+    margin: 10px; 
+    border: black 1px solid;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;     
+    justify-content: space-around;
+}
+
+
+input{
+    margin-bottom: 30px;
+}
+
+.account_link{
+    font-size: 10px;
+}
+
+.button{
+    background-color: #03adfc;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.link_create_acc_container{
+    width: 500px;
+    display: flex; 
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap; 
+}

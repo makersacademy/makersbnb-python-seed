@@ -6,7 +6,7 @@
     </head>
     <body>
         <header><h1>MakersBnB</h1></header>
-        <div>
+        <div class = "forms_container">
             <h2>Create Account</h2>
         <form action="/profile" method="POST" class="create_account_form">
             <label for="user_name">Username</label><br>
@@ -15,9 +15,12 @@
             <input type="text" email="email"><br/>
             <label for="password">Password</label><br/>
             <input type="text" password="password"><br/>
-            <input type="submit" value="Create Account">
+            <div class = "link_create_acc_container">
+            <a href="/sign_in" class = "account_link">Already have an account? Sign in here!</a>
+            <input type="submit" value="Create Account" class = "button">
+            </div>
         </form>
-        <a href="/sign_in">Already have an account? Sign in here!</a>
+        
         </div>
     </body>
 </html>
