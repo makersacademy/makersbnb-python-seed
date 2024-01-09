@@ -30,7 +30,7 @@ Spaces | title, description, price, daterange, user_id
 Spaces:
     * id: SERIAL
     * title: text
-    * description: text
+    * space_description: text
     * price: float
     * daterange: text
     * user_id: int

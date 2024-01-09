@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            .flex-box {
+  display:flex;
+  justify-content:space-between;
+  width: 300px;
+  margin-left: 40%;
+  align-items: center;
+  flex-direction: column;
+  outline: none;}
+  .input-symbol-pound {
+    position: relative;
+}
+.input-symbol-pound input {
+    padding-left:0px;
+}
+.input-symbol-pound:before {
+    position: absolute;
+    top: 0;
+    content:"£";
+    left: 5px;
+}
+        </style>
         <title>MakersBnB</title>
 
         <!--
@@ -10,6 +32,26 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is for adding spaces.</h1>
-    </body>
+        <div>
+            <form class="flex-box">
+            <h1>Create new listing</h1>
+            <label for="title" align="center">Listing title:</label>
+            <input type="text" id="title" name="title"><br>
+            <label for="space_desc" align="center">Brief Description:</label>
+            <input type="text" id="space_desc" name="space_desc"><br>
+    
+            <label for="price" align="center">Price:</label>
+            <span class="input-symbol-pound">
+                <input type="text" id="price" name="price" />
+            </span>
+            <span>
+                <label for="startdate" align="left">Available from:</label> &nbsp;&nbsp; <label for="enddate">Available Until:</label>
+            </span>
+            <span>
+                <input type="date" id="startdate" name="startdate"> <input type="date" id="enddate" name="enddate">
+            </span>
+            <button type="submit">Submit</button>
+            </form>
+        </div>
+        </body>
 </html>
