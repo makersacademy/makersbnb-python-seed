@@ -2,7 +2,7 @@
 <html>
     <head>
     <title>Add your space</title>
-        <link rel="stylesheet" href="/static/style.css" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}">
     </head>
     <body style="background-color: powderblue;">
         <h1 style="text-align:center;" > List a Space </h1>
@@ -13,12 +13,8 @@
         <!--to here-->
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name" value=""><br>
-        
         <label for="description">Description</label><br><textarea id="description" name = "description" rows = "5" cols = "50">
-        </textarea><br> <!--
-        <label for="description">Description: </label><br>
-        <input type="text" id="description" name="description"><br>
-        -->
+        </textarea><br>
         <label for="pricepernight">Price per night (£)</label><br>
         <input type="integer" id="pricepernight" name="pricepernight" value=""><br>
         <label for="availablefrom">Available from (DD/MM/YY)</label><br>

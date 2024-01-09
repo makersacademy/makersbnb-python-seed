@@ -5,15 +5,17 @@ from playwright.sync_api import Page, expect
 """
 We can render the index page
 """
-def test_get_index(page, test_web_address):
+def test_get_spaces(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
+    page.goto(f"http://{test_web_address}/spaces")
 
     # We look at the <p> tag
-    strong_tag = page.locator("p")
+    h1_tag = page.locator("h1")
 
     # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
+
+    expect(h1_tag).to_have_text("Maker'sBNB")
+
 
 def test_signup_successful(page, test_web_address):
     page.goto(f"http://{test_web_address}/signup")
@@ -51,7 +53,6 @@ def test_email_exists(page, test_web_address):
     fail_message = page.locator('body:has-text("Email already exists. Please use a different Email.")')
     assert fail_message
 
-
 def test_get_spaces(db_connection, page, test_web_address):
     db_connection.seed('seeds/makers_bnb.sql')
     page.goto(f'http://{test_web_address}/spaces')
@@ -84,3 +85,4 @@ def test_create_space(db_connection, page, test_web_address):
         '\nCountry escape 2\n Description: A luxury cottage in the middle of the countryside \n Price per night: £106\n',
         '\nhouse \n Description: a house\n Price per night: £110'
     ])
+
