@@ -15,6 +15,11 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+
+@app.route('/spaces/new', methods=['GET'])
+def get_new_space():
+    return render_template('/spaces/new.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
