@@ -1,7 +1,8 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
-
+from lib.user_repository import UserRepository
+from lib.user import User
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
 
@@ -12,9 +13,9 @@ users = []
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-# @app.route('/index', methods=['GET'])
-# def get_index():
-#     return render_template('index.html')
+@app.route('/index', methods=['GET'])
+def get_index():
+    return render_template('index.html')
 
 @app.route('/spaces', methods=['GET'])
 def get_space():
@@ -30,52 +31,39 @@ def get_template():
 def get_addnewspace():
     return render_template('addnewspace.html')
 
-
-@app.route('/template', methods=['GET'])
-def get_template():
-    return render_template('template.html')
-
 @app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login.html')
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    # user input from the form
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     email = request.form['email']
     telephone_number = request.form['telephone_number']
     password = request.form['password']
-
-    # Check if the email already exists
-    if any(user['email'] == email for user in users):
+    # Check if the email already exists in the database
+    existing_user = repository.find_by_email(email)
+    if existing_user:
         return render_template('signup.html', error_message="Email already exists. Please choose a different email.")
-
-    user_id = len(users) + 1
-    user = {
-        'user_id': user_id,
-        'first_name': first_name,
-        'last_name': last_name,
-        'email': email,
-        'telephone_number': telephone_number,
-        'password': password,
-    }
-    users.append(user)
-    print(f"User '{email}' signed up with user_id {user_id}.")
+    # Continue with user registration if the email is unique
+    new_user = User(
+        id=None,
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        telephone_number=telephone_number,
+        password=password
+    )
+    created_user = repository.create(new_user)
     return render_template('signup.html', success_message="Sign-up successful!")
 
 @app.route('/signup')
 def show_signup():
     return render_template('signup.html')
-
-@app.route('/addnewspace')
-def get_addnewspace():
-    return render_template('addnewspace.html')
-    
-@app.route('/spaces')
-def get_spaces():
-    return render_template('spaces.html')
 
 
 # These lines start the server if you run this file directly
