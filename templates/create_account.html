@@ -8,23 +8,35 @@
         <header><h1>MakersBnB</h1></header>
         <div class = "forms_container">
             <h2>Create Account</h2>
-        <form method="POST" action="">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <ul class="flashes">
-                  {% for message in messages %}
-                      <li>{{ message }}</li>
-                  {% endfor %}
-              </ul>
-            {% endif %}
-            {% endwith %}
-            {{ form.csrf_token }}
-            {{ form.hidden_tag() }}
-            {{ form.username }}<br>
-            {{ form.password }}<br>
-            {{ form.email }}<br>
-            {{ form.submit }}
-        </form>
+            <form method="POST" action="">
+                <fieldset>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                    {{ form.csrf_token }}
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.username }}<br>
+                    </p>
+                    <p>
+                        {{ form.password }}<br>
+                    </p>
+                    <p>
+                        {{ form.email }}<br>
+                    </p>
+                    <!-- Link to navigate back to sign_in page-->
+                    <div class = "link_create_acc_container">
+                        <a href="/login" class = "account_link">Already have an account? Sign in here!</a>
+                        {{ form.submit(class="button")}}
+                    </div>
+                </fieldset>
+            </form>
         
         </div>
     </body>
