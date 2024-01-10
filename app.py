@@ -22,6 +22,8 @@ def get_spaces():
 
 @app.route('/new_space', methods=['GET'])
 def get_new_space():
+    if 'user_id' not in session:
+        return redirect('/')
     return render_template('new_space.html')
 
 @app.route('/new_space', methods=['POST'])

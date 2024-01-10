@@ -26,3 +26,24 @@ def test_get_login(page, test_web_address):
     heading_3 = page.locator("h3")
 
     expect(heading_3).to_have_text("Log in to SpaceBnB")
+
+def test_create_new_space(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+    page.get_by_label("username").fill("bob")
+    page.get_by_label("password").fill("bob")
+
+    heading_3 = page.locator("h3")
+    expect(heading_3).to_have_text("Book a Space")
+
+    
+    # page.goto(f"http://{test_web_address}/")
+    # page.get_by_label("username").fill("bob")
+    # page.get_by_label("email").fill("bob@bob.com")
+    # page.get_by_label("username").fill("bob")
+    # page.get_by_label("username").fill("bob")
+
+
+    # page.goto(f"http://{test_web_address}/new_space")
+
+    # page.get_by_role("textbox").fill("Peter")
+
