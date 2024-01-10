@@ -50,3 +50,5 @@ INSERT INTO spaces (space_name, location, description, price, user_id, start_dat
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('Town cottage', 'Newastle', 'city', 125, 1, '2024-03-01', '2024-11-01');
 
 INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-01', False, 1, 1);
+INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-02', False, 1, 2);
+INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-03', False, 2, 2);

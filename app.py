@@ -4,6 +4,8 @@ from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
 from lib.space import Space
 from lib.space_repository import SpaceRepository
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 
 app = Flask(__name__)
 app.secret_key='12'
@@ -45,13 +47,55 @@ def create_new_space():
 
     return render_template('spaces.html')
 
-@app.route('/space', methods=['GET'])
-def get_space():
-    return render_template('space.html')
+@app.route('/space/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find_by_id(id)[0]
+    return render_template('space.html', space=space)
+
+@app.route('/book/<id>', methods=['POST'])
+def book(id):
+    connection = get_flask_database_connection(app)
+    # space_repo = SpaceRepository(connection)
+    # space = space_repo.find_by_id(id)[0]
+    user_repo = UserRepo(connection)
+    booking_repo = BookingRepository(connection)
+    booking_date = request.form['date']
+    booking = Booking(None, booking_date, False, session['user_id'], id)
+    booking_id = booking_repo.create(booking)
+    booking.id = booking_id
+    user_repo.add_booking(booking)
+    return redirect('/spaces')
 
 @app.route('/requests', methods=['GET'])
 def get_requests():
-    return render_template('requests.html')
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    user_bookings = booking_repo.find_all_by_user(session["user_id"])
+    spaces_and_bookings = []
+    space_repo = SpaceRepository(connection)
+    for booking in user_bookings:
+        space = space_repo.find_by_id(booking.space_id)[0]
+        spaces_and_bookings.append((booking, space))
+
+    spaces_owned_by_user = space_repo.find_spaces_by_user(session["user_id"])
+    owned_space_ids = [space.id for space in spaces_owned_by_user]
+    all_bookings = booking_repo.all()
+    requests_received = []
+    for booking in all_bookings:
+        if booking.space_id in owned_space_ids:
+            requests_received.append(booking)
+    
+    user_repo = UserRepo(connection)
+    space_bookings_users_rec = []
+    for booking in requests_received:
+        space = space_repo.find_by_id(booking.space_id)[0]
+        user = user_repo.find_user_by_id(booking.user_id)
+        space_bookings_users_rec.append((space, booking, user))
+
+    return render_template('requests.html', spaces_and_bookings=spaces_and_bookings, space_bookings_users_rec=space_bookings_users_rec)
+
 
 @app.route('/viewspace/<int:space_id>', methods=['GET'])
 def get_viewspace(space_id):
