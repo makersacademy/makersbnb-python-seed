@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang=“en”>
+    <style>
+        #textContainer {
+            /* make element inline flex-container */
+            /* this will make its children flex-items */
+            display: inline-flex;
+            /* align-items items in column */
+            flex-direction: column;
+            /* center items horizontally */
+            align-items: center;
+            /* center items vertically */
+            justify-content: space-between;
+            
+            border: solid 3px black;
+            width: 325px;
+            height: 162px;
+            box-sizing: border-box;
+            margin-left: 42%;
+            margin-right: 50%;
+          }
+          .button {
+              border: 2px solid rgb(0,0,0);
+              color: rgb(0, 0, 0);
+              padding: 15px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+              margin: 4px 2px;
+              cursor: pointer;
+                    }
+            .button3 {
+              border: 2px solid rgb(0,0,0);
+              color: rgb(0, 0, 0);
+              padding: 2px 2px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+              margin: 4px 2px;
+              cursor: pointer;
+                    }
+        .button1 {background-color: #cbc9c9;} 
+        .button2 {background-color: #cbc9c9;} 
+        .button3 {background-color: #cbc9c9;} 
+        .flex-box {
+          display:flex;
+          justify-content:space-between;
+          outline: none;
+                        }
+        .flex-box2 {
+            display:flex;
+            justify-content:space-between;
+            width: 700px;
+            margin-left: 30%;
+            align-items: center;
+            
+            outline: none;}
+        .scroll-box {
+                width: 300px;
+                height: 200px;
+                overflow: auto;
+                border: 1px solid #ccc;
+              }
+          </style>
+    <head>
+        <title>My Dashboard</title>
+    </head>
+    <div>
+        <span class="flex-box2"><a href="/spaces">Spaces</a>|<a href='/newspace'>New Listing</a>
+        </span>
+    <body>
+        <p align="right" class="t-current_user">Signed in as {{ username }}</p>
+        <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+        <h1 align="left">
+    
+    <div class="scroll-box"></div>
+    
+    
+    
+    <div class="scroll-box"></div>
+
+
+
+
+    <div class="scroll-box"> 
+        {% for space in spaces %}
+            <div>
+                <h3>{{space.title}}<br align="right">£{{space.price}}</h3>
+                <p>
+                    Available from: {{space.daterange}}
+                </p>
+            </div>    
+        
+            
+            <p><br><br></p>
+
+        {% endfor %}
+</div>
+
+    </body>
+</html>

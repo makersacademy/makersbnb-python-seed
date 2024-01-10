@@ -1,3 +1,10 @@
+CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255),
+    passw VARCHAR(255)
+);
+
 CREATE TABLE Spaces(
     id SERIAL PRIMARY KEY,
     title text,
@@ -7,10 +14,4 @@ CREATE TABLE Spaces(
     user_id int
 );
 
-CREATE SEQUENCE IF NOT EXISTS users_id_seq;
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255),
-    passw VARCHAR(255)
-);
 
