@@ -26,6 +26,20 @@ class UserRepository:
         #else:
         #    return ", ".join(errors)
 
+    def get_userid(self, email, password_attempt):
+        # Hash the password attempt
+        binary_password_attempt = password_attempt.encode("utf-8")
+        hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest()
+
+        User_ID = self._connection.execute(
+            'SELECT id FROM users WHERE email = %s AND password = %s',
+            [email, hashed_password_attempt])[0]
+        User_ID = User_ID.get('id')
+
+        return User_ID
+
+
+
     def check_password(self, email, password_attempt):
         # Hash the password attempt
         binary_password_attempt = password_attempt.encode("utf-8")

@@ -6,8 +6,9 @@
     <title>Book a space!</title>
 </head>
 <body>
-    {% if email %}
+    {% if id %}
     <h1>Book your space</h1>
+    <p>User id is: {{id}}</p>
     <ul> 
         {% for listing in listings %}
         <li> 
@@ -15,7 +16,6 @@
         </li>
         {%endfor %}
     </ul>
-
     {% else %}
         <div> Please log in to view content </div>
         <a href="/login2">Login page</a>
