@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <header><h1>MakersBnB</h1></header>
+        <div>
+            <h2>Create Account</h2>
+        <form method="POST" action="">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class="flashes">
+                  {% for message in messages %}
+                      <li>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+            {% endif %}
+            {% endwith %}
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            {{ form.username }}<br>
+            {{ form.password }}<br>
+            {{ form.email }}<br>
+            {{ form.submit }}
+        </form>
+        <a href="/sign_in">Already have an account? Sign in here!</a>
+        </div>
+    </body>
+</html>
