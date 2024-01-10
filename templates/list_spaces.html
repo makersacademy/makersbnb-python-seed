@@ -40,7 +40,7 @@
                     <th>Space Location</th>
                     <th>Space Description</th>
                     <th>Space Price</th>
-                    <th>Request</th>
+                    <th>View Space</th>
                     
                 </tr>
                 {% for space in spaces %}
@@ -50,7 +50,9 @@
                     <td>{{ space.location }}</td>
                     <td>{{ space.description }}</td>
                     <td>£{{ space.price }}</td>
-                    <td><input type="Spacetable" value="Request" href="/request/{{ space.space_id }}"></td>
+                    <!-- <td><input type="Spacetable" value="Request" href="/request/{{ space.space_id }}"></td> -->
+                    <!-- <td><a href="/request/{{ space.id }}">Request</a></td> -->
+                    <td><a href="{{ url_for('get_viewspace', space_id=space.id) }}">View Space</a></td>
                     
                     
                         <!-- Assuming space_id is a unique identifier for each space -->
@@ -58,7 +60,6 @@
                 </tr>
                 {% endfor %}
             </table>
-            <input type="submit" value="Book Selected Spaces">
         </form>
     </body>
 </html>

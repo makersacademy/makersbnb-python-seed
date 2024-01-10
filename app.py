@@ -32,9 +32,15 @@ def get_space():
 def get_requests():
     return render_template('requests.html')
 
-@app.route('/request', methods=['GET'])
-def get_request():
-    return render_template('request.html')
+@app.route('/viewspace/<int:space_id>', methods=['GET'])
+def get_viewspace(space_id):
+    space_details = space_id  
+    if space_details:
+        return render_template('request.html', space_details=space_details)
+    else:
+        # Handle the case where the space with the given ID is not found
+        return render_template('error.html', message='Space not found'), 404
+
 
 @app.route('/list_spaces', methods=['GET'])
 def get_list_spaces():
