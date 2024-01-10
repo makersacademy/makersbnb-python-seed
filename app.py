@@ -41,7 +41,7 @@ def submit_signup():
     userRepo.create(email, password)
     return render_template('login.html', name=name, email=email, password=password)
 
-@app.route('/login2', methods=['GET'])
+@app.route('/login', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
@@ -53,7 +53,8 @@ def submit_login():
     userRepo = UserRepository(connection)
     checker = userRepo.check_password(email, password)
     if checker:
-        return render_template('test_loggedin.html', email=email, password=password)
+        id = userRepo.get_userid(email, password)
+        return render_template('test_loggedin.html', id=id, email=email, password=password)
     else:
         message = "Incorrect details" 
         return render_template('login.html', message = message)
@@ -71,22 +72,23 @@ def booking_page():
     connection = get_flask_database_connection(app)
     repo = ListingRepository(connection)
     #testing authentication
-    email = request.args['email']
+    id = request.args['id']
     listings = repo.get()
-    return render_template('booking.html', email=email, listings=listings)
+    return render_template('booking.html', id=id, listings=listings)
 
 @app.route('/requests', methods=['GET'])
 def request_page():
     #testing authentication
-    email = request.args['email']
-    return render_template('requests.html', email=email)
+    id = request.args['id']
+    return render_template('requests.html', id=id)
 
 
 
 #ROBERT AND HARRY'S CODE
 @app.route('/create', methods=['GET'])
 def get_data():
-    return render_template('create.html')
+    id = request.args['id']
+    return render_template('create.html', id=id)
 
 @app.route('/create', methods=['POST'])
 def post_data():
