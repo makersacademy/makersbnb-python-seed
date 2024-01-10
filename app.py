@@ -151,6 +151,20 @@ def get_add():
     else:
         return "Not Authorized"
 
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space = space_repo.find(id)
+
+    return render_template("single_space.html", space=space)
+
+@app.route('/mylisting', methods=['GET'])
+def user_listings(id):
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space = space_repo.find(id)
+
+    return render_template("my_listings.html", space=space)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
