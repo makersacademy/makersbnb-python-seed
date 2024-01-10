@@ -2,13 +2,68 @@
 <html>
     <head>
         <style>
+            #textContainer {
+    /* make element inline flex-container */
+    /* this will make its children flex-items */
+    display: inline-block;
+    /* align-items items in column */
+    flex-direction: column;
+    /* center items horizontally */
+    align-items: center;
+    /* center items vertically */
+    justify-content: space-between;
+    position: inherit;
+    border: solid 3px black;
+    width: 350px;
+    height: 182px;
+    box-sizing: border-box;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+   
+  }
             .flex-box {
-  display:flex;
+  display:inline-flex;
   justify-content:space-between;
   width: 300px;
-  margin-left: 40%;
+  margin-left: 42%;
+
   align-items: center;
   flex-direction: column;
+  outline: none;}
+  .flex-box2 {
+  display:inline-flex;
+  justify-content:space-between;
+  width: 700px;
+  margin-left: 30%;
+  align-items: center;
+  
+  outline: none;}
+  .flex-box4 {
+  display:inline-flex;
+  flex-direction: column;
+  flex-flow: column;
+  justify-content:space-between;
+  width: 1100px;
+  height: auto;
+  margin-left: 3%;
+  align-items: center;
+  
+  outline: none;}
+  
+  .flex-box3 {
+  display:inline-block;
+  justify-content:space-between;
+  position: relative;
+  width: 1600px;
+  height: 220px;
+  margin-left: 3%;
+  margin-right: 3%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  align-items: left;
+  flex-direction: row;
+  flex-flow: row;
   outline: none;}
   .flex-box2 {
   display:flex;
@@ -45,30 +100,51 @@
             </span>
                 <p align="right" class="t-current_user">Signed in as {{ username }}</p>
                 <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out.</button></p>
-                
-            
-            <form class="flex-box" method="post" action="/newspace">
-            <h1>Create new listing</h1>
-            {% for error in errors %}
-            <p><strong><FONT COLOR="#ff0000"> {{error}}</FONT></strong></p>
-            {% endfor %}
-            <label for="title" align="center">Listing title:</label>
-            <input type="text" id="title" name="title"><br>
-            <label for="space_desc" align="center">Brief Description:</label>
-            <input type="text" id="space_desc" name="space_desc"><br>
-    
-            <label for="price" align="center">Price:</label>
-            <span class="input-symbol-pound">
-                <input type="text" id="price" name="price" />
-            </span>
-            <span>
-                <label for="startdate" align="left">Available from:</label> &nbsp;&nbsp; <label for="enddate">Available Until:</label>
-            </span>
-            <span>
-                <input type="date" id="startdate" name="startdate"> <input type="date" id="enddate" name="enddate">
-            </span>
-            <button type="submit">Submit</button>
-            </form>
         </div>
+
+            
+                
+      
+        
+        
+            <div>
+                <form class="flex-box" method="post" action="/newspace">
+                    <h1>Create new listing</h1>
+                    {% for error in errors %}
+                    <p><strong><FONT COLOR="#ff0000"> {{error}}</FONT></strong></p>
+                    {% endfor %}
+                    <label for="title" align="center">Listing title:</label>
+                    <input type="text" id="title" name="title"><br>
+                    <label for="space_desc" align="center">Brief Description:</label>
+                    <input type="text" id="space_desc" name="space_desc"><br>
+            
+                    <label for="price" align="center">Price:</label>
+                    <span class="input-symbol-pound">
+                        <input type="text" id="price" name="price" />
+                    </span>
+                    <span>
+                        <label for="startdate" align="left">Available from:</label> &nbsp;&nbsp; <label for="enddate">Available Until:</label>
+                    </span>
+                    <span>
+                        <input type="date" id="startdate" name="startdate"> <input type="date" id="enddate" name="enddate">
+                    </span>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <br>
+            <br>
+            <br>
+            <h2 align="center">Your current listings:</h2>
+            <div class="flex-box3">
+                {% for space in spaces %}
+                <ui id="textContainer">
+                <h3>{{space.title}}<br align="right">£{{space.price}}</h3>
+                <p>{{space.space_description}} <br><br>
+                Available from: {{space.daterange}}</p>
+                </ui>
+                {% endfor %}
+            </div>  
+        
+    
         </body>
 </html>

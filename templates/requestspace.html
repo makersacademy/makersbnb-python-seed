@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <style>
+         .flex-box {
+  display:flex;
+  justify-content:space-between;
+  width: 275px;
+  align-items: left;
+  flex-direction: column;
+  outline: none;}
+    </style>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <h1>Request for {{ spaces.title }}</h1>
+        <p>Date availability: {{ formatted_date_range(spaces.daterange) }}</p>
+        <span>
+            <input type="date" id="startdate" name="startdate" min="2024-02-01" max="2024-02-11"> 
+        </span>
+
+    </body>
+    </html>

@@ -65,10 +65,20 @@ def user():
 
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
-    return render_template('newspace.html', username = session['email'])
+    try:
+        if session['email']:
+
+            connection = get_flask_database_connection(app)
+            repository = SpacesRepository(connection)
+            spaces = repository.get_by_user(session['user_id'])
+            return render_template('newspace.html', username=session['email'],spaces=spaces)
+    except:
+        return redirect('/spaces')
 
 @app.route('/newspace',methods=['POST'])
 def validate_new_space():
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
     errors = []
     data = [title:=request.form['title'],space_description:=request.form['space_desc'],startdate:=request.form['startdate'],enddate:=request.form['enddate'],price:=request.form['price']]
     if not(all(data)):
@@ -87,10 +97,11 @@ def validate_new_space():
         errors.append('Please enter a valid price')
 
     if not(errors):
-        connection = get_flask_database_connection(app)
-        repository = SpacesRepository(connection)
-        repository.add(title,space_description,price,f'{startdate}-{enddate}',session["user_id"])
-    return render_template('newspace.html', errors = errors)
+        repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
+
+        return redirect('/newspace')
+    spaces = repository.get_by_user(session['user_id'])
+    return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'],spaces=spaces)
 
 # POST route for creating new user and password.
 @app.route('/signup', methods=['POST'])
@@ -117,7 +128,7 @@ def create_user():
     
     user_id = repository.create(user)
     session['email'] = user.email
-    session['user_id'] = user_id
+    session['user_id'] = repository.check_valid_login(email,passw)
     return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])
@@ -131,7 +142,7 @@ def list_spaces():
     try:
         if session['email']:
         
-            return render_template('spaces.html',spaces = spaces,signedin =True, username = session['email'])
+            return render_template('spaces.html', spaces = spaces,signedin =True, username = session['email'])
     except:
         return render_template('spaces.html',spaces = spaces,signedin =False) 
         
@@ -152,6 +163,24 @@ def logout():
     session.clear()
     return redirect('/spaces')
 
+def formatted_date_range(daterange):
+   
+    start_date = daterange[0:10]
+    end_date = daterange[11:]
+    
+    start_date = datetime.strptime(start_date, '%Y-%m-%d').strftime('%B %d, %Y')
+    
+    end_date = datetime.strptime(end_date, '%Y-%m-%d').strftime('%B %d, %Y')
+    return f"{start_date} - {end_date}"
+
+@app.route('/requestspace/<int:id>', methods=['GET'])
+def request_space(id):
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    spaces = repository.find(id)
+    # daterange = formatted_date_range(spaces.daterange)
+    # print(daterange)
+    return render_template('requestspace.html', spaces = spaces, formatted_date_range=formatted_date_range)
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
