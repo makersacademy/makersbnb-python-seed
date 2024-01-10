@@ -23,12 +23,34 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
 
     # Assert on the results
     assert availablespaces == [
-        Availability(1, date(2025,1,1), True),
-        Availability(1, date(2025,1,2), True),
-        Availability(1, date(2025,1,3), True),
-        Availability(2, date(2025,1,2), True),
-        Availability(3, date(2025,1,2), True),
-        Availability(4, date(2025,1,2), True),
-        Availability(5, date(2025,1,2), True),
-        Availability(6, date(2025,1,2), True)
+        Availability(1, 1, date(2025,1,1), True),
+        Availability(2, 1, date(2025,1,2), True),
+        Availability(3, 1, date(2025,1,3), True),
+        Availability(4, 2, date(2025,1,2), True),
+        Availability(5, 3, date(2025,1,2), True),
+        Availability(6, 4, date(2025,1,2), True),
+        Availability(7, 5, date(2025,1,2), True),
+        Availability(8, 6, date(2025,1,2), True)
+    ]
+
+def test_create(db_connection):
+    db_connection.seed("seeds/makers_bnb.sql") # Seed our database with some test data
+    repository = AvailabilityRepository(db_connection) # Create a new AvailabilityRepository
+
+    space = Availability(None, 5, date(2025,2,2))
+    repository.create(space)
+
+    availablespaces = repository.all() # Get all spaces
+
+    # Assert on the results
+    assert availablespaces == [
+        Availability(1, 1, date(2025,1,1), True),
+        Availability(2, 1, date(2025,1,2), True),
+        Availability(3, 1, date(2025,1,3), True),
+        Availability(4, 2, date(2025,1,2), True),
+        Availability(5, 3, date(2025,1,2), True),
+        Availability(6, 4, date(2025,1,2), True),
+        Availability(7, 5, date(2025,1,2), True),
+        Availability(8, 6, date(2025,1,2), True),
+        Availability(9, 5, date(2025,2,2), True)
     ]

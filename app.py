@@ -5,6 +5,8 @@ from lib.space_repository import *
 from lib.space import *
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.availability import Availability
+from lib.availability_repository import AvailabilityRepository
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
@@ -19,10 +21,6 @@ users = []
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-
-@app.route('/spaces', methods=['GET'])
-def get_space():
-    return render_template('spaces.html')
 
 
 @app.route('/template', methods=['GET'])
@@ -92,13 +90,17 @@ def add_space_page():
 @app.route('/add-new-space', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
+    repo_space = SpaceRepository(connection)
+    repo_avaliblity = AvailabilityRepository(connection)
     userid = request.form['userID']
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']
+    date = request.form['availablefrom']
     space = Space(None,int(userid),name,description,int(price))
-    repo.create(space)
+    night = Availability(None, int(userid), date)
+    repo_space.create(space)
+    repo_avaliblity.create(night)
     return redirect('/spaces')
 
 
