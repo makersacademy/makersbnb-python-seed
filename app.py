@@ -7,7 +7,7 @@ from lib.space_repository import SpaceRepository
 
 # Create a new Flask app
 app = Flask(__name__)
-#app.secret_key = 20240110
+app.secret_key = 20240110
 
 # == Your Routes Here ==
 
@@ -40,8 +40,16 @@ def user_login():
 
     email = request.form['email']
     password = request.form['password']
-    session['username'] = request.form['username']
+    session['username'] = request.form['email']
     return redirect("/spaces")
+
+# @app.route('/dashboard', methods=['GET', 'POST'])
+# def dashboard():
+#     if 'username' in session:
+#         username = session['username']
+#         return render_template('dashboard.html', username=username)
+#     else:
+#         return redirect(url_for('login'))
 
 @app.route('/signup', methods=['GET'])
 def signup_page():
