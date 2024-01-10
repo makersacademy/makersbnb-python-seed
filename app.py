@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for, session 
 from lib.database_connection import get_flask_database_connection
 from lib.user import *
 from lib.user_repository import *
@@ -7,14 +7,15 @@ from lib.space_repository import SpaceRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+#app.secret_key = 20240110
 
 # == Your Routes Here ==
 
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET']) #To-Do integrate def home into def get_homepage
+def home():
+    if "username" in session:
+        return f"Logged in as {session['username']}"
+    return "You are not logged in"
 def get_homepage():
     return render_template('homepage.html')
 
@@ -39,8 +40,8 @@ def user_login():
 
     email = request.form['email']
     password = request.form['password']
-
-    
+    session['username'] = request.form['username']
+    return redirect("/spaces")
 
 @app.route('/signup', methods=['GET'])
 def signup_page():
@@ -48,28 +49,20 @@ def signup_page():
 
 @app.route('/signup', methods=['POST'])
 def add_new_user():
-    # Set up the database connection and repository
     connection = get_flask_database_connection(app)
     repository = UserRepository(connection)
 
-        # Get the fields from the request form
     email = request.form['email']
     password = request.form['password']
 
-        # Create a book object
     user = User(None, email, password)
 
-        # Check for validity and if not valid, show the form again with errors
     if not user.is_valid():
         return 400
 
-        # Save the book to the database
     user = repository.create(user)
-
-        # Redirect to the book's show route to the user can see it
-    return redirect("/users")
-
-# login
+    session['username'] = request.form['username']
+    return redirect("/spaces")
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
