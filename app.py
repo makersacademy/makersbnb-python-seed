@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, render_template, session, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
+from lib.space import Space
+from lib.space_repository import SpaceRepository
 
 app = Flask(__name__)
 app.secret_key='12'
@@ -33,6 +35,13 @@ def get_requests():
 @app.route('/request', methods=['GET'])
 def get_request():
     return render_template('request.html')
+
+@app.route('/list_spaces', methods=['GET'])
+def get_list_spaces():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    return render_template('list_spaces.html', spaces=spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
