@@ -7,7 +7,7 @@ from lib.user_repository import UserRepository
 
 from lib.SpacesRepository import SpacesRepository
 
-
+# test
 # Create a new Flask app
 app = Flask(__name__)
 app.secret_key = 'your_long_and_random_secret_key'
@@ -32,8 +32,9 @@ def login():
         passw = request.form['passw']  
         connection = get_flask_database_connection(app)
         repository = UserRepository(connection)
-        if repository.check_valid_login(username,passw):          
-            session['email'] = username                   
+        if user_id:=repository.check_valid_login(username,passw):          
+            session['email'] = username  
+            session['user_id'] = user_id                 
             return redirect('/spaces')
         flash('Email or password is incorrect.','error')
         return render_template('/log_in.html')

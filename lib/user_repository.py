@@ -29,5 +29,10 @@ class UserRepository:
         datalist = self.all()
         for user in datalist:
             if email == user.email and passw == user.passw:
-                return True
+                return self._get_user_id(email)
         return False
+    
+    def _get_user_id(self,email):
+        rows = self._connection.execute('SELECT * FROM users WHERE email = %s',[email])
+        for row in rows:
+            return row['id']
