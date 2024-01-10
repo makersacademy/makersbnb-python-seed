@@ -14,11 +14,11 @@ class SpaceRepository():
             return list_to_return
         
     def find(self, id):
-        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
+        rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
         if rows:
             row = rows[0]
         space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
         return space
     
-    def update(self, space: Space):
+    def update(self, space:Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])

@@ -13,7 +13,7 @@ class DatabaseConnection:
     DEV_DATABASE_NAME = "makersbnb_db_data"
     TEST_DATABASE_NAME = "makersbnb_db_data_test"
 
-    def __init__(self, test_mode=False):
+    def __init__(self, test_mode=True):
         self.test_mode = test_mode
 
     # This method connects to PostgreSQL using the psycopg library. We connect
