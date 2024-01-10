@@ -20,7 +20,10 @@
         <h3>My requests</h3>
         <h4>Lots of writing that means nothing</h4>
         <h5>Requests I've made</h5>
-        
+        {% for booking, space in spaces_and_bookings %}
+        <p>{{ space.space_name }}</p>
+        <p>{{ booking.date }}</p>
+        {% endfor %}
         <h5>Requests I've received</h5>
 
     </body>

@@ -67,7 +67,16 @@ def book(id):
 
 @app.route('/requests', methods=['GET'])
 def get_requests():
-    return render_template('requests.html')
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    user_bookings = booking_repo.find_all_by_user(session["user_id"])
+    spaces_and_bookings = []
+    space_repo = SpaceRepository(connection)
+    for booking in user_bookings:
+        space = space_repo.find_by_id(booking.space_id)[0]
+        spaces_and_bookings.append((booking, space))
+    print(spaces_and_bookings)
+    return render_template('requests.html', spaces_and_bookings=spaces_and_bookings)
 
 @app.route('/request', methods=['GET'])
 def get_request():
