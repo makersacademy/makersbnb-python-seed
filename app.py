@@ -50,14 +50,14 @@ def submit_login():
     if checker:
         id = userRepo.get_userid(email, password)
         name = userRepo.get_username(email, password)
-        return render_template('test_loggedin.html', id=id, name = name, email=email, password=password)
+        return render_template('loggedin.html', id=id, name = name, email=email, password=password)
     else:
         message = "Incorrect details" 
         return render_template('login.html', message = message)
 
 @app.route('/adminlogin', methods=['GET'])
 def loggedin_page():
-    return render_template('test_loggedin.html')
+    return render_template('loggedin.html')
 
 
 
@@ -93,11 +93,12 @@ def post_data():
     title = request.form['title']
     description = request.form['description']
     price = request.form['price']
-    listing = Listing(None, title, description, price)
+    user_id = request.args['id']
+    listing = Listing(None, title, description, price, user_id)
     listing = repo.insert(listing)
-    return redirect(f'/listings/{listing.id}')
+    return redirect(f'/listing/{listing.id}')
 
-@app.route('/listings/<int:id>', methods=['GET'])
+@app.route('/listing/<int:id>', methods=['GET'])
 def get_listing(id):
     connection = get_flask_database_connection(app)
     repo = ListingRepository(connection)
