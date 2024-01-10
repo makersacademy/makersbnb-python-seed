@@ -11,6 +11,7 @@ class ListingRepository:
         rows = self.connection.execute('SELECT * FROM listings WHERE id = %s', [id])
         return Listing(rows[0]['id'], rows[0]['title'], rows[0]['description'], rows[0]['price'])
     
+    #ONCE THIS IS READY REFERENCE THE USER ID
     def insert(self, listing):
         rows = self.connection.execute('INSERT INTO listings (title, description, price) VALUES (%s, %s, %s) RETURNING id', [listing.title, listing.description, listing.price])
         listing.id = rows[0]['id']
