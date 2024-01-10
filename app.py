@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 import jwt
@@ -56,6 +57,22 @@ def is_valid(password):
 
 # == Your Routes Here ==
 
+# GET /index
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000/index
+@app.route('/index', methods=['GET'])
+def get_index():
+    return render_template('index.html')
+
+@app.route('/bookings', methods=['GET'])
+def get_bookings():
+    return render_template('bookings/index.html')
+
+@app.route('/bookings', methods=['POST'])
+def goto_booking():
+    space_id = request.form['id']
+    return redirect("new_booking")
 
 @app.route("/", methods=["GET", "POST"])
 def register():
