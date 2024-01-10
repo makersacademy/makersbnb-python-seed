@@ -30,7 +30,7 @@
             </div>
             {% for space in spaces %}
             <div class="t-property">
-                <h2><a href="/add-new-space/<int:{{space.id}}>">{{space.name}}</a></h2>
+                <h2><a href="/spaces/{{space.id}}">{{space.name}}</a></h2>
                 <p>Description: {{space.description}}</p>
                 <p>Price per night: £{{space.price_per_night}}</p>
             </div>

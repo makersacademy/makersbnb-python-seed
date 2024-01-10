@@ -29,10 +29,6 @@ def get_template():
     return render_template('template.html')
 
 
-@app.route('/addnewspace', methods=['GET'])
-def get_addnewspace():
-    return render_template('addnewspace.html')
-
 @app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login.html')
@@ -84,11 +80,11 @@ def get_space(id):
     return render_template {create template for single space page and then finish this}
 '''
 
-@app.route('/add-new-space', methods = ['GET'])
+@app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
     return render_template('addnewspace.html')
 
-@app.route('/add-new-space', methods = ['POST'])
+@app.route('/addnewspace', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
     repo_space = SpaceRepository(connection)
@@ -110,7 +106,6 @@ def add_space():
         current_date += timedelta(days=1)
     for a_date in dates:
         repo_avaliblity.create(Availability(None, space.id, a_date))
-
     return redirect('/spaces')
 
 
