@@ -25,7 +25,7 @@ class TestUserRepository(unittest.TestCase):
 
             # Verifying that the execute method was called with the correct arguments
             self.mock_connection.execute.assert_called_once_with(
-                'INSERT INTO MakersBnB (email, password) VALUES (%s, %s)',
+                'INSERT INTO users (email, password) VALUES (%s, %s)',
                 [email, "hashed_password"])
 
     def test_check_password(self):
@@ -45,7 +45,7 @@ class TestUserRepository(unittest.TestCase):
 
             # Verifying that the execute method was called with the correct arguments
             self.mock_connection.execute.assert_called_once_with(
-                'SELECT * FROM test_table WHERE email = %s AND password = %s',
+                'SELECT * FROM users WHERE email = %s AND password = %s',
                 [email, "hashed_password_attempt"])
 
             # Verifying that the method returns True when the password is correct
@@ -68,7 +68,7 @@ class TestUserRepository(unittest.TestCase):
 
             # Verifying that the execute method was called with the correct arguments
             self.mock_connection.execute.assert_called_once_with(
-                'SELECT * FROM test_table WHERE email = %s AND password = %s',
+                'SELECT * FROM users WHERE email = %s AND password = %s',
                 [email, "hashed_wrong_password_attempt"])
 
             # Verifying that the method returns False when the password is incorrect
