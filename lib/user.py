@@ -12,4 +12,4 @@ class User(UserMixin):
         return self.__dict__ == other.__dict__
 
     def __repr__(self):
-        return f"User({self.id}, {self.username}, {self.password}, {self.email})"
+        return f"User({self.id}, {self.user_name}, {self.email}, {self.password})"       

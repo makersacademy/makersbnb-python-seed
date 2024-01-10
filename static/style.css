@@ -127,6 +127,44 @@ footer {
     margin-left: auto;
     
 }
+/* Create Account CSS */
+
+.forms_container {
+    padding: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%; 
+    border: black 1px solid;
+    border-radius: 1%;
+}
+
+.button{
+    background-color: #03adfc;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 153px;
+    height: 48px;
+}
+
+.link_create_acc_container{
+    width: auto;  
+    display: flex; 
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap; 
+}
+
+fieldset{
+    border:0;
+    margin:0;
+    padding:0; 
+}
 
 
 
