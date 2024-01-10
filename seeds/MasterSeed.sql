@@ -11,7 +11,7 @@ CREATE TABLE Spaces(
     space_description text,
     price float,
     daterange text,
-    user_id SERIAL REFERENCES users
+    user_id int
 );
 
 
