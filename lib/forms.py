@@ -32,4 +32,4 @@ class NewListing(FlaskForm):
     description = StringField(validators=[InputRequired()], render_kw={"placeholder": "Description"})
     date_added = DateField('Date Added', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput())
     date_available = DateField('Date Available', format='%Y-%m-%d', validators=[DataRequired()], widget=Input())
-    submit = SubmitField('Login')
+    submit = SubmitField('Submit')

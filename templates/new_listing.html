@@ -25,16 +25,32 @@
         </div>
     </nav>
     
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {{ form.csrf_token }}
         {{ form.hidden_tag() }}
-        {{ form.name}}</br>
-        {{ form.address}}</br>
-        {{ form.price }}</br>
-        {{ form.description}}</br>
+    
+        {{ form.name.label }}</br>
+        {{ form.name() }}</br>
+    
+        {{ form.address.label }}</br>
+        {{ form.address() }}</br>
+    
+        {{ form.price.label }}</br>
+        {{ form.price() }}</br>
+    
+        {{ form.description.label }}</br>
+        {{ form.description() }}</br>
+    
+        {{ form.date_added.label }}</br>
         {{ form.date_added(class="form-control", placeholder="YYYY-MM-DD", type="date") }}</br>
-        {{ form.image_path }}</br>
-        {{ form.submit(class ="button")}}
+    
+        {{ form.image_path.label }}</br>
+        {{ form.image_path() }}</br>
+    
+        {{ form.submit(class="button") }}
     </form>
+    <a class="nav-link" href="{{ url_for('profile_page') }}">Back to profile page</a>
+    <footer>©MakerBnB</footer>
 </body>
+
 </html>

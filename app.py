@@ -109,12 +109,14 @@ def create_space():
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
         today = date.today()
+        print(form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
         space = Space(None, form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
         repository.create(space)
-        return redirect(url_for("profile_page"))
+        flash('Space created successfully!', 'success')
+    else:
+        print(form.errors)
     
     return render_template("new_listing.html", form=form, user=current_user)
-
 
 
 
@@ -124,6 +126,9 @@ def get_space_page(id):
     repo = SpaceRepository(connection)
     space = repo.find(id)
     return render_template("space.html", space=space)
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
