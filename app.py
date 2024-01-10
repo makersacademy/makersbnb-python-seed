@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, session
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import *
 from lib.booking_repository import BookingRepository
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -26,16 +27,17 @@ def get_space_page(id):
     return render_template("space.html", space=space)
 
 
-@app.route('/profile', methods=['GET'])
-def get_profile_page():
+@app.route('/profile/<int:id>', methods=['GET'])
+def get_profile_page(id):
         connection = get_flask_database_connection(app)
         booking_repository = BookingRepository(connection)
         space_repository = SpaceRepository(connection)
-        user_id = session.get('user_id')
-        bookings = booking_repository.find_user_bookings(3)
-        spaces = space_repository.find_user_spaces(3)
+        user_repository = UserRepository(connection)
+        username = user_repository.get_username_by_id(id)
+        bookings = booking_repository.find_user_bookings(id)
+        spaces = space_repository.find_user_spaces(id)
 
-        return render_template('profile.html', username=session.get('username'), spaces=spaces, bookings=bookings)
+        return render_template('profile.html', username=username, spaces=spaces, bookings=bookings)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

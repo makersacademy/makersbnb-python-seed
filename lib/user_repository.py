@@ -29,3 +29,11 @@ class UserRepository:
 
         rows = self._connection.execute('SELECT email, password FROM users WHERE email = %s AND password = %s', [email, hashed_password])
         return len(rows) > 0
+    
+    def get_username_by_id(self, id):
+        rows = self._connection.execute("SELECT user_name FROM users WHERE id = %s", [id])
+        row = rows[0]
+        username = row['user_name']
+            
+        return username
+    
