@@ -28,7 +28,10 @@ def load_user(user_id):
 
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    listings = repo.all()
+    return render_template('index.html', listings = listings)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
@@ -82,7 +85,7 @@ def get_create_account():
     return render_template('create_account.html', form=form)
 
 
-@app.route('/spaces/<int:id>', methods=['GET'])
+@app.route('/space/<int:id>', methods=['GET'])
 def get_space_page(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
