@@ -7,14 +7,26 @@
 </head>
     <body>
         <div class="links" >
-            <a href="/logout">Logout</a>
-
-            <a href="">About</a>
+            <a href="/spaces">Spaces</a>
+            <a href="/requests">Requests</a>
+            <a href="/logout">Sign out</a>
         </div>
         <h1></h1>
         <h2></h2>
         <h3>Log out</h3>
 
-        <button type= "button"> Log out </button>
+        <button type="button" onclick="alert('Confirm logout?')"> Log out </button>
+        <button type="button" action='' onclick="myFunction()">Log out</button>
+        
+        <script>
+        function logOut() {
+            var confirmLogout = confirm("Are you sure you want to logout?");
+            if (confirmLogout) {
+                // Perform logout actions here
+                alert("Logged out successfully");
+                // You can add code here to execute
+            }
+        }
+        </script>
     </body>
 </html>
