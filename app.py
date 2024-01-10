@@ -150,14 +150,24 @@ def logout():
     session.clear()
     return redirect('/spaces')
 
+def formatted_date_range(daterange):
+   
+    start_date = daterange[0:10]
+    end_date = daterange[11:]
+    
+    start_date = datetime.strptime(start_date, '%Y-%m-%d').strftime('%B %d, %Y')
+    
+    end_date = datetime.strptime(end_date, '%Y-%m-%d').strftime('%B %d, %Y')
+    return f"{start_date} - {end_date}"
 
 @app.route('/requestspace/<int:id>', methods=['GET'])
 def request_space(id):
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
     spaces = repository.find(id)
-    return render_template('requestspace.html', spaces = spaces)
-
+    # daterange = formatted_date_range(spaces.daterange)
+    # print(daterange)
+    return render_template('requestspace.html', spaces = spaces, formatted_date_range=formatted_date_range)
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
