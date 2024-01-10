@@ -5,30 +5,28 @@
             #textContainer {
     /* make element inline flex-container */
     /* this will make its children flex-items */
-    display: inline-flex;
+    display: inline-block;
     /* align-items items in column */
     flex-direction: column;
-    flex-flow: column;
-    
     /* center items horizontally */
     align-items: center;
     /* center items vertically */
     justify-content: space-between;
-    
+    position: inherit;
     border: solid 3px black;
-    width: 300px;
+    width: 350px;
     height: 182px;
     box-sizing: border-box;
-    margin-top: 2%;
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 1%;
+    margin-right: 1%;
     margin-bottom: 2%;
+   
   }
             .flex-box {
   display:inline-flex;
   justify-content:space-between;
   width: 300px;
-  margin-left: 30%;
+  margin-left: 42%;
 
   align-items: center;
   flex-direction: column;
@@ -52,18 +50,20 @@
   align-items: center;
   
   outline: none;}
-  .columnone, .columntwo {
-display:inline-block;
-width: 50%;
-
-}
+  
   .flex-box3 {
-  display:flex;
+  display:inline-block;
   justify-content:space-between;
-  width: 1920px;
-  margin-left: 1%;
-  align-items: center;
-  flex-direction: column;
+  position: relative;
+  width: 1600px;
+  height: 220px;
+  margin-left: 3%;
+  margin-right: 3%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  align-items: left;
+  flex-direction: row;
+  flex-flow: row;
   outline: none;}
   .flex-box2 {
   display:flex;
@@ -106,8 +106,8 @@ width: 50%;
                 
       
         
-        <div class="flex-box3"> 
-            <div class="columnone">
+        
+            <div>
                 <form class="flex-box" method="post" action="/newspace">
                     <h1>Create new listing</h1>
                     {% for error in errors %}
@@ -134,17 +134,17 @@ width: 50%;
             <br>
             <br>
             <br>
-            <h2>Your current listings:</h2>
-            <div class="columntwo"  >
+            <h2 align="center">Your current listings:</h2>
+            <div class="flex-box3">
                 {% for space in spaces %}
-                <ui id="textContainer" class="column">
+                <ui id="textContainer">
                 <h3>{{space.title}}<br align="right">£{{space.price}}</h3>
                 <p>{{space.space_description}} <br><br>
                 Available from: {{space.daterange}}</p>
                 </ui>
                 {% endfor %}
             </div>  
-        </div>
+        
     
         </body>
 </html>
