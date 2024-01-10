@@ -19,6 +19,7 @@
               <div id="logo"><img src="static/img/logo.png" /></div>
               <div id="menu">
                   <p>
+                    <a href="/">Home Page</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                   {% if session['email_address'] %}
                       <a href="/spaces/">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
                   {% else %}
@@ -26,6 +27,10 @@
                   {% endif %}
               </div>
           </div>
+
+
+
+          
           <div id="main">
             {% if session['email_address'] and data['spaces_list'] %}
               <p>User: {{ session['fullname'] }}<br>
@@ -35,8 +40,20 @@
               <div id="list_of_spaces">
                 <div class="box">
                 {% for space in data['spaces_list'] %}
-                <a href="">
-                  <div class="title">User: {{ space.user_id }}</div>
+                
+                <a href="{% if session['id'] == space.user_id %}
+                
+                   /spaces/edit/{{ space.id }}
+                
+                
+                {% else %}
+                
+                
+                   /space/{{ space.id }}{% endif %}">
+                
+                  {% if not(session['email_address']) %}
+                    <div class="title">User: {{ space.user_id }}</div>
+                  {% endif %}
                   <div class="space">Space: {{ space.name }}</div>
                   <div class="descr">Descr: {{ space.desc }}</div><br>
                   <div class="descr">cost per night: {{ space['price'] }}</div><br>

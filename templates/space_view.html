@@ -12,8 +12,9 @@
         </div>
         <div class="row pt-4 d-flex justify-content-center">
             <div class="col-4 rounded-3 shadow bg-white">
-                <form class="p-2 pt-3" action="/spaces/add" method="post">
-                    <h3 class="text-center">Add Space</h3>
+                
+                    <h3 class="text-center">View space</h3>
+                   {{ session['name'] }}
                     <div class="col-11 mt-3 mx-auto">
                         <label class="form-label fs-5">Name</label>
                         <input class="form-control" type="text" name="name">
@@ -30,7 +31,7 @@
                     <div class="col-11 mt-3 mx-auto pb-4 d-flex justify-content-end">
                         <input class="btn btn-primary" type="submit" id="submit" value="Add">
                     </div>
-                </form>
+                
             </div>
         </div>
     </body>

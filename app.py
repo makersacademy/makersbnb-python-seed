@@ -102,13 +102,20 @@ def user(section):
 # 
 @app.route('/spaces/edit/<id>')
 def edit_spaces(id):
-    space_repo = SpaceRepository(get_flask_database_connection(app))
-    space = space_repo.find(id)
+    if id:
+        space_repo = SpaceRepository(get_flask_database_connection(app))
+        space = space_repo.find(id)
+    else:
+        space = ""
     return render_template("space_edit.html", space=space)
 
 @app.route('/spaces', methods=['GET'])
-def shows_all_spaces():
+def shows_user_spaces():
+        space_repo = SpaceRepository(get_flask_database_connection(app))
+        space = space_repo.filter(user_id)
     return redirect('/')
+
+
 
 @app.route('/spaces/update', methods=['POST'])
 def update_spaces():
