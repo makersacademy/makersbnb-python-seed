@@ -93,3 +93,38 @@ def test_wrong_password(page, test_web_address):
     error_message_tag = page.locator("h2")
     expect(error_message_tag).to_have_text("Incorrect password.")
 
+def test_get_spaces(db_connection, page, test_web_address):
+    db_connection.seed('seeds/makers_bnb.sql')
+    page.goto(f'http://{test_web_address}/spaces')
+    div_tags = page.locator('.t-property')
+    expect(div_tags).to_have_text([
+        '\nBeach House 1\n Description: A beautiful beach side property with a pool \n Price per night: £101\n',
+        '\nBeach House 2\n Description: A beautiful beach side property with a pool \n Price per night: £102\n',
+        '\nGlamping Pod 1\n Description: A glamping pod with all cooking facilities \n Price per night: £103\n',
+        '\nGlamping Pod 2\n Description: A glamping pod with all cooking facilities \n Price per night: £104\n',
+        '\nCountry escape 1\n Description: A luxury cottage in the middle of the countryside \n Price per night: £105\n',
+        '\nCountry escape 2\n Description: A luxury cottage in the middle of the countryside \n Price per night: £106\n',
+    ])
+
+def test_create_space(db_connection, page, test_web_address):
+    db_connection.seed('seeds/makers_bnb.sql')
+    page.goto(f'http://{test_web_address}/spaces')
+    page.click('text=Add New Space')
+    page.fill("input[name='userID']",'1')
+    page.fill("input[name='name']",'house')
+    page.get_by_label("description").fill("a house")
+    page.fill("input[name='pricepernight']",'110')
+    page.fill("input[name='availablefrom']",'2024-01-29')
+    page.fill("input[name='availableto']",'2024-01-30')
+    page.click('text=Submit')
+    div_tags = page.locator('.t-property')
+    expect(div_tags).to_have_text([
+        '\nBeach House 1\n Description: A beautiful beach side property with a pool \n Price per night: £101\n',
+        '\nBeach House 2\n Description: A beautiful beach side property with a pool \n Price per night: £102\n',
+        '\nGlamping Pod 1\n Description: A glamping pod with all cooking facilities \n Price per night: £103\n',
+        '\nGlamping Pod 2\n Description: A glamping pod with all cooking facilities \n Price per night: £104\n',
+        '\nCountry escape 1\n Description: A luxury cottage in the middle of the countryside \n Price per night: £105\n',
+        '\nCountry escape 2\n Description: A luxury cottage in the middle of the countryside \n Price per night: £106\n',
+        '\nhouse \n Description: a house\n Price per night: £110'
+    ])
+

@@ -14,18 +14,20 @@ class SpaceRepository:
         return Space(row['id'], row['user_id'], row['name'], row['description'], row['price_per_night'])
     
     def create(self, new_space):
-        self._connection.execute('''
+        rows = self._connection.execute('''
                                 INSERT INTO spaces
                                     (user_id, name, description, price_per_night)
                                     VALUES
-                                    (%s, %s, %s, %s)
+                                    (%s, %s, %s, %s) RETURNING id
                                     ''',
                                 [new_space.user_id,
                                     new_space.name,
                                     new_space.description,
                                     new_space.price_per_night
                                     ])
-        return None
+        row = rows[0]
+        new_space.id = row['id']
+        return new_space
     
 # ---------------------------------------------------------------
 # Commented out, as availability classes required before it can be used
