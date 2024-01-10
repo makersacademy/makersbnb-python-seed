@@ -28,9 +28,15 @@ def get_index():
 @app.route('/log_in', methods=['GET', 'POST'])        
 def login():                                         
     if request.method == 'POST':                      
-        username = request.form['email']             
-        session['email'] = username                   
-        return redirect('/spaces')
+        username = request.form['email'] 
+        passw = request.form['passw']  
+        connection = get_flask_database_connection(app)
+        repository = UserRepository(connection)
+        if repository.check_valid_login(username,passw):          
+            session['email'] = username                   
+            return redirect('/spaces')
+        flash('Email or password is incorrect.','error')
+        return render_template('/log_in.html')
     return render_template('/log_in.html')
 
 # @app.route('/log_in', methods=['GET'])
@@ -97,7 +103,7 @@ def create_user():
     passw = request.form['passw']
     passw_conf = request.form['passw_conf']
     
-    if not(repository.check_valid(email)):
+    if not(repository.check_valid_signup(email)):
         flash("Email already in use.", "error")
         return redirect('/index')
 
@@ -108,7 +114,8 @@ def create_user():
     # Create a user object
     user = User(None, email, passw)
     
-    user = repository.create(user)
+    repository.create(user)
+    session['email'] = user.email
     return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])

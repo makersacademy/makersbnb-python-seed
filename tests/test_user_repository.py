@@ -31,3 +31,21 @@ def test_create(db_connection):
         User(3, 'user_3@mail.com', 'makersbnb1'),
         User(4, 'new_user', 'newpassword1234')
     ]
+
+def test_valid_signup(db_connection):
+    db_connection.seed("seeds/user_details.sql")
+    repository = UserRepository(db_connection)
+    result = repository.check_valid_signup('user_1@mail.com')
+    assert result == False
+    result = repository.check_valid_signup('Testemail@nomail.com')
+    assert result == True
+
+def test_valid_login(db_connection):
+    db_connection.seed("seeds/user_details.sql")
+    repository = UserRepository(db_connection)
+    result = repository.check_valid_login('user_1@mail.com','makersbnb2')
+    assert result == True
+    result = repository.check_valid_login('user_1@mail.com','makersbb2')
+    assert result == False
+    result = repository.check_valid_login('user1@mail.com','makersbnb2')
+    assert result == False

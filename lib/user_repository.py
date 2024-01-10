@@ -18,11 +18,16 @@ class UserRepository:
             [user.email, user.passw]
         )
         
-    def check_valid(self, username):
+    def check_valid_signup(self, username):
         datalist = self.all()
         for user in datalist:
             if username == user.email:
                 return False
         return True
 
-    
+    def check_valid_login(self,email,passw):
+        datalist = self.all()
+        for user in datalist:
+            if email == user.email and passw == user.passw:
+                return True
+        return False
