@@ -7,12 +7,12 @@
     {%block content%}
     <main>
         <div class="example-container">
-            <div class="add-new-space">
-                <h3><a href="/add-new-space">Add New Space</a></h3>
+            <div class="addnewspace">
+                <h3><a href="/addnewspace">Add New Space</a></h3>
                 <hr>
             </div>
             {% for space in spaces %}
-            <div class="property">
+            <div class="t-property">
                 <h2><a href="/add-new-space/<int:{{space.id}}>">{{space.name}}</a></h2>
                 <p>Description: {{space.description}}</p>
                 <p>Price per night: £{{space.price_per_night}}</p>

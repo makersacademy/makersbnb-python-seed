@@ -6,24 +6,28 @@
 
     {%block content%}
         <h1 style="text-align:center;" > List a Space </h1>
-        <form action="/spaces.html"></form>
+        <form action="/add-new-space" method = "post">
+        <!--delete userID once login working-->
+        <label for="user_id">UserID:</label><br>
+        <input type="integer" id="userID" name="userID" value=""><br>
+        <!--to here-->
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name" value=""><br>
-        <label for="description">Description</label><br><textarea rows = "5" cols = "50" name = "description">
-            Enter description here...
-         </textarea><br>
-        <input type="text" id="description" name="description" value=""><br> -->
+        <label for="description">Description</label><br><textarea id="description" name = "description" rows = "5" cols = "50">
+        </textarea><br>
         <label for="pricepernight">Price per night (£)</label><br>
         <input type="integer" id="pricepernight" name="pricepernight" value=""><br>
         <label for="availablefrom">Available from (DD/MM/YY)</label><br>
         <input type="date" id="availablefrom" name="availablefrom" value=""><br>
         <label for="availableto">Available to (DD/MM/YY)</label><br>
         <input type="date" id="availableto" name="availableto" value=""><br><br>
-
         <input type="submit" value="Submit">
+        </form>
     {% endblock %}
 
     {% block footer %} {{ super() }} {% endblock %}
 
-</body>
+
+    </body>
+
 </html>
