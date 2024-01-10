@@ -7,8 +7,8 @@
     <body>
         <header>
             <h1>MakersBnB</h1>
-            <a href="/sign_in">Sign in</a>
-            <a href="/create_account">Create account</a>
+            <a class="nav-link" href="{{ url_for('get_login_details') }}">Sign In</a>
+            <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
         </header>
         <div class ="description-container">
                 <div><h1>Welcome to MakersBnB</h1>

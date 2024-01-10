@@ -3,11 +3,13 @@ from flask import Flask, request, render_template, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
-from lib.forms import RegisterForm, LoginForm
+from lib.space_repository import *
+from lib.forms import RegisterForm, LoginForm, NewListing
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
 from flask_bcrypt import Bcrypt
 from lib.booking_repository import BookingRepository
+from datetime import date
 import hashlib
 
 # Create a new Flask app
@@ -32,7 +34,9 @@ def load_user(user_id):
         user.spaces = spaces
     return user 
 
-@app.route('/index', methods=['GET'])
+
+# REMOVED THE INDEX ROOT SO IT GOES 
+@app.route('/', methods=['GET'])
 def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
@@ -55,8 +59,6 @@ def get_login_details():
             flash('Invalid username or password. Please try again.', 'error')
 
     return render_template('login.html', form=form)
-
-#Test123!@111
 
 
 #IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
@@ -96,6 +98,21 @@ def get_create_account():
         flash(form.errors)
 
     return render_template('create_account.html', form=form)
+
+
+
+@app.route('/new_listing', methods=['GET', 'POST'])
+def create_space():
+    form = NewListing()
+    if form.validate_on_submit():
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        today = date.today()
+        space = Space(None, form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
+        repository.create(space)
+        return redirect(url_for("get_space_page"))
+    
+    return render_template("new_listing.html", form=form)
 
 
 
