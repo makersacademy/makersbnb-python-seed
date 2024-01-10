@@ -25,6 +25,11 @@
         <p>{{ booking.date }}</p>
         {% endfor %}
         <h5>Requests I've received</h5>
+        {% for space, booking, user in space_bookings_users_rec %}
+        <p>{{ space.space_name }}</p>
+        <p>{{ booking.date }}</p>
+        <p>Request by {{ user.username }}</p>
+        {% endfor %}
 
     </body>
 </html>

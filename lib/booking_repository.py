@@ -37,8 +37,8 @@ class BookingRepository():
         return Booking(row["id"], str(row["date"]), row["confirmed"], row["user_id"], row["space_id"])
 
     def create(self, booking):
-        self._connection.execute('INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES (%s, %s, %s, %s)', [booking.date, booking.confirmed, booking.user_id, booking.space_id])
-        return None
+        rows = self._connection.execute('INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES (%s, %s, %s, %s) RETURNING ID', [booking.date, booking.confirmed, booking.user_id, booking.space_id])
+        return rows[0]['id']
     
     def delete(self, id):
         self._connection.execute('DELETE FROM bookings WHERE id = %s', [id])

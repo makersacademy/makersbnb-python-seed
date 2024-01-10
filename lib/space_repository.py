@@ -121,3 +121,23 @@ class SpaceRepository:
         if len(result) == 0:
             result = "No results found"
         return result
+    
+    def find_spaces_by_user(self, user_id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
+
+        result = [
+            Space(
+                row["id"],
+                row["space_name"],
+                row["description"],
+                row["price"],
+                row["user_id"],
+                str(row["start_date"]),
+                str(row["end_date"]),
+            )
+            for row in rows
+        ]
+        if len(result) == 0:
+            result = "No results found"
+        return result
+    

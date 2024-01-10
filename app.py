@@ -57,12 +57,15 @@ def get_space(id):
 @app.route('/book/<id>', methods=['POST'])
 def book(id):
     connection = get_flask_database_connection(app)
-    space_repo = SpaceRepository(connection)
+    # space_repo = SpaceRepository(connection)
     # space = space_repo.find_by_id(id)[0]
+    user_repo = UserRepo(connection)
     booking_repo = BookingRepository(connection)
     booking_date = request.form['date']
     booking = Booking(None, booking_date, False, session['user_id'], id)
-    booking_repo.create(booking)
+    booking_id = booking_repo.create(booking)
+    booking.id = booking_id
+    user_repo.add_booking(booking)
     return redirect('/spaces')
 
 @app.route('/requests', methods=['GET'])
@@ -75,8 +78,24 @@ def get_requests():
     for booking in user_bookings:
         space = space_repo.find_by_id(booking.space_id)[0]
         spaces_and_bookings.append((booking, space))
-    print(spaces_and_bookings)
-    return render_template('requests.html', spaces_and_bookings=spaces_and_bookings)
+
+    spaces_owned_by_user = space_repo.find_spaces_by_user(session["user_id"])
+    owned_space_ids = [space.id for space in spaces_owned_by_user]
+    all_bookings = booking_repo.all()
+    requests_received = []
+    for booking in all_bookings:
+        if booking.space_id in owned_space_ids:
+            requests_received.append(booking)
+    
+    user_repo = UserRepo(connection)
+    space_bookings_users_rec = []
+    for booking in requests_received:
+        space = space_repo.find_by_id(booking.space_id)[0]
+        user = user_repo.find_user_by_id(booking.user_id)
+        space_bookings_users_rec.append((space, booking, user))
+
+    return render_template('requests.html', spaces_and_bookings=spaces_and_bookings, space_bookings_users_rec=space_bookings_users_rec)
+
 
 @app.route('/request', methods=['GET'])
 def get_request():
