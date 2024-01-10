@@ -37,3 +37,25 @@ class UserRepository:
             
         return username
     
+    def find_by_id(self, id):
+        rows = self._connection.execute('SELECT * FROM users WHERE id = %s', [id])
+        row = rows[0]
+        return User(row["id"], row["user_name"], row["email"], row["password"])
+    
+
+    def find_by_name(self, name):
+        rows = self._connection.execute('SELECT * FROM users WHERE user_name = %s', [name])
+
+        if rows:
+            row = rows[0]
+            return User(row["id"], row["user_name"], row["email"], row["password"])
+        else:
+            # Return None if the user is not found
+            return None
+    
+    
+    def find_by_email(self, email):
+        rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
+        row = rows[0]
+        return User(row["id"], row["user_name"], row["email"], row["password"])
+    
