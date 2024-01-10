@@ -42,6 +42,11 @@ class SpaceRepository:
 
         return spaces
 
-'''nice to have - TODO'''
-    # def update_space():
-    #     pass
+    def get_available_dates(self, space_id):
+        available_dates = []
+        dates = self._connection.execute(
+            'SELECT * from dates where space_id = %s', [space_id]
+        )
+        for date in dates:
+            available_dates.append(date['date'])
+        return available_dates

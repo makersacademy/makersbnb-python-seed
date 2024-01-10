@@ -46,3 +46,13 @@ def test_list_all_spaces_returns_a_list(db_connection):
     repo = SpaceRepository(db_connection)
     spaced = repo.list_all_spaces()
     assert (len(spaced) is not 0)
+
+"""
+When we call SpaceRepository#get_available_dates
+We get a list of dates back that the space is available to book
+"""
+def test_get_available_dates(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repo = SpaceRepository(db_connection)
+    dates = repo.get_available_dates(3)
+    assert len(dates) == 5
