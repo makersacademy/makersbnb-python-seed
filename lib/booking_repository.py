@@ -41,6 +41,50 @@ class BookingRepository:
         else:
             raise Exception("Booking does not exist.")
         
+    def find_by_guest_id(self, guest_id):
+        if guest_id in [booking.guest_id for booking in self.all()]:
+            rows = self._connection.execute(
+                """
+                SELECT * FROM bookings WHERE guest_id=%s;
+                """, [guest_id]
+            )
+            bookings = []
+            for row in rows:
+                if row['confirmed'] == '1':
+                    confirmed = True
+                elif row['confirmed'] == '0':
+                    confirmed = False
+                else:
+                    confirmed = None
+                bookings.append(
+                    Booking(row['id'], row['date'], row['space_id'], row['guest_id'], confirmed)
+                )
+            return bookings
+        else:
+            raise Exception("Bookings for this user do not exist.")
+        
+    def find_by_space_id(self, space_id):
+        if space_id in [booking.space_id for booking in self.all()]:
+            rows = self._connection.execute(
+                """
+                SELECT * FROM bookings WHERE space_id=%s;
+                """, [space_id]
+            )
+            bookings = []
+            for row in rows:
+                if row['confirmed'] == '1':
+                    confirmed = True
+                elif row['confirmed'] == '0':
+                    confirmed = False
+                else:
+                    confirmed = None
+                bookings.append(
+                    Booking(row['id'], row['date'], row['space_id'], row['guest_id'], confirmed)
+                )
+            return bookings
+        else:
+            raise Exception("Bookings for this space do not exist.")
+        
     def create(self, booking):
         date = booking.date
         space_id = booking.space_id
