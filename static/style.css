@@ -88,19 +88,20 @@ header a:nth-of-type(1) {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .listings-profile-div ul {
     list-style-type: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .listings-profile-div li {
-    width: calc(33.33% - 20px);
+    max-width: calc(33%);
     margin: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -110,9 +111,10 @@ header a:nth-of-type(1) {
 }
 
 .listings-profile-div img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+    max-width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -144,16 +146,13 @@ footer {
     margin-left: auto;
 }
 
-.navbar {
-    background-color: #ffffff;
-}
 
 .container {
     max-width: 800px;
     margin: auto;
 }
 
-h3 {
+h3, h5 {
     color: #333;
 }
 
@@ -176,10 +175,17 @@ footer {
 
 .navbar-nav .nav-link,
 .logout-button-profile {
-    color: #007bff;
+    color: #DDE6ED;
 }
+
 
 .navbar-nav .nav-link:hover,
 .logout-button-profile:hover {
-    color: #0056b3;
+    color: #DDE6ED;
 }
+
+
+.navbar {
+    background-color: #27374D;
+}
+
