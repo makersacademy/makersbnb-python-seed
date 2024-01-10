@@ -65,7 +65,7 @@ def test_get_loggedin_homepage(page, test_web_address, db_connection):
     db_connection.seed("seeds/user.sql")
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name = 'email']", "hello@gmail.com")
-    page.fill("input[name = 'password']", "asgduhasfiavisfh")
+    page.fill("input[name = 'password']", "testpassword1")
     page.click("text=submit")
     print(page.url)
     strong_tag = page.locator("p")
@@ -76,8 +76,8 @@ def test_get_book_space(page, test_web_address, db_connection):
     db_connection.seed("seeds/user.sql")
     #Sign In
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name = 'email']", "Test Email")
-    page.fill("input[name = 'password']", "TestPassword")
+    page.fill("input[name = 'email']", "hello@gmail.com")
+    page.fill("input[name = 'password']", "testpassword1")
     #Submit Details
     page.click("text=submit")
 
@@ -90,16 +90,14 @@ def test_get_book_space(page, test_web_address, db_connection):
 
 def test_get_requests(page, test_web_address, db_connection):
     db_connection.seed("seeds/user.sql")
-    #Sign In
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name = 'email']", "Test Email")
-    page.fill("input[name = 'password']", "TestPassword")
+    #Sign In
+    page.fill("input[name = 'email']", "hello@gmail.com")
+    page.fill("input[name = 'password']", "testpassword1")
     #Submit Details
     page.click("text=submit")
-
-    #Click on book spaces
+    #Click on view requests
     page.click("text=View requests")
-
+    #Check h1 tag
     strong_tag = page.locator("h1")
-
     expect(strong_tag).to_have_text("Requests")

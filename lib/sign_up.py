@@ -40,3 +40,4 @@ class UserRepository:
 
         # If that SELECT finds any rows, the password is correct.
         return len(rows) > 0
+    
