@@ -10,12 +10,12 @@ class SpaceRepository:
         rows = self._connection.execute("SELECT * FROM spaces")
         result = [
             Space(
-                rows["id"],
-                rows["space_name"],
-                rows["location"],
-                rows["description"],
-                rows["price"],
-                rows["user_id"],
+                row["id"],
+                row["space_name"],
+                row["location"],
+                row["description"],
+                row["price"],
+                row["user_id"],
                 str(row["start_date"]),
                 str(row["end_date"]),
             )
@@ -27,7 +27,7 @@ class SpaceRepository:
     
     def create(self, space):
         self._connection.execute(
-            "INSERT INTO spaces (id, space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            "INSERT INTO spaces (id, space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s,%s, %s)",
             [
                 space.id,
                 space.space_name,
