@@ -28,12 +28,49 @@ def test_get_login(page, test_web_address):
     expect(strong_tag).to_have_text("Please log in.")
 
 
-def test_get_add_spaces(page, test_web_address):
-    page.goto(f"http://{test_web_address}/newspace")
+def test_get_add_spaces(page, test_web_address,db_connection):
+    db_connection.seed("seeds/user_details.sql")
+    page.goto(f"http://{test_web_address}/index")
+    
+    # Then we fill out the field with the name attribute 'email'
+    page.fill("input[name='email']", "test_user@mail.com")
+    
+    # And the field with the name attribute 'passw'
+    page.fill("input[name='passw']", "testpassword123")
+
+    page.fill("input[name='passw_conf']", "testpassword123")
+    
+    page.click("text=Submit")
+    
+    page.click('text=List new space')
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Create new listing")
 
-
+def test_list_spaces(page,test_web_address,db_connection):
+    db_connection.seed("seeds/SpacesTest.sql")
+    page.goto(f"http://{test_web_address}/spaces")
+    h3_tag = page.locator('h3')
+    expect(h3_tag).to_have_count(5)
+    
+def test_adding_a_space(page,test_web_address,db_connection):
+    db_connection.seed("seeds/user_details.sql")
+    page.goto(f"http://{test_web_address}/index")
+    # Then we fill out the field with the name attribute 'email'
+    page.fill("input[name='email']", "test_user@mail.com")
+    # And the field with the name attribute 'passw'
+    page.fill("input[name='passw']", "testpassword123")
+    page.fill("input[name='passw_conf']", "testpassword123")
+    page.click("text=Submit")
+    page.click('text=List new space')
+    page.fill('input[name=title]','Test Title6')
+    page.fill('input[name=space_desc]','This is some description')
+    page.fill('input[name=price]','1.234')
+    page.fill('input[name=startdate]','2024-01-17')
+    page.fill('input[name=enddate]','2024-01-31')
+    page.click('text=Submit')
+    page.click('text=Spaces')
+    h3_tag = page.locator('h3')
+    expect(h3_tag).to_have_count(6)
 
 def test_create_user(db_connection, page, test_web_address):
     db_connection.seed("seeds/user_details.sql")
@@ -47,8 +84,8 @@ def test_create_user(db_connection, page, test_web_address):
 
     page.fill("input[name='passw_conf']", "testpassword123")
     
-    page.click("#submit")
+    page.click("text=Submit")
     
     strong_tag = page.locator("h1")
-    expect(strong_tag).to_have_text("Please log in.")
+    expect(strong_tag).to_have_text("Space Listings")
     

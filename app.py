@@ -65,7 +65,12 @@ def user():
 
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
-    return render_template('newspace.html')
+    try:
+        if session['email']:
+
+            return render_template('newspace.html', username=session['email'])
+    except:
+        return redirect('/spaces')
 
 @app.route('/newspace',methods=['POST'])
 def validate_new_space():

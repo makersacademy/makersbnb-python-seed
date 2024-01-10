@@ -49,15 +49,25 @@
   justify-content:space-between;
   outline: none;
 }
+.flex-box2 {
+  display:flex;
+  justify-content:space-between;
+  width: 700px;
+  margin-left: 30%;
+  align-items: center;
+  
+  outline: none;}
   </style>
   <head>
     <title>Spaces</title>
   </head>
   <body>
     {% if signedin %}
+    <span class="flex-box2"><a href="/newspace">List new space</a>|<a href="/requests">Requests</a>|<a href='/dashboard'>Dashboard</a>
+    </span>
     <p align="right" class="t-current_user">Signed in as {{ username }}</p>
-    <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out.</button></p>
-    <h1 align="left">
+    <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+    
     {% else %}
       <p align="right">
         <button class="button button1" onclick="location.href='/log_in';">Sign in!</button>
