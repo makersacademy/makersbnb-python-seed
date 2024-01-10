@@ -20,7 +20,11 @@ app.secret_key = '1'
 #   ; open http://localhost:5000/index
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    if 'user_id' in session:
+        user_name = session['user_email']
+        return render_template('index.html', user_name=user_name)
+    else:
+        return render_template('index.html')
 
 @app.route('/spaces', methods=['GET'])
 def get_space():
