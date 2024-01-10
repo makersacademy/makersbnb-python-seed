@@ -78,6 +78,13 @@ def get_spaces():
     spaces = repository.all()
     return render_template('spaces.html', spaces=spaces)
 
+@app.route('/spaces/<int:id>', methods=['GET'])
+def get_single_space(id):
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    space = repository.find(id)
+    return render_template('space_page.html', space=space)
+
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
 
