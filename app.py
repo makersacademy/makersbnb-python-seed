@@ -23,7 +23,7 @@ def get_template():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    return render_template('login.html', title="Login Page")
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -49,19 +49,19 @@ def signup():
     }
     users.append(user)
     print(f"User '{email}' signed up with user_id {user_id}.")
-    return render_template('signup.html', success_message="Sign-up successful!")
+    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
 
 @app.route('/signup')
 def show_signup():
-    return render_template('signup.html')
+    return render_template('signup.html', title='Signup Page')
 
 @app.route('/addnewspace')
 def get_addnewspace():
-    return render_template('addnewspace.html')
+    return render_template('addnewspace.html', title='Addspace Page')
     
 @app.route('/spaces')
 def get_spaces():
-    return render_template('spaces.html')
+    return render_template('spaces.html', title='Spaces Page')
 
 
 # These lines start the server if you run this file directly
