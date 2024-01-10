@@ -28,7 +28,7 @@ class SpaceRepository:
     def create(self, space):
         self._connection.execute(
             "INSERT INTO spaces (id, space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s,%s, %s)",
-            [
+            [   
                 space.id,
                 space.space_name,
                 space.location,
@@ -37,7 +37,7 @@ class SpaceRepository:
                 space.user_id,
                 space.start_date,
                 space.end_date,
-            ],
+            ]
         )
         return None
 
@@ -45,8 +45,10 @@ class SpaceRepository:
         self._connection.execute("DELETE FROM spaces WHERE id = %s", [id])
         return None
 
+
     def find_by_id(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE id= %s", [id])
+
 
         result = [
             Space(
