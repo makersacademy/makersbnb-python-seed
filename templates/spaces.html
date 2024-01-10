@@ -1,27 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Title</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}">
-</head>
+{% extends 'base.html' %}
 
 <body>
-    <header>
-        <div class="page-title">
-            <h1>Maker'sBNB</h1>
-        </div>
-    </header>
     
-    <nav class ="navbar">
-        <div class="flex-nav"></div>
-        <div class="properties-listed">Property Listings</div>
-        <div class="my-listings"><a href="/my-listings">My Listings</a></div>
-        <div class="my-profile"><a href="/my-profile">My Profile</a></div>
-        <div class="my-requests"><a href="/my-rewquests">My Requests</a></div>
-    </nav>
+    {% block header %} {{ super() }} {% endblock %}
 
+    {%block content%}
     <main>
         <div class="example-container">
             <div class="addnewspace">
@@ -39,9 +22,8 @@
         
         </div>
     </main>
+    {% endblock %}
 
-    <footer>
-        <div class="footer"></div>>
-    </footer>
+    {% block footer %} {{ super() }} {% endblock %}
 </body>
 </html>
