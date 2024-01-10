@@ -130,7 +130,7 @@ def list_spaces():
     try:
         if session['email']:
         
-            return render_template('spaces.html',spaces = spaces,signedin =True, username = session['email'])
+            return render_template('spaces.html', spaces = spaces,signedin =True, username = session['email'])
     except:
         return render_template('spaces.html',spaces = spaces,signedin =False) 
         
@@ -139,6 +139,14 @@ def list_spaces():
 def logout():
     session.clear()
     return redirect('/spaces')
+
+
+@app.route('/requestspace/<int:id>', methods=['GET'])
+def request_space(id):
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    spaces = repository.find(id)
+    return render_template('requestspace.html', spaces = spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

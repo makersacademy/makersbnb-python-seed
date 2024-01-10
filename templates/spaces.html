@@ -71,7 +71,10 @@
             <h3>{{space.title}}<br align="right">£{{space.price}}</h3>
             <p>{{space.space_description}} <br><br>
             Available from: {{space.daterange}}</p>
+            
+            <button onclick="location.href='/requestspace/{{ space.id | urlencode }}';">Request {{space.title}}</button>
             </ui>
+            
             </div>
        
             <p><br><br></p>
