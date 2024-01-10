@@ -121,7 +121,7 @@ def update_spaces():
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.update(space)
 
-    return redirect('/')
+    return redirect('/spaces/listings')
 
 @app.route('/spaces/add', methods=['POST'])
 def add_spaces():
@@ -151,12 +151,14 @@ def get_space(id):
 
     return render_template("single_space.html", space=space)
 
-@app.route('/mylisting', methods=['GET'])
-def user_listings(id):
+@app.route('/spaces/listings')
+def spaces_listings():
+    user_id = session['id']
     space_repo = SpaceRepository(get_flask_database_connection(app))
-    space = space_repo.find(id)
+    spaces = space_repo.find(user_id, "user_id")
+    print(spaces)
 
-    return render_template("my_listings.html", space=space)
+    return render_template("space_listings.html", spaces=spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
