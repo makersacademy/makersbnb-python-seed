@@ -3,7 +3,7 @@
 class Availability:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
-    def __init__(self, id, space_id, date, status = True):
+    def __init__(self, id, space_id, date, status = []):
         self.id = id
         self.space_id = space_id
         self.date = date
@@ -16,4 +16,4 @@ class Availability:
 
     # This method makes it look nicer when we print an Artist
     def __repr__(self):
-        return f"Availability({self.id}, {self.space_id}, {self.date}, {self.status})"
+        return f"Availability({self.id},{self.space_id}, {self.date}, {self.status})"
