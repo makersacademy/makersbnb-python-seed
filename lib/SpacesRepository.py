@@ -15,3 +15,7 @@ class SpacesRepository:
         self._connection.execute('''INSERT INTO Spaces(
                                  title,space_description,price,daterange,user_id)
                                   VALUES (%s,%s,%s,%s,%s)''',[title,space_description,price,daterange,user_id])
+        
+    def find(self, user_id):
+        rows = self._connection.execute("SELECT * FROM Spaces WHERE id = %s", [user_id])
+        return rows

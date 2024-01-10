@@ -13,10 +13,12 @@ class UserRepository:
         
     def create(self, user):
         
-        self._connection.execute(
-            "INSERT INTO users (email, passw) VALUES (%s, %s)",
+        get_user_id = self._connection.execute(
+            "INSERT INTO users (email, passw) VALUES (%s, %s) RETURNING id",
             [user.email, user.passw]
         )
+        user_id = get_user_id[0]['id']
+        return user_id
         
     def check_valid_signup(self, username):
         datalist = self.all()

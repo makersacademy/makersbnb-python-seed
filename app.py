@@ -65,7 +65,7 @@ def user():
 
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
-    return render_template('newspace.html')
+    return render_template('newspace.html', username = session['email'])
 
 @app.route('/newspace',methods=['POST'])
 def validate_new_space():
@@ -89,7 +89,7 @@ def validate_new_space():
     if not(errors):
         connection = get_flask_database_connection(app)
         repository = SpacesRepository(connection)
-        repository.add(title,space_description,price,f'{startdate}-{enddate}',1)
+        repository.add(title,space_description,price,f'{startdate}-{enddate}',session["user_id"])
     return render_template('newspace.html', errors = errors)
 
 # POST route for creating new user and password.
@@ -115,8 +115,9 @@ def create_user():
     # Create a user object
     user = User(None, email, passw)
     
-    repository.create(user)
+    user_id = repository.create(user)
     session['email'] = user.email
+    session['user_id'] = user_id
     return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])
@@ -134,6 +135,17 @@ def list_spaces():
     except:
         return render_template('spaces.html',spaces = spaces,signedin =False) 
         
+
+@app.route('/dashboard', methods=['GET'])
+def get_dashboard():
+    connection = get_flask_database_connection(app)
+    repository = SpacesRepository(connection)
+    user_spaces = repository.find(session["user_id"])
+    
+    
+    return render_template('/dashboard.html', spaces = user_spaces, username = session['email']) # , username = session['email'], user_id = session['user_id']
+
+
 
 @app.route('/sign_out')
 def logout():
