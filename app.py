@@ -121,7 +121,7 @@ def update_spaces():
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.update(space)
 
-    return "Successfully Edited!"
+    return redirect('/')
 
 @app.route('/spaces/add', methods=['POST'])
 def add_spaces():
@@ -135,7 +135,7 @@ def add_spaces():
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.add(space)
 
-    return "Successfully Added!"
+    return redirect('/')
 
 @app.route('/add')
 def get_add():
