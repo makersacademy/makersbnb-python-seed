@@ -100,9 +100,9 @@ def post_data():
     user_id = request.args['id']
     listing = Listing(None, title, description, price, user_id)
     listing = repo.insert(listing)
-    return redirect(f'/listings/{listing.id}')
+    return redirect(f'/listing/{listing.id}')
 
-@app.route('/listings/<int:id>', methods=['GET'])
+@app.route('/listing/<int:id>', methods=['GET'])
 def get_listing(id):
     connection = get_flask_database_connection(app)
     repo = ListingRepository(connection)
