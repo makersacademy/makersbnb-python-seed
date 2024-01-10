@@ -27,20 +27,12 @@
         </form>
         </div>
 
+        <style>
+            table, th, td {
+                border: 1px solid white;
+            }
+        </style>
         <h1>Spaces</h1>
-        <!-- <form>
-        {% for space in spaces %}
-        <table>
-            <tr>
-                <th>Space Name: {{space.space_name}}</th>
-                <th>Space Location</th>
-                <th>Space Description: {{space.description}}</th>
-                <th>Space Price: £{{space.price}}</th>
-                <th><input type="submit" value="Book"></th>
-            </tr>
-        {% endfor %}
-        </table>
-        </form> -->
         <form>
             <table>
                 <tr>
@@ -48,18 +40,21 @@
                     <th>Space Location</th>
                     <th>Space Description</th>
                     <th>Space Price</th>
-                    <th>Book</th>
+                    <th>Request</th>
+                    
                 </tr>
                 {% for space in spaces %}
                 <tr>
+                    
                     <td>{{ space.space_name }}</td>
                     <td>{{ space.location }}</td>
                     <td>{{ space.description }}</td>
                     <td>£{{ space.price }}</td>
-                    <td>
-                        <input type="checkbox" name="book_space[]" value="{{ space.space_id }}">
+                    <td><input type="Spacetable" value="Request" href="/request/{{ space.space_id }}"></td>
+                    
+                    
                         <!-- Assuming space_id is a unique identifier for each space -->
-                    </td>
+                    
                 </tr>
                 {% endfor %}
             </table>
