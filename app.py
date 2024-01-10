@@ -4,6 +4,8 @@ from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
 from lib.space import Space
 from lib.space_repository import SpaceRepository
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 
 app = Flask(__name__)
 app.secret_key='12'
@@ -45,9 +47,23 @@ def create_new_space():
 
     return render_template('spaces.html')
 
-@app.route('/space', methods=['GET'])
-def get_space():
-    return render_template('space.html')
+@app.route('/space/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find_by_id(id)[0]
+    return render_template('space.html', space=space)
+
+@app.route('/book/<id>', methods=['POST'])
+def book(id):
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+    # space = space_repo.find_by_id(id)[0]
+    booking_repo = BookingRepository(connection)
+    booking_date = request.form['date']
+    booking = Booking(None, booking_date, False, session['user_id'], id)
+    booking_repo.create(booking)
+    return redirect('/spaces')
 
 @app.route('/requests', methods=['GET'])
 def get_requests():
