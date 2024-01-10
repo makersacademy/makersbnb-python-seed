@@ -102,6 +102,7 @@ def get_create_account():
 
 
 @app.route('/new_listing', methods=['GET', 'POST'])
+@login_required
 def create_space():
     form = NewListing()
     if form.validate_on_submit():
@@ -110,18 +111,18 @@ def create_space():
         today = date.today()
         space = Space(None, form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
         repository.create(space)
-        return redirect(url_for("get_space_page"))
+        return redirect(url_for("profile_page"))
     
     return render_template("new_listing.html", form=form)
 
 
 
-@app.route('/space/<int:id>', methods=['GET'])
-def get_space_page(id):
-    connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
-    space = repo.find(id)
-    return render_template("space.html", space=space)
+# @app.route('/space/<int:id>', methods=['GET'])
+# def get_space_page(id):
+#     connection = get_flask_database_connection(app)
+#     repo = SpaceRepository(connection)
+#     space = repo.find(id)
+#     return render_template("space.html", space=space)
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))

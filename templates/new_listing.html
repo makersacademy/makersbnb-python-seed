@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css" >
-    <title>New Space Form</title>
-</head>
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
@@ -15,7 +13,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Hi, {{ username }}</a>
+                    <a class="nav-link" href="#">Hi, {{ user.user_name }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/index">Sign Out</a>
@@ -34,7 +32,6 @@
         {{ form.date_added(class="form-control", placeholder="YYYY-MM-DD", type="date") }}</br>
         {{ form.image_path }}</br>
         {{ form.submit(class ="button")}}
-
     </form>
 </body>
 </html>
