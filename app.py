@@ -125,8 +125,28 @@ def update_spaces():
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.update(space)
 
-    return "Successfully Edited!"
+    return redirect('/')
 
+@app.route('/spaces/add', methods=['POST'])
+def add_spaces():
+    id = request.form['id']
+    name = request.form['name']
+    desc = request.form['desc']
+    price = request.form['price']
+    user_id = session['id']
+
+    space = Space(id, name, desc, price, user_id)
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space_repo.add(space)
+
+    return redirect('/')
+
+@app.route('/add')
+def get_add():
+    if 'id' in session:
+        return render_template("space_add.html")
+    else:
+        return "Not Authorized"
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
