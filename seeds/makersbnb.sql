@@ -35,12 +35,14 @@ CREATE TABLE bookings (
     date_booked text,
     user_id int,
     space_id int,
+    space_name text,
     constraint fk_user foreign key(user_id) references users(id) ON DELETE CASCADE,
     constraint fk_space foreign key(space_id) references spaces(id) ON DELETE CASCADE
 );
 
 
 INSERT INTO users (user_name, email, password) VALUES
+('gustavo', 'gustavo@gustavo.com', 'Gustavo123456!'),
 ('Lil kim', 'femalerappers@femalerappers.com', '14d7d63e53c91431cb5b4a2e62dbb80881736ae7f228d5b4894935a108b1bfab'),
 ('Curious George', 'fakemonkey@fakemonkey.com', 'Curiousgeorge2£'),
 ('Barbie', 'dreamteam@barbiemail.com', 'ImjustKen123%*');
@@ -55,12 +57,12 @@ INSERT INTO spaces (address, name, price, image_path, description, date_added, d
 ('333 Skyline Tower', 'Cityscape Loft', 95, '/images/cityscape_loft.jpg', 'A modern loft with stunning views of the city skyline.', '2020-12-03', '2024-08-20', 3),
 ('444 Lakeside Drive', 'Tranquil Lake Cottage', 80, '/images/lake_cottage.jpg', 'Escape to this cozy cottage by the lake for a peaceful retreat.', '2021-09-25', '2024-09-18', 2);
 
-INSERT INTO bookings (date_booked, user_id, space_id) VALUES
-('2024-02-01', 1, 3),
-('2024-04-10', 1, 2),
-('2024-05-15', 2, 4),
-('2024-06-22', 2, 1),
-('2024-08-20', 2, 6),
-('2024-09-18', 3, 7),
-('2024-10-12', 3, 5);
+INSERT INTO bookings (date_booked, user_id, space_id, space_name) VALUES
+('2024-02-01', 1, 3, 'Celestial Haven'),
+('2024-04-10', 1, 2, 'Zootropolis'),
+('2024-05-15', 2, 4, 'Mountain Hideaway' ),
+('2024-06-22', 2, 1, 'Wild horses'),
+('2024-08-20', 2, 6, 'Cityscape Loft'),
+('2024-09-18', 3, 7, 'Tranquil Lake Cottage'),
+('2024-10-12', 3, 5, 'Ocean Paradise Villa');
 
