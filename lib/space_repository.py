@@ -19,7 +19,7 @@ class SpaceRepository:
 
 
     def create(self, space):
-        self._connection.execute('INSERT INTO spaces (id, space_name, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s, %s)', [space.id, space.space_name, space.description, space.price, space.user_id, space.start_date, space.end_date])
+        self._connection.execute('INSERT INTO spaces (space_name, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s)', [space.space_name, space.description, space.price, space.user_id, space.start_date, space.end_date])
 
     def find_user(self, user_id):
         rows = self._connection.execute(

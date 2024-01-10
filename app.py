@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, render_template, session, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
+from lib.space import Space
+from lib.space_repository import SpaceRepository
 
 app = Flask(__name__)
 app.secret_key='12'
@@ -21,6 +23,25 @@ def get_spaces():
 @app.route('/new_space', methods=['GET'])
 def get_new_space():
     return render_template('new_space.html')
+
+@app.route('/new_space', methods=['POST'])
+def create_new_space():
+    if 'user_id' not in session:
+        return redirect('/')
+    
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepo(connection)
+    user = user_repo.find_user_by_id(session['user_id'])
+    space_name = request.form['space_name']
+    description = request.form['description']
+    price = request.form['price']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    space_repo = SpaceRepository(connection)
+    new_space = Space(None, space_name, description, price, user.id, start_date, end_date)
+    space_repo.create(new_space)
+
+    return render_template('spaces.html')
 
 @app.route('/space', methods=['GET'])
 def get_space():
