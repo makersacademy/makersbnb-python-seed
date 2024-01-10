@@ -78,7 +78,6 @@ class BookingRepository:
         
     
     def update(self, booking):
-        
         if booking.id not in [booking.id for booking in self.all()]:
             raise Exception("Booking does not exist.")
         if confirmed:= booking.confirmed:
@@ -96,3 +95,14 @@ class BookingRepository:
         )
         return None
     
+    def confirm(self, booking_id):
+        if booking_id in [booking.id for booking in self.all()]:
+            booking = self.find(booking_id)
+            booking.confirmed = True
+            self.update(booking)
+            self._connection.execute(
+                """
+                DELETE FROM dates WHERE date=%s AND space_id=%s;
+                """, [booking.date.isoformat(), booking.space_id]
+            )
+            return True

@@ -5,6 +5,10 @@ from lib.booking import Booking
 from lib.booking_repository import BookingRepository
 
 def test_booking_repo_init():
+    """
+    Tests that an instantiation of the 
+    BookingRepository class raises no errors
+    """
     try:
         connection = Mock()
         booking_repo = BookingRepository(connection)
@@ -12,6 +16,9 @@ def test_booking_repo_init():
         raise AssertionError(f"An error was raised: {err}")
     
 def test_booking_repo_all(db_connection):
+    """
+    Tests that the #all method returns every booking in the bookings table
+    """
     db_connection.seed("seeds/makersbnb.sql")
     booking_repo = BookingRepository(db_connection)
     assert booking_repo.all() == [
@@ -24,6 +31,9 @@ def test_booking_repo_all(db_connection):
     ]
 
 def test_booking_repo_find(db_connection):
+    """
+    Tests that the #find method returns the booking with id == id
+    """
     db_connection.seed("seeds/makersbnb.sql")
     booking_repo = BookingRepository(db_connection)
     bookings = [
@@ -42,6 +52,10 @@ def test_booking_repo_find(db_connection):
     assert str(err.value) == "Booking does not exist."
 
 def test_booking_repo_create(db_connection):
+    """
+    Tests that a new booking is inserted into the database
+    by the #create method
+    """
     db_connection.seed("seeds/makersbnb.sql")
     booking_repo = BookingRepository(db_connection)
     new_booking = Booking(None, date(2024,1,15), 5, 2, None)
@@ -53,6 +67,10 @@ def test_booking_repo_create(db_connection):
     assert str(err.value) == "That date is not available!"
 
 def test_booking_repo_delete(db_connection):
+    """
+    Tests that the #delete method removes the booking with id == id
+    from the bookings table
+    """
     db_connection.seed("seeds/makersbnb.sql")
     booking_repo = BookingRepository(db_connection)
     assert booking_repo.delete(6) == None
@@ -70,6 +88,10 @@ def test_booking_repo_delete(db_connection):
     assert str(err.value) == "Booking does not exist."
 
 def test_booking_repo_update(db_connection):
+    """
+    Tests that the #update method can be used to adjust the values for
+    a single booking record in the bookings table
+    """
     db_connection.seed("seeds/makersbnb.sql")
     booking_repo = BookingRepository(db_connection)
     updated_booking = Booking(5, date(2024,12,10), 3, 1, None)
@@ -87,3 +109,26 @@ def test_booking_repo_update(db_connection):
     with pytest.raises(Exception) as err:
         booking_repo.update(bad_update)
     assert str(err.value) == "Booking does not exist."
+
+def test_booking_repo_confirm(db_connection):
+    """
+    Tests that the #confirm method sets the confirmed field to True for
+    the Booking
+    Also tests that the date is then removed from the dates table
+    """
+    db_connection.seed("seeds/makersbnb.sql")
+    booking_repo = BookingRepository(db_connection)
+    date_rows = db_connection.execute(
+        """
+        SELECT * FROM dates WHERE date=%s AND space_id=%s;
+        """, ['2024-02-01', 1]
+    )
+    assert len(date_rows) == 1
+    assert booking_repo.confirm(1)
+    assert booking_repo.find(1).confirmed == True
+    date_rows = db_connection.execute(
+        """
+        SELECT * FROM dates WHERE date=%s AND space_id=%s;
+        """, ['2024-02-01', 1]
+    )
+    assert len(date_rows) == 0
