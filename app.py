@@ -113,16 +113,17 @@ def create_space():
         repository.create(space)
         return redirect(url_for("profile_page"))
     
-    return render_template("new_listing.html", form=form)
+    return render_template("new_listing.html", form=form, user=current_user)
 
 
 
-# @app.route('/space/<int:id>', methods=['GET'])
-# def get_space_page(id):
-#     connection = get_flask_database_connection(app)
-#     repo = SpaceRepository(connection)
-#     space = repo.find(id)
-#     return render_template("space.html", space=space)
+
+@app.route('/space/<int:id>', methods=['GET'])
+def get_space_page(id):
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    space = repo.find(id)
+    return render_template("space.html", space=space)
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
