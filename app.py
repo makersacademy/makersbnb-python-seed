@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, url_for, session 
+from flask import Flask, request, render_template, redirect, session 
 from lib.database_connection import get_flask_database_connection
 from lib.user import *
 from lib.user_repository import *
@@ -7,7 +7,7 @@ from lib.space_repository import SpaceRepository
 
 # Create a new Flask app
 app = Flask(__name__)
-app.secret_key = 20240110
+app.secret_key = '20240110'
 
 # == Your Routes Here ==
 

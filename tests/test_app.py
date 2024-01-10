@@ -2,18 +2,18 @@ from playwright.sync_api import Page, expect
 
 # Tests for your routes go here
 
-"""
-We can render the index page
-"""
-def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
+# """
+# We can render the index page ---> Test commented out as redundant 
+# """
+# def test_get_index(page, test_web_address):
+#     # We load a virtual browser and navigate to the /index page
+#     page.goto(f"http://{test_web_address}/index")
 
-    # We look at the <p> tag
-    strong_tag = page.locator("p")
+#     # We look at the <p> tag
+#     strong_tag = page.locator("p")
 
-    # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")
+#     # We assert that it has the text "This is the homepage."
+#     expect(strong_tag).to_have_text("This is the homepage.")
 """
 We can navigate to the spaces page
 """
@@ -36,3 +36,15 @@ def test_spaces_page_shows_list(page, test_web_address):
         "Tranquil Haven",
         "Peaceful Retreat"
     ])
+"""
+The spaces page displays the user's name
+"""
+def test_user_name_displays_on_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='email']", "test@test.com")
+    page.fill("input[name='password']", "password1")
+    page.click("text=Login")
+
+    bold_tag = page.locator("b")
+
+    expect(bold_tag).to_have_text("You are logged in as test@test.com")
