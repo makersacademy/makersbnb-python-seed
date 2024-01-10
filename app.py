@@ -54,14 +54,14 @@ def submit_login():
     checker = userRepo.check_password(email, password)
     if checker:
         id = userRepo.get_userid(email, password)
-        return render_template('test_loggedin.html', id=id, email=email, password=password)
+        return render_template('loggedin.html', id=id, email=email, password=password)
     else:
         message = "Incorrect details" 
         return render_template('login.html', message = message)
 
 @app.route('/adminlogin', methods=['GET'])
 def loggedin_page():
-    return render_template('test_loggedin.html')
+    return render_template('loggedin.html')
 
 
 

@@ -101,3 +101,30 @@ def test_get_requests(page, test_web_address, db_connection):
     #Check h1 tag
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Requests")
+
+# Testing getting to create page after logging in
+def test_get_create_page_and_create_list_redirects(page, test_web_address, db_connection):
+    db_connection.seed("seeds/user.sql")
+    page.goto(f"http://{test_web_address}/login")
+    #Sign In
+    page.fill("input[name = 'email']", "hello@gmail.com")
+    page.fill("input[name = 'password']", "testpassword1")
+    #Submit Details
+    page.click("text=submit")
+    #Click on List a Space
+    page.click("text=List a space")
+     #Check h1 tag
+    strong_tag = page.locator("h1")
+    expect(strong_tag).to_have_text("Create a Listing")
+    #Fill in Create a Space Form
+    page.fill("input[name = 'title']", "Test Title")
+    page.fill("input[name = 'description']", "Test Description")
+    page.fill("input[name = 'price']", "150")
+    #Submit create a space form
+    page.click("text=submit")
+    h1_listing_tag = page.locator("h1")
+    expect(h1_listing_tag).to_have_text("Listing Test Title")
+
+
+# Need to add a test to get to a listing when logged in 
+# (once authentication has been added to listing pages)
