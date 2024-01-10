@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <img src="logo.png" width="30" height="30" alt="logo-img">
+            <img src="/static/images/logo.jpeg" width="45" height="50" alt="logo-img">
             MakersBnB
         </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -22,7 +22,7 @@
                     <a class="nav-link" href="#">Hi, {{ user.user_name }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="logout-button-profile" href="{{ url_for('get_login_details') }}">Log out</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
                 </li>
             </ul>
         </div>
@@ -40,11 +40,11 @@
                 <li>
                     <article>
                         <h5>
-                            {{ space.address }} <br> {{ space.name }} <br> {{ space.price }} <br>
+                            {{ space.name }} <br> Address: {{ space.address }} <br>Price: {{ space.price }}£ <br>
                             <a href="/spaces/{{ space.id }}">
-                                <img src="{{ space.image_path }}" alt="Space Image">
+                                <img src="/static{{ space.image_path }}" alt="Space Image">
                             </a>
-                            <br> {{ space.date_available }}
+                            <br>Availability: {{ space.date_available }}
                         </h5>
                     </article>
                 </li>
