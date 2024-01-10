@@ -12,6 +12,7 @@ from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 
 
+# Auth token generation
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -41,9 +42,8 @@ def token_required(f):
 # Create a new Flask app
 app = Flask(__name__)
 
-# Need work?
+# Need work? ### NOT SECURE ###
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
-print(SECRET_KEY)
 app.config["SECRET_KEY"] = SECRET_KEY
 
 
@@ -82,18 +82,18 @@ def register():
         password = request.form.get("password")
         password_confirmation = request.form.get("password_confirmation")
 
-        if password == password_confirmation:
-            # # password check function
-            if not is_valid(password):
-                return "Invalid Password", 400  # TODO - html page?
-            # # create userRepo instance
-            connection = get_flask_database_connection(app)
-            user_repo = UserRepository(connection)
-            user_repo.create_user(username, email, password)
-            return redirect("success")  # with button to login
+        if password != password_confirmation:
+            return "Passwords do not match", 400
 
+        if not is_valid(password):
+            return "Invalid password", 400
+            # create userRepo instance
+        connection = get_flask_database_connection(app)
+        user_repo = UserRepository(connection)
+        if user_repo.create_user(username, email, password):
+            return render_template("success.html")
         else:
-            return "passwords do not match"
+            return render_template("userexists.html")
 
     return render_template("index.html")
 
