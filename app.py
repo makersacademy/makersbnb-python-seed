@@ -110,7 +110,7 @@ def create_space():
         repository = SpaceRepository(connection)
         today = date.today()
         print(form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
-        space = Space(None, form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
+        space = Space(None, form.address.data, form.name.data, form.price.data, form.image_path.data, form.description.data, today, form.date_added.data, current_user.id )
         repository.create(space)
         flash('Space created successfully!', 'success')
     else:
