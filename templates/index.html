@@ -8,6 +8,13 @@
     </head>
     <body>
         <p>Welcome to the MakersBnB homepage.</h1>
+        <body>
+            {% if user_name %}
+            <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <p>Please <a href="{{ url_for('get_login') }}">log in</a> to access the dashboard.</p>
+                {% endif %}
         <br>
         <button type="button">Sign up</button>
         <br>
