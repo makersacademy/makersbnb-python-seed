@@ -74,6 +74,8 @@ def test_create_space(db_connection, page, test_web_address):
     page.fill("input[name='name']",'house')
     page.get_by_label("description").fill("a house")
     page.fill("input[name='pricepernight']",'110')
+    page.fill("input[name='availablefrom']",'2024-01-29')
+    page.fill("input[name='availableto']",'2024-01-30')
     page.click('text=Submit')
     div_tags = page.locator('.t-property')
     expect(div_tags).to_have_text([

@@ -5,6 +5,9 @@ from lib.space_repository import *
 from lib.space import *
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.availability import Availability
+from lib.availability_repository import AvailabilityRepository
+from datetime import date, timedelta, datetime
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
@@ -24,6 +27,7 @@ def get_index():
 @app.route('/template', methods=['GET'])
 def get_template():
     return render_template('template.html')
+
 
 @app.route('/login', methods=['GET'])
 def get_login():
@@ -73,14 +77,6 @@ def signup():
 def show_signup():
     return render_template('signup.html', title='Signup Page')
 
-@app.route('/addnewspace')
-def get_addnewspace():
-    return render_template('addnewspace.html', title='Addspace Page')
-    
-@app.route('/spaces')
-def get_spaces():
-    return render_template('spaces.html', title='Spaces Page')
-
 @app.route('/spaces', methods = ['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
@@ -98,20 +94,32 @@ def get_space(id):
     return render_template {create template for single space page and then finish this}
 '''
 
-@app.route('/add-new-space', methods = ['GET'])
+@app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
     return render_template('addnewspace.html')
 
-@app.route('/add-new-space', methods = ['POST'])
+@app.route('/addnewspace', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
+    repo_space = SpaceRepository(connection)
+    repo_avaliblity = AvailabilityRepository(connection)
     userid = request.form['userID']
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']
+    first_date = request.form['availablefrom']
+    last_date = request.form['availableto']
+    first_date = datetime.strptime(first_date, "%Y-%m-%d").date()
+    last_date = datetime.strptime(last_date, "%Y-%m-%d").date()
     space = Space(None,int(userid),name,description,int(price))
-    repo.create(space)
+    space = repo_space.create(space)
+    dates = []
+    current_date = first_date
+    while current_date < last_date:
+        dates.append(current_date)
+        current_date += timedelta(days=1)
+    for a_date in dates:
+        repo_avaliblity.create(Availability(None, space.id, a_date))
     return redirect('/spaces')
 
 
