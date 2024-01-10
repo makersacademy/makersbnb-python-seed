@@ -110,10 +110,6 @@ def edit_spaces(id):
 def shows_all_spaces():
     return redirect('/')
 
-@app.route('/spaces/add', methods=['GET'])
-def add_spaces():
-    return render_template("space_edit.html", space=[])
-
 @app.route('/spaces/update', methods=['POST'])
 def update_spaces():
     id = request.form['id']

@@ -12,7 +12,7 @@
         </div>
         <div class="row pt-4 d-flex justify-content-center">
             <div class="col-4 rounded-3 shadow bg-white">
-                <form class="p-2 pt-3" action={% if space: %}"/spaces/update"{% else %}"/spaces/update"{% endif %} method="post">
+                <form class="p-2 pt-3" action="{% if space: %}/spaces/update{% else %}/spaces/add{% endif %}" method="post">
                     <h3 class="text-center">{% if space: %}Edit Space{% else %}List a Space{% endif %}</h3>
                     <div class="col-11 mt-3 mx-auto">
                         <label class="form-label fs-5">Name</label>
@@ -28,7 +28,7 @@
                         <input type="hidden" name="id" value="{{ space.id }}">
                     </div>
                     <div class="col-11 mt-3 mx-auto pb-4 d-flex justify-content-end">
-                        <input class="btn btn-primary" type="submit" id="submit" value="Edit">
+                        <input class="btn btn-primary" type="submit" id="submit" value="{% if space: %}Edit{% else %}Add{% endif %}">
                     </div>
                 </form>
             </div>
