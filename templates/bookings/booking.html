@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersBnB</title>
+</head>
+<body>
+    <h1>{{space_name}}</h1>
+    <h2>Listed by {{host_username}}</h2>
+    <p>{{guest_username}} has made a booking request for {{booking.date}}.</p>
+    <br />
+    <form method="post" action="/booking/confirm">
+        <input type="hidden" name="booking_id" value="{{booking.id}}">
+        <input type="submit" class="button" value="Confirm">
+    </form>
+    <form method="post" action="/booking/reject">
+        <input type="hidden" name="booking_id" value="{{booking.id}}">
+        <input type="submit" class="button" value="Reject">
+    </form>
+</body>
+</html>

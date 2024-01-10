@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersBnB</title>
+</head>
+<body>
+    <h1>Requests</h1>
+
+    <h2>Requests I've made</h2>
+    {% for request in requests_made %}
+    <p>{{request.id}}</p>
+    {% endfor %}
+
+    <h2>Requests I've recieved</h2>
+    {% for request in requests_received %}
+    <p>{{request.id}}</p>
+    {% endfor %}
+</body>
+</html>
