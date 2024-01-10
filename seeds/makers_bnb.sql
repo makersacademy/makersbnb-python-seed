@@ -59,7 +59,7 @@ INSERT INTO spaces (user_id, name, description, price_per_night) VALUES (3, 'Cou
 
 INSERT INTO availability (space_id, date, status) VALUES (1,'2025-01-01',TRUE);
 INSERT INTO availability (space_id, date, status) VALUES (1,'2025-01-02',TRUE);
-INSERT INTO availability (space_id, date, status) VALUES (1,'2025-01-03',TRUE);
+INSERT INTO availability (space_id, date, status) VALUES (1,'2025-02-03',TRUE);
 INSERT INTO availability (space_id, date, status) VALUES (2,'2025-01-02',TRUE);
 INSERT INTO availability (space_id, date, status) VALUES (3,'2025-01-02',TRUE);
 INSERT INTO availability (space_id, date, status) VALUES (4,'2025-01-02',TRUE);

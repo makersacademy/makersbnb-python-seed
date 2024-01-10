@@ -20,23 +20,23 @@
             </div>
             <div class="space-availability">
                 <h2>Availability</h2>
-                <form action="/spaces/{{space.id}}/booking-request/{{month}}" method='POST'>
+                <form action="/spaces/{{space.id}}/filter" method='POST'>
                     <div class="month-selector">
                         <label for="month-selector">Filter by month:</label>
                         <select name="month-selector" id="month-selector">
                             <option value="show-all">Show All</option>
-                            <option value="Jan">January</option>
-                            <option value="Feb">February</option>
-                            <option value="Mar">March</option>
-                            <option value="Apr">April</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
                             <option value="May">May</option>
-                            <option value="Jun">June</option>
-                            <option value="Jul">July</option>
-                            <option value="Aug">August</option>
-                            <option value="Sep">September</option>
-                            <option value="Oct">October</option>
-                            <option value="Nov">November</option>
-                            <option value="Dec">December</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
                         </select>
                         <input type="submit" value="Filter">
                     </div>
