@@ -22,25 +22,25 @@
 #         browser = await p.chromium.launch()
 #         context = await browser.new_context()
 #         page = await context.new_page()
-#         await page.goto("https://example.com")
+#         await page.goto("http://localhost:5000/")
 #         await browser.close()
 
 
-# # @pytest.mark.asyncio
-# # async def test_success_page():
-# #     token = await generate_token(SECRET_KEY)
-# #     async with async_playwright() as p:
-# #         browser = await p.chromium.launch()
-# #         context = await browser.new_context()
+# @pytest.mark.asyncio
+# async def test_success_page():
+#     token = await generate_token(SECRET_KEY)
+#     async with async_playwright() as p:
+#         browser = await p.chromium.launch()
+#         context = await browser.new_context()
 
-# #         await context.add_cookies(
-# #             [{"name": "token", "value": token, "domain": "localhost", "path": "/"}]
-# #         )
+#         await context.add_cookies(
+#             [{"name": "token", "value": token, "domain": "localhost", "path": "/"}]
+#         )
 
-# #         page = await context.new_page()
-# #         test_web_address = "localhost:5000"
-# #         await page.goto(f"http://{test_web_address}/success")
+#         page = await context.new_page()
+#         test_web_address = "localhost:5000"
+#         await page.goto(f"http://{test_web_address}/success")
 
-# #         await expect(page.locator("h1")).to_have_text("Registration Successful!")
+#         await expect(page.locator("h1")).to_have_text("Registration Successful!")
 
-# #         await browser.close()
+#         await browser.close()
