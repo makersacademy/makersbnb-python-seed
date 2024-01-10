@@ -1,3 +1,82 @@
 body {
-    font-size: 18px;
+  font-size: 18px;
+}
+
+.listSpaceForm {
+  text-align: center;
+  border: 2px solid black;
+  width: 50%;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.listSpace {
+  text-align: center;
+}
+
+.spaceWithDates {
+  text-align: center;
+}
+
+.button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  color: black;
+  border: 2px solid black;
+}
+
+.button:hover {
+  background-color: #555555;
+  color: white;
+  border: 2px solid black;
+}
+
+.spacesList {
+  border: 2px solid black;
+  width: 50%;
+  margin: auto;
+}
+
+.spaceIndividual {
+  border: 2px solid black;
+  width: 70%;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.spacebutton {
+  /* max-width: 70%; */
+  padding-left: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+label {
+  padding-top: 20px;
+}
+
+.formStyling {
+  padding: 20px 0px;
 }
