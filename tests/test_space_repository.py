@@ -62,4 +62,18 @@ def test_find_space_with_availabilities(db_connection):
         Availability(2, date(2025,1,2), True),
         Availability(3, date(2025,1,3), True)
         ]
-    
+
+# """
+# When we call #find_space_with_availabilities_month with a space id and a month
+# We get a single space with all the availabilities where status = True
+# """
+# def test_find_space_with_availabilities(db_connection):
+#     db_connection.seed('seeds/makers_bnb.sql')
+#     space_repository = SpaceRepository(db_connection)
+#     space, availability = space_repository.find_space_with_availabilities(1)
+#     assert space == Space(1, 1, 'Beach House 1', 'A beautiful beach side property with a pool', 101) 
+#     assert availability == [
+#         Availability(1, date(2025,1,1), True),
+#         Availability(2, date(2025,1,2), True),
+#         Availability(3, date(2025,1,3), True)
+#         ]

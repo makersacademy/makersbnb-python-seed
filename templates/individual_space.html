@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Title</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}"></head>
-
+{% extends 'base.html' %}
 <body>
-    <header>
-        <div class="page-title">
-            <h1>Maker'sBNB</h1>
-        </div>
-    </header>
+    {% block header %} {{ super() }} {% endblock %}
     
     <nav class ="navbar">
         <div class="flex-nav"></div>
@@ -21,6 +10,7 @@
         <div class="my-requests">My Requests</div>
     </nav>
 
+    {%block content%}
     <main>
         <div class="space-container">
             <div class="property">
@@ -30,12 +20,34 @@
             </div>
             <div class="space-availability">
                 <h2>Availability</h2>
+                <form action="/spaces/{{space.id}}/booking-request/{{month}}" method='POST'>
+                    <div class="month-selector">
+                        <label for="month-selector">Filter by month:</label>
+                        <select name="month-selector" id="month-selector">
+                            <option value="show-all">Show All</option>
+                            <option value="Jan">January</option>
+                            <option value="Feb">February</option>
+                            <option value="Mar">March</option>
+                            <option value="Apr">April</option>
+                            <option value="May">May</option>
+                            <option value="Jun">June</option>
+                            <option value="Jul">July</option>
+                            <option value="Aug">August</option>
+                            <option value="Sep">September</option>
+                            <option value="Oct">October</option>
+                            <option value="Nov">November</option>
+                            <option value="Dec">December</option>
+                        </select>
+                        <input type="submit" value="Filter">
+                    </div>
+                </form>
                 {% for date in availability %}
                     <p>{{date}}</p>
                     {% endfor %}
             </div>
             <hr>
             <h2>Booking Request</h2>
+
             <form action="/spaces/{{space.id}}/booking-request" method="POST">
                 <div class="booking-dates">
                     <div class="date-from">
@@ -60,9 +72,8 @@
             
 </div>
     </main>
+    {% endblock %}
 
-    <footer>
-        <div class="footer"></div>>
-    </footer>
+    {% block footer %} {{ super() }} {% endblock %}
 </body>
 </html>
