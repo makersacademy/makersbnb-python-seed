@@ -22,6 +22,14 @@ class SpaceRepository:
         row = rows[0]
         return Space(row["id"], row["address"], row["name"], row["price"], row["image_path"], row["description"], row['date_added'], row["date_available"], row["user_id"])
     
+    def find_user_spaces(self, user_id):
+        rows = self.connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
+        spaces = []
+        for row in rows:
+            item = Space(row["id"], row["address"], row["name"], row["price"], row["image_path"], row["description"], row['date_added'], row["date_available"], row["user_id"])
+            spaces.append(item)
+        return spaces
+
     def delete(self, id):
         self.connection.execute("DELETE FROM spaces WHERE id = %s", [id])
         return None
