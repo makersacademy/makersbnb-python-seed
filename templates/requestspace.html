@@ -15,8 +15,10 @@
     </head>
     <body>
         <h1>Request for {{ spaces.title }}</h1>
-        <p>Date availability: {{ spaces.daterange }}</p>
-        
+        <p>Date availability: {{ formatted_date_range(spaces.daterange) }}</p>
+        <span>
+            <input type="date" id="startdate" name="startdate" min="2024-02-01" max="2024-02-11"> 
+        </span>
 
     </body>
     </html>
