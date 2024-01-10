@@ -9,7 +9,7 @@ def test_user_initialized():
     assert user.id == 1
     assert user.user_name == "test_user"
     assert user.email == "test_email@test.com"
-    assert user.password == "abcd123"
+    assert user.password == "983487d9c4b7451b0e7d282114470d3a0ad50dc5e554971a4d1cda04acde670b"
 
 """
 When we compare two identical users

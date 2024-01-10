@@ -32,7 +32,7 @@ def get_index():
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
-@app.route('/sign_in', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def get_login_details():
     form = LoginForm()
     if form.validate_on_submit():
@@ -45,7 +45,7 @@ def get_login_details():
         else:
             flash('Invalid username or password. Please try again.', 'error')
 
-    return render_template('sign_in.html', form=form)
+    return render_template('login.html', form=form)
 
 
 #IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
