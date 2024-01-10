@@ -10,6 +10,7 @@ body {
 #wrapper {
     background-color: rgb(229, 229, 229);
     width: 80%;
+    height: 600px;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -50,34 +51,36 @@ body {
 }
 #main {
     width: 95%;
-    height: auto;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
     border: 1px solid black;
     align-items: center;
     align-content: center;
     padding: 10px;
     text-align: center;
 }
-    #main ul {
-        list-style-type: none;
-        text-align: center;
+    #list_of_spaces {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: auto;
     }
-    #main li {
+    #list_of_spaces .box {
+        display: flex;
+        flex-direction: column;
         width: 80%;
-        height: 10em;
         padding: 10px;
         margin-bottom: 10px;
-        text-align: justify;
         border: 1px solid salmon;
         background-color: rgb(212, 241, 241);
     }
-    #main a {
-        text-decoration: none;
-    }
-    #main li .title, .space, .descr {
+    #list_of_spaces .title, .space, .descr {
         color: blue;
     }
-    #main li .descr {
+    #list_of_spaces .descr {
         font-size: small;
+        text-align: justify;
     }
 
 #footer {
