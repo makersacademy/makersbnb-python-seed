@@ -10,12 +10,14 @@
 <body>
     <h1>{{space.name}}</h1>
     <div class="spaceWithDates">
-
-        {% for date in dates %}
-        <input type="radio" id={{date.isoformat()}} name="date_option" value="HTML">
-        <label for={{date.isoformat()}}>{{date.isoformat()}}</label><br>
-        {% endfor %}
-        <button type="button">Request to Book</button>
+        <form class="createBookingForm" action="/bookings/new" method="post">
+            {% for date in dates %}
+            <input type="radio" id={{date.isoformat()}} name="date_option" value="{{date.isoformat()}}">
+            <label for={{date.isoformat()}}>{{date.isoformat()}}</label><br>
+            {% endfor %}
+            <input type="hidden" name="space_id" value="{{space.id}}">
+            <input class="button" type="submit" value="Request to Book">
+        </form>
     </div>
 </body>
 </html>
