@@ -42,7 +42,6 @@ app = Flask(__name__)
 
 # Need work?
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
-print(SECRET_KEY)
 app.config["SECRET_KEY"] = SECRET_KEY
 
 
@@ -65,18 +64,18 @@ def register():
         password = request.form.get("password")
         password_confirmation = request.form.get("password_confirmation")
 
-        if password == password_confirmation:
-            # # password check function
-            if not is_valid(password):
-                return "Invalid Password", 400  # TODO - html page?
-            # # create userRepo instance
-            connection = get_flask_database_connection(app)
-            user_repo = UserRepository(connection)
-            user_repo.create_user(username, email, password)
-            return redirect("success")  # with button to login
+        if password != password_confirmation:
+            return "Passwords do not match", 400
 
+        if not is_valid(password):
+            return "Invalid password", 400
+            # # create userRepo instance
+        connection = get_flask_database_connection(app)
+        user_repo = UserRepository(connection)
+        if user_repo.create_user(username, email, password):
+            return redirect("success")  # with button to login
         else:
-            return "passwords do not match"
+            return "Username already exisits, please try again"
 
     return render_template("index.html")
 

@@ -6,10 +6,15 @@ class UserRepository:
         self._connection = connection
 
     def create_user(self, username, email, password):
-        self._connection.execute(
-            "INSERT into users (username, email, password) VALUES (%s, %s, %s)",
-            [username, email, password],
-        )
+        try:
+            self._connection.execute(
+                "INSERT into users (username, email, password) VALUES (%s, %s, %s)",
+                [username, email, password],
+            )
+            return True
+        except Exception as e:
+            print("Error creating user")
+            return False
 
     def all(self):
         rows = self._connection.execute(

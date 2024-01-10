@@ -1,6 +1,5 @@
-from playwright.sync_api import Page, expect, sync_playwright
+from playwright.sync_api import expect
 from app import is_valid
-import time
 
 # Tests for your routes go here
 

@@ -11,6 +11,7 @@ pytest-playwright = "*"
 pytest-xprocess = "*"
 py = "*"
 pyjwt = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 autopep8 = "*"
