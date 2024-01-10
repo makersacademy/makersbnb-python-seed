@@ -106,3 +106,14 @@ class BookingRepository:
                 """, [booking.date.isoformat(), booking.space_id]
             )
             return True
+        else:
+            raise Exception("Booking does not exist.")
+    
+    def reject(self, booking_id):
+        if booking_id in [booking.id for booking in self.all()]:
+            booking = self.find(booking_id)
+            booking.confirmed = False
+            self.update(booking)
+            return True
+        else:
+            raise Exception("Booking does not exist.")

@@ -113,7 +113,7 @@ def test_booking_repo_update(db_connection):
 def test_booking_repo_confirm(db_connection):
     """
     Tests that the #confirm method sets the confirmed field to True for
-    the Booking
+    the Booking with id == id
     Also tests that the date is then removed from the dates table
     """
     db_connection.seed("seeds/makersbnb.sql")
@@ -132,3 +132,13 @@ def test_booking_repo_confirm(db_connection):
         """, ['2024-02-01', 1]
     )
     assert len(date_rows) == 0
+
+def test_booking_repo_reject(db_connection):
+    """
+    Tests that the #reject method sets the confirmed field to False for
+    the Booking with id == id
+    """
+    db_connection.seed("seeds/makersbnb.sql")
+    booking_repo = BookingRepository(db_connection)
+    assert booking_repo.reject(1)
+    assert booking_repo.find(1).confirmed == False
