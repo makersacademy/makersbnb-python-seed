@@ -68,7 +68,10 @@ def get_new_space():
     try:
         if session['email']:
 
-            return render_template('newspace.html', username=session['email'])
+            connection = get_flask_database_connection(app)
+            repository = SpacesRepository(connection)
+            spaces = repository.get_by_user(session['user_id'])
+            return render_template('newspace.html', username=session['email'],spaces=spaces)
     except:
         return redirect('/spaces')
 
@@ -122,6 +125,7 @@ def create_user():
     
     repository.create(user)
     session['email'] = user.email
+    session['user_id'] = repository.check_valid_login(email,passw)
     return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])

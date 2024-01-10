@@ -43,6 +43,7 @@ def test_get_add_spaces(page, test_web_address,db_connection):
     page.click("text=Submit")
     
     page.click('text=List new space')
+    page.screenshot(path="screenshot.png", full_page=True)
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Create new listing")
 
