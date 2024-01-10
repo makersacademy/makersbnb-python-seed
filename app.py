@@ -54,14 +54,14 @@ def submit_login():
     checker = userRepo.check_password(email, password)
     if checker:
         id = userRepo.get_userid(email, password)
-        return render_template('test_loggedin.html', id=id, email=email, password=password)
+        return render_template('loggedin.html', id=id, email=email, password=password)
     else:
         message = "Incorrect details" 
         return render_template('login.html', message = message)
 
 @app.route('/adminlogin', methods=['GET'])
 def loggedin_page():
-    return render_template('test_loggedin.html')
+    return render_template('loggedin.html')
 
 
 
@@ -97,7 +97,8 @@ def post_data():
     title = request.form['title']
     description = request.form['description']
     price = request.form['price']
-    listing = Listing(None, title, description, price)
+    user_id = request.args['id']
+    listing = Listing(None, title, description, price, user_id)
     listing = repo.insert(listing)
     return redirect(f'/listings/{listing.id}')
 
