@@ -14,11 +14,25 @@ class SpaceRepository():
             return list_to_return
         
     def find(self, id):
-        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
+        rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
         if rows:
             row = rows[0]
         space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
         return space
+    
+    def filter(self, user_id):
+        rows = self._connection.execute(
+            'SELECT * FROM spaces WHERE user_id = %s', [user_id]
+            )
+        # TODOs: Implement error checks insted of IF
+        if rows:
+            space_list = []
+            for row in rows:
+                space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+                space_list.append(space)
+            if len(space_list):
+                return space_list
+        return "Error fetching data"
     
     def update(self, space: Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])

@@ -12,8 +12,8 @@
         </div>
         <div class="row pt-4 d-flex justify-content-center">
             <div class="col-4 rounded-3 shadow bg-white">
-                <form class="p-2 pt-3" action="/spaces/update" method="post">
-                    <h3 class="text-center">Edit Space</h3>
+                <form class="p-2 pt-3" action={% if space: %}"/spaces/update"{% else %}"/spaces/update"{% endif %} method="post">
+                    <h3 class="text-center">{% if space: %}Edit Space{% else %}List a Space{% endif %}</h3>
                     <div class="col-11 mt-3 mx-auto">
                         <label class="form-label fs-5">Name</label>
                         <input class="form-control" type="text" name="name" value="{{ space.name }}">

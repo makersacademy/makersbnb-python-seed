@@ -37,8 +37,6 @@ def index_subsection(home_page_section):
         rows = space_repository.all()
     else:
         rows = []
-        #rows = space_repository.find(session['id'])
-        #####
     data = {
         'home_page_section': home_page_section,
         'spaces_list': rows
@@ -108,14 +106,13 @@ def edit_spaces(id):
     space = space_repo.find(id)
     return render_template("space_edit.html", space=space)
 
-@app.route('/spaces/', methods=['GET'])
+@app.route('/spaces', methods=['GET'])
 def shows_all_spaces():
     return redirect('/')
 
 @app.route('/spaces/add', methods=['GET'])
 def add_spaces():
-    return "list a space"
-    # route to spaces.html
+    return render_template("space_edit.html", space=[])
 
 @app.route('/spaces/update', methods=['POST'])
 def update_spaces():

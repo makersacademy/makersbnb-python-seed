@@ -29,17 +29,21 @@
           <div id="main">
             {% if session['email_address'] and data['spaces_list'] %}
               <p>User: {{ session['fullname'] }}<br>
-              <a href="/spaces/add">List a Space</a></p>
-              <ul>
+              <a href="/spaces/add">List a Space</a></p> <a href="/spaces/update">Update</a></p>
+
+              <hr width="80%" />
+              <div id="list_of_spaces">
+                <div class="box">
                 {% for space in data['spaces_list'] %}
-                <a href=""><li>
+                <a href="">
                   <div class="title">User: {{ space.user_id }}</div>
                   <div class="space">Space: {{ space.name }}</div>
                   <div class="descr">Descr: {{ space.desc }}</div><br>
                   <div class="descr">cost per night: {{ space['price'] }}</div><br>
-                </li></a>
+                </a>
                 {% endfor %}
-              </ul>
+                </div>
+              </div>
             {% else %}
               <p>Please log in first</p>
             {% endif %}
