@@ -16,39 +16,33 @@ class UserRepository:
         return users
     
     def create(self, user):
-        binary_password = user.password.encode("utf-8")
-        hashed_password = hashlib.sha256(binary_password).hexdigest()
+          rows = self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s) RETURNING id', [
+              user.user_name, user.email, user.password])
+          row = rows[0]
+          user.id = row['id']
+          return None
 
-        rows = self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s) RETURNING id', [
-            user.user_name, user.email, hashed_password])
-        row = rows[0]
-        user.id = row['id']
-        return None
-    
     
     def find(self, email, password_attempt):
         binary_password = password_attempt.encode("utf-8")
-        hashed_password_attempt = hashlib.sha256(binary_password).hexdigest()
+        hashed_password = hashlib.sha256(binary_password).hexdigest()
 
-        rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
-        if not rows:
-            return None  # User not found
-        
+        rows = self._connection.execute('SELECT email, password FROM users WHERE email = %s AND password = %s', [email, hashed_password])
+        return len(rows) > 0
+    
+    def get_username_by_id(self, id):
+        rows = self._connection.execute("SELECT user_name FROM users WHERE id = %s", [id])
         row = rows[0]
-        stored_password = row["password"]
-
-        if hashed_password_attempt == stored_password:
-            return User(row["id"], row["user_name"], row["email"], row["password"])
-        else:
-            return None  # Incorrect password
-
+        username = row['user_name']
+            
+        return username
     
     def find_by_id(self, id):
         rows = self._connection.execute('SELECT * FROM users WHERE id = %s', [id])
         row = rows[0]
         return User(row["id"], row["user_name"], row["email"], row["password"])
     
-      
+
     def find_by_name(self, name):
         rows = self._connection.execute('SELECT * FROM users WHERE user_name = %s', [name])
 
@@ -64,3 +58,4 @@ class UserRepository:
         rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
         row = rows[0]
         return User(row["id"], row["user_name"], row["email"], row["password"])
+    
