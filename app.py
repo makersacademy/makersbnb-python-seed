@@ -7,6 +7,7 @@ from lib.forms import RegisterForm, LoginForm
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
 from flask_bcrypt import Bcrypt
+from lib.booking_repository import BookingRepository
 import hashlib
 
 # Create a new Flask app
@@ -25,12 +26,18 @@ def load_user(user_id):
     # Load user information
     user_repository = UserRepository(connection)
     user = user_repository.find_by_id(int(user_id))
-    
-    return user
+    space_repository = SpaceRepository(connection)
+    spaces = space_repository.find_user_spaces(user_id)
+    if user:
+        user.spaces = spaces
+    return user 
 
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    listings = repo.all()
+    return render_template('index.html', listings = listings)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
@@ -56,7 +63,12 @@ def get_login_details():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile_page():
-    return render_template('profile.html', user=current_user)
+    connection = get_flask_database_connection(app)
+    space_repository = SpaceRepository(connection)
+    spaces = space_repository.find_user_spaces(current_user.id)
+    booking_repository = BookingRepository(connection)
+    bookings = booking_repository.find_user_bookings(current_user.id)
+    return render_template('profile.html', user=current_user, spaces=spaces, bookings=bookings)
 
 # I ALSO CREATED A LOG OUT FUNCTION. 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -87,8 +99,7 @@ def get_create_account():
 
 
 
-
-@app.route('/spaces/<int:id>', methods=['GET'])
+@app.route('/space/<int:id>', methods=['GET'])
 def get_space_page(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
@@ -97,3 +108,4 @@ def get_space_page(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+
