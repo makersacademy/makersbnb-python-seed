@@ -1,3 +1,4 @@
+
 """Table: spaces
 id: SERIAL
 space_name: text
@@ -9,7 +10,9 @@ user_id: int"""
 
 
 class Space:
-    def __init__(self, id, space_name, location, description, price, user_id, start_date, end_date):
+    def __init__(
+        self, id, space_name,location, description, price, user_id, start_date, end_date
+    ):
         self.id = id
         self.space_name = space_name
         self.location = location
@@ -24,5 +27,3 @@ class Space:
 
     def __repr__(self):
         return f"Space ({self.id} {self.user_id} {self.space_name} {self.location} {self.description} {self.price} {self.start_date} {self.end_date})"
-    
-    
