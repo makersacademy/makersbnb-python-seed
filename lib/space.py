@@ -1,5 +1,5 @@
 class Space():
-    def __init__(self, id, name, desc, price, user_id):
+    def __init__(self, id, name, desc, price, user_id=None):
         self.id = id
         self.name = name
         self.desc = desc
