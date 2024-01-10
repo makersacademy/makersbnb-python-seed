@@ -10,6 +10,8 @@ from flask import request, jsonify, make_response, session
 from lib.user_repository import UserRepository
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
+from lib.booking_repository import BookingRepository
+from lib.booking import Booking
 
 
 def token_required(f):
@@ -43,7 +45,6 @@ app = Flask(__name__)
 
 # Need work?
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
-print(SECRET_KEY)
 app.config["SECRET_KEY"] = SECRET_KEY
 
 
@@ -64,15 +65,6 @@ def is_valid(password):
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
-
-@app.route('/bookings', methods=['GET'])
-def get_bookings():
-    return render_template('bookings/index.html')
-
-@app.route('/bookings', methods=['POST'])
-def goto_booking():
-    space_id = request.form['id']
-    return redirect("new_booking")
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -195,6 +187,30 @@ def space(space_id, current_user=None):
     dates = repository.get_available_dates(space_id)
     return render_template('/spaces/space.html', space=space, dates = dates)
 
+@app.route('/bookings/new', methods=['POST'])
+@token_required
+def create_booking(current_user):
+    guest_username = current_user
+    space_id = request.form['space_id']
+    booking_date = datetime.date.fromisoformat(request.form['date_option'])
+
+    connection = get_flask_database_connection(app)
+    guest_id = connection.execute(
+        """
+        SELECT id FROM users WHERE username=%s;
+        """, [guest_username]
+    )[0]['id']
+    # space_repo = SpaceRepository(connection)
+    # host_id = space_repo.get_space_by_id(space_id).host_id
+    new_booking = Booking(None, booking_date, space_id, guest_id, None)
+    booking_repo = BookingRepository(connection)
+    booking_repo.create(new_booking)
+    return redirect("/bookings/success")
+
+@app.route('/bookings/success', methods=['GET'])
+@token_required
+def get_bookings_success(current_user):
+    return render_template("bookings/success.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
