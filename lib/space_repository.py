@@ -20,5 +20,8 @@ class SpaceRepository():
         space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
         return space
     
+    def add(self, space:Space):
+        self._connection.execute("INSERT INTO spaces (name, descr, price, user_id) VALUES (%s, %s, %s, %s)", [space.name, space.desc, space.price, space.user_id])
+    
     def update(self, space:Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])
