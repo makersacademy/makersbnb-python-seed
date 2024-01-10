@@ -22,7 +22,7 @@
                     <a class="nav-link" href="#">Hi, {{ user.user_name }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/index">Sign Out</a>
+                    <a class="logout-button-profile" href="{{ url_for('get_login_details') }}">Log out</a>
                 </li>
             </ul>
         </div>
