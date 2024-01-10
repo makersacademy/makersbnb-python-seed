@@ -61,7 +61,8 @@
                 <li>
                     <article>
                         <h5>
-                            {{ booking.date_booked }} - {% for space in spaces if space.id == booking.space_id %} {{space.name}} - {{space.address}} {% endfor %}
+                            <a href="/spaces/{{ booking.space_id }}">
+                            {{ booking.date_booked }} - {{booking.space_name}} 
                         </h5>
                     </article>
                 </li>
