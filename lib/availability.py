@@ -3,7 +3,7 @@
 class Availability:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
-    def __init__(self, id, space_id, date, status = []):
+    def __init__(self, id, space_id, date, status = True):
         self.id = id
         self.space_id = space_id
         self.date = date
