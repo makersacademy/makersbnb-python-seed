@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {% block content%}
+    <main>
+        <div vertical-align="center"><center>
+            <label class = "login_title">Login</label>
+            <form action="/login" method="post">
+                <p class = 'form_heading'>
+                    <label for="email" class="login_headers">Email:</label><br>
+                    <input type = "text" id = "email" class = "form_input" name = "email">
+                </p>
+                <p class = 'form_heading'>
+                    <label for= "password" class="login_headers">Password:</label><br>
+                    <input type = "password" id = "password" class = "form_input" name = "password">
+                </p>
+                <button type = 'submit' id = "submit" class = "button" onclick = login()>Submit</button>
+            </form>
+            
+        </center></div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</body>
+</html>
