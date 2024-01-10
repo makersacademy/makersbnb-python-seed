@@ -7,7 +7,7 @@ from lib.user_repository import UserRepository
 from lib.user import User
 from lib.availability import Availability
 from lib.availability_repository import AvailabilityRepository
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
@@ -99,15 +99,17 @@ def add_space():
     price = request.form['pricepernight']
     first_date = request.form['availablefrom']
     last_date = request.form['availableto']
+    first_date = datetime.strptime(first_date, "%Y-%m-%d").date()
+    last_date = datetime.strptime(last_date, "%Y-%m-%d").date()
     space = Space(None,int(userid),name,description,int(price))
-    repo_space.create(space)
+    space = repo_space.create(space)
     dates = []
     current_date = first_date
     while current_date < last_date:
         dates.append(current_date)
         current_date += timedelta(days=1)
     for a_date in dates:
-        repo_avaliblity.create(Availability(None, userid, a_date))
+        repo_avaliblity.create(Availability(None, space.id, a_date))
 
     return redirect('/spaces')
 
