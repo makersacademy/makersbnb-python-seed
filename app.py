@@ -1,15 +1,13 @@
+from lib.user_repository import UserRepository, hash_pass, is_valid
+from lib.spaces_repository import SpaceRepository
+from lib.spaces import Space
 import os
-
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
 from functools import wraps
 from flask import request, jsonify, make_response, session
-
-from lib.user_repository import UserRepository
-from lib.spaces_repository import SpaceRepository
-from lib.spaces import Space
 
 
 # Auth token generation
@@ -46,33 +44,28 @@ app = Flask(__name__)
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
 
-
-def is_valid(password):
-    if password is not None:
-        valid_length = len(password) >= 8
-        has_special_char = any(char in "!@#$%?" for char in password)
-        has_digit = any(char.isdigit() for char in password)
-        return valid_length and has_special_char and has_digit
-
-
 # == Your Routes Here ==
+
 
 # GET /index
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+@app.route("/index", methods=["GET"])
 def get_index():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/bookings', methods=['GET'])
+
+@app.route("/bookings", methods=["GET"])
 def get_bookings():
-    return render_template('bookings/index.html')
+    return render_template("bookings/index.html")
 
-@app.route('/bookings', methods=['POST'])
+
+@app.route("/bookings", methods=["POST"])
 def goto_booking():
-    space_id = request.form['id']
+    space_id = request.form["id"]
     return redirect("new_booking")
+
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -87,10 +80,11 @@ def register():
 
         if not is_valid(password):
             return "Invalid password", 400
-            # create userRepo instance
+
         connection = get_flask_database_connection(app)
         user_repo = UserRepository(connection)
-        if user_repo.create_user(username, email, password):
+
+        if user_repo.create_user(username, email, password):  # pass the plain password
             return render_template("success.html")
         else:
             return render_template("userexists.html")
@@ -193,7 +187,7 @@ def space(space_id, current_user=None):
     repository = SpaceRepository(connection)
     space = repository.get_space_by_id(space_id)
     dates = repository.get_available_dates(space_id)
-    return render_template('/spaces/space.html', space=space, dates = dates)
+    return render_template("/spaces/space.html", space=space, dates=dates)
 
 
 if __name__ == "__main__":
