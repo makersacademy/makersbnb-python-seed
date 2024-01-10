@@ -74,6 +74,8 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         password_confirmation = request.form.get("password_confirmation")
+        print(password)
+        print(password_confirmation)
 
         if password != password_confirmation:
             return "Passwords do not match", 400
