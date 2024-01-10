@@ -31,8 +31,6 @@ class SpaceRepository:
         new_space.id = row['id']
         return new_space
     
-# ---------------------------------------------------------------
-# Commented out, as availability classes required before it can be used
 
     def find_space_with_availabilities(self, space_id):
         rows = self._connection.execute(
