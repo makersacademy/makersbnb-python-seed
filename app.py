@@ -1,5 +1,7 @@
 import os
+import secrets
 from flask import Flask, request, render_template, session, redirect
+
 from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
 from lib.space import Space
@@ -7,8 +9,9 @@ from lib.space_repository import SpaceRepository
 from lib.booking import Booking
 from lib.booking_repository import BookingRepository
 
+
 app = Flask(__name__)
-app.secret_key='12'
+app.secret_key = secrets.token_hex(16)
 
 @app.route('/', methods=['GET'])
 def get_index():
