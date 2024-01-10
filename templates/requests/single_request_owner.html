@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Request | Makersbnb</title>
+<!-------------------------- START COPYING TO EVERY PAGE -------------------------------->
+
+    <!-- IN-DOC STYLESHEET: -->
+    <style>
+        body {
+            font-size: 18px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 20px 30px; /* Add margin top/bottom, right/left */
+        }
+        /* LINK COLOUR */
+        a:link {
+            color: black; /* Change this to your desired color */
+        }
+        a:visited {
+            color: black; /* Change this to your desired color */
+        }
+        .other_requests{
+            height: 100%; /* Set a fixed height for the columns */
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            overflow: hidden; /* Hide overflowed content */
+            border: 2px solid #000;
+            margin: 0 auto; /* Center the div horizontally */;
+        }
+        .individual_request {
+            flex: 1;
+            margin: 5px; /* Increase the padding to space out the sub-elements */
+            overflow-y: auto;
+        }
+        .button-container {
+        text-align: center; /* Center the buttons horizontally */
+        margin: 0 auto; /* Center the div horizontally */
+        }
+
+        .confirm_request_button, .deny_request_button {
+            background-color: transparent; /* Remove the background color */
+            border: 2px solid #000;
+            padding: 8px 15px;
+            box-shadow: 5px 5px 0px #000;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Set the font */
+            font-size: 18px;
+            margin: 10px; /* Add margin to space out the buttons horizontally */
+            width: 400px; /* Set the same width for both buttons */
+        }
+    </style>
+
+    <!-- CSS STYLESHEET LINK NOT WORKING -->
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
+</head>
+<body>
+    <!-- HEADER WITH AUTH -- copy to every page once this image is figured out -->
+    <div class="header">
+        <!-- LINKABLE LOGO -->
+        <a href="/" style="text-decoration: none;">
+            <div class="logo-container" style="float: left; background-color: black; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;">
+                <span style="color: white; font-family: 'Comic Sans MS', cursive, sans-serif; font-size: 40px;">M</span>
+            </div>
+        </a>
+        <!-- HEADER LINKS -->
+        <div class="header_links" style="text-align: right;">
+            <a class="spaces_link" href="/spaces">Spaces</a> |
+            <a class="requests_link" href="/requests">Requests</a> |
+            <a class="sign_out_link" href="/signout">Sign out</a>
+        
+    </div>
+    <!-- HEADER WITH AUTH-->
+
+<!-------------------------- STOP COPYING TO EVERY PAGE -------------------------------->
+
+    <br>
+    <br>
+
+    <!-- ALL REQUESTS -->
+    <div class="single_request" style="text-align: center;">
+        <h1 class="single_request_header">Request for '{{ this_request.title }}'</h1>
+        <p class="all_requests_blurb">
+            {{ this_request.description }}
+        </p>
+    </div>
+    <!-- ALL REQUESTS -->
+
+    <br>
+
+    <!-- THIS REQUEST DETAILS @DANIEL FILL IN HERE--> 
+    <div class="this_request_details" style="text-align: center;">
+        <p style="font-size: 20px;">
+            From: {{ this_request.requester_email }}
+        </p>
+        <p style="font-size: 20px;">
+            Date: {{ this_request.date_requested }}
+        </p>
+        <p style="font-size: 20px;">
+            Confirmation Status: {{ this_request.confirmation }}
+        </p>
+    </div>
+
+<br>
+    <!-- OTHER REQUESTS FOR THIS SPACE -->
+    <div class="all_requests_for_space">
+        <h2 style="text-align: center;">Other Requests for this Space</h2>
+<br>
+        <!-- REQUESTS I'VE MADE -->
+        <div class="other_requests_with_header" style="align-items: center;">
+            <div class="other_requests" style="border: 2px solid #000; padding: 30px;">
+                {% for request in other_requests%}
+                    <a href="/requests/{{ request.id }}">
+                        <div class="individual_request" style="border: 2px solid #000; padding-left: 20px;">
+                            <h2 class="request-title">{{request.title}}</h2>
+                            <p class="requestp-confirmed">{{request.confirmed}}</p>
+                            <p class="request-date">{{request.date_requested}}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- OTHER REQUESTS FOR THIS SPACE -->
+
+<br><br>
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="button-container">
+        <form class="confirm_request" action="/requests/{{ this_request.id }}/confirm" method="post">
+            <button type="submit" class="confirm_request_button">
+                Confirm Request from {{this_request.requester_email}}
+            </button>
+        </form>
+    
+        <form class="deny_request" action="/requests/{{ this_request.id }}/deny" method="post">
+            <button type="submit" class="deny_request_button">
+                Deny Request from {{this_request.requester_email}}
+            </button>
+        </form>
+    </div>
+
+
+    </body>
+</html>

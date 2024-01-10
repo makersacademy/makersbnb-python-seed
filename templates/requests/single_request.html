@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Request | Makersbnb</title>
+<!-------------------------- START COPYING TO EVERY PAGE -------------------------------->
+
+    <!-- IN-DOC STYLESHEET: -->
+    <style>
+        body {
+            font-size: 18px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 20px 30px; /* Add margin top/bottom, right/left */
+        }
+        /* LINK COLOUR */
+        a:link {
+            color: black; /* Change this to your desired color */
+        }
+        a:visited {
+            color: black; /* Change this to your desired color */
+        }
+        .other_requests{
+            height: 100%; /* Set a fixed height for the columns */
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            overflow: hidden; /* Hide overflowed content */
+            border: 2px solid #000;
+            margin: 0 auto; /* Center the div horizontally */;
+        }
+        .individual_request {
+            flex: 1;
+            margin: 5px; /* Increase the padding to space out the sub-elements */
+            overflow-y: auto;
+        }
+
+    </style>
+
+    <!-- CSS STYLESHEET LINK NOT WORKING -->
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
+</head>
+<body>
+    <!-- HEADER WITH AUTH -- copy to every page once this image is figured out -->
+    <div class="header">
+        <!-- LINKABLE LOGO -->
+        <a href="/" style="text-decoration: none;">
+            <div class="logo-container" style="float: left; background-color: black; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center;">
+                <span style="color: white; font-family: 'Comic Sans MS', cursive, sans-serif; font-size: 40px;">M</span>
+            </div>
+        </a>
+        <!-- HEADER LINKS -->
+        <div class="header_links" style="text-align: right;">
+            <a class="spaces_link" href="/spaces">Spaces</a> |
+            <a class="requests_link" href="/requests">Requests</a> |
+            <a class="sign_out_link" href="/signout">Sign out</a>
+        
+    </div>
+    <!-- HEADER WITH AUTH-->
+
+<!-------------------------- STOP COPYING TO EVERY PAGE -------------------------------->
+
+    <br>
+    <br>
+
+    <!-- ALL REQUESTS -->
+    <div class="single_request" style="text-align: center;">
+        <h1 class="single_request_header">Request for '{{ this_request.title }}'</h1>
+        <p class="all_requests_blurb">
+            {{ this_request.description }}
+        </p>
+    </div>
+    <!-- ALL REQUESTS -->
+
+    <br>
+
+    <!-- THIS REQUEST DETAILS @DANIEL FILL IN HERE--> 
+    <div class="this_request_details" style="text-align: center;">
+        <p style="font-size: 20px;">
+            To: {{ this_request.owner_email }}
+        </p>
+        <p style="font-size: 20px;">
+            Date: {{ this_request.date_requested }}
+        </p>
+        <p style="font-size: 20px;">
+            Confirmation Status: {{ this_request.confirmation }}
+        </p>
+    </div>
+
+
+    </div>
+    <!-- REQUESTS FOR USER -->
+    
+    </body>
+</html>
