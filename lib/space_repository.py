@@ -16,6 +16,21 @@ class SpaceRepository:
             spaces.append(item)
         return spaces
 
+    # def create(self, space):
+    #     file = space.image_path
+    #     if file:
+    #         filename = secure_filename(file.filename)
+    #         file_path = os.path.join(self.UPLOAD_FOLDER, filename)
+    #         file.save(file_path)
+
+    #         self.connection.execute("""
+    #             INSERT INTO spaces 
+    #             (address, name, price, image_path, description, date_added, date_available, user_id) 
+    #             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    #         """, [space.address, space.name, space.price, file_path, space.description, space.date_added, space.date_available, space.user_id])
+
+    #     return None
+    
     def create(self, space):
         file = space.image_path
         if file:
@@ -23,14 +38,17 @@ class SpaceRepository:
             file_path = os.path.join(self.UPLOAD_FOLDER, filename)
             file.save(file_path)
 
+            # Update the image_path in the Space instance before storing in the database
+            space.image_path = f'images/{filename}'
+
             self.connection.execute("""
                 INSERT INTO spaces 
                 (address, name, price, image_path, description, date_added, date_available, user_id) 
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, [space.address, space.name, space.price, file_path, space.description, space.date_added, space.date_available, space.user_id])
+            """, [space.address, space.name, space.price, space.image_path, space.description, space.date_added, space.date_available, space.user_id])
 
         return None
-    
+        
     def find(self, id):
         rows = self.connection.execute("SELECT * FROM spaces WHERE id = %s", [id])
         if rows: 
