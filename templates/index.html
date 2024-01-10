@@ -16,14 +16,13 @@
                 <div><img src="https://placehold.co/300x300"></div>
         </div>
         <div class="image-container">
-            <img src="static/images/lilkim.jpg">
-            <img src="static/images/zoos.jpg">
-            <img src="static/images/celestial_haven.jpg">
-            <img src="static/images/mountain_hideaway.jpg">
-            <img src="static/images/ocean_paradise.jpg">
-            <img src="static/images/cityscape_loft.jpg">
-            <img src="static/images/lake_cottage.jpg">
-            <img src="https://placehold.co/300x200"></div>
+            {% for listing in listings %}
+            <div class='listing-container'><a href="/space/{{listing.id}}"><img src="static/{{listing.image_path}}"></a>
+            <div class="listing-details">{{listing.name}} - £{{listing.price}}/night</div></div>
+            {% endfor %}
+        </div>
         <footer>Footer text goes here</footer>
     </body>
 </html>
+
+

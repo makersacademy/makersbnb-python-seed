@@ -6,11 +6,13 @@ from lib.user_repository import UserRepository
 from lib.forms import RegisterForm, LoginForm
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
+from flask_bcrypt import Bcrypt
 from lib.booking_repository import BookingRepository
 import hashlib
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
+bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret_key')
 
 login_manager = LoginManager()
@@ -32,24 +34,29 @@ def load_user(user_id):
 
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    listings = repo.all()
+    return render_template('index.html', listings = listings)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
-@app.route('/sign_in', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def get_login_details():
     form = LoginForm()
     if form.validate_on_submit():
         connection = get_flask_database_connection(app)
         user_repository = UserRepository(connection)
         user = user_repository.find_by_name(form.username.data)
-        if user and user.check_password(form.password.data):
+        if user and bcrypt.check_password_hash(user.password.encode('utf-8'), form.password.data.encode('utf-8')):
             login_user(user)
             return redirect(url_for('profile_page'))
         else:
             flash('Invalid username or password. Please try again.', 'error')
 
-    return render_template('sign_in.html', form=form)
+    return render_template('login.html', form=form)
+
+#Test123!@111
 
 
 #IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
@@ -79,8 +86,8 @@ def get_create_account():
         repo = UserRepository(connection)
         username = form.username.data
         email = form.email.data
-        password = form.password.data
-        user = User(None, username, email, password)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(None, username, email, hashed_password)
         repo.create(user)
         login_user(user)
         flash('Account created successfully!', 'success')
@@ -91,7 +98,8 @@ def get_create_account():
     return render_template('create_account.html', form=form)
 
 
-@app.route('/spaces/<int:id>', methods=['GET'])
+
+@app.route('/space/<int:id>', methods=['GET'])
 def get_space_page(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)

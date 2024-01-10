@@ -12,6 +12,7 @@ pytest-xprocess = "*"
 py = "*"
 flask-wtf = "*"
 flask-login = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 autopep8 = "*"
