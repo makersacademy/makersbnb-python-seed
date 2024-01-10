@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,24 +23,31 @@
 
     <main>
         <div vertical-align="center"><center>
-            <label class = "login_title">Login</label>
+            <label class="login_title">Login</label>
             <form action="/login" method="post">
-                <p class = 'form_heading'>
+                <p class='form_heading'>
                     <label for="email" class="login_headers">Email:</label><br>
-                    <input type = "text" id = "email" class = "form_input" name = "email">
+                    <input type="text" id="email" class="form_input" name="email">
                 </p>
-                <p class = 'form_heading'>
-                    <label for= "password" class="login_headers">Password:</label><br>
-                    <input type = "password" id = "password" class = "form_input" name = "password">
+                <p class='form_heading'>
+                    <label for="password" class="login_headers">Password:</label><br>
+                    <input type="password" id="password" class="form_input" name="password">
                 </p>
-                <button type = 'submit' id = "submit" class = "button" onclick = login()>Submit</button>
+                <button type='submit' id="submit" class="button">Submit</button>
             </form>
-            
+        
+            {% if error_message %}
+                <h2 style="color: red;">{{ error_message }}</h2>
+            {% endif %}
+        
+            {% if success_message %}
+                <p style="color: green;">{{ success_message }}</p>
+            {% endif %}
         </center></div>
     </main>
 
     <footer>
-        <div class="footer"></div>>
+        <div class="footer"></div>
     </footer>
 </body>
 </html>

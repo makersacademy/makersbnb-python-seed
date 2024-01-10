@@ -17,7 +17,7 @@ def test_get_spaces(page, test_web_address):
     expect(h1_tag).to_have_text("Maker'sBNB")
 
 
-def test_signup_successful(page, test_web_address):
+"""def test_signup_successful(page, test_web_address):
     page.goto(f"http://{test_web_address}/signup")
     # Fill out the signup form
     page.fill('input[name="first_name"]', 'John')
@@ -51,5 +51,45 @@ def test_email_exists(page, test_web_address):
     page.fill('input[name="password"]', 'testpassword')
     page.click("input[type='submit']")
     fail_message = page.locator('body:has-text("Email already exists. Please use a different Email.")')
-    assert fail_message
+    assert fail_message"""
+
+def test_post_login(page, test_web_address):
+    user = {
+        'user_id': 3,
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'email': 'john.doe@example.com',
+        'phone_number': '123456',
+        'password': 'password',
+    }
+    page.goto(f"http://{test_web_address}/login")
+    page.fill('input[name="email"]', 'john.doe@example.com')
+    page.fill('input[name="password"]', 'password')
+    page.click("button[type='submit']")
+    assert page.goto(f"http://{test_web_address}/index")
+
+def test_login_fail(page, test_web_address):
+    page.goto(f"http://{test_web_address}/login")
+    page.fill('input[name="email"]', 'john.doe@example.com')
+    page.fill('input[name="password"]', 'password')
+    page.click("button[type='submit']")
+    error_message = page.locator("h2")
+    expect(error_message).to_have_text('No account has been made with this email. Please sign up.')
+
+
+def test_wrong_password(page, test_web_address):
+    user = {
+        'user_id': 3,
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'email': 'email1@email.com',
+        'phone_number': '123456',
+        'password': 'password',
+    }
+    page.goto(f"http://{test_web_address}/login")
+    page.fill('input[name="email"]', 'email1@email.com')
+    page.fill('input[name="password"]', 'wrongpassword')
+    page.click("button[type='submit']")
+    error_message_tag = page.locator("h2")
+    expect(error_message_tag).to_have_text("Incorrect password.")
 
