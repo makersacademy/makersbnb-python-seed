@@ -1,5 +1,6 @@
 from lib.user import User, UserRepo
 from unittest.mock import Mock
+import pytest
 
 def test_creation_of_user():
     user = User(1, 'testuser', 'test@user.com', 'pass123', None)
