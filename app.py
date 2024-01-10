@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 import jwt
@@ -56,6 +57,22 @@ def is_valid(password):
 
 # == Your Routes Here ==
 
+# GET /index
+# Returns the homepage
+# Try it:
+#   ; open http://localhost:5000/index
+@app.route('/index', methods=['GET'])
+def get_index():
+    return render_template('index.html')
+
+@app.route('/bookings', methods=['GET'])
+def get_bookings():
+    return render_template('bookings/index.html')
+
+@app.route('/bookings', methods=['POST'])
+def goto_booking():
+    space_id = request.form['id']
+    return redirect("new_booking")
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -175,7 +192,8 @@ def space(space_id, current_user=None):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.get_space_by_id(space_id)
-    return render_template("/spaces/space.html", space=space)
+    dates = repository.get_available_dates(space_id)
+    return render_template('/spaces/space.html', space=space, dates = dates)
 
 
 if __name__ == "__main__":

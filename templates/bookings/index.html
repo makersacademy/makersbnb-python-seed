@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <h1>Book a Space</h1>
+    <h2> ----- </h2>
+    <form class="goToBookingForm" action="/goto_booking" method="post">
+        <label for="id">Space ID:</label>
+        <input type="text" id="id" name="id"><br><br>
+        <input type="submit" value="Book this space!">
+    </form>
+    <br />
+    <br />
+    <a href="/logout">logout</a>
+  </body>
+</html>
