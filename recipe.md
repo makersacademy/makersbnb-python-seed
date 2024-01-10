@@ -27,7 +27,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 Record	| Properties
 --------+-----------
 user    |  name, email, password, bookings
-space   |  name, description, price, dates_booked, dates_availible, user_id
+space   |  name, location, description, price, dates_booked, dates_availible, user_id
 bookings|  date, user_id, space_id, confirmed
 
 
@@ -63,6 +63,7 @@ bookings: int[]
 Table: spaces
 id: SERIAL
 space_name: text
+location: text
 description: text
 price: money
 dates_booked: date[]
