@@ -46,4 +46,3 @@ INSERT INTO users (username, email, password) VALUES ('test_username2', 'test2@t
 INSERT INTO spaces (space_name, description, price, user_id, start_date, end_date) VALUES ('London', 'city', 200, 1, '2024-02-01', '2025-02-01');
 
 INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-01', False, 1, 1);
-
