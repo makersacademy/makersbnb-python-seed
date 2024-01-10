@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret_key')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "profile_page"
+login_manager.login_view = "sign_in"
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -48,7 +48,6 @@ def get_login_details():
     return render_template('sign_in.html', form=form)
 
 
-
 #IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
 @app.route('/profile', methods=['GET'])
 @login_required
@@ -72,15 +71,16 @@ def get_create_account():
         username = form.username.data
         email = form.email.data
         password = form.password.data
-
         user = User(None, username, email, password)
         repo.create(user)
-
         login_user(user)
         flash('Account created successfully!', 'success')
         return redirect(url_for('profile_page'))
+    else:
+        flash(form.errors)
 
     return render_template('create_account.html', form=form)
+
 
 @app.route('/spaces/<int:id>', methods=['GET'])
 def get_space_page(id):
