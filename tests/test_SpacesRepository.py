@@ -28,9 +28,21 @@ def test_user_can_add_a_listing(db_connection):
        Space(2,'Test Title2','This is some test description',25.00,'2024-01-14-2024-01-29',1), 
        Space(1,'Test Title','This is some test description',65.75,'2024-01-12-2024-01-31',1)
     ]
+
     
 def test_find_space_by_id(db_connection):
    db_connection.seed('seeds/SpacesTest.sql')
    repository = SpacesRepository(db_connection)
    result = repository.find(1)
    assert result == Space(1, 'Test Title','This is some test description',65.75,'2024-01-12-2024-01-31',1)
+
+
+def test_get_by_user_returns_spaces(db_connection):
+    db_connection.seed('seeds/SpacesTest.sql')
+    repository = SpacesRepository(db_connection)
+    result = repository.get_by_user(2)
+    assert result == [
+        Space(4,'Test Title4','This is some test description',19.95,'2024-01-21-2024-01-31',2), 
+       Space(3,'Test Title3','This is some test description',135.50,'2024-01-12-2024-02-05',2)
+    ]
+

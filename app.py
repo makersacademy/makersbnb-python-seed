@@ -65,7 +65,15 @@ def user():
 
 @app.route('/newspace', methods=['GET'])
 def get_new_space():
-    return render_template('newspace.html')
+    try:
+        if session['email']:
+
+            connection = get_flask_database_connection(app)
+            repository = SpacesRepository(connection)
+            spaces = repository.get_by_user(session['user_id'])
+            return render_template('newspace.html', username=session['email'],spaces=spaces)
+    except:
+        return redirect('/spaces')
 
 @app.route('/newspace',methods=['POST'])
 def validate_new_space():
@@ -89,8 +97,9 @@ def validate_new_space():
     if not(errors):
         connection = get_flask_database_connection(app)
         repository = SpacesRepository(connection)
-        repository.add(title,space_description,price,f'{startdate}-{enddate}',1)
-    return render_template('newspace.html', errors = errors)
+        repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
+        return redirect('/newspace')
+    return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'])
 
 # POST route for creating new user and password.
 @app.route('/signup', methods=['POST'])
@@ -117,6 +126,7 @@ def create_user():
     
     repository.create(user)
     session['email'] = user.email
+    session['user_id'] = repository.check_valid_login(email,passw)
     return redirect('/spaces')
 
 @app.route('/spaces', methods=['GET'])
