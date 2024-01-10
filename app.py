@@ -20,10 +20,6 @@ users = []
 def get_index():
     return render_template('index.html')
 
-@app.route('/spaces', methods=['GET'])
-def get_space():
-    return render_template('spaces.html')
-
 
 @app.route('/template', methods=['GET'])
 def get_template():
