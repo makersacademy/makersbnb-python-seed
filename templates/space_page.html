@@ -37,6 +37,22 @@
             color: #555;
         }
 
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="date"] {
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
         a {
             display: block;
             margin-top: 20px;
@@ -44,45 +60,30 @@
             text-decoration: none;
         }
 
-        /* Styles for the list of spaces */
-        h1 {
-            text-align: center;
-        }
-
-        div {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-        }
-
-        a {
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         a:hover {
             text-decoration: underline;
         }
-
     </style> -->
 </head>
 
 <body>
     <div class="container">
-        <h1>Stay at any of these spaces.</h1>
-            
-        {% for space in spaces %}
-            <div>
-                <a href="/spaces/{{space.id}}">{{space.name}}</a>
-                <p></p>
-                <a1 class="location">{{space.location}}</a1> 
-                <a2 class="price">£{{space.price}}</a2>
-                <br></br>
-            </div>
-        {% endfor %}
+        <h1 class="space_name">{{space.name}}</h1>
+        <p class="price">Price: £{{space.price}} per night</p>
+        <p class="location">Location: {{space.location}}</p>
+        <p class="size">Size: {{space.size}}</p>
+        <p class="description">{{space.description}}</p>
+
+        <form action="/book_space" method="post">
+            <input type="hidden" name="space_id" value="{{ space.id }}">
+            <input type="date" name="date" required>
+            <button type="submit">Book</button>
+        </form>
+
+        <br></br>
+
+        <a href="/spaces">Back to all spaces</a>
     </div>
 </body>
 
 </html>
-
