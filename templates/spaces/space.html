@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakersBnB</title>
-    <link rel="stylesheet" href="/static/style.css" >
+{% extends "layout.html" %}
 
-</head>
+{% block body %}
 <body>
     <h1>{{space.name}}</h1>
     <div class="spaceWithDates">
-
+        
         {% for date in dates %}
         <input type="radio" id={{date.isoformat()}} name="date_option" value="HTML">
         <label for={{date.isoformat()}}>{{date.isoformat()}}</label><br>
@@ -18,4 +12,4 @@
         <button type="button">Request to Book</button>
     </div>
 </body>
-</html>
+{% endblock %}

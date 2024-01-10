@@ -8,14 +8,15 @@
 </head>
 <body>
     <nav>
-        <h2>MakersBnB</h2>
-        <ul>
-            <li>
-                <a>Spaces</a>
-                <a>Requests</a>
-                <a>Login/Logout</a>
-            </li>
-        </ul>
+        <div class="topnav">
+            <a href="/">MakersBnB</a>
+            <div class="topnav-right">
+                <a href="/spaces">Spaces</a>
+                <a href="/requests">Requests</a>
+                <a href="/login" >Login/Logout</a>
+            </div>
+        </div>
     </nav>
+    {% block body %}{% endblock %}
 </body>
 </html>
