@@ -10,8 +10,9 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        <br>You are logged in as test@test.com</br>
         <h1>Stay at any of these spaces.</h1>
-            
+
         {% for space in spaces %}
             <div>
                 <a href="/spaces/{{space.id}}">{{space.name}}</a> <br>

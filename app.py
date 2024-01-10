@@ -12,10 +12,10 @@ app.secret_key = '20240110'
 # == Your Routes Here ==
 
 @app.route('/', methods=['GET']) #To-Do integrate def home into def get_homepage
-def home():
-    if "username" in session:
-        return f"Logged in as {session['username']}"
-    return "You are not logged in"
+# def home():
+    # if "username" in session:
+    #     return f"Logged in as {session['username']}"
+    # return "You are not logged in"
 def get_homepage():
     return render_template('homepage.html')
 
@@ -35,12 +35,9 @@ def login_page():
 
 @app.route('/login', methods=['POST'])
 def user_login():
-    connection = get_flask_database_connection(app)
-    repository = UserRepository(connection)
-
-    email = request.form['email']
-    password = request.form['password']
-    session['username'] = request.form['email']
+    # connection = get_flask_database_connection(app)
+    # repository = UserRepository(connection)
+    # session['email'] = request.form['email']
     return redirect("/spaces")
 
 # @app.route('/dashboard', methods=['GET', 'POST'])
@@ -69,7 +66,7 @@ def add_new_user():
         return 400
 
     user = repository.create(user)
-    session['username'] = request.form['username']
+    session['email'] = request.form['email']
     return redirect("/spaces")
 
 @app.route('/spaces', methods=['GET'])
@@ -77,6 +74,8 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
+    
+    # email = session['email']
     return render_template('spaces.html', spaces=spaces)
 
 if __name__ == '__main__':
