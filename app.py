@@ -46,7 +46,8 @@ def space(space_id):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     space = repository.get_space_by_id(space_id)
-    return render_template('/spaces/space.html', space=space)
+    dates = repository.get_available_dates(space_id)
+    return render_template('/spaces/space.html', space=space, dates = dates)
 
 
 

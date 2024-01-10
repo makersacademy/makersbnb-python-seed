@@ -8,9 +8,14 @@
 
 </head>
 <body>
-    <p>{{space.name}}</p>
+    <h1>{{space.name}}</h1>
+    <div class="spaceWithDates">
 
-    <label for="pickadate">Pick a date</label>
-<input type="date" name="pickadate" id="pickadate">
+        {% for date in dates %}
+        <input type="radio" id={{date.isoformat()}} name="date_option" value="HTML">
+        <label for={{date.isoformat()}}>{{date.isoformat()}}</label><br>
+        {% endfor %}
+        <button type="button">Request to Book</button>
+    </div>
 </body>
 </html>
