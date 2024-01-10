@@ -97,8 +97,8 @@ def validate_new_space():
     if not(errors):
         connection = get_flask_database_connection(app)
         repository = SpacesRepository(connection)
-        repository.add(title,space_description,price,f'{startdate}-{enddate}',1)
-    return render_template('newspace.html', errors = errors)
+        repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
+    return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'])
 
 # POST route for creating new user and password.
 @app.route('/signup', methods=['POST'])
