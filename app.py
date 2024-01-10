@@ -33,7 +33,6 @@ def index():
 def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(_connection)
-    ss = ''
     if 'id' in session:
         rows = space_repository.all()
     else:
@@ -107,8 +106,16 @@ def user(section):
 def edit_spaces(id):
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-
     return render_template("space_edit.html", space=space)
+
+@app.route('/spaces/', methods=['GET'])
+def shows_all_spaces():
+    return redirect('/')
+
+@app.route('/spaces/add', methods=['GET'])
+def add_spaces():
+    return "list a space"
+    # route to spaces.html
 
 @app.route('/spaces/update', methods=['POST'])
 def update_spaces():

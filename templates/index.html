@@ -28,7 +28,8 @@
           </div>
           <div id="main">
             {% if session['email_address'] and data['spaces_list'] %}
-              <p>User: {{ session['fullname'] }}</p>
+              <p>User: {{ session['fullname'] }}<br>
+              <a href="/spaces/add">List a Space</a></p>
               <ul>
                 {% for space in data['spaces_list'] %}
                 <a href=""><li>
