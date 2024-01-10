@@ -20,7 +20,7 @@
               <div id="menu">
                   <p>
                   {% if session['email_address'] %}
-                      <a href="/spaces">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
+                      <a href="/index">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="">My listings</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
                   {% else %}
                       <a href="/about">About</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/login">Login</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/register">Register</a></p>
                   {% endif %}
@@ -31,7 +31,7 @@
               <p>User: {{ session['fullname'] }}</p>
               <ul>
                 {% for space in data['spaces_list'] %}
-                <a href=""><li>
+                <a href="/spaces/{{space.id}}"><li>
                   <div class="title">User: {{ space.user_id }}</div>
                   <div class="space">Space: {{ space.name }}</div>
                   <div class="descr">Descr: {{ space.desc }}</div><br>
