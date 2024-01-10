@@ -1,6 +1,7 @@
 from lib.space import Space
 from lib.database_connection import DatabaseConnection 
 
+
 class SpaceRepository:
     def __init__(self, connection):
         self._connection = connection
@@ -11,6 +12,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
@@ -25,15 +27,17 @@ class SpaceRepository:
     
     def create(self, space):
         self._connection.execute(
-            "INSERT INTO spaces (space_name, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s)",
-            [
+            "INSERT INTO spaces (id, space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s,%s, %s)",
+            [   
+                space.id,
                 space.space_name,
+                space.location,
                 space.description,
                 space.price,
                 space.user_id,
                 space.start_date,
                 space.end_date,
-            ],
+            ]
         )
         return None
 
@@ -50,6 +54,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
@@ -69,6 +74,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
@@ -90,6 +96,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
@@ -110,6 +117,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
