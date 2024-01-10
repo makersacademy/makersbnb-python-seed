@@ -16,11 +16,8 @@ class UserRepository:
         return users
     
     def create(self, user):
-        binary_password = user.password.encode("utf-8")
-        hashed_password = hashlib.sha256(binary_password).hexdigest()
-
         rows = self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s) RETURNING id', [
-            user.user_name, user.email, hashed_password])
+            user.user_name, user.email, user.password])
         row = rows[0]
         user.id = row['id']
         return None
