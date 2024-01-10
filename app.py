@@ -20,6 +20,8 @@ def get_spaces():
 
 @app.route('/new_space', methods=['GET'])
 def get_new_space():
+    if 'user_id' not in session:
+        return redirect('/')
     return render_template('new_space.html')
 
 @app.route('/space', methods=['GET'])
@@ -33,6 +35,12 @@ def get_requests():
 @app.route('/request', methods=['GET'])
 def get_request():
     return render_template('request.html')
+
+@app.route('/logout', methods=['GET'])
+def get_logout():
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('logout.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
@@ -81,6 +89,17 @@ def signup():
         session['user_id'] = user_id
         return render_template('spaces.html')
 
+@app.route('/logout', methods=['POST'])
+def logout():
+
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepo(connection)
+
+    if user_repo.find_user_by_id(session['user_id']):
+        del session['user_id']
+        return render_template('login.html')
+    else:
+        return render_template('logout.html', errors=['Nobody logged in'])
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
