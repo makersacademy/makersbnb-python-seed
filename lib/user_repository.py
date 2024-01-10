@@ -19,8 +19,10 @@ class UserRepository:
         binary_password = user.password.encode("utf-8")
         hashed_password = hashlib.sha256(binary_password).hexdigest()
 
-        self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s)', [
+        rows = self._connection.execute('INSERT INTO users (user_name, email, password) VALUES (%s, %s, %s) RETURNING id', [
             user.user_name, user.email, hashed_password])
+        row = rows[0]
+        user.id = row['id']
         return None
     
     def find(self, email, password_attempt):
@@ -30,10 +32,12 @@ class UserRepository:
         rows = self._connection.execute('SELECT email, password FROM users WHERE email = %s AND password = %s', [email, hashed_password])
         return len(rows) > 0
     
-    def get_username_by_id(self, id):
-        rows = self._connection.execute("SELECT user_name FROM users WHERE id = %s", [id])
+    def find_by_id(self, id):
+        rows = self._connection.execute('SELECT * FROM users WHERE id = %s', [id])
         row = rows[0]
-        username = row['user_name']
-            
-        return username
+        return User(row["id"], row["user_name"], row["email"], row["password"])
     
+    def find_by_email(self, email):
+        rows = self._connection.execute('SELECT * FROM users WHERE email = %s', [email])
+        row = rows[0]
+        return User(row["id"], row["user_name"], row["email"], row["password"])
