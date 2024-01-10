@@ -7,7 +7,6 @@
     <p class="listSpace"><a class="button" href="spaces/new">List a Space</a></p>
 
     <div class="spacesList">
-
         {% for space in spaces %}
         <div class="spaceIndividual">
 
@@ -20,7 +19,9 @@
             </a>
         </div>
         {% endfor %}
-        
+        <center>
+      <a href="/logout">logout</a>
+    </center>
     </div>
 </body>
 {% endblock %}

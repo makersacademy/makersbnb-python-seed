@@ -17,15 +17,26 @@
       <br />
       Password
       <br />
-      <input type="password" name="password" />
+      <!--input type=password placeholder="P@ssw0rd"-->
+      <input
+        type="password"
+        name="password"
+        pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+        title="Password must be at least 8 characters long and include both a special character and a number."
+      />
+      <!--input input type="password" id="pwd" name="pwd" minlength="8" pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$" required><br><br> -->
       <br />
       <br />
       Password Confirmation
       <br />
+      <!--input type=password placeholder="P@ssw0rd"> -->
       <input type="password" name="password_confirmation" />
       <br />
       <br />
       <input type="submit" value="Submit" />
+      <br />
+      <br />
+      <a href="/login">login</a>
     </form>
   </body>
 {% endblock %}

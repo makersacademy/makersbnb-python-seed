@@ -1,6 +1,6 @@
-from playwright.sync_api import Page, expect, sync_playwright
+from playwright.sync_api import expect
 from app import is_valid
-import time
+from app import logout
 
 # Tests for your routes go here
 
@@ -28,3 +28,11 @@ def test_password_is_valid():
     assert is_valid(password) == True
     password2 = "incorrect"
     assert is_valid(password2) == False
+
+
+# test logout route
+def test_logout(page, test_web_address):
+    page.goto(f"http://{test_web_address}/logout")
+    assert page.url == f"http://{test_web_address}/"
+    cookies = page.context.cookies()
+    assert not any(cookie["name"] == "token" and cookie["value"] for cookie in cookies)
