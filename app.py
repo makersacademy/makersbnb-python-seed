@@ -98,6 +98,7 @@ def validate_new_space():
         connection = get_flask_database_connection(app)
         repository = SpacesRepository(connection)
         repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
+        return redirect('/newspace')
     return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'])
 
 # POST route for creating new user and password.
