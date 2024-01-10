@@ -25,14 +25,9 @@ def get_index():
 def get_template():
     return render_template('template.html')
 
-
-@app.route('/addnewspace', methods=['GET'])
-def get_addnewspace():
-    return render_template('addnewspace.html')
-
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    return render_template('login.html', title="Login Page")
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -48,6 +43,20 @@ def signup():
     existing_user = repository.find_by_email(email)
     if existing_user:
         return render_template('signup.html', error_message="Email already exists. Please choose a different email.")
+
+    user_id = len(users) + 1
+    user = {
+        'user_id': user_id,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'phone_number': phone_number,
+        'password': password,
+    }
+    users.append(user)
+    print(f"User '{email}' signed up with user_id {user_id}.")
+    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
+
     # Continue with user registration if the email is unique
     new_user = User(
         id=None,
@@ -62,7 +71,15 @@ def signup():
 
 @app.route('/signup')
 def show_signup():
-    return render_template('signup.html')
+    return render_template('signup.html', title='Signup Page')
+
+@app.route('/addnewspace')
+def get_addnewspace():
+    return render_template('addnewspace.html', title='Addspace Page')
+    
+@app.route('/spaces')
+def get_spaces():
+    return render_template('spaces.html', title='Spaces Page')
 
 @app.route('/spaces', methods = ['GET'])
 def get_spaces():
@@ -96,6 +113,7 @@ def add_space():
     space = Space(None,int(userid),name,description,int(price))
     repo.create(space)
     return redirect('/spaces')
+
 
 
 # These lines start the server if you run this file directly
