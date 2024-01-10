@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}"></head>
+
+<body>
+    <header>
+        <div class="page-title">
+            <h1>Maker'sBNB</h1>
+        </div>
+    </header>
+    
+    <nav class ="navbar">
+        <div class="flex-nav"></div>
+        <div class="properties-listed">Property Listings</div>
+        <div class="my-listings">My Listings</div>
+        <div class="my-profile">My Profile</div>
+        <div class="my-requests">My Requests</div>
+    </nav>
+
+    <main>
+        <div class="space-container">
+            <div class="property">
+                <h2>{{space.name}}</h2>
+                <p>Description: {{space.description}}</p>
+                <p>Price per night: £{{space.price_per_night}}.00</p>
+            </div>
+            <div class="space-availability">
+                <h2>Availability</h2>
+                {% for date in availability %}
+                    <p>{{date}}</p>
+                    {% endfor %}
+            </div>
+            <hr>
+            <h2>Booking Request</h2>
+            <form action="/spaces/{{space.id}}/booking-request" method="POST">
+                <div class="booking-dates">
+                    <div class="date-from">
+                        <label for="date-from">Date from:</label>
+                        <select name="date-from" id="date-from">
+                            {% for date in availability %}
+                            <option value={{date.id}}>{{date}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                <div class="date-to">
+                    <label for="date-to">Date to:</label>
+                    <select name="date-to" id="date-to">
+                        {% for date in availability %}
+                        <option value={{date.id}}>{{date}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                </div>
+                <input type="submit" value="Submit Request">
+            </form>
+            
+</div>
+    </main>
+
+    <footer>
+        <div class="footer"></div>>
+    </footer>
+</body>
+</html>

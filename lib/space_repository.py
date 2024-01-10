@@ -1,4 +1,6 @@
 from lib.space import Space
+from lib.availability import Availability
+from datetime import datetime
 
 class SpaceRepository:
     def __init__(self, connection):
@@ -32,14 +34,21 @@ class SpaceRepository:
 # ---------------------------------------------------------------
 # Commented out, as availability classes required before it can be used
 
-    # def find_space_with_availabilities(self, space_id):
-    #     rows = self._connection.execute(
-    #         """
-    #         SELECT spaces.id as space_id, spaces.user_id, spaces.description, spaces.price_per_night, availability.id as availability_id, availability.date, availability.status
-    #         FROM spaces JOIN availability ON spaces.id = availability.space_id
-    #         WHERE spaces.id = %s AND availability.status = %s
-    #         """, 
-    #         [space_id, 'TRUE']
-    #     )
-    #     availability = [Availability(row['availability_id'], row['date'], row['status']) for row in rows]
-    #     return Space(rows[0]['space_id'], rows[0]['user_id'],rows[0]['name'], rows[0]['description'], rows[0]['price_per_night'], availability)
+    def find_space_with_availabilities(self, space_id):
+        rows = self._connection.execute(
+            """
+            SELECT spaces.id as space_id, spaces.user_id, spaces.name, spaces.description, spaces.price_per_night, availability.id as availability_id, availability.date, availability.status
+            FROM spaces JOIN availability ON spaces.id = availability.space_id
+            WHERE spaces.id = %s AND availability.status = %s
+            """, 
+            [space_id, 'TRUE']
+        )
+        #gets all availabilities as class objects
+        availabilities = [Availability(row['availability_id'], row['date'], row['status']) for row in rows]
+        #gets dates from class objects in  a list
+        dates = [availability.date for availability in availabilities]
+        #reformats each date in the list to 'DD-MM-YYYY'
+        formatted_dates = [date.strftime('%d-%m-%Y') for date in dates]
+        
+        space = Space(rows[0]['space_id'], rows[0]['user_id'],rows[0]['name'], rows[0]['description'], rows[0]['price_per_night'])
+        return space, formatted_dates
