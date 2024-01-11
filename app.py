@@ -22,7 +22,7 @@ users = []
 @app.route('/index', methods=['GET'])
 def get_index():
     if 'user_id' in session:
-        user_name = session['user_email']
+        user_name = session['user_first_name']
         return render_template('index.html', user_name=user_name)
     else:
         return render_template('index.html')
@@ -36,6 +36,7 @@ def get_template():
 def get_login():
     return render_template('login.html')
 
+#
 @app.route('/login', methods=['POST'])
 def post_login():
     connection = get_flask_database_connection(app)
@@ -48,6 +49,7 @@ def post_login():
     if password == existing_user.password:
         session['user_id'] = existing_user.id
         session['user_email'] = existing_user.email
+        session['user_first_name'] = existing_user.first_name
         return redirect(url_for('get_index'))
     else:
         return render_template('login.html', error_message="Incorrect password.")
@@ -129,13 +131,13 @@ def get_space_by_month(id):
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
     return render_template('addnewspace.html')
-
+#
 @app.route('/addnewspace', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
     repo_space = SpaceRepository(connection)
     repo_avaliblity = AvailabilityRepository(connection)
-    userid = request.form['userID']
+    userid = session.get('user_id')
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']
@@ -153,7 +155,6 @@ def add_space():
     for a_date in dates:
         repo_avaliblity.create(Availability(None, space.id, a_date))
     return redirect('/spaces')
-
 
 
 # These lines start the server if you run this file directly
