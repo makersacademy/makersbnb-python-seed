@@ -140,12 +140,12 @@ def edit_spaces(id):
             # this will populate the form for us
             space_repo = SpaceRepository(get_flask_database_connection(app))
             space = space_repo.find(id)
+            availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+            availabilities = availability_repo.find(space.id)
+            return render_template("space_edit.html", space=space, availabilities=availabilities)
         else:
-            #  this will not pupulate the form
-            space = ""
-        availability_repo = AvailabilityRepository(get_flask_database_connection(app))
-        availabilities = availability_repo.find(space.id)
-        return render_template("space_edit.html", space=space, availabilities=availabilities)
+            #  this will not fill the form
+            return render_template("space_edit.html", space="", availabilities="")
     else:
         return "Not Authorized"
 
@@ -198,12 +198,12 @@ def update_spaces():
 
 
 
-# @app.route('/spaces/<id>', methods=['GET'])
-# def get_space(id):
-#     # checks
-#     space_repo = SpaceRepository(get_flask_database_connection(app))
-#     space = space_repo.find(id)
-#     return render_template("space_view.html", space=space)
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    # checks
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space = space_repo.find(id)
+    return render_template("space_view.html", space=space)
 
 
 

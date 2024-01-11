@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>MakersBnB</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>MakersBnB</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--
+          Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+          If you're wondering how the CSS file below is being loaded.
+      -->
+      <link rel="stylesheet" href="/static/css/style.css" >
+  </head>
+    <body>
+      <div id="wrapper">
+          <div id="nav">
+              <div id="logo"><img src="static/img/logo.png" /></div>
+              <div id="menu">
+                  <p>
+                  {% if session['email_address'] %}
+
+                      <a href="/index">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/spaces/listings">My listings</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
+
+                  {% else %}
+                      <a href="/about">About</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/login">Login</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/register">Register</a></p>
+                  {% endif %}
+              </div>
+          </div>
+
+
+
+          
+          <div id="main">
+            {% if session['email_address'] and data['spaces_list'] %}
+              <p>User: {{ session['fullname'] }}<br>
+              <a href="/spaces/edit/">List a Space</a></p>
+
+              <hr width="80%" />
+              <div id="list_of_spaces">
+                <div class="box">
+                
+                
+                {% for space in data['spaces_list'] %}
+
+                <a href="/spaces/{{space.id}}">
+               <!-- not SESSION ID -->
+                  {% if not(session['id']) %}
+                    <a href="/spaces/{{space.id}}">
+                    <div class="title">User: {{ space.user_id }}</div>
+                  {% else %}
+                    <a href="/spaces/{{space.id}}">
+                  {% endif %}
+                  <div class="space">Space: {{ space.name }}</div>
+                  <div class="descr">Descr: {{ space.desc }}</div><br>
+                  <div class="descr">cost per night: {{ space['price'] }}</div><br>
+                </a>
+                {% endfor %}
+                </div>
+              </div>
+            {% else %}
+              <p>Please log in first</p>
+            {% endif %}
+          </div>
+      </div>
+  </body>
+</html>
