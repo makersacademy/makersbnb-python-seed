@@ -10,6 +10,14 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
         <div class="links" >
             <a href="/list_spaces">Spaces</a>
             <a href="/requests">Requests</a>
