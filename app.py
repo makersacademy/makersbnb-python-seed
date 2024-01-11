@@ -132,7 +132,7 @@ def get_space_by_month(id):
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
     return render_template('addnewspace.html')
-
+#
 @app.route('/addnewspace', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
