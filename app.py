@@ -105,9 +105,7 @@ def get_create_account():
         login_user(user)
         flash('Account created successfully!', 'success')
         return redirect(url_for('profile_page'))
-    else:
-        flash(form.errors)
-
+    
     return render_template('create_account.html', form=form)
 
 
@@ -136,15 +134,19 @@ def get_space_done(id):
     space_repo = SpaceRepository(connection)
     space = space_repo.find(id)
     form = BookingForm()
+    selected_date = form.booking_date.data
 
     if form.validate_on_submit() and current_user.is_authenticated:
-        selected_date = form.booking_date.data
-        booking = Booking(None, current_user.id, space.id, selected_date, space.name)
-        repo.create(booking)
-        flash("Booking successful!", "success")
-        return redirect(url_for('profile_page'))
+            if not repo.find_booking(selected_date):
+                booking = Booking(None, current_user.id, space.id, selected_date, space.name)
+                repo.create(booking)
+                flash("Booking successful!", "success")
+                return redirect(url_for('profile_page'))
+            else:
+                flash("That date is unavailable, please choose another")
     else:
-        flash("You need to be logged in to make a booking")
+        flash("Please log in to make a booking")
+
 
     return render_template("space.html", space=space, form=form, user=current_user)
 
