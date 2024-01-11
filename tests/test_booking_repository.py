@@ -61,10 +61,7 @@ def test_booking_repo_find_by_guest_id(db_connection):
         Booking(3, date(2024,11,21), 3, 3, True),
         Booking(4, date(2024,11,22), 3, 3, True)
     ]
-
-    with pytest.raises(Exception) as err:
-        booking_repo.find_by_guest_id(12)
-    assert str(err.value) == "Bookings for this user do not exist."
+    assert booking_repo.find_by_guest_id(12) == []
 
 def test_booking_repo_find_by_space_id(db_connection):
     """
@@ -77,10 +74,7 @@ def test_booking_repo_find_by_space_id(db_connection):
         Booking(4, date(2024,11,22), 3, 3, True),
         Booking(6, date(2024,11,22), 3, 1, False)
     ]
-
-    with pytest.raises(Exception) as err:
-        booking_repo.find_by_space_id(12)
-    assert str(err.value) == "Bookings for this space do not exist."
+    assert booking_repo.find_by_space_id(12) == []
 
 def test_booking_repo_create(db_connection):
     """

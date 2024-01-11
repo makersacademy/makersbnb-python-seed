@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
 <body>
     <h1>Requests</h1>
 
@@ -17,10 +18,8 @@
         {% endif %}
     </a>
     {% endfor %}
-
     <h2>Requests I've recieved</h2>
     {% for request in requests_received %}
-    <a>I work</a>
     <p>{{request.id}}</p><br>
         {% if request.confirmed == True %}
         <p>You approved this.</p>
