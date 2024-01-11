@@ -54,3 +54,12 @@ def test_create(db_connection):
         Availability(8, 6, date(2025,1,2), True),
         Availability(9, 5, date(2025,2,2), True)
     ]
+#we have the space id, space name and available date 
+def test_find_id(db_connection):
+    db_connection.seed("seeds/makers_bnb.sql") # Seed our database with some test data
+    repository = AvailabilityRepository(db_connection) # Create a new AvailabilityRepository
+    space_id = 1
+    first_date = date(2025,1,1)
+    last_date = date(2025,1,2)
+    result = repository.find_id(space_id,first_date,last_date)
+    assert result == [1,2]
