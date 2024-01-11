@@ -151,7 +151,7 @@ def list_spaces():
 def get_dashboard():
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
-    user_spaces = repository.find(session["user_id"])
+    user_spaces = repository.get_by_user(session["user_id"])
     
     
     return render_template('/dashboard.html', spaces = user_spaces, username = session['email']) # , username = session['email'], user_id = session['user_id']
