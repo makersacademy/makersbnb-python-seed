@@ -21,7 +21,7 @@ body {
     background-image: url(../images/body-background.png);
 }
 
-.login_title {
+.title {
     color: var(--colour-1);
     opacity: 0.8;
     font-size: x-large;
@@ -29,7 +29,7 @@ body {
     padding: 5%;
 }
 
-.login_headers {
+.headers {
     color: var(--colour-1);
     opacity: 0.8;
     font-size: large;
