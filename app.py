@@ -121,7 +121,6 @@ def create_space():
 
 
 @app.route('/space/<int:id>', methods=['GET', 'POST'])
-@login_required
 def get_space_done(id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
@@ -130,13 +129,17 @@ def get_space_done(id):
 
     if request.method == 'POST':
         date = request.form['date']
-        date_booked = datetime.strptime(date, '%Y-%m-%d')
-        if current_user:
-            booking = Booking(None, current_user.id, space.id, date_booked, space.name)
-            repo.create(booking)
-            return redirect(url_for('profile_page'))
+        
+        if current_user.is_authenticated:
+            if not repo.find_booking(date):
+                date_booked = datetime.strptime(date, '%Y-%m-%d')
+                booking = Booking(None, current_user.id, space.id, date_booked, space.name)
+                repo.create(booking)
+                return redirect(url_for('profile_page'))
+            else:
+                flash("This date is unavailable, please choose another")
         else:
-            flash("You need to be logged in to make a booking")
+            flash("Please log in to make a booking :)")
 
     return render_template("space.html", space=space)
 
