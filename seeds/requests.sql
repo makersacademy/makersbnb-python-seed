@@ -9,4 +9,5 @@ CREATE TABLE requests(
     constraint fk_users foreign key(req_id)
     references users(id)
     on delete cascade
+
 );

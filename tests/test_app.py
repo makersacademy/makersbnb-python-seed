@@ -16,7 +16,10 @@ def test_get_index(page, test_web_address):
 
     expect(strong_tag).to_have_text("Welcome to MakersBnB.")
     
-
+def test_mainpage_redirects_to_spaces(page,test_web_address):
+    page.goto(f'http://{test_web_address}/')
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text('Space Listings')
 """
 We can render the login page
 """
