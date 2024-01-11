@@ -190,7 +190,10 @@ def get_space(id):
     # checks
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-    return render_template("space_view.html", space=space)
+
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availabilities = availability_repo.find(space.id)
+    return render_template("space_view.html", space=space, availabilities=availabilities)
 
 
 @app.route('/availability/add', methods=['POST'])
