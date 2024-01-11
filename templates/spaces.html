@@ -18,6 +18,7 @@
     box-sizing: border-box;
     margin-left: 42%;
     margin-right: 50%;
+    margin-bottom: 3%;
   }
   .button {
       border: 2px solid rgb(0,0,0);
@@ -63,7 +64,7 @@
   </head>
   <body>
     {% if signedin %}
-    <span class="flex-box2"><a href="/newspace">List new space</a>|<a href="/requests">Requests</a>|<a href='/dashboard'>Dashboard</a>
+    <span class="flex-box2"><a href="/newspace">List new space</a>|<a href='/dashboard'>Dashboard</a>
     </span>
     <p align="right" class="t-current_user">Signed in as {{ username }}</p>
     <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
@@ -81,11 +82,14 @@
             <p>{{space.space_description}} <br><br>
             Available from: {{space.daterange}}</p>
             
-            <button onclick="location.href='/requestspace/{{ space.id | urlencode }}';">Request {{space.title}}</button>
-            </ui>
+              <button onclick="location.href='/requestspace/{{ space.id | urlencode }}';">Request {{space.title}}</button>
+           
+          </ui>
             
             </div>
-       
+       <div>
+        
+       </div>
             <p><br><br></p>
 
     {% else %}
@@ -94,5 +98,18 @@
         </div>
 
     {% endfor %}
+    <h3 align="center">Your listings</h3>
+    {% for space in user_spaces %}
+        <div >
+            <ui id="textContainer">
+            <h3>{{space.title}}<br align="right">£{{space.price}}</h3>
+            <p>{{space.space_description}} <br><br>
+            Available from: {{space.daterange}}</p>
+            
+          
+          </ui>
+            
+            </div>
+        {%endfor%}
   </body>
 </html>
