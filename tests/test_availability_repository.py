@@ -25,7 +25,7 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
     assert availablespaces == [
         Availability(1, 1, date(2025,1,1), True),
         Availability(2, 1, date(2025,1,2), True),
-        Availability(3, 1, date(2025,1,3), True),
+        Availability(3, 1, date(2025,2,3), True),
         Availability(4, 2, date(2025,1,2), True),
         Availability(5, 3, date(2025,1,2), True),
         Availability(6, 4, date(2025,1,2), True),
@@ -46,7 +46,7 @@ def test_create(db_connection):
     assert availablespaces == [
         Availability(1, 1, date(2025,1,1), True),
         Availability(2, 1, date(2025,1,2), True),
-        Availability(3, 1, date(2025,1,3), True),
+        Availability(3, 1, date(2025,2,3), True),
         Availability(4, 2, date(2025,1,2), True),
         Availability(5, 3, date(2025,1,2), True),
         Availability(6, 4, date(2025,1,2), True),

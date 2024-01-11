@@ -1,5 +1,4 @@
 
-
 class Availability:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
@@ -14,6 +13,6 @@ class Availability:
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
-    # This method makes it look nicer when we print an Artist
+    # This method makes it look nicer when we print an Availability
     def __repr__(self):
         return f"Availability({self.id},{self.space_id}, {self.date}, {self.status})"

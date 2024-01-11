@@ -30,7 +30,6 @@ def get_index():
 def get_space():
     return render_template('spaces.html')
 
-
 @app.route('/template', methods=['GET'])
 def get_template():
     return render_template('template.html')
@@ -115,15 +114,23 @@ def get_spaces():
     spaces = repo.all()
     return render_template('spaces.html', spaces = spaces)
 
-
-'''
 @app.route('/spaces/<int:id>', methods = ['GET'])
 def get_space(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
-    space = repo.find(id)
-    return render_template {create template for single space page and then finish this}
-'''
+    space, dates = repo.find_space_with_availabilities(id)
+    return render_template('individual_space.html', space = space, availability = dates)
+
+@app.route('/spaces/<int:id>/filter', methods = ['POST'])
+def get_space_by_month(id):
+    month = request.form['month-selector']
+    print(month)
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    if month == 'show-all':
+        return redirect(f'/spaces/{id}')
+    space, dates = repo.find_space_with_availabilities_month(id, month)
+    return render_template('individual_space.html', space = space, availability = dates, month = month)
 
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
