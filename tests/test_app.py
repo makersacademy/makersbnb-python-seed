@@ -102,7 +102,9 @@ def test_adding_a_space(page,test_web_address,db_connection,web_client):
     expect(h3_tag).to_have_count(6)
     response = web_client.post('/newspace', data={'title':'Test','space_desc':'Test','price':'1.23','startdate':'2024-01-20','enddate':'2024-01-31'})
     assert response.status_code ==302
-    response = web_client.post('/newspace', data={'title':'','space_desc':'Test','price':'1.23','startdate':'2024-01-20','enddate':'2024-01-31'})
+    response = web_client.post('/newspace', data={'title':'','space_desc':'Test','price':'1.23','startdate':'2024-01-20','enddate':'2024-01-19'})
+    assert response.status_code ==200
+    response = web_client.post('/newspace', data={'title':'','space_desc':'Test','price':'1.23f','startdate':'2024-01-20','enddate':'2024-01-ab'})
     assert response.status_code ==200
 def test_create_user(db_connection, page, test_web_address):
     db_connection.seed("seeds/MasterTest.sql")
