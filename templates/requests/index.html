@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakersBnB</title>
-</head>
+{% extends "layout.html" %}
+
+{% block body %}
 <body>
     <h1>Requests</h1>
 
@@ -24,6 +20,7 @@
 
     <h2>Requests I've recieved</h2>
     {% for request in requests_received %}
+    <a>I work</a>
     <p>{{request.id}}</p><br>
         {% if request.confirmed == True %}
         <p>You approved this.</p>
@@ -36,4 +33,4 @@
         {% endif %}
     {% endfor %}
 </body>
-</html>
+{% endblock %}

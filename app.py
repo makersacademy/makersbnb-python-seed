@@ -154,10 +154,11 @@ def logout():
 @app.route("/spaces", methods=["GET"])
 @token_required
 def get_all_spaces(current_user):
+    print(current_user)
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.list_all_spaces()
-    return render_template("/spaces/index.html", spaces=spaces)
+    return render_template("/spaces/index.html", spaces=spaces, current_user=current_user)
 
 
 @app.route("/spaces/new", methods=["GET"])

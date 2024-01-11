@@ -125,3 +125,7 @@ label {
 .topnav-right {
   float: right;
 }
+
+.centeredText {
+  text-align: center;
+}
