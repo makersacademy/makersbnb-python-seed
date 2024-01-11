@@ -1,36 +1,35 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 <html>
     <head>
-        <title>MakersBnB</title>
-        <link rel="stylesheet" href="/static/newstyle.css" >
+          
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
     </head>
     <body>       
-        <nav class ="navbar">
-            <div class="flex-nav"></div>
-            <div class="properties-listed">Property Listings</div>
-            <div class="my-listings">My Listings</div>
-            <div class="my-profile">My Profile</div>
-            <div class="my-requests">My Requests</div>
-        </nav>
-        <p style="text-align:center; font-size: xx-large; font-weight: bolder;">Book a Space<br><br>
-            <a href="http://localhost:5000/addnewspace">List your space</a></p>
-            <style>
-                table, th, td {
-                  border:1px solid black;
-                }
-                table.center {
-                  margin-left: auto; 
-                  margin-right: auto;
-                }
-                </style>
-                <table class="center" style="width:50%;">
-                  <tr>
-                    <th>Sea facing lovely home<br>Description and any other details needs to be added<br></th>
-                  </tr>
-                  <tr>
-                    <th>Sea facing lovely home<br>Description and any other details needs to be added<br></th>
-                  </tr>
+          <style>
+            .content {
+              max-width: 600px;
+              margin: auto;
+              background: white;
+              padding: 10px;
+            }
+            </style>
+          <div class="content">
+            <h3>Name: {{spaces.name}}</h3>
+              <p>Description : {{spaces.description}}<br>Price per night £101</p>
+            <button onclick="myFunction()"> Reserve </button>
+          <p id="reserve"></p>
+      
+      <script>
+      function myFunction() {
+        document.getElementById("reserve").innerHTML = "Your booking has been requested.";
+      }
+      </script>
+      
+      </body>    
+      {% endblock %}
 
-                </table>
-    </body>
+      {% block footer %} {{ super() }} {% endblock %}
 </html>
