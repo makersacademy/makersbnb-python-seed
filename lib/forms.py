@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField
-from wtforms.validators import InputRequired, Length, Regexp, Email
-
+from wtforms import StringField, validators, PasswordField, SubmitField, EmailField, IntegerField, DateField
+from wtforms.validators import InputRequired, Length, Regexp, Email, DataRequired
+from wtforms.widgets import NumberInput, Input, DateInput
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -19,3 +20,15 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField('Login')
+
+class NewListing(FlaskForm):
+    name = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Name"})
+    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
+    price = IntegerField('Price', validators=[validators.NumberRange(min=0, max=10000)], widget=NumberInput())
+    image_path = FileField('Image', validators=[
+        FileRequired(),  
+        FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!') 
+    ])
+    description = StringField(validators=[InputRequired()], render_kw={"placeholder": "Description"})
+    date_added = DateField('Date Added', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput())
+    submit = SubmitField('Submit')

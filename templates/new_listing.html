@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <title>MakersBnB</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/style.css') }}">
+        
+    </head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="color: #DDE6ED;">
+            <img src="/static/images/logo.jpeg" width="45" height="50" alt="logo-img">
+            MakersBnB
+        </a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" >Hi {{ user.user_name }} </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+    
+        {{ form.name.label }}</br>
+        {{ form.name() }}</br>
+    
+        {{ form.address.label }}</br>
+        {{ form.address() }}</br>
+    
+        {{ form.price.label }}</br>
+        {{ form.price() }}</br>
+    
+        {{ form.description.label }}</br>
+        {{ form.description() }}</br>
+    
+        {{ form.date_added.label }}</br>
+        {{ form.date_added(class="form-control", placeholder="YYYY-MM-DD", type="date") }}</br>
+    
+        {{ form.image_path.label }}</br>
+        {{ form.image_path() }}</br>
+    
+        {{ form.submit(class="button") }}
+    </form>
+    <a class="nav-link" href="{{ url_for('profile_page') }}">Back to profile page</a>
+    <footer>©MakerBnB</footer>
+</body>
+
+</html>
