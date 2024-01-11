@@ -61,7 +61,7 @@ class BookingRepository:
                 )
             return bookings
         else:
-            raise Exception("Bookings for this user do not exist.")
+            return []
         
     def find_by_space_id(self, space_id):
         if space_id in [booking.space_id for booking in self.all()]:
@@ -83,7 +83,7 @@ class BookingRepository:
                 )
             return bookings
         else:
-            raise Exception("Bookings for this space do not exist.")
+            return []
         
     def create(self, booking):
         date = booking.date
