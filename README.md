@@ -26,7 +26,7 @@ Everyone in the team should then clone this fork to their local machine to work 
 # Open lib/database_connection.py and change the database names
 ; open lib/database_connection.py
 
-# Run the tests (with extra logging)
+# Run the tests (with extra logging.info.info)
 ; pytest -sv
 
 # Run the app
