@@ -3,6 +3,8 @@
 {% block body %}
 <body>
     <h1>{{space.name}}</h1>
+    <p>{{space.description}}</p>
+    <p>£{{space.price}} per night</p>
     <div class="spaceWithDates">
         <form class="createBookingForm" action="/bookings/new" method="post">
             {% for date in dates %}
