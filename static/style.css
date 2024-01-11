@@ -265,3 +265,39 @@ fieldset{
     margin:0;
     padding:0; 
 }
+
+
+/* Flash messages styles */
+.flashes {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+  }
+  
+  .flashes li {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Define colors for different message types */
+  .flashes .success {
+    background-color: #4CAF50;
+    color: #ffffff;
+  }
+  
+  .flashes .info {
+    background-color: #3498db;
+    color: #ffffff;
+  }
+  
+  .flashes .warning {
+    background-color: #f39c12;
+    color: #ffffff;
+  }
+  
+  .flashes .error {
+    background-color: #e74c3c;
+    color: #ffffff;
+  }
