@@ -26,7 +26,7 @@ def test_get_index(page, test_web_address,web_client):
     # We assert that it has the text "This is the homepage."
 
     expect(strong_tag).to_have_text("Welcome to MakersBnB.")
-    
+# test
 
 """
 We can render the login page
