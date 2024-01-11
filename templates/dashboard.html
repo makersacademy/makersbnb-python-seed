@@ -75,11 +75,53 @@
         <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
         <h1 align="left">
     
-    <div class="scroll-box"></div>
+    <div class="scroll-box">
+        {% for approval in approvals %}
+        <div>
+            <h3>{{approval.title}}<br align="right">£{{approval.price}}</h3>
+            <p>
+                Date Chosen: {{approval.date_req}}
+                Status: {{approval.stat}}
+            </p>
+        </div>    
+    <form method="post" action="/dashboard">
+    <input hidden="True" type="text" name="space_id" value='{{approval.space_id}}'>
+    <input hidden="True" type="text" name="req_id" value={{approval.req_id}}>
+    <input hidden="True" type="text" name="date_req" text={{approval.date_req}}>
+
+    <button type="submit" id="accept">Accept</button>
+    <button type="submit" id="decline">Decline</button>
+    </form>
+        
+        <p><br><br></p>
+
+        {% else %}
+            <div id="textContainer">
+                <h2>No Requests Available</h2>
+            </div>
+        {% endfor %}</div>
+            
     
     
+    <div class="scroll-box">
+        {% for request in requests %}
+        <div>
+            <h3>{{request.title}}<br align="right">£{{request.price}}</h3>
+            <p>
+                Date Chosen: {{request.date_req}}
+                Status: {{request.stat}}
+            </p>
+        </div>    
     
-    <div class="scroll-box"></div>
+        
+        <p><br><br></p>
+
+{% else %}
+    <div id="textContainer">
+        <h2>No Requests Available</h2>
+    </div>
+
+{% endfor %}</div>
 
 
 
