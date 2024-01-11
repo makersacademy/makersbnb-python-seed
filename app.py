@@ -53,14 +53,14 @@ def login():
 #         return redirect('/spaces')
 #     return render_template('/log_in.html')
     
-@app.route("/user", methods=['GET'])
-def user():
-    if "email" in session:
-        user = session["email"]
-        
-        return f"<h1>{user}</h1>"
-    else:
-        return redirect('/log_in')
+#@app.route("/user", methods=['GET'])
+#def user():
+#    if "email" in session:
+#        user = session["email"]
+ #       
+#        return f"<h1>{user}</h1>"
+#    else:
+#        return redirect('/log_in')
 
 
 @app.route('/newspace', methods=['GET'])
@@ -97,11 +97,16 @@ def validate_new_space():
         errors.append('Please enter a valid price')
 
     if not(errors):
-        repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
-
-        return redirect('/newspace')
-    spaces = repository.get_by_user(session['user_id'])
-    return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'],spaces=spaces)
+        try:
+            repository.add(title,space_description,price,f'{startdate}-{enddate}',session['user_id'])
+            return redirect('/newspace')
+        except:
+            return redirect('/newspace')
+    try:
+        spaces = repository.get_by_user(session['user_id'])
+        return render_template('newspace.html', errors = errors,username=session['email'],user_id=session['user_id'],spaces=spaces)
+    except:
+        return render_template('newspace.html')
 
 # POST route for creating new user and password.
 @app.route('/signup', methods=['POST'])
