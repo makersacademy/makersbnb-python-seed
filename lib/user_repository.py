@@ -77,3 +77,17 @@ class UserRepository:
 
     def request_space():
         pass
+
+    def username_to_id(self, username):
+        return self._connection.execute(
+            """
+            SELECT id FROM users WHERE username=%s;
+            """, [username]
+        )[0]['id']
+    
+    def id_to_username(self, id):
+        return self._connection.execute(
+            """
+            SELECT username FROM users WHERE id=%s;
+            """, [id]
+        )[0]['username']

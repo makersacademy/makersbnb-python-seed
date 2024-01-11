@@ -51,6 +51,37 @@ def test_booking_repo_find(db_connection):
         booking_repo.find(7)
     assert str(err.value) == "Booking does not exist."
 
+def test_booking_repo_find_by_guest_id(db_connection):
+    """
+    Tests that all bookings made by the same user can be retrieved
+    """
+    db_connection.seed("seeds/makersbnb.sql")
+    booking_repo = BookingRepository(db_connection)
+    assert booking_repo.find_by_guest_id(3) == [
+        Booking(3, date(2024,11,21), 3, 3, True),
+        Booking(4, date(2024,11,22), 3, 3, True)
+    ]
+
+    with pytest.raises(Exception) as err:
+        booking_repo.find_by_guest_id(12)
+    assert str(err.value) == "Bookings for this user do not exist."
+
+def test_booking_repo_find_by_space_id(db_connection):
+    """
+    Tests that all bookings made for the same space can be retrieved
+    """
+    db_connection.seed("seeds/makersbnb.sql")
+    booking_repo = BookingRepository(db_connection)
+    assert booking_repo.find_by_space_id(3) == [
+        Booking(3, date(2024,11,21), 3, 3, True),
+        Booking(4, date(2024,11,22), 3, 3, True),
+        Booking(6, date(2024,11,22), 3, 1, False)
+    ]
+
+    with pytest.raises(Exception) as err:
+        booking_repo.find_by_space_id(12)
+    assert str(err.value) == "Bookings for this space do not exist."
+
 def test_booking_repo_create(db_connection):
     """
     Tests that a new booking is inserted into the database

@@ -38,6 +38,21 @@ def test_get_space_by_id(db_connection):
     assert space == Space(1, '1 Test Drive', 'A small one bedroom flat with wet room and kitchenette.', 50.00, 1)
 
 """
+When we call Space_Repository#get_space_by_host_id
+we get a list of space objects with the same host_id
+"""
+def test_get_spaces_by_host_id(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repo = SpaceRepository(db_connection)
+    spaces = repo.get_spaces_by_host_id(1)
+    # 50.00 does not carry significant information in 2nd decimal place 
+    # and is getting truncated. Format forces this to be a string.
+    # Therefore, must compare strings in assertion.
+    assert [str(space) for space in spaces] == [
+        str(Space(1, '1 Test Drive', 'A small one bedroom flat with wet room and kitchenette.', "{:.2f}".format(50.00), 1)),
+        str(Space(2, '2 Notteven Close', '3 bed, 3 bath, 3 beyond?', 115.99, 1))
+    ]
+"""
 When we call SpaceRepository#all
 We get a list of objects back reflecting the seed
 """
