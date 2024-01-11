@@ -50,7 +50,7 @@ def get_index():
     paginated_products = listings[offset: offset + per_page]
     current_page = int(request.args.get('page', 1))
     
-    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page)
+    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page, user=current_user)
 
 
 

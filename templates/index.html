@@ -8,9 +8,11 @@
     <body>
         <header>
             {% if current_user.is_authenticated %}
+                <h1>MakersBnB</h1>  
                 <a class="nav-link" href="{{ url_for('profile_page') }}">Hi, {{ user.user_name }}</a>
                 <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
             {% else %}
+                <h1>MakersBnB</h1>
                 <a class="nav-link" href="{{ url_for('get_login_details') }}">Sign In</a>
                 <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
             {% endif %}
