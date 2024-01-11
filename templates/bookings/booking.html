@@ -5,7 +5,7 @@
 
 <body>
     <h1>{{space.name}}</h1>
-    <h2>Listed by {{host_username}}</h2>
+    <h2 class="centeredText">Listed by {{host_username}}</h2>
     <p>{{guest_username}} has made a booking request for {{booking.date}}.</p>
     <br />
     {% if space.host_id == current_user_id %}
@@ -14,14 +14,16 @@
         {% elif booking.confirmed == False %}
         <p>You have already rejected this booking!</p>
         {% else %}
-        <form method="post" action="/bookings/confirm">
-            <input type="hidden" name="booking_id" value="{{booking.id}}">
-            <input type="submit" class="button" value="Confirm">
-        </form>
-        <form method="post" action="/bookings/reject">
-            <input type="hidden" name="booking_id" value="{{booking.id}}">
-            <input type="submit" class="button" value="Reject">
-        </form>
+        <div class="buttonStyling">
+            <form class="approveDeny" class='centeredText' method="post" action="/bookings/confirm">
+                <input type="hidden" name="booking_id" value="{{booking.id}}">
+                <input type="submit" class="button" value="Confirm">
+            </form>
+            <form class="approveDeny" class="centeredText" method="post" action="/bookings/reject">
+                <input type="hidden" name="booking_id" value="{{booking.id}}">
+                <input type="submit" class="button" value="Reject">
+            </form>
+        </div>
         {% endif %}
     {% else %}
         {% if booking.confirmed == True %}

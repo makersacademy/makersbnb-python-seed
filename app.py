@@ -7,8 +7,8 @@ from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
 from functools import wraps
-from flask import request, jsonify, make_response, flash
-
+from flask import request, jsonify, make_response, session, flash
+from itertools import zip_longest
 
 from lib.user_repository import UserRepository
 from lib.spaces_repository import SpaceRepository
@@ -16,6 +16,7 @@ from lib.spaces import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 
+from flask_mail import Mail, Message
 
 # Auth token generation
 def token_required(f):
@@ -50,6 +51,28 @@ app = Flask(__name__)
 # Need work? ### NOT SECURE ###
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
+
+#email config
+app.config['MAIL_SERVER']="smtp.gmail.com"
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
+app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+#email function
+def send_email(subject, recipients, body):
+    email_success = False
+    msg = Message(subject)
+    msg.sender ='MakersBnbJan2024@gmail.com'
+    msg.sender=('MakersBnB', 'MakersBnbJan2024@gmail.com')
+    msg.recipients= recipients
+    msg.body = body
+    try:
+        mail.send(msg)
+    except Exception as e:
+            print(str(e))
 
 # == Your Routes Here ==
 
@@ -259,9 +282,26 @@ def get_requests(current_user):
     for space in host_spaces:
         for booking in booking_repo.find_by_space_id(space.id):
             requests_received.append(booking)
+
+    space_for_request_received = []
+    for space in requests_received:
+        space_for_request_received.append(space_repo.get_space_by_id(space.space_id))
+
+    space_for_request_made = []
+    for space in requests_made:
+        space_for_request_made.append(space_repo.get_space_by_id(space.space_id))
+
+    #Need to zip to access both the space info to display and the request info for routing in the html
+    made_zipped_data = zip_longest(requests_made, space_for_request_made)
+    received_zipped_data = zip_longest(requests_received, space_for_request_received)
+
     return render_template("requests/index.html",
                            requests_made=requests_made,
-                           requests_received=requests_received)
+                           requests_received=requests_received,
+                           host_spaces = host_spaces,
+                           received_zipped_data=received_zipped_data,
+                           made_zipped_data=made_zipped_data
+                           )
 
 @app.route('/requests/<int:booking_id>', methods=['GET'])
 @token_required
@@ -303,5 +343,23 @@ def post_reject_booking(current_user):
     booking_repo.reject(booking_id)
     return redirect(f"/requests/{booking_id}")
 
+@app.route('/account', methods=['GET'])
+@token_required
+def view_account_details(current_user):
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepository(connection)
+    user = user_repo.find_user_by_username(current_user)
+    return render_template('/account.html', user=user)
+
+@app.route('/myspaces', methods=['GET'])
+@token_required
+def view_user_spaces(current_user):
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepository(connection)
+    user_id = user_repo.username_to_id(current_user)
+    space_repo = SpaceRepository(connection)
+    host_spaces = space_repo.get_spaces_by_host_id(user_id)
+    return render_template('/listspace.html', host_spaces=host_spaces)
+
 if __name__ == "__main__":
-    app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
+    app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
