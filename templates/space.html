@@ -11,7 +11,8 @@
             <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
         </header>
 
-        <div class="image-container-space"> <img src="/static{{ space.image_path }}"> </div>
+        <div class="image-container-space"> <img src="{{ url_for('static', filename=space.image_path) }}" alt="Space Image"> </div>
+
         <div class="price">
             <p>£{{ space.price }} per night</p>
             <form action="/space/{{space.id}}" method="post" >
