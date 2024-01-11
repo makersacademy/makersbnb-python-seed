@@ -153,10 +153,6 @@ def spaces():
                 return render_template('list_spaces.html', spaces=spaces)
     return render_template('list_spaces.html')
 
-# These lines start the server if you run this file directly
-# They also start the server configured to use the test database
-# if started in test mode.
-
 
 @app.route("/login", methods=["POST"])
 def login():
