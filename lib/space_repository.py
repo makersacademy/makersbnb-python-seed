@@ -1,8 +1,12 @@
 from lib.space import Space
+import os
+from werkzeug.utils import secure_filename
 
 class SpaceRepository:
+    UPLOAD_FOLDER = 'static/images'
     def __init__(self, connection):
         self.connection = connection
+    
 
     def all(self):
         rows = self.connection.execute("SELECT * FROM spaces")
@@ -13,15 +17,30 @@ class SpaceRepository:
         return spaces
 
     def create(self, space):
-        self.connection.execute("INSERT INTO spaces (address, name, price, image_path, description, date_added, date_available, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
-                                        [space.address, space.name, space.price, space.image_path, space.description, space.date_added, space.date_available, space.user_id])
+        file = space.image_path
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(self.UPLOAD_FOLDER, filename)
+            file.save(file_path)
+
+            space.image_path = f'images/{filename}'
+
+            self.connection.execute("""
+                INSERT INTO spaces 
+                (address, name, price, image_path, description, date_added, date_available, user_id) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, [space.address, space.name, space.price, space.image_path, space.description, space.date_added, space.date_available, space.user_id])
+
         return None
-    
+        
     def find(self, id):
         rows = self.connection.execute("SELECT * FROM spaces WHERE id = %s", [id])
-        row = rows[0]
-        return Space(row["id"], row["address"], row["name"], row["price"], row["image_path"], row["description"], row['date_added'], row["date_available"], row["user_id"])
-    
+        if rows: 
+            for row in rows:
+                return Space(row["id"], row["address"], row["name"], row["price"], row["image_path"], row["description"], row['date_added'], row["date_available"], row["user_id"])
+        else:
+            return None
+
     def find_user_spaces(self, user_id):
         rows = self.connection.execute("SELECT * FROM spaces WHERE user_id = %s", [user_id])
         spaces = []

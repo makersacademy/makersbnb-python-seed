@@ -3,11 +3,15 @@ from flask import Flask, request, render_template, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
-from lib.forms import RegisterForm, LoginForm
+from lib.space_repository import *
+from lib.forms import RegisterForm, LoginForm, NewListingForm, BookingForm
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
 from flask_bcrypt import Bcrypt
+from flask_paginate import Pagination, get_page_args
 from lib.booking_repository import BookingRepository
+from datetime import datetime, date
+from lib.booking import Booking
 import hashlib
 
 # Create a new Flask app
@@ -32,12 +36,21 @@ def load_user(user_id):
         user.spaces = spaces
     return user 
 
-@app.route('/index', methods=['GET'])
+
+# REMOVED THE INDEX ROOT SO IT GOES 
+@app.route('/', methods=['GET'])
 def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
-    listings = repo.all()
-    return render_template('index.html', listings = listings)
+    listings = repo.all()    
+    page, per_page, offset= get_page_args()
+    total = len(listings)
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+    paginated_products = listings[offset: offset + per_page]
+    current_page = int(request.args.get('page', 1))
+    
+    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page, user=current_user)
+
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
@@ -56,19 +69,19 @@ def get_login_details():
 
     return render_template('login.html', form=form)
 
-#Test123!@111
 
-
-#IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile_page():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
     spaces = space_repository.find_user_spaces(current_user.id)
+    listing = space_repository.all()
+    
     booking_repository = BookingRepository(connection)
     bookings = booking_repository.find_user_bookings(current_user.id)
-    return render_template('profile.html', user=current_user, spaces=spaces, bookings=bookings)
+    return render_template('profile.html', user=current_user, spaces=spaces, bookings=bookings, listing=listing)
+
 
 # I ALSO CREATED A LOG OUT FUNCTION. 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -99,12 +112,43 @@ def get_create_account():
 
 
 
-@app.route('/space/<int:id>', methods=['GET'])
-def get_space_page(id):
+@app.route('/new_listing', methods=['GET', 'POST'])
+@login_required
+def create_space():
+    form = NewListingForm()
+    if form.validate_on_submit():
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        today = date.today()
+        space = Space(None, form.address.data, form.name.data, form.price.data, form.image_path.data, form.description.data, today, form.date_added.data, current_user.id )
+        repository.create(space)
+        flash('Space created successfully!', 'success')
+    else:
+        print(form.errors)
+    
+    return render_template("new_listing.html", form=form, user=current_user)
+
+
+@app.route('/space/<int:id>', methods=['GET', 'POST'])
+def get_space_done(id):
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
-    space = repo.find(id)
-    return render_template("space.html", space=space)
+    repo = BookingRepository(connection)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(id)
+    form = BookingForm()
+
+    if form.validate_on_submit() and current_user.is_authenticated:
+        selected_date = form.booking_date.data
+        booking = Booking(None, current_user.id, space.id, selected_date, space.name)
+        repo.create(booking)
+        flash("Booking successful!", "success")
+        return redirect(url_for('profile_page'))
+    else:
+        flash("You need to be logged in to make a booking")
+
+    return render_template("space.html", space=space, form=form)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))

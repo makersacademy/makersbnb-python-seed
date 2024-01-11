@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MakersBnB</title>
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <header>
-            <h1>MakersBnB</h1>
-            <a href="/sign_in">Sign in</a>
-            <a href="/create_account">Create account</a>
-        </header>
+<head>
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+    <h1>MakersBnB</h1>
+    <a class="nav-link" href="{{ url_for('get_login_details') }}">Sign In</a>
+    <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
+</header>
 
-        <div class="image-container-space"> <img src="/static{{ space.image_path }}"> </div>
-        <div class="price">
-            <p>£{{ space.price }} per night</p>
-            <button type="button">Book Now</button> 
-        </div>
-        <div class='name'>
-            <h1>{{ space.name }}</h1>
-        </div>
-        <div class='description'>
-            <p>{{ space.description }}</p>
-        </div>   
-            
-        <footer>Footer</footer>
-    </body>
+<div class="image-container-space"> <img src="{{ url_for('static', filename=space.image_path) }}" alt="Space Image"> </div>
+
+<div class="price">
+    <p>£{{ space.price }} per night</p>
+    <form action="/space/{{ space.id }}" method="POST">
+        {{ form.csrf_token }}
+        {{ form.booking_date }}
+        {{ form.submit }}
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages and form.is_submitted() %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+<div class='name'>
+    <h1>{{ space.name }}</h1></br>
+
+</div>
+<div class='description'>
+    <p>{{ space.description }}</p>
+</div>
+<h1>{{ space.id }}</h1>
+<footer>©MakerBnB</footer>
+</body>
 </html>
