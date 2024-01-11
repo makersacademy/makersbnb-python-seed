@@ -29,3 +29,11 @@ class SpacesRepository:
             data = Space(row['id'],row['title'],row['space_description'],row['price'],row['daterange'],row['user_id'])
             return_data.insert(0,data)
         return return_data
+
+    def get_by_other_users(self,user_id):
+        rows = self._connection.execute('SELECT * FROM Spaces WHERE user_id != %s',[user_id])
+        return_data = []
+        for row in rows:
+            data = Space(row['id'],row['title'],row['space_description'],row['price'],row['daterange'],row['user_id'])
+            return_data.insert(0,data)
+        return return_data

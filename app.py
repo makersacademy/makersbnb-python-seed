@@ -145,12 +145,13 @@ def list_spaces():
     #     return redirect('/log_in')
     connection = get_flask_database_connection(app)
     repository = SpacesRepository(connection)
-    spaces = repository.list_all()
     try:
         if session['email']:
-        
-            return render_template('spaces.html', spaces = spaces,signedin =True, username = session['email'])
+            spaces = repository.get_by_other_users(session['user_id'])
+            user_spaces = repository.get_by_user(session['user_id'])
+            return render_template('spaces.html', spaces = spaces,signedin =True, username = session['email'], user_spaces=user_spaces)
     except:
+        spaces = repository.list_all()
         return render_template('spaces.html',spaces = spaces,signedin =False) 
         
 
@@ -169,13 +170,13 @@ def get_dashboard():
     except:
         return redirect('/spaces') 
     
-@app.route('/dashboard', methods=['POST'])
-def post_accept():
-    pass
+# @app.route('/dashboard', methods=['POST'])
+# def post_accept():
+#     pass
 
-@app.route('/dashboard', method=['POST'])
-def post_decline():
-    pass
+# @app.route('/dashboard', method=['POST'])
+# def post_decline():
+#     pass
 
 
 @app.route('/sign_out')
