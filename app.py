@@ -5,6 +5,8 @@ from lib.user import User
 from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+from lib.availability_repository import AvailabilityRepository
+from lib.availability import Availability
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -134,6 +136,14 @@ def add_spaces():
     space = Space(id, name, desc, price, user_id)
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.add(space)
+    
+    space_id = space_repo.get_id()
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+
+    availability = Availability(date_from, date_to, space_id)
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availability_repo.add(availability)
 
     return redirect('/')
 

@@ -31,10 +31,13 @@ class SpaceRepository():
                     spaces.append(space)
                 
                 return spaces
-            
     
     def add(self, space:Space):
         self._connection.execute("INSERT INTO spaces (name, descr, price, user_id) VALUES (%s, %s, %s, %s)", [space.name, space.desc, space.price, space.user_id])
     
     def update(self, space:Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])
+    
+    def get_id(self):
+        row = self._connection.execute("SELECT lastval()")
+        return row[0]['lastval']
