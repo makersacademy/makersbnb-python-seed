@@ -46,3 +46,12 @@ def test_get_by_user_returns_spaces(db_connection):
        Space(3,'Test Title3','This is some test description',135.50,'2024-01-12-2024-02-05',2)
     ]
 
+def test_get_by_other_users(db_connection):
+    db_connection.seed('seeds/MasterTest.sql')
+    repository = SpacesRepository(db_connection)
+    result = repository.get_by_other_users(2)
+    assert result == [
+      Space(5,'Test Title5','This is some test description',1037.63,'2024-01-12-2024-01-19',3), 
+       Space(2,'Test Title2','This is some test description',25.00,'2024-01-14-2024-01-29',1), 
+       Space(1,'Test Title','This is some test description',65.75,'2024-01-12-2024-01-31',1)
+    ]

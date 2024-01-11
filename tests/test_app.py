@@ -106,8 +106,12 @@ def test_adding_a_space(page,test_web_address,db_connection,web_client):
     assert response.status_code ==200
     response = web_client.post('/newspace', data={'title':'','space_desc':'Test','price':'1.23f','startdate':'2024-01-20','enddate':'2024-01-ab'})
     assert response.status_code ==200
-def test_create_user(db_connection, page, test_web_address):
+def test_create_user(db_connection, page, test_web_address,web_client):
     db_connection.seed("seeds/MasterTest.sql")
+    
+    response = web_client.post('/signup', data={'email':'testemail@mail.com','passw':'testpass','passw_conf':'testpass'})
+    assert response.status_code == 302
+
     page.goto(f"http://{test_web_address}/index")
     
     # Then we fill out the field with the name attribute 'email'
@@ -122,4 +126,9 @@ def test_create_user(db_connection, page, test_web_address):
     
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Space Listings")
-    
+
+def test_create_user_wrong_pass(web_client):
+    response = web_client.post('/signup', data={'email':'testemail@mail.com','passw':'estpass','passw_conf':'testpass'})
+    assert response.status_code == 302
+    response = web_client.post('/signup', data={'email':'user_1@mail.com','passw':'testpass','passw_conf':'testpass'})
+    assert response.status_code == 302
