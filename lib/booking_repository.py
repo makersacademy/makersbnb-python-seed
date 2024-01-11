@@ -1,7 +1,9 @@
 from lib.booking import Booking
 from datetime import date
+import requests
 
 class BookingRepository:
+    global_mobilenum = "" # Enter users mobile number in format +449999999999
     def __init__(self, connection):
         self._connection = connection
 
@@ -105,6 +107,8 @@ class BookingRepository:
                 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES (%s, %s, %s, %s);
                 """, [date.isoformat(), space_id, booking.guest_id, confirmed]
             )
+            if self.global_mobilenum != "":
+                self.send_sms("Booking confirm", self.global_mobilenum)
         else:
             raise Exception("That date is not available!")
         return None
@@ -149,6 +153,8 @@ class BookingRepository:
                 DELETE FROM dates WHERE date=%s AND space_id=%s;
                 """, [booking.date.isoformat(), booking.space_id]
             )
+            if self.global_mobilenum != "":
+                self.send_sms("Booking confirm", self.global_mobilenum)
             return True
         else:
             raise Exception("Booking does not exist.")
@@ -158,6 +164,32 @@ class BookingRepository:
             booking = self.find(booking_id)
             booking.confirmed = False
             self.update(booking)
+            if self.global_mobilenum != "":
+                self.send_sms("Booking Rejected", self.global_mobilenum)
             return True
         else:
             raise Exception("Booking does not exist.")
+        
+    def send_sms(self, message, mobilenumber):
+        # Twilio API endpoint
+        url = "https://api.twilio.com/2010-04-01/Accounts/AC825fe42416c2169fc9991c0597b4a5ed/Messages.json"
+
+        # Headers
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Basic QUM4MjVmZTQyNDE2YzIxNjlmYzk5OTFjMDU5N2I0YTVlZDozNjYyNjc1YzAxM2ZkMjdhYTU5ZjZjYzUzYTM1M2JhNQ==",
+        }
+
+        # Payload
+        payload = {
+            "Body": message,
+            "To": mobilenumber,
+            "From": "+447400364837",
+        }
+
+        # Make the request
+        response = requests.post(url, headers=headers, data=payload)
+
+        # Display the response
+        print("Response Code:", response.status_code)
+        print("Response Content:", response.text)    
