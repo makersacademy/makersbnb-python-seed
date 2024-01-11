@@ -104,6 +104,7 @@ CREATE TABLE users (
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name text,
+    location text,
     description text,
     price money,
     user_id int, 

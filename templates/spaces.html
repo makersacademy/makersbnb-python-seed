@@ -16,15 +16,16 @@
         <h3>Book a Space</h3>
         <h4>Lots of writing that means nothing</h4>
         <div class="list-space-button">
-        <a href="/new_space">List a space</a>
+        <a href="/list_spaces">Lists spaces</a>
         </div>
+        
 
         <div>
-        <form  class="book-space-form"  method="post">
-            Available From: <input type="date">
-            Available To: <input type="date">
-            <input type="submit" value="List Spaces">
-        </form>
+            <form class="list-space-form" method="post">
+                Available From: <input type="date" name="available_from">
+                Available To: <input type="date" name="available_to">
+                <input type="submit" value="List Spaces">
+            </form>
         </div>
     </body>
 </html>

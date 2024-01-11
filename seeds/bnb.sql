@@ -29,7 +29,7 @@ CREATE TABLE spaces (
 
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
-    date text,
+    date DATE,
     confirmed boolean,
     user_id int,
     constraint fk_user foreign key(user_id)
@@ -47,7 +47,7 @@ INSERT INTO users (username, email, password) VALUES ('test_username2', 'test2@t
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('3 bedroom apartment', 'London', 'city', 200, 1, '2024-02-01', '2025-02-01');
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('Penthouse', 'Manchester', 'city', 150, 1, '2024-03-01', '2025-01-01');
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('BnB villa', 'Rome', 'city', 300, 1, '2024-02-01', '2024-09-01');
-INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('Town cottage', 'Newastle', 'city', 125, 1, '2024-03-01', '2024-11-01');
+INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('Town cottage', 'Newcastle', 'city', 125, 1, '2024-03-01', '2024-11-01');
 
 INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-01', False, 1, 1);
 INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-02', False, 1, 2);

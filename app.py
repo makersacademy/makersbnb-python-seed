@@ -1,7 +1,7 @@
 import os
 import secrets
 from flask import Flask, request, render_template, session, redirect
-
+from datetime import datetime
 from lib.database_connection import get_flask_database_connection
 from lib.user import User, UserRepo
 from lib.space import Space
@@ -50,12 +50,12 @@ def create_new_space():
 
     return render_template('spaces.html')
 
-@app.route('/space/<id>', methods=['GET'])
+""" @app.route('/space/<id>', methods=['GET'])
 def get_space(id):
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(id)[0]
-    return render_template('space.html', space=space)
+    return render_template('space.html', space=space) """
 
 @app.route('/book/<id>', methods=['POST'])
 def book(id):
@@ -110,12 +110,40 @@ def get_viewspace(space_id):
         return render_template('error.html', message='Space not found'), 404
 
 
-@app.route('/list_spaces', methods=['GET'])
+""" @app.route('/list_spaces', methods=['GET', 'POST'])
 def get_list_spaces():
-    connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    return render_template('list_spaces.html', spaces=spaces)
+    spaces = []
+    if request.method == 'GET':
+        return render_template('list_spaces.html', spaces=[])
+    elif request.method == 'POST':
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        available_from = request.form['available_from']
+        available_to = request.form['available_to']
+        spaces = repository.get_available_spaces(available_from, available_to)
+        if not spaces or spaces == "No results found":
+            return render_template('list_spaces.html', spaces=[], no_results=True)
+        else:
+            return render_template('list_spaces.html', spaces=spaces) """
+@app.route('/spaces', methods=['GET', 'POST'])             
+def spaces():
+    if request.method == 'GET':
+        return render_template('spaces.html')
+    elif request.method == 'POST':
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        if 'available_from' in request.form and 'available_to' in request.form:
+            available_from = request.form['available_from']
+            available_to = request.form['available_to']
+            spaces = repository.get_available_spaces(available_from, available_to)
+            if not spaces or spaces == "No results found":
+                return render_template('list_spaces.html', spaces=[], no_results=True)
+            else:
+                return render_template('list_spaces.html', spaces=spaces)
+    return render_template('spaces.html')
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

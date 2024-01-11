@@ -11,7 +11,7 @@ def test_get_all_spaces(db_connection):
     assert spaces == [Space(1, "3 bedroom apartment", "London", "city", 200, 1, "2024-02-01", "2025-02-01"),
                       Space(2, "Penthouse", "Manchester", "city", 150, 1, "2024-03-01", "2025-01-01"),
                       Space(3, "BnB villa", "Rome", "city", 300, 1, "2024-02-01", "2024-09-01"),
-                      Space(4, "Town cottage", "Newastle", "city", 125, 1, "2024-03-01", "2024-11-01")]
+                      Space(4, "Town cottage", "Newcastle", "city", 125, 1, "2024-03-01", "2024-11-01")]
 
 
 
@@ -29,7 +29,7 @@ def test_create_space(db_connection):
         Space(1, "3 bedroom apartment", "London", "city", 200, 1, "2024-02-01", "2025-02-01"),
                       Space(2, "Penthouse", "Manchester", "city", 150, 1, "2024-03-01", "2025-01-01"),
                       Space(3, "BnB villa", "Rome", "city", 300, 1, "2024-02-01", "2024-09-01"),
-                      Space(4, "Town cottage", "Newastle", "city", 125, 1, "2024-03-01", "2024-11-01"),
+                      Space(4, "Town cottage", "Newcastle", "city", 125, 1, "2024-03-01", "2024-11-01"),
                       Space(5, "mountain view", "Ben Nevis", "mountain", 150, 1, "2024-03-01", "2025-03-01")
     ]
 
@@ -62,7 +62,7 @@ def test_delete_space(db_connection):
 
     assert result == [Space(1,"3 bedroom apartment", "London", "city", 200, 1, "2024-02-01", "2025-02-01"),
                       Space(3, "BnB villa", "Rome", "city", 300, 1, "2024-02-01", "2024-09-01"),
-                      Space(4, "Town cottage", "Newastle", "city", 125, 1, "2024-03-01", "2024-11-01")]
+                      Space(4, "Town cottage", "Newcastle", "city", 125, 1, "2024-03-01", "2024-11-01")]
 
 def test_find_by_date(db_connection):
     db_connection.seed("seeds/bnb.sql")
@@ -112,3 +112,19 @@ def test_empty_all_function(db_connection):
     spaces = repository.find_by_space_name("koala")
 
     assert spaces == "No results found"
+    
+def test_get_available_spaces(db_connection):
+    db_connection.seed('seeds/bnb.sql')
+    repository = SpaceRepository(db_connection)
+
+    result_1 = repository.get_available_spaces("2024-02-15", "2025-01-01")
+    assert result_1 == [Space(1, "3 bedroom apartment", "London", "city", 200, 1, "2024-02-01", "2025-02-01"),
+                      Space(2, "Penthouse", "Manchester", "city", 150, 1, "2024-03-01", "2025-01-01"),
+                      Space(3, "BnB villa", "Rome", "city", 300, 1, "2024-02-01", "2024-09-01"), 
+                      Space(4, "Town cottage", "Newcastle", "city", 125, 1, "2024-03-01", "2024-11-01")]
+    
+    result_2 = repository.get_available_spaces("2025-01-01", "2025-02-01")
+    assert result_2 == [Space(1, "3 bedroom apartment", "London", "city", 200, 1, "2024-02-01", "2025-02-01")]
+    
+    result_3 = repository.get_available_spaces('2025-03-05', '2025-03-15')
+    assert result_3 == "No results found"

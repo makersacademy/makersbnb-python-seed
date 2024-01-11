@@ -2,6 +2,7 @@ from lib.space import Space
 from lib.database_connection import DatabaseConnection 
 
 
+
 class SpaceRepository:
     def __init__(self, connection):
         self._connection = connection
@@ -137,6 +138,27 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["description"],
+                row["price"],
+                row["user_id"],
+                str(row["start_date"]),
+                str(row["end_date"]),
+            )
+            for row in rows
+        ]
+        if len(result) == 0:
+            result = "No results found"
+        return result
+    
+    def get_available_spaces(self, start_date, end_date):
+        rows = self._connection.execute(
+        "SELECT * FROM spaces WHERE (start_date, end_date) OVERLAPS (%s, %s)", 
+        [start_date, end_date])
+        result = [
+            Space(
+                row["id"],
+                row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
