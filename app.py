@@ -88,7 +88,7 @@ def profile_page():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('get_login_details'))
+    return redirect(url_for('get_index'))
 
 
 @app.route('/create_account', methods=['GET', 'POST'])
