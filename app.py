@@ -146,7 +146,7 @@ def get_space_done(id):
     else:
         flash("You need to be logged in to make a booking")
 
-    return render_template("space.html", space=space, form=form)
+    return render_template("space.html", space=space, form=form, user=current_user)
 
 
 
