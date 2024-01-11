@@ -42,7 +42,7 @@ def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     listings = repo.all()
-    return render_template('index.html', listings = listings)
+    return render_template('index.html', listings = listings, user=current_user)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
@@ -110,7 +110,6 @@ def create_space():
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
         today = date.today()
-        print(form.name.data, form.address.data, form.price.data, form.image_path.data, form.description.data, form.date_added.data, today)
         space = Space(None, form.address.data, form.name.data, form.price.data, form.image_path.data, form.description.data, today, form.date_added.data, current_user.id )
         repository.create(space)
         flash('Space created successfully!', 'success')
