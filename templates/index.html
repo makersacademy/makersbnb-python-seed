@@ -34,7 +34,7 @@
     <div class="text-center row pt-4 d-flex justify-content-center">
       {% if session['id'] and data['spaces_list'] %}
       <p>User: {{ session['fullname'] }}
-        <a href="/spaces/edit/">List a Space</a></p>
+        <a href="/spaces/show/add">List a Space</a></p>
         <hr width="80%" />
 
         {% for space in data['spaces_list'] %}
