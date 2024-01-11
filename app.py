@@ -201,12 +201,14 @@ def create_booking(current_user):
         SELECT id FROM users WHERE username=%s;
         """, [guest_username]
     )[0]['id']
-    # Commented lines below may later be useful for notification sending to host
-    # space_repo = SpaceRepository(connection)
-    # host_id = space_repo.get_space_by_id(space_id).host_id
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
     booking_repo.create(new_booking)
+    # Commented lines below may later be useful for notification sending to host
+    # space_repo = SpaceRepository(connection)
+    # host_id = space_repo.get_space_by_id(space_id).host_id
+    # user_repo = UserRepository(connection)
+    # host_username = user_repo.id_to_username(host_id)
     return redirect("/bookings/success")
 
 @app.route('/bookings/success', methods=['GET'])
@@ -244,27 +246,37 @@ def get_request_by_id(booking_id, current_user):
     guest_id = booking.guest_id
     user_repo = UserRepository(connection)
     guest_username = user_repo.id_to_username(guest_id)
-    booking_date = booking.date
     space_id = booking.space_id
     space_repo = SpaceRepository(connection)
     space = space_repo.get_space_by_id(space_id)
     host_username = user_repo.id_to_username(space.host_id)
-    space_name = space.name
+    current_user_id = user_repo.username_to_id(current_user)
 
     return render_template("bookings/booking.html",
-                           space_name=space_name,
+                           current_user_id=current_user_id,
+                           space=space,
                            host_username=host_username,
                            guest_username=guest_username,
                            booking=booking)
 
-@app.route('/booking/confirm', methods=['POST'])
+@app.route('/bookings/confirm', methods=['POST'])
 @token_required
 def post_confirm_booking(current_user):
     booking_id = request.form['booking_id']
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
-    booking_repo.confirm(booking_id)
+    booking_repo.confirm(int(booking_id))
     return redirect(f"/requests/{booking_id}")
+
+@app.route('/bookings/reject', methods=['POST'])
+@token_required
+def post_reject_booking(current_user):
+    booking_id = int(request.form['booking_id'])
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking_repo.reject(booking_id)
+    return redirect(f"/requests/{booking_id}")
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
