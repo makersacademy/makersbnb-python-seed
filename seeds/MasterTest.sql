@@ -49,3 +49,7 @@ VALUES('Test Title5','This is some test description',1037.63,'2024-01-12-2024-01
 INSERT INTO users (email, passw) VALUES ('user_1@mail.com', 'makersbnb2');
 INSERT INTO users (email, passw) VALUES ('user_2@mail.com', 'qwerty123');
 INSERT INTO users (email, passw) VALUES ('user_3@mail.com', 'makersbnb1');
+
+INSERT INTO requests (req_id, space_id, date_req, stat) VALUES (1, 2, '2024-01-12', 'Approved');
+INSERT INTO requests (req_id, space_id, date_req, stat) VALUES (2, 4, '2024-02-14', 'Denied');
+INSERT INTO requests (req_id, space_id, date_req, stat) VALUES (3, 5, '2024-03-15', 'Approved');

@@ -11,14 +11,16 @@
     </style>
     <head>
         <title>MakersBnB</title>
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
         <h1>Request for {{ spaces.title }}</h1>
         <p>Date availability: {{ formatted_date_range(spaces.daterange) }}</p>
-        <span>
-            <input type="date" id="startdate" name="startdate" min="2024-02-01" max="2024-02-11"> 
-        </span>
-
+    
+        <form method="post" action="/requestspace/{{ spaces.id }}">
+            <label for="startdate">Start Date:</label><br>
+            <input type="date" id="startdate" name="startdate" required><br>
+            <button type="submit" id="submit">Submit Request</button>
+        </form>
     </body>
     </html>

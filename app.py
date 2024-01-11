@@ -4,6 +4,8 @@ from lib.database_connection import get_flask_database_connection
 from datetime import datetime
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.RequestRepository import RequestRepository
+from lib.Request import Request
 
 from lib.SpacesRepository import SpacesRepository
 
@@ -173,16 +175,45 @@ def formatted_date_range(daterange):
     end_date = datetime.strptime(end_date, '%Y-%m-%d').strftime('%B %d, %Y')
     return f"{start_date} - {end_date}"
 
-@app.route('/requestspace/<int:id>', methods=['GET'])
+@app.route('/requestspace/<int:id>', methods=['GET', 'POST'])
 def request_space(id):
+    print(f"Received request for /requestspace/{id} with method: {request.method}")
+    
     connection = get_flask_database_connection(app)
-    repository = SpacesRepository(connection)
-    spaces = repository.find(id)
-    # daterange = formatted_date_range(spaces.daterange)
-    # print(daterange)
-    return render_template('requestspace.html', spaces = spaces, formatted_date_range=formatted_date_range)
+    spaces_repository = SpacesRepository(connection)
+    spaces = spaces_repository.find(id)
+    request_repository = RequestRepository(connection)
+
+    if request.method == 'POST':
+        print("Processing POST request")
+        req_id = session['user_id']
+        space_id = id
+        date_req = request.form['startdate']
+        
+              
+        request_obj = Request(req_id, space_id, date_req, 'Pending')
+        
+        request_obj = request_repository.create(request_obj)
+        return redirect('/')
+
+    print("Rendering template")
+    return render_template('requestspace.html', spaces=spaces, formatted_date_range=formatted_date_range)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
+
+# @app.route('/requestspace', methods=['POST'])
+# def send_request():
+#     connection = get_flask_database_connection(app)
+#     repository = RequestRepository(connection)
+#     request = Request [
+#         session['user_id'],
+        
+#     ]
+    
+
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
+    
+
