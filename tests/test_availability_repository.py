@@ -26,9 +26,9 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
         Availability(1, 1, date(2025,1,1), True),
         Availability(2, 1, date(2025,1,2), True),
         Availability(3, 1, date(2025,2,3), True),
-        Availability(4, 2, date(2025,1,2), True),
-        Availability(5, 3, date(2025,1,2), True),
-        Availability(6, 4, date(2025,1,2), True),
+        Availability(4, 2, date(2025,1,2), False),
+        Availability(5, 3, date(2025,1,2), False),
+        Availability(6, 4, date(2025,1,2), False),
         Availability(7, 5, date(2025,1,2), True),
         Availability(8, 6, date(2025,1,2), True)
     ]
@@ -47,9 +47,9 @@ def test_create(db_connection):
         Availability(1, 1, date(2025,1,1), True),
         Availability(2, 1, date(2025,1,2), True),
         Availability(3, 1, date(2025,2,3), True),
-        Availability(4, 2, date(2025,1,2), True),
-        Availability(5, 3, date(2025,1,2), True),
-        Availability(6, 4, date(2025,1,2), True),
+        Availability(4, 2, date(2025,1,2), False),
+        Availability(5, 3, date(2025,1,2), False),
+        Availability(6, 4, date(2025,1,2), False),
         Availability(7, 5, date(2025,1,2), True),
         Availability(8, 6, date(2025,1,2), True),
         Availability(9, 5, date(2025,2,2), True)
