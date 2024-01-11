@@ -75,8 +75,10 @@
         <p class="description">{{space.description}}</p>
 
         <form action="/book_space" method="post">
-            <input type="hidden" name="space_id" value="{{ space.id }}">
+            <input type="hidden" name="space_id" value="{{space.id}}">
+            <input type="hidden" name="user_id" value=1> <!-- session thing here OR in app.py-->
             <input type="date" name="date" required>
+            <input type="hidden" name="price" value="{{ space.price }}">
             <button type="submit">Book</button>
         </form>
 
