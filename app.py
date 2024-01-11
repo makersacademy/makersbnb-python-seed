@@ -158,7 +158,6 @@ def add_space():
         repo_avaliblity.create(Availability(None, space.id, a_date))
     return redirect('/spaces')
 
-
 @app.route('/spaces/<int:id>/booking-request', methods = ['POST'])
 def bookaspace(id):
     connection = get_flask_database_connection(app)
@@ -177,19 +176,6 @@ def bookaspace(id):
         repo_booking.create(Booking(None, night_id, user_id, status))
     space = repo_space.find(id)    
     return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
-
-
-@app.route('/authorization', methods = ['GET'])
-def get_authorization():
-    connection=get_flask_database_connection(app)
-    repo_booking = BookingRepository(connection)
-    bookings = repo_booking.all()
-    users_bookings = []
-    for booking in bookings:
-        if booking.user_id == session["user_id"]:
-            users_bookings.append(booking)
-    
-    return render_template('authorization.html', bookings=users_bookings)
 
 
 # These lines start the server if you run this file directly
