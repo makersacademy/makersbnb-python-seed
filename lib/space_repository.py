@@ -147,4 +147,8 @@ class SpaceRepository:
         ]
 
         return result
-    
+
+    def space_available(self, date, space):
+        rows = self._connection.execute(
+            "SELECT * FROM spaces WHERE %s between start_date AND end_date AND id = %s", [date, space.id])
+        return len(rows) > 0
