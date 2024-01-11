@@ -13,13 +13,25 @@ class SpaceRepository():
         if len(list_to_return):
             return list_to_return
 
-    def find(self, id):
-        #if not(id == 0) and not(id == None):
+    def find(self, id, filter="id"):
+        if filter == "id":
+            #if not(id == 0) and not(id == None):
         rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
-        if rows:
-            row = rows[0]
-            space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
-        return space
+            if rows:
+                row = rows[0]
+                    space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+            return space
+        
+        if filter == "user_id":
+            rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
+            if rows:
+                spaces = []
+                
+                for row in rows:
+                    space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+                    spaces.append(space)
+                
+                return spaces
         
     def filter(self, user_id):
         rows = self._connection.execute(
@@ -40,3 +52,7 @@ class SpaceRepository():
     
     def update(self, space:Space):
         self._connection.execute("UPDATE spaces SET name=%s, descr=%s, price=%s WHERE id=%s", [space.name, space.desc, space.price, space.id])
+    
+    def get_id(self):
+        row = self._connection.execute("SELECT lastval()")
+        return row[0]['lastval']

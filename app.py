@@ -5,6 +5,8 @@ from lib.user import User
 from lib.user_repository import UserRepository
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+from lib.availability_repository import AvailabilityRepository
+from lib.availability import Availability
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -118,7 +120,11 @@ def edit_spaces(id):
         else:
             #  this will not pupulate the form
             space = ""
-        return render_template("space_edit.html", space=space)
+    
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availabilities = availability_repo.find(space.id)
+
+    return render_template("space_edit.html", space=space, availabilities=availabilities)
     else:
         return "Not Authorized"
 
@@ -141,7 +147,7 @@ def update_spaces():
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.update(space)
 
-    return redirect('/')
+    return redirect('/spaces/listings')
 
 @app.route('/spaces/add', methods=['POST'])
 def add_spaces():
@@ -154,10 +160,23 @@ def add_spaces():
     space = Space(id, name, desc, price, user_id)
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space_repo.add(space)
+    
+    space_id = space_repo.get_id()
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+
+    availability = Availability(date_from, date_to, space_id)
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availability_repo.add(availability)
 
     return redirect('/')
 
-
+@app.route('/add')
+def get_add():
+    if 'id' in session:
+        return render_template("space_add.html")
+    else:
+        return "Not Authorized"
 
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
@@ -168,8 +187,11 @@ def get_space(id):
 
 
 @app.route('/mylisting', methods=['GET'])
-def user_listings():
-    return redirect('/user')
+def user_listings(id):
+    space_repo = SpaceRepository(get_flask_database_connection(app))
+    space = space_repo.find(id)
+
+    return render_template("my_listings.html", space=space)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
