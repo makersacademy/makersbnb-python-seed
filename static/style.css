@@ -5,6 +5,7 @@ body {
     height: 100vh;
     margin: 0px;
     background-color: #f8f9fa; 
+    min-height: 100vh;
 }
 
 header {
@@ -16,6 +17,10 @@ header {
     color: #DDE6ED;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
 }
 
 header h1 {
@@ -40,6 +45,8 @@ header a {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 10px;
     border-radius: 10px;
+    margin-top: 100px;
+
 
 }
 
@@ -128,6 +135,8 @@ header a:nth-of-type(1) {
     justify-content: center;
     max-width: 30%;
     margin: auto;
+    margin-top: 100px;
+
 }
 
 .image-container-space img {
@@ -221,6 +230,10 @@ h3, h5 {
 
 footer {
     margin-top: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     background-color: #27374D;
     align-items: center;
     color: #DDE6ED;
@@ -239,7 +252,6 @@ footer {
 .logout-button-profile:hover {
     color: #DDE6ED;
 }
-
 
 .navbar {
     background-color: #27374D;
@@ -279,6 +291,8 @@ footer {
     width: 40%; 
     border: black 1px solid;
     border-radius: 1%;
+    margin-top: 100px;
+
 }
 
 .button{
@@ -343,6 +357,12 @@ fieldset{
   .flashes .error {
     background-color: #e74c3c;
     color: #ffffff;
+  }
+
+  .navbar.navbar-expand-lg {
+    position: fixed;
+    top: 0;
+    width: 100%;
   }
 
   /* Pagination */
