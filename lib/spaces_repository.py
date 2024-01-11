@@ -33,6 +33,15 @@ class SpaceRepository:
         row = rows[0]
         return Space(row['id'], row['name'], row['description'], row['price'], row['host_id'])
 
+    def get_spaces_by_host_id(self, host_id):
+        rows = self._connection.execute(
+            'SELECT * from spaces WHERE host_id = %s', [host_id]
+        )
+        spaces = []
+        for row in rows:
+            spaces.append(Space(row['id'], row['name'], row['description'], row['price'], row['host_id']))
+        return spaces
+
     def list_all_spaces(self):
         all_spaces = self._connection.execute("SELECT * from spaces")
         spaces = []

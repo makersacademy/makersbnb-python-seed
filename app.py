@@ -171,7 +171,8 @@ def get_new_space(current_user):
 def create_space(current_user):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
-    host = 1
+    user_repo = UserRepository(connection)
+    host = user_repo.username_to_id(current_user)
     new_space = Space(
         None,
         request.form["name"],
@@ -210,14 +211,16 @@ def create_booking(current_user):
     guest_id = connection.execute(
         """
         SELECT id FROM users WHERE username=%s;
-        """,
-        [guest_username],
-    )[0]["id"]
-    # space_repo = SpaceRepository(connection)
-    # host_id = space_repo.get_space_by_id(space_id).host_id
+        """, [guest_username]
+    )[0]['id']
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
     booking_repo.create(new_booking)
+    # Commented lines below may later be useful for notification sending to host
+    # space_repo = SpaceRepository(connection)
+    # host_id = space_repo.get_space_by_id(space_id).host_id
+    # user_repo = UserRepository(connection)
+    # host_username = user_repo.id_to_username(host_id)
     return redirect("/bookings/success")
 
 
@@ -226,6 +229,66 @@ def create_booking(current_user):
 def get_bookings_success(current_user):
     return render_template("bookings/success.html")
 
+@app.route('/requests', methods=['GET'])
+@token_required
+def get_requests(current_user):
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepository(connection)
+    user_id = user_repo.username_to_id(current_user)
+    # Find all bookings where user.id is the guest_id
+    booking_repo = BookingRepository(connection)
+    requests_made = booking_repo.find_by_guest_id(user_id)
+    # Find all spaces where user.id is the host_id AND
+    # find all bookings where space_id is in this list
+    space_repo = SpaceRepository(connection)
+    host_spaces = space_repo.get_spaces_by_host_id(user_id)
+    requests_received = []
+    for space in host_spaces:
+        for booking in booking_repo.find_by_space_id(space.id):
+            requests_received.append(booking)
+    return render_template("requests/index.html",
+                           requests_made=requests_made,
+                           requests_received=requests_received)
+
+@app.route('/requests/<int:booking_id>', methods=['GET'])
+@token_required
+def get_request_by_id(booking_id, current_user):
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking = booking_repo.find(booking_id)
+    guest_id = booking.guest_id
+    user_repo = UserRepository(connection)
+    guest_username = user_repo.id_to_username(guest_id)
+    space_id = booking.space_id
+    space_repo = SpaceRepository(connection)
+    space = space_repo.get_space_by_id(space_id)
+    host_username = user_repo.id_to_username(space.host_id)
+    current_user_id = user_repo.username_to_id(current_user)
+
+    return render_template("bookings/booking.html",
+                           current_user_id=current_user_id,
+                           space=space,
+                           host_username=host_username,
+                           guest_username=guest_username,
+                           booking=booking)
+
+@app.route('/bookings/confirm', methods=['POST'])
+@token_required
+def post_confirm_booking(current_user):
+    booking_id = request.form['booking_id']
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking_repo.confirm(int(booking_id))
+    return redirect(f"/requests/{booking_id}")
+
+@app.route('/bookings/reject', methods=['POST'])
+@token_required
+def post_reject_booking(current_user):
+    booking_id = int(request.form['booking_id'])
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking_repo.reject(booking_id)
+    return redirect(f"/requests/{booking_id}")
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
