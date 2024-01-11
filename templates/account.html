@@ -1,38 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Page</title>
-    <style>
-    
-        h1 {text-align: center;}
-        li {text-align: center;}
+{% extends "layout.html" %}
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-    </style>
-</head>
+{% block body %}
 <body>
 
     <h1>My Account</h2>
@@ -42,10 +10,11 @@
         <br>
         <li><strong>Email:</strong> [Your Email]</li>
         <br>
-        <li><strong>My Spaces:</strong> <a href="/spaces">/spaces</a></li>
+        <li><strong>My Spaces</strong> <a href="/myspaces">/spaces</a></li>
         <br>
-        <li><a href="#">Change Password</a></li>
+        <!-- an extra feature maybe at some point  -->
+        <!-- <li><a href="#">Change Password</a></li> -->
     </ul>
 
 </body>
-</html>
+{% endblock %}

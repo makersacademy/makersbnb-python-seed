@@ -296,5 +296,10 @@ def post_reject_booking(current_user):
 def view_account_details(current_user):
     return render_template('/account.html')
 
+@app.route('/myspaces', methods=['GET'])
+@token_required
+def view_user_spaces(current_user):
+    return render_template('/listspace.html')
+
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
