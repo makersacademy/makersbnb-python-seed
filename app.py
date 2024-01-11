@@ -14,6 +14,12 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 
+def show_username():
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepo(connection)
+    user = user_repo.find_user_by_id(session["user_id"])
+    return user
+
 
 @app.route("/", methods=["GET"])
 def get_index():
@@ -28,57 +34,59 @@ def get_login():
 @app.route("/spaces", methods=["GET"])
 def get_spaces():
     return render_template("spaces.html")
-    
 
-@app.route("/space", methods=["GET"])
-def get_space():
-    return render_template("space.html")
 
 @app.route("/new_space", methods=["GET"])
 def get_new_space():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('new_space.html')
+    if "user_id" not in session:
+        return redirect("/")
+    return render_template("new_space.html")
 
-@app.route('/new_space', methods=['POST'])
+
+@app.route("/new_space", methods=["POST"])
 def create_new_space():
-    if 'user_id' not in session:
-        return redirect('/')
-    
+    if "user_id" not in session:
+        return redirect("/")
+
     connection = get_flask_database_connection(app)
     user_repo = UserRepo(connection)
-    user = user_repo.find_user_by_id(session['user_id'])
-    space_name = request.form['space_name']
-    description = request.form['description']
-    price = request.form['price']
-    start_date = request.form['start_date']
-    end_date = request.form['end_date']
+    user = user_repo.find_user_by_id(session["user_id"])
+    space_name = request.form["space_name"]
+    description = request.form["description"]
+    price = request.form["price"]
+    start_date = request.form["start_date"]
+    end_date = request.form["end_date"]
     space_repo = SpaceRepository(connection)
-    new_space = Space(None, space_name, description, price, user.id, start_date, end_date)
+    new_space = Space(
+        None, space_name, description, price, user.id, start_date, end_date
+    )
     space_repo.create(new_space)
 
-    return render_template('spaces.html')
+    return render_template("spaces.html")
 
-@app.route('/space/<id>', methods=['GET'])
+
+@app.route("/space/<id>", methods=["GET"])
 def get_space(id):
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(id)[0]
-    return render_template('space.html', space=space)
+    return render_template("space.html", space=space)
 
-@app.route('/book/<id>', methods=['POST'])
+
+@app.route("/book/<id>", methods=["POST"])
 def book(id):
     connection = get_flask_database_connection(app)
     # space_repo = SpaceRepository(connection)
     # space = space_repo.find_by_id(id)[0]
     user_repo = UserRepo(connection)
     booking_repo = BookingRepository(connection)
-    booking_date = request.form['date']
-    booking = Booking(None, booking_date, False, session['user_id'], id)
+    booking_date = request.form["date"]
+    booking = Booking(None, booking_date, False, session["user_id"], id)
     booking_id = booking_repo.create(booking)
     booking.id = booking_id
     user_repo.add_booking(booking)
-    return redirect('/spaces')
+
+    return redirect("/spaces")
 
 
 @app.route("/requests", methods=["GET"])
@@ -99,7 +107,7 @@ def get_requests():
     for booking in all_bookings:
         if booking.space_id in owned_space_ids:
             requests_received.append(booking)
-    
+
     user_repo = UserRepo(connection)
     space_bookings_users_rec = []
     for booking in requests_received:
@@ -107,9 +115,13 @@ def get_requests():
         user = user_repo.find_user_by_id(booking.user_id)
         space_bookings_users_rec.append((space, booking, user))
 
-    return render_template('requests.html', spaces_and_bookings=spaces_and_bookings, space_bookings_users_rec=space_bookings_users_rec)
+    return render_template(
+        "requests.html",
+        spaces_and_bookings=spaces_and_bookings,
+        space_bookings_users_rec=space_bookings_users_rec,
+    )
 
-  
+
 @app.route("/request", methods=["GET"])
 def get_request():
     return render_template("request.html")
@@ -120,24 +132,25 @@ def get_logout():
     if "user_id" not in session:
         return redirect("/")
     return render_template("logout.html")
-  
-  
-@app.route('/viewspace/<int:space_id>', methods=['GET'])
+
+
+@app.route("/viewspace/<int:space_id>", methods=["GET"])
 def get_viewspace(space_id):
-    space_details = space_id  
+    space_details = space_id
     if space_details:
-        return render_template('request.html', space_details=space_details)
+        return render_template("request.html", space_details=space_details)
     else:
         # Handle the case where the space with the given ID is not found
-        return render_template('error.html', message='Space not found'), 404
+        return render_template("error.html", message="Space not found"), 404
 
 
-@app.route('/list_spaces', methods=['GET'])
+@app.route("/list_spaces", methods=["GET"])
 def get_list_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    return render_template('list_spaces.html', spaces=spaces)
+    return render_template("list_spaces.html", spaces=spaces)
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
@@ -154,7 +167,7 @@ def login():
     if user_repo.check_password_correct(username, password):
         user = user_repo.find_user_by_username(username)
         session["user_id"] = user.id
-        return render_template("spaces.html")
+        return render_template("spaces.html", user=user)
     else:
         return render_template("login.html", errors=["Invalid username or password"])
 
@@ -195,7 +208,7 @@ def logout():
 
     if user_repo.find_user_by_id(session["user_id"]):
         del session["user_id"]
-        return render_template("login.html")
+        return redirect("/")
     else:
         return render_template("logout.html", errors=["Nobody logged in"])
 
