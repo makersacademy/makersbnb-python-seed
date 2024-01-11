@@ -4,7 +4,7 @@ from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
 from lib.space_repository import *
-from lib.forms import RegisterForm, LoginForm, NewListing
+from lib.forms import RegisterForm, LoginForm, NewListingForm, BookingForm
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
 from flask_bcrypt import Bcrypt
@@ -70,16 +70,18 @@ def get_login_details():
     return render_template('login.html', form=form)
 
 
-#IF LOG IN AND PASSWORD IS CORRECT USER IS REDIRECT TO THIS PAGE. 
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile_page():
     connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(connection)
     spaces = space_repository.find_user_spaces(current_user.id)
+    listing = space_repository.all()
+    
     booking_repository = BookingRepository(connection)
     bookings = booking_repository.find_user_bookings(current_user.id)
-    return render_template('profile.html', user=current_user, spaces=spaces, bookings=bookings)
+    return render_template('profile.html', user=current_user, spaces=spaces, bookings=bookings, listing=listing)
+
 
 # I ALSO CREATED A LOG OUT FUNCTION. 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -113,7 +115,7 @@ def get_create_account():
 @app.route('/new_listing', methods=['GET', 'POST'])
 @login_required
 def create_space():
-    form = NewListing()
+    form = NewListingForm()
     if form.validate_on_submit():
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
@@ -133,22 +135,18 @@ def get_space_done(id):
     repo = BookingRepository(connection)
     space_repo = SpaceRepository(connection)
     space = space_repo.find(id)
+    form = BookingForm()
 
-    if request.method == 'POST':
-        date = request.form['date']
-        
-        if current_user.is_authenticated:
-            if not repo.find_booking(date):
-                date_booked = datetime.strptime(date, '%Y-%m-%d')
-                booking = Booking(None, current_user.id, space.id, date_booked, space.name)
-                repo.create(booking)
-                return redirect(url_for('profile_page'))
-            else:
-                flash("This date is unavailable, please choose another")
-        else:
-            flash("Please log in to make a booking")
+    if form.validate_on_submit() and current_user.is_authenticated:
+        selected_date = form.booking_date.data
+        booking = Booking(None, current_user.id, space.id, selected_date, space.name)
+        repo.create(booking)
+        flash("Booking successful!", "success")
+        return redirect(url_for('profile_page'))
+    else:
+        flash("You need to be logged in to make a booking")
 
-    return render_template("space.html", space=space, user=current_user)
+    return render_template("space.html", space=space, form=form)
 
 
 
