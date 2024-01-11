@@ -48,3 +48,19 @@ def test_user_name_displays_on_page(page, test_web_address):
     b_tag = page.locator("b")
 
     expect(b_tag).to_have_text("You are logged in as test@test.com")
+
+"""
+Test that homepage appears
+"""
+def test_homepage_appears(page, test_web_address, web_client):
+    page.goto(f"http://{test_web_address}/")
+    response = web_client.get("/")
+    h1_tag = page.locator("h1")
+
+    expect(h1_tag).to_have_text("Welcome to MakersBnB")
+
+    assert response.status_code == 200
+
+"""
+Test that signup function works
+"""
