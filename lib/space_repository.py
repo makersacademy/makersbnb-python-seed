@@ -145,7 +145,6 @@ class SpaceRepository:
             )
             for row in rows
         ]
-        if len(result) == 0:
-            result = "No results found"
+
         return result
     

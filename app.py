@@ -54,6 +54,9 @@ def create_new_space():
 
 @app.route('/space/<space_id>', methods=['GET'])
 def get_space(space_id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(space_id)[0]
@@ -61,9 +64,9 @@ def get_space(space_id):
 
 @app.route('/book/<id>', methods=['POST'])
 def book(id):
+    if 'user_id' not in session:
+        return redirect('/')
     connection = get_flask_database_connection(app)
-    # space_repo = SpaceRepository(connection)
-    # space = space_repo.find_by_id(id)[0]
     user_repo = UserRepo(connection)
     booking_repo = BookingRepository(connection)
     booking_date = request.form['date']
@@ -75,6 +78,9 @@ def book(id):
 
 @app.route('/requests', methods=['GET'])
 def get_requests():
+    if 'user_id' not in session:
+        return redirect('/')
+    
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     user_bookings = booking_repo.find_all_by_user(session["user_id"])
@@ -104,6 +110,9 @@ def get_requests():
 
 @app.route('/viewspace/<int:space_id>', methods=['GET'])
 def get_viewspace(space_id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
     space_details = space_id  
     if space_details:
         return render_template('request.html', space_details=space_details)
@@ -114,6 +123,9 @@ def get_viewspace(space_id):
 
 @app.route('/list_spaces', methods=['GET'])
 def get_list_spaces():
+    if 'user_id' not in session:
+        return redirect('/')
+    
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
@@ -164,10 +176,13 @@ def signup():
         # Add user to session as logged in
         user_id = user_repo.create_user(new_user) 
         session['user_id'] = user_id
-        return render_template('list_spaces.html')
+        return redirect('/list_spaces')
 
 @app.route('/request/<id>', methods=['GET'])  
 def get_request(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     user_repo = UserRepo(connection)
@@ -179,12 +194,13 @@ def get_request(id):
 
 @app.route('/approve/<id>', methods=['POST'])
 def approve(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.confirm(id)
     return redirect('/requests')
-
-
 
 
 if __name__ == '__main__':
