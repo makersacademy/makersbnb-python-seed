@@ -32,7 +32,7 @@ CREATE TABLE spaces (
 CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
-    date_booked text,
+    date_booked date,
     user_id int,
     space_id int,
     space_name text,
