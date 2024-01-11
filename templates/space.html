@@ -18,10 +18,11 @@
             <form action="/space/{{space.id}}" method="post" >
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                    <ul class="flashes">
+                    <ul class="flash_space_page">
                         {% for message in messages %}
                             <li>{{ message }}</li>
                         {% endfor %}
+                    </ul>
                     {% endif %}
                     {% endwith %}
                 <label for="datepicker"></label>
