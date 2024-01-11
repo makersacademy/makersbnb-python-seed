@@ -68,8 +68,14 @@ def book(id):
     connection = get_flask_database_connection(app)
     user_repo = UserRepo(connection)
     booking_repo = BookingRepository(connection)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find_by_id(id)[0]
     booking_date = request.form['date']
     booking = Booking(None, booking_date, False, session['user_id'], id)
+    if booking_repo.already_booked(booking):
+        return render_template('/booking_failed.html', id=id, error='Booking already taken')
+    if not space_repo.space_available(booking_date, space):
+        return render_template('/booking_failed.html', id=id, error='Space not available on this date')
     booking_id = booking_repo.create(booking)
     booking.id = booking_id
     user_repo.add_booking(booking)
@@ -107,19 +113,14 @@ def get_requests():
 
     return render_template('requests.html', spaces_and_bookings=spaces_and_bookings, space_bookings_users_rec=space_bookings_users_rec)
 
-  
-# @app.route("/request", methods=["GET"])
-# def get_request():
-#     return render_template("request.html")
-
 
 @app.route("/logout", methods=["GET"])
 def get_logout():
     if "user_id" not in session:
         return redirect("/")
     return render_template("logout.html")
-  
-  
+
+
 @app.route('/viewspace/<int:space_id>', methods=['GET'])
 def get_viewspace(space_id):
     if 'user_id' not in session:
