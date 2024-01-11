@@ -37,6 +37,8 @@ app.secret_key = b"_5#2LF34nxec]"
 #       /spaces/update POST        update 1 space (no html) --> /
 #
 
+
+
 # ==== Home Page - routes
 #
 #   active_user: None or user_instance
@@ -145,7 +147,8 @@ def edit_spaces(id):
             return render_template("space_edit.html", space=space, availabilities=availabilities)
         else:
             #  this will not fill the form
-            return render_template("space_edit.html", space="", availabilities="")
+            #return render_template("space_edit.html", space="", availabilities="")
+            return render_template("space_edit.html", space="")
     else:
         return "Not Authorized"
 
@@ -163,12 +166,12 @@ def add_spaces():
     space_repo.add(space)
     
     space_id = space_repo.get_id()
-    date_from = request.form['date_from']
-    date_to = request.form['date_to']
+    #date_from = request.form['date_from']
+    #date_to = request.form['date_to']
 
-    availability = Availability(date_from, date_to, space_id)
+   #availability = Availability(date_from, date_to, space_id)
     availability_repo = AvailabilityRepository(get_flask_database_connection(app))
-    availability_repo.add(availability)
+    #availability_repo.add(availability)
 
     return redirect('/')
 
