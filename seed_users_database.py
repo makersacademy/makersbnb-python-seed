@@ -1,8 +1,11 @@
 from lib.database_connection import DatabaseConnection
 
-# Run this file to reset your database using the seeds
-# ; pipenv run python seed_dev_database.py
+def seed_database(sql_file):
+    db_connection = DatabaseConnection()
+    db_connection.connect()
+    for sql_file in sql_files:
+        db_connection.seed(sql_file)
 
-connection = DatabaseConnection(test_mode=False)
-connection.connect()
-connection.seed("seeds/users.sql")
+if __name__ == "__main__":
+    sql_files = ["./seeds/spaces.sql", "./seeds/users.sql", "./seeds/bookings.sql"] 
+    seed_database(sql_files)

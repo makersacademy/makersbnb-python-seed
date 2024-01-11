@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MakersBnb</title>
+    <meta charset="utf-8">
+    <!-- <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .price {
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .location,
+        .size,
+        .description {
+            color: #555;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="date"] {
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style> -->
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="space_name">{{space.name}}</h1>
+        <p class="price">Price: £{{space.price}} per night</p>
+        <p class="location">Location: {{space.location}}</p>
+        <p class="size">Size: {{space.size}}</p>
+        <p class="description">{{space.description}}</p>
+
+        <form action="/book_space" method="post">
+            <input type="hidden" name="space_id" value="{{space.id}}">
+            <input type="hidden" name="user_id" value=1> <!-- session thing here OR in app.py-->
+            <input type="date" name="date" required>
+            <input type="hidden" name="price" value="{{ space.price }}">
+            <button type="submit">Book</button>
+        </form>
+
+        <br></br>
+
+        <a href="/spaces">Back to all spaces</a>
+    </div>
+</body>
+
+</html>
