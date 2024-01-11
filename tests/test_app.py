@@ -1,14 +1,25 @@
 from playwright.sync_api import Page, expect
-
+from flask import session
 # Tests for your routes go here
 
 """
 We can render the index page
 """
-def test_get_index(page, test_web_address):
+
+def test_get_homepage_redirects(page, test_web_address,web_client):
+    response = web_client.get('/')
+    assert response.status_code ==302
+    page.goto(f'http://{test_web_address}/')
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text('Space Listings')
+def test_get_index(page, test_web_address,web_client):
+    response = web_client.get('/index')
+    assert response.status_code == 200
+    assert 'Welcome to MakersBnB' in response.data.decode('utf-8')
+
     # We load a virtual browser and navigate to the /index page
     page.goto(f"http://{test_web_address}/index")
-
+    
     # We look at the <p> tag
     strong_tag = page.locator("h1")
 
@@ -16,22 +27,33 @@ def test_get_index(page, test_web_address):
 
     expect(strong_tag).to_have_text("Welcome to MakersBnB.")
     
-def test_mainpage_redirects_to_spaces(page,test_web_address):
-    page.goto(f'http://{test_web_address}/')
-    h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Space Listings')
+
 """
 We can render the login page
 """
 
-def test_get_login(page, test_web_address):
+def test_get_login(page, test_web_address,web_client):
     page.goto(f"http://{test_web_address}/log_in")
-    
+    response = web_client.get('/log_in')
+    assert response.status_code == 200
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Please log in.")
 
+def test_post_login(page,test_web_address,web_client):
+    response = web_client.post('/log_in', data={'email':'user_1@mail.com','passw':'makersbnb2'})
+    assert response.status_code == 302
+    assert 'Redirecting' in response.data.decode('utf-8')
+    response = web_client.post('/log_in', data={'email':'user_@mail.com','passw':'makersbnb2'})
+    assert response.status_code == 200
+    assert 'Email or password is incorrect.' in response.data.decode('utf-8')
+    page.goto(f"http://{test_web_address}/log_in")
+    page.fill('input[name=email]','user_1@mail.com')
+    page.fill('input[name=passw]','makersbnb2')
+    page.click('text=Submit')
+    logged_in = page.locator('.t-current_user')
+    expect(logged_in).to_have_text('Signed in as user_1@mail.com')
 
-def test_get_add_spaces(page, test_web_address,db_connection):
+def test_get_add_spaces(page, test_web_address,db_connection,web_client):
     db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
     
@@ -49,6 +71,9 @@ def test_get_add_spaces(page, test_web_address,db_connection):
     page.screenshot(path="screenshot.png", full_page=True)
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Create new listing")
+    
+    response = web_client.get('/newspace')
+    assert response.status_code == 302
 
 def test_list_spaces(page,test_web_address,db_connection):
     db_connection.seed("seeds/MasterTest.sql")
@@ -56,7 +81,7 @@ def test_list_spaces(page,test_web_address,db_connection):
     h3_tag = page.locator('h3')
     expect(h3_tag).to_have_count(5)
     
-def test_adding_a_space(page,test_web_address,db_connection):
+def test_adding_a_space(page,test_web_address,db_connection,web_client):
     db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
     # Then we fill out the field with the name attribute 'email'
@@ -75,7 +100,10 @@ def test_adding_a_space(page,test_web_address,db_connection):
     page.click('text=Spaces')
     h3_tag = page.locator('h3')
     expect(h3_tag).to_have_count(6)
-
+    response = web_client.post('/newspace', data={'title':'Test','space_desc':'Test','price':'1.23','startdate':'2024-01-20','enddate':'2024-01-31'})
+    assert response.status_code ==302
+    response = web_client.post('/newspace', data={'title':'','space_desc':'Test','price':'1.23','startdate':'2024-01-20','enddate':'2024-01-31'})
+    assert response.status_code ==200
 def test_create_user(db_connection, page, test_web_address):
     db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
