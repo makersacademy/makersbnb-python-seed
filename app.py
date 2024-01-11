@@ -8,6 +8,8 @@ from lib.user import User
 from lib.availability import Availability
 from lib.availability_repository import AvailabilityRepository
 from datetime import date, timedelta, datetime
+from lib.booking import *
+from lib.booking_repository import * 
 
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
@@ -155,6 +157,26 @@ def add_space():
     for a_date in dates:
         repo_avaliblity.create(Availability(None, space.id, a_date))
     return redirect('/spaces')
+
+
+@app.route('/spaces/<int:id>/booking-request', methods = ['POST'])
+def bookaspace(id):
+    connection = get_flask_database_connection(app)
+    first_date = request.form['date-from']
+    last_date = request.form['date-to']
+    first_date = datetime.strptime(first_date, "%d-%m-%Y").date()
+    last_date = datetime.strptime(last_date, "%d-%m-%Y").date()
+    repo_avaliblity = AvailabilityRepository(connection)
+    repo_space = SpaceRepository(connection)
+    repo_booking = BookingRepository(connection)
+    night_ids = repo_avaliblity.find_id(id,first_date,last_date)
+    # user_id = session["user_id"] #When session is functional we can uncomment this line
+    user_id = 2 #Remove this line once session is live
+    status = "pending"
+    for night_id in night_ids:
+        repo_booking.create(Booking(None, night_id, user_id, status))
+    space = repo_space.find(id)    
+    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
 
 
 

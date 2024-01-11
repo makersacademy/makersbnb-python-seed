@@ -12,22 +12,14 @@
             .content {
               max-width: 600px;
               margin: auto;
-              background: white;
+              background: rgb(177, 220, 246);
               padding: 10px;
             }
             </style>
           <div class="content">
-            <h3>Name: {{spaces.name}}</h3>
-              <p>Description : {{spaces.description}}<br>Price per night £101</p>
-            <button onclick="myFunction()"> Reserve </button>
-          <p id="reserve"></p>
-      
-      <script>
-      function myFunction() {
-        document.getElementById("reserve").innerHTML = "Your booking has been requested.";
-      }
-      </script>
-      
+            <h3>Your booking details</h3>
+              <p>{{space.name}}<br>Description : {{space.description}}<br>Price per night £{{space.price_per_night}}</p>
+              <p>Your booking has been requested from {{ date_from }} to {{date_to}}</p>
       </body>    
       {% endblock %}
 
