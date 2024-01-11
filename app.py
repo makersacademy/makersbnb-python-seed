@@ -134,15 +134,24 @@ def get_viewspace(space_id):
         return render_template('error.html', message='Space not found'), 404
 
 
-@app.route('/list_spaces', methods=['GET'])
-def get_list_spaces():
+@app.route('/list_spaces', methods=['GET', 'POST'])             
+def spaces():
     if 'user_id' not in session:
         return redirect('/')
-    
-    connection = get_flask_database_connection(app)
-    repository = SpaceRepository(connection)
-    spaces = repository.all()
-    return render_template('list_spaces.html', spaces=spaces)
+    if request.method == 'GET':
+        return render_template('list_spaces.html')
+    elif request.method == 'POST':
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        if 'available_from' in request.form and 'available_to' in request.form:
+            available_from = request.form['available_from']
+            available_to = request.form['available_to']
+            spaces = repository.get_available_spaces(available_from, available_to)
+            if not spaces or spaces == "No results found":
+                return render_template('list_spaces.html', spaces=[], no_results=True)
+            else:
+                return render_template('list_spaces.html', spaces=spaces)
+    return render_template('list_spaces.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

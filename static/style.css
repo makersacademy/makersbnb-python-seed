@@ -43,7 +43,12 @@ input[type="submit"] {
     background-color: #3b3b4f;
     border-color: white;
     min-width: 300px;
+    transition: background-color 0.3s ease;
 }
+input[type="submit"]:hover {
+    background-color: #22994f;
+}
+
 input[type="Spacetable"]{
     display: inline;
     width: 60%;
@@ -75,6 +80,7 @@ a[tabindex]:focus {
 
 .list-space-button {
     text-align: center;
+
 }
 
 .error {
