@@ -2,7 +2,7 @@ from lib.user_repository import UserRepository, is_valid
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for
 from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
@@ -15,6 +15,15 @@ from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
+
+import stripe
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
 # Auth token generation
@@ -81,8 +90,6 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         password_confirmation = request.form.get("password_confirmation")
-        print(password)
-        print(password_confirmation)
 
         if password != password_confirmation:
             return "Passwords do not match", 400
@@ -169,11 +176,12 @@ def logout():
 @app.route("/spaces", methods=["GET"])
 @token_required
 def get_all_spaces(current_user):
-    print(current_user)
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.list_all_spaces()
-    return render_template("/spaces/index.html", spaces=spaces, current_user=current_user)
+    return render_template(
+        "/spaces/index.html", spaces=spaces, current_user=current_user
+    )
 
 
 @app.route("/spaces/new", methods=["GET"])
@@ -227,8 +235,9 @@ def create_booking(current_user):
     guest_id = connection.execute(
         """
         SELECT id FROM users WHERE username=%s;
-        """, [guest_username]
-    )[0]['id']
+        """,
+        [guest_username],
+    )[0]["id"]
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
     booking_repo.create(new_booking)
@@ -245,7 +254,8 @@ def create_booking(current_user):
 def get_bookings_success(current_user):
     return render_template("bookings/success.html")
 
-@app.route('/requests', methods=['GET'])
+
+@app.route("/requests", methods=["GET"])
 @token_required
 def get_requests(current_user):
     connection = get_flask_database_connection(app)
@@ -262,11 +272,14 @@ def get_requests(current_user):
     for space in host_spaces:
         for booking in booking_repo.find_by_space_id(space.id):
             requests_received.append(booking)
-    return render_template("requests/index.html",
-                           requests_made=requests_made,
-                           requests_received=requests_received)
+    return render_template(
+        "requests/index.html",
+        requests_made=requests_made,
+        requests_received=requests_received,
+    )
 
-@app.route('/requests/<int:booking_id>', methods=['GET'])
+
+@app.route("/requests/<int:booking_id>", methods=["GET"])
 @token_required
 def get_request_by_id(booking_id, current_user):
     connection = get_flask_database_connection(app)
@@ -281,30 +294,75 @@ def get_request_by_id(booking_id, current_user):
     host_username = user_repo.id_to_username(space.host_id)
     current_user_id = user_repo.username_to_id(current_user)
 
-    return render_template("bookings/booking.html",
-                           current_user_id=current_user_id,
-                           space=space,
-                           host_username=host_username,
-                           guest_username=guest_username,
-                           booking=booking)
+    return render_template(
+        "bookings/booking.html",
+        current_user_id=current_user_id,
+        space=space,
+        host_username=host_username,
+        guest_username=guest_username,
+        booking=booking,
+    )
 
-@app.route('/bookings/confirm', methods=['POST'])
+
+@app.route("/bookings/confirm", methods=["POST"])
 @token_required
 def post_confirm_booking(current_user):
-    booking_id = request.form['booking_id']
+    booking_id = request.form["booking_id"]
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.confirm(int(booking_id))
     return redirect(f"/requests/{booking_id}")
 
-@app.route('/bookings/reject', methods=['POST'])
+
+@app.route("/bookings/reject", methods=["POST"])
 @token_required
 def post_reject_booking(current_user):
-    booking_id = int(request.form['booking_id'])
+    booking_id = int(request.form["booking_id"])
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.reject(booking_id)
     return redirect(f"/requests/{booking_id}")
+
+
+# Stripe Integration
+@app.route("/create-checkout-session", methods=["POST"])
+@token_required
+def create_checkout_session(current_user):
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "gbp",
+                        "product_data": {
+                            "name": "To confirm your booking a deposit of £20 is required",
+                        },
+                        "unit_amount": 2000,  # price in pence
+                    },
+                    "quantity": 1,
+                }
+            ],
+            mode="payment",
+            success_url=url_for("payment_success", _external=True),
+            cancel_url=url_for("payment_cancel", _external=True),
+        )
+        return redirect(checkout_session.url, code=303)
+    except Exception as e:
+        return str(e), 403
+
+
+@app.route("/payment-confirmed")
+@token_required
+def payment_success(current_user):
+    return render_template("bookings/payment-confirmed.html")
+
+
+@app.route("/payment-cancelled")
+@token_required
+def payment_cancel(current_user):
+    return render_template("bookings/payment-cancelled.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
