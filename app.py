@@ -291,5 +291,10 @@ def post_reject_booking(current_user):
     booking_repo.reject(booking_id)
     return redirect(f"/requests/{booking_id}")
 
+@app.route('/account', methods=['GET'])
+@token_required
+def view_account_details(current_user):
+    return render_template('/account.html')
+
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
