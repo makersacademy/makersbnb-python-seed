@@ -14,6 +14,12 @@
     <main>
         <div class="space-container">
             <div class="property">
+                {% if 'user_id' in session %}
+            <p>Welcome, {{ session['user_first_name'] }}!</p>
+            <!-- Add other personalized content as needed for logged-in users -->
+        {% else %}
+            <p>You are not logged in! Please sign up or log in.</p><!-- Content for users who are not logged in -->
+        {% endif %}
                 <h2>{{space.name}}</h2>
                 <p>Description: {{space.description}}</p>
                 <p>Price per night: £{{space.price_per_night}}.00</p>
