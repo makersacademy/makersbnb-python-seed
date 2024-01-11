@@ -29,7 +29,7 @@ def test_get_login(page, test_web_address):
 
 
 def test_get_add_spaces(page, test_web_address,db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
     
     # Then we fill out the field with the name attribute 'email'
@@ -48,13 +48,13 @@ def test_get_add_spaces(page, test_web_address,db_connection):
     expect(strong_tag).to_have_text("Create new listing")
 
 def test_list_spaces(page,test_web_address,db_connection):
-    db_connection.seed("seeds/SpacesTest.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/spaces")
     h3_tag = page.locator('h3')
     expect(h3_tag).to_have_count(5)
     
 def test_adding_a_space(page,test_web_address,db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
     # Then we fill out the field with the name attribute 'email'
     page.fill("input[name='email']", "test_user@mail.com")
@@ -74,7 +74,7 @@ def test_adding_a_space(page,test_web_address,db_connection):
     expect(h3_tag).to_have_count(6)
 
 def test_create_user(db_connection, page, test_web_address):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/index")
     
     # Then we fill out the field with the name attribute 'email'

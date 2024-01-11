@@ -6,7 +6,7 @@ Returns list of all users when all method is called.
 '''
 
 def test_all(db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     repository = UserRepository(db_connection)
     assert repository.all() == [
         User(1, 'user_1@mail.com', 'makersbnb2'),
@@ -21,7 +21,7 @@ And I can see it back in #all
 '''
 
 def test_create(db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     repository = UserRepository(db_connection)
     user = User(None, "new_user", "newpassword1234")
     repository.create(user)
@@ -33,7 +33,7 @@ def test_create(db_connection):
     ]
 
 def test_valid_signup(db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     repository = UserRepository(db_connection)
     result = repository.check_valid_signup('user_1@mail.com')
     assert result == False
@@ -41,7 +41,7 @@ def test_valid_signup(db_connection):
     assert result == True
 
 def test_valid_login(db_connection):
-    db_connection.seed("seeds/user_details.sql")
+    db_connection.seed("seeds/MasterTest.sql")
     repository = UserRepository(db_connection)
     result = repository.check_valid_login('user_1@mail.com','makersbnb2')
     assert result == True
