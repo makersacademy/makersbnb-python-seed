@@ -24,12 +24,11 @@ As a User
 So I can see my spaces and bookings
 I would like to be able to login and go to my profile page.
 ~~~~
-**Users should be able to create new spaces*
+**Users should be able to create new spaces**
 ~~~~
 As a User
 So I can display my spaces
 I would like to name, describe, price, add an address and a picture of a new space.
-~~~~
 ~~~~
 **Any signed-up user can request to book any space for one night.**
 ~~~~
@@ -37,7 +36,7 @@ As a User
 So I can stay somewhere for a day
 I would like to make a request to book a space for one night from the space page
 ~~~~
-~~~~
+
 
 ## Setup
 
@@ -75,7 +74,7 @@ I would like to make a request to book a space for one night from the space page
 ; pipenv run pytest 
 ```
 
-## Design/Planning
+## Planning
 | ![](static/images/plan-design.png)|
 
 

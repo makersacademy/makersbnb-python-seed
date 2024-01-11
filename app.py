@@ -43,14 +43,13 @@ def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     listings = repo.all()
-    
     page, per_page, offset= get_page_args()
     total = len(listings)
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
     paginated_products = listings[offset: offset + per_page]
     current_page = int(request.args.get('page', 1))
     
-    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page)
+    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page, user = current_user)
 
 
 
