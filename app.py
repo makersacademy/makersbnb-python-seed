@@ -81,8 +81,6 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         password_confirmation = request.form.get("password_confirmation")
-        print(password)
-        print(password_confirmation)
 
         if password != password_confirmation:
             return "Passwords do not match", 400
@@ -150,7 +148,7 @@ def get_login():
             response.set_cookie("token", token, httponly=True)
             return response
         else:
-            return render_template("/login.html", error="Invalid credentials")
+            return render_template("/login.html", error=f"Invalid credentials: {username, password}")
 
     return render_template("login.html")
 
@@ -169,7 +167,6 @@ def logout():
 @app.route("/spaces", methods=["GET"])
 @token_required
 def get_all_spaces(current_user):
-    print(current_user)
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.list_all_spaces()
