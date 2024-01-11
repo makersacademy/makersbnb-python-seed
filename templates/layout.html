@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css" >
+</head>
+<body>
+    <nav>
+        <div class="topnav">
+            <a href="/">MakersBnB</a>
+            <div class="topnav-right">
+                
+                <!-- this only displays if a user is logged in -->
+                {% if 'token' in request.cookies %}
+                <a href="/spaces">Spaces</a>
+                <a href="/requests">Requests</a>
+                <a href="/logout" >Logout</a>
+
+                <!-- this only displays if a user is logged out -->
+                {% else %}
+                <a href="/login" >Login</a>
+                {% endif %}
+
+                                
+            </div>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+
+
+
+</body>
+</html>

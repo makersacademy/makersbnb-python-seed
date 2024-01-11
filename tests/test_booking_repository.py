@@ -76,7 +76,6 @@ def test_booking_repo_find_by_space_id(db_connection):
     ]
     assert booking_repo.find_by_space_id(12) == []
 
-
 def test_booking_repo_create(db_connection):
     """
     Tests that a new booking is inserted into the database

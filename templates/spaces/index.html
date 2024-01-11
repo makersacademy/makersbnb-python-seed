@@ -1,17 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MakersBnB</title>
-    <link rel="stylesheet" href="/static/style.css" />
-  </head>
+{% extends "layout.html" %}
+
+{% block body %}
   <body>
     <h1>Book a Space</h1>
-
-    <p class="listSpace">
-      <a class="button" href="spaces/new">List a Space</a>
-    </p>
+    <h2 class="centeredText">Welcome {{current_user}}</h2>
+    <p class="listSpace"><a class="button" href="spaces/new">List a Space</a></p>
 
     <div class="spacesList">
       {% for space in spaces %}
@@ -48,9 +41,9 @@
         </a>
       </div>
       {% endfor %}
-      <center>
-        <a href="/logout">logout</a>
-      </center>
+
     </div>
-  </body>
-</html>
+    <br>
+</body>
+{% endblock %}
+

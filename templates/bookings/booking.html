@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakersBnB</title>
-</head>
+
+{% extends "layout.html" %}
+
+{% block body %}
+
 <body>
     <h1>{{space.name}}</h1>
     <h2>Listed by {{host_username}}</h2>
@@ -35,4 +33,5 @@
         {% endif %}
     {% endif %}
 </body>
-</html>
+
+{% endblock %}
