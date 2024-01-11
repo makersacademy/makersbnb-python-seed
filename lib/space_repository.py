@@ -29,7 +29,7 @@ class SpaceRepository():
                 for row in rows:
                     space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
                     spaces.append(space)
-                    return spaces
+                return spaces
             else:
                 return "Error fetching data"
         else:

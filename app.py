@@ -124,18 +124,7 @@ def user(section):
 #
 #   
 # 
-
-@app.route('/spaces', methods=['GET'])
-def shows_all_spaces():
-    return redirect('/')
-
-
-
-@app.route('/spaces/edit/')
-def spaces():
-    return redirect('/spaces/edit/0')
-
-@app.route('/spaces/edit/<id>', methods=['GET'])
+@app.route('/spaces/show/edit/<id>', methods=['GET'])
 def edit_spaces(id):
     if 'id' in session:
         if not(int(id) == 0):
@@ -190,24 +179,24 @@ def update_spaces():
     return redirect('/spaces/listings')
 
 
-#===? 
-#
-# @app.route('/add')
-# def get_add():
-#     if 'id' in session:
-#         return render_template("space_add.html")
-#     else:
-#         return "Not Authorized"
+@app.route('/spaces/show/add')
+def get_add():
+     if 'id' in session:
+         return render_template("space_add.html")
+     else:
+         return "Not Authorized"
 
 
 
-@app.route('/spaces/<id>', methods=['GET'])
+@app.route('/spaces/show/<id>', methods=['GET'])
 def get_space(id):
     # checks
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-    return render_template("space_view.html", space=space)
 
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availabilities = availability_repo.find(space.id)
+    return render_template("space_view.html", space=space, availabilities=availabilities)
 
 
 @app.route('/availability/add', methods=['POST'])
