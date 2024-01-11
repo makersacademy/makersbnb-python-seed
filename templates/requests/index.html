@@ -10,12 +10,30 @@
 
     <h2>Requests I've made</h2>
     {% for request in requests_made %}
-    <p>{{request.id}}</p>
+    <p>{{request.id}}</p><br>
+    <a href="/requests/{{ request.id }}">
+        {% if request.confirmed == True %}
+        <p>Approved</p>
+        {% elif request.confirmed == False %}
+        <p>Rejected</p>
+        {% else %}
+        <p>Awaiting Response</p>
+        {% endif %}
+    </a>
     {% endfor %}
 
     <h2>Requests I've recieved</h2>
     {% for request in requests_received %}
-    <p>{{request.id}}</p>
+    <p>{{request.id}}</p><br>
+        {% if request.confirmed == True %}
+        <p>You approved this.</p>
+        {% elif request.confirmed == False %}
+        <p>You rejected this.</p>
+        {% else %}
+        <a href="/requests/{{ request.id }}">
+            <p>Make a decision</p>
+        </a>
+        {% endif %}
     {% endfor %}
 </body>
 </html>

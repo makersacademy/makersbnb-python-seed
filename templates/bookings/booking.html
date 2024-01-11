@@ -6,17 +6,33 @@
     <title>MakersBnB</title>
 </head>
 <body>
-    <h1>{{space_name}}</h1>
+    <h1>{{space.name}}</h1>
     <h2>Listed by {{host_username}}</h2>
     <p>{{guest_username}} has made a booking request for {{booking.date}}.</p>
     <br />
-    <form method="post" action="/booking/confirm">
-        <input type="hidden" name="booking_id" value="{{booking.id}}">
-        <input type="submit" class="button" value="Confirm">
-    </form>
-    <form method="post" action="/booking/reject">
-        <input type="hidden" name="booking_id" value="{{booking.id}}">
-        <input type="submit" class="button" value="Reject">
-    </form>
+    {% if space.host_id == current_user_id %}
+        {% if booking.confirmed == True %}
+        <p>You have already confirmed this booking!</p>
+        {% elif booking.confirmed == False %}
+        <p>You have already rejected this booking!</p>
+        {% else %}
+        <form method="post" action="/bookings/confirm">
+            <input type="hidden" name="booking_id" value="{{booking.id}}">
+            <input type="submit" class="button" value="Confirm">
+        </form>
+        <form method="post" action="/bookings/reject">
+            <input type="hidden" name="booking_id" value="{{booking.id}}">
+            <input type="submit" class="button" value="Reject">
+        </form>
+        {% endif %}
+    {% else %}
+        {% if booking.confirmed == True %}
+        <p>This booking has been approved!</p>
+        {% elif booking.confirmed == False %}
+        <p>This booking has been rejected.</p>
+        {% else %}
+        <p>This booking is still awaiting a response.</p>
+        {% endif %}
+    {% endif %}
 </body>
 </html>
