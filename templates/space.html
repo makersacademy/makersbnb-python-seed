@@ -16,6 +16,15 @@
         <div class="price">
             <p>£{{ space.price }} per night</p>
             <form action="/space/{{space.id}}" method="post" >
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class="flash_space_page">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
                 <label for="datepicker"></label>
                 <input type="date" id="datepicker" name="date" min="2024-01-01" max="2024-12-31" />
                 <button type="submit">Book Now</button> 
