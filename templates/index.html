@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <title>MakersBnB</title>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>MakersBnB</title>
-      <meta name="description" content="">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!--
-          Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-          If you're wondering how the CSS file below is being loaded.
-      -->
-      <link rel="stylesheet" href="/static/css/style.css" >
-  </head>
-    <body>
-      <div id="wrapper">
-          <div id="nav">
-              <div id="logo"><img src="static/img/logo.png" /></div>
-              <div id="menu">
-                  <p>
-                  {% if session['email_address'] %}
 
-                      <a href="/index">Spaces</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/spaces/listings">My listings</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/requests">Requests</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/logout">Sign out</a></p>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
 
-                  {% else %}
-                      <a href="/about">About</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/login">Login</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="/account/register">Register</a></p>
-                  {% endif %}
-              </div>
-          </div>
-          <div id="main">
-            {% if session['email_address'] and data['spaces_list'] %}
-              <p>User: {{ session['fullname'] }}<br>
-              <a href="/add">List a Space</a></p>
 
-              <hr width="80%" />
-              <div id="list_of_spaces">
-                <div class="box">
-                {% for space in data['spaces_list'] %}
 
-                <a href="/spaces/{{space.id}}"><li>
-
-                  <div class="title">User: {{ space.user_id }}</div>
-                  <div class="space">Space: {{ space.name }}</div>
-                  <div class="descr">Descr: {{ space.desc }}</div><br>
-                  <div class="descr">cost per night: {{ space['price'] }}</div><br>
-                </a>
-                {% endfor %}
-                </div>
-              </div>
-            {% else %}
-              <p>Please log in first</p>
-            {% endif %}
-          </div>
+ <body class="bg-light">
+    <div class="row pt-2 pe-3">
+      <div class="col-12 fs-5 fw-bold text-end">
+        {% if session['id'] %}
+          <a class="link-underline link-underline-opacity-0 pe-4" href="/index">Spaces</a>
+          <a class="link-underline link-underline-opacity-0 pe-4" href="/spaces/listings">My Listings</a>
+          <a class="link-underline link-underline-opacity-0 pe-4" href="/requests">Requests</a>
+          <a class="link-underline link-underline-opacity-0" href="/account/logout">Sign Out</a>
+        {% else %}
+          <a class="link-underline link-underline-opacity-0 pe-4" href="/about">About</a>
+          <a class="link-underline link-underline-opacity-0 pe-4" href="/account/login">Login</a>
+          <a class="link-underline link-underline-opacity-0" href="/account/register">Register</a>
+        {% endif %}
       </div>
+    </div>
+    <div class="row pt-4 d-flex justify-content-center">
+      <div class="col-4 fs-1 fw-bold text-center">
+          MakersBNB
+      </div>
+    </div>
+    <div class="text-center row pt-4 d-flex justify-content-center">
+      {% if session['id'] and data['spaces_list'] %}
+      <p>User: {{ session['fullname'] }}
+        <a href="/spaces/edit/">List a Space</a></p>
+        <hr width="80%" />
+
+        {% for space in data['spaces_list'] %}
+          <a href="/spaces/{{space.id}}">
+          <div class="row col-10 mx-auto pt-4 d-flex justify-content-center">
+          <div class="col-4 rounded-3 shadow bg-white">
+          <h3 class="text-center">{{ space.name }}</h3>
+          <p class="text-center">{{ space.desc }}</p>
+          <p class="text-center">Cost p/n: £{{ space['price'] }}</p>
+          </div>
+        </div></a>
+        {% endfor %}
+        </div>
+        </div>
+      {% else %}
+        <p>Please log in first</p>
+      {% endif %}
+    </div>
+
   </body>
+
 </html>
+ 
