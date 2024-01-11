@@ -89,7 +89,7 @@ def get_single_space(id):
 @app.route('/book_space', methods=['POST'])
 def book_space():
     space_id = request.form['space_id']
-    user_id = request.form['user_id']
+    user_id = request.form['user_id'] # <-- session thing here OR in space_page.html
     date = request.form['date']
     price = request.form['price']
 
