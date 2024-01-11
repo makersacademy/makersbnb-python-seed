@@ -110,7 +110,6 @@ def test_create_space(db_connection, page, test_web_address):
     db_connection.seed('seeds/makers_bnb.sql')
     page.goto(f'http://{test_web_address}/spaces')
     page.click('text=Add New Space')
-    page.fill("input[name='userID']",'1')
     page.fill("input[name='name']",'house')
     page.get_by_label("description").fill("a house")
     page.fill("input[name='pricepernight']",'110')

@@ -177,6 +177,12 @@ def bookaspace(id):
     space = repo_space.find(id)    
     return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
 
+@app.route('/my-listings', methods = ['GET'])
+def get_my_listings():
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    spaces = repo.find_by_user(int(session.get('user_id')))
+    return render_template('my_listings.html', spaces = spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
