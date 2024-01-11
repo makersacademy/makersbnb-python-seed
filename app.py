@@ -12,6 +12,7 @@ from datetime import date, timedelta, datetime
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = '1'
+users = []
 # == Your Routes Here ==
 
 # GET /index
@@ -85,10 +86,6 @@ def signup():
         'password': password,
     }
     users.append(user)
-    print(f"User '{email}' signed up with user_id {user_id}.")
-    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
-
-    # Continue with user registration if the email is unique
     new_user = User(
         id=None,
         first_name=first_name,
@@ -98,7 +95,8 @@ def signup():
         password=password
     )
     repository.create(new_user)
-    return render_template('signup.html', success_message="Sign-up successful!")
+    print(f"User '{email}' signed up with user_id {user_id}.")
+    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
 
 @app.route('/signup')
 def show_signup():
