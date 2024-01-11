@@ -36,6 +36,7 @@ def get_template():
 def get_login():
     return render_template('login.html')
 
+#
 @app.route('/login', methods=['POST'])
 def post_login():
     connection = get_flask_database_connection(app)
