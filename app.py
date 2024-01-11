@@ -42,8 +42,7 @@ def load_user(user_id):
 def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
-    listings = repo.all()
-    
+    listings = repo.all()    
     page, per_page, offset= get_page_args()
     total = len(listings)
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
@@ -51,7 +50,6 @@ def get_index():
     current_page = int(request.args.get('page', 1))
     
     return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page)
-
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
