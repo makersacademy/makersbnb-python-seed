@@ -60,7 +60,7 @@
 
     <div class="container mt-5">
         <h3>My Bookings</h3>
-        <div class="bookings-profile-div">
+        <div class="listings-profile-div">
             <ul>
                 {% for booking in bookings %}
                 {% for listing in listing %}
@@ -68,7 +68,7 @@
                 <li>
                     <article>
                         <h5>
-                            <a href="/spaces/{{ booking.space_id }}" style="color:#27374D;">
+                            <a href="/space/{{ booking.space_id }}" style="color:#27374D; text-decoration: none;">
                                 Booking Date: {{ booking.date_booked }} -  Space Name {{booking.space_name}} {{ booking.space_id }}  <img src="{{ url_for('static', filename=listing.image_path) }}" alt="Space Image">     
                             </a>
                         </h5>
