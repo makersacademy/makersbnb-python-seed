@@ -9,7 +9,7 @@ from flask_login import login_user, LoginManager, login_required, logout_user, c
 from lib.user import User
 from flask_bcrypt import Bcrypt
 from lib.booking_repository import BookingRepository
-from datetime import datetime
+from datetime import datetime, date
 from lib.booking import Booking
 import hashlib
 
