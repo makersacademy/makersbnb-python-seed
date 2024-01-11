@@ -20,9 +20,14 @@
         </div>
         <h1></h1>
         <h2></h2>
-        <h3>Request for ...</h3>
-        <h4>Lots of writing that means nothing</h4>
-
-
+        <h3>Request for: {{ space.space_name }}</h3>
+        <h4>For the date of: {{ booking.date }}</h4>
+        <h4>Request made by: {{ user.username }}</h4>
+        <form action="/approve/{{ booking.id }}" method="POST" name="approve" id="approve">
+        <button type="" name="approve">Approve</button>
+        </form>
+        <form action="/reject_request/{{ booking.id }}" method="POST" name="reject_request" id="reject_request">
+        <button type="" name="reject_request">Reject Request</button>
+        </form>
     </body>
 </html>

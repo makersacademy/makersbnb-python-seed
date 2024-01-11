@@ -2,3 +2,6 @@ __pycache__
 .vscode
 .pytest_cache
 screenshot.png
+.coverage
+Pipfile
+Pipfile.lock
