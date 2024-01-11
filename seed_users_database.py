@@ -7,5 +7,5 @@ def seed_database(sql_file):
         db_connection.seed(sql_file)
 
 if __name__ == "__main__":
-    sql_files = ["./seeds/spaces.sql", "./seeds/users.sql"] 
+    sql_files = ["./seeds/spaces.sql", "./seeds/users.sql", "./seeds/bookings.sql"] 
     seed_database(sql_files)
