@@ -3,7 +3,7 @@ from lib.Space import Space
 
 
 def test_list_all_returns_object_list(db_connection):
-    db_connection.seed('seeds/SpacesTest.sql')
+    db_connection.seed('seeds/MasterTest.sql')
     repository = SpacesRepository(db_connection)
     result =repository.list_all()
     
@@ -16,7 +16,7 @@ def test_list_all_returns_object_list(db_connection):
     ]
 
 def test_user_can_add_a_listing(db_connection):
-    db_connection.seed('seeds/SpacesTest.sql')
+    db_connection.seed('seeds/MasterTest.sql')
     repository = SpacesRepository(db_connection)
     repository.add('Test Title6','This is some test description',45.75,'2024-01-23-2024-02-05',3)
     result = repository.list_all()
@@ -31,14 +31,14 @@ def test_user_can_add_a_listing(db_connection):
 
     
 def test_find_space_by_id(db_connection):
-   db_connection.seed('seeds/SpacesTest.sql')
+   db_connection.seed('seeds/MasterTest.sql')
    repository = SpacesRepository(db_connection)
    result = repository.find(1)
    assert result == Space(1, 'Test Title','This is some test description',65.75,'2024-01-12-2024-01-31',1)
 
 
 def test_get_by_user_returns_spaces(db_connection):
-    db_connection.seed('seeds/SpacesTest.sql')
+    db_connection.seed('seeds/MasterTest.sql')
     repository = SpacesRepository(db_connection)
     result = repository.get_by_user(2)
     assert result == [
