@@ -106,7 +106,11 @@ def user(section):
 def edit_spaces(id):
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-    return render_template("space_edit.html", space=space)
+
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availabilities = availability_repo.find(space.id)
+
+    return render_template("space_edit.html", space=space, availabilities=availabilities)
 
 @app.route('/spaces', methods=['GET'])
 def shows_all_spaces():
@@ -146,6 +150,20 @@ def add_spaces():
     availability_repo.add(availability)
 
     return redirect('/')
+
+@app.route('/availability/add', methods=['POST'])
+def add_availability():
+    space_id = request.form['id']
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+
+    availability = Availability(date_from, date_to, space_id)
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availability_repo.add(availability)
+    
+    url = '/spaces/edit/' + space_id
+
+    return redirect(url)
 
 @app.route('/add')
 def get_add():
