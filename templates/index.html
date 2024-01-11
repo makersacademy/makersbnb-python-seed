@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
     <head>
-        <title>MakersBnB</title>
-
+        <title>SpaceBnB</title>
+        <meta charset="utf-8">
         <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
@@ -10,6 +10,30 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <div class="links" >
+            <a href="/login">Login</a>
+
+            <a href="">About</a>
+        </div>
+
+        <h1>Space BnB</h1>
+        <h2>Feel at home, anywhere</h2>
+        <h3>Sign up to SpaceBnB</h3>
+
+        <form  action="/" method="post">
+            <fieldset>
+            {% if errors %}
+            {% for error in errors %}
+            <div class="error">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+            <label for="username">User Name: <input type="text" name="username" id="username"></label>
+            <label for="email">Email Address: <input type="text" name="email" id="email"></label>
+            <label for="password">Password: <input type="password" name="password" id="password"><label>
+            <label for="password-confirmation">Password Confirmation: <input type="password" name="password-confirmation" id="password-confirmation"></label>
+            <input type="submit" value="Sign Up">
+            </fieldset>
+        </form>
+
     </body>
 </html>
