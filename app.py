@@ -42,7 +42,7 @@ def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     listings = repo.all()
-    return render_template('index.html', listings = listings)
+    return render_template('index.html', listings = listings, user=current_user)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
@@ -120,7 +120,6 @@ def create_space():
 
 
 @app.route('/space/<int:id>', methods=['GET', 'POST'])
-@login_required
 def get_space_done(id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
