@@ -10,13 +10,17 @@ def test_booking_repository_all(db_connection):
                     Booking(2, '2024-01-02', False, 1, 2),
                     Booking(3, '2024-01-03', False, 2, 2)]
 
+    assert result == [
+        Booking(1, '2024-01-01', False, 1, 1),
+        Booking(2, '2024-01-02', False, 1, 2),
+        Booking(3, '2024-01-03', False, 2, 2),
+        ]
 
 def test_create_booking(db_connection):
     db_connection.seed('seeds/bnb.sql')
     repository = BookingRepository(db_connection)
     new_booking = Booking(4, '2024-02-02', False, 1, 1)
     repository.create(new_booking)
-    
     result = repository.all()
 
     assert result == [Booking(1, '2024-01-01', False, 1, 1),

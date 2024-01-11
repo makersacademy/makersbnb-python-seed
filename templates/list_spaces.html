@@ -7,7 +7,7 @@
 </head>
     <body>
         <div class="links" >
-            <a href="/spaces">Spaces</a>
+            <a href="/list_spaces">Spaces</a>
             <a href="/requests">Requests</a>
             <a href="">Sign out</a>
         </div>
@@ -16,7 +16,7 @@
         <h3>Book a Space</h3>
         <h4>Lots of writing that means nothing</h4>
         <div class="list-space-button">
-        <a href="">List a space</a>
+        <a href="/new_space">List a space</a>
         </div>
 
         <div>
@@ -52,7 +52,7 @@
                     <td>£{{ space.price }}</td>
                     <!-- <td><input type="Spacetable" value="Request" href="/request/{{ space.space_id }}"></td> -->
                     <!-- <td><a href="/request/{{ space.id }}">Request</a></td> -->
-                    <td><a href="{{ url_for('get_viewspace', space_id=space.id) }}">View Space</a></td>
+                    <td><a href="{{ url_for('get_space', space_id=space.id) }}">View Space</a></td>
                     
                     
                         <!-- Assuming space_id is a unique identifier for each space -->
