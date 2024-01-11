@@ -11,7 +11,7 @@
     </head>
     <body>
         <div class="links" >
-            <a href="/spaces">Spaces</a>
+            <a href="/list_spaces">Spaces</a>
             <a href="/requests">Requests</a>
             <a href="/logout">Sign out</a>
         </div>
@@ -20,15 +20,27 @@
         <h3>My requests</h3>
         <h4>Lots of writing that means nothing</h4>
         <h5>Requests I've made</h5>
+
         {% for booking, space in spaces_and_bookings %}
-        <p>{{ space.space_name }}</p>
-        <p>{{ booking.date }}</p>
+            <p>{{ space.space_name }}</p>
+            <p>{{ booking.date }}</p>
+            {% if booking.confirmed %}
+                <p>Confirmed</p>
+            {% else %}
+                <p>Pending...</p>
+            {% endif %}
         {% endfor %}
+
         <h5>Requests I've received</h5>
+
         {% for space, booking, user in space_bookings_users_rec %}
-        <p>{{ space.space_name }}</p>
-        <p>{{ booking.date }}</p>
-        <p>Request by {{ user.username }}</p>
+            {% if booking.confirmed %}
+                <p>{{ space.space_name }} - Confirmed</p>
+            {% else %}
+                <a href="/request/{{ booking.id }}">{{ space.space_name }}</a></p>
+            {% endif %}
+            <p>{{ booking.date }}</p>
+            <p>Request by {{ user.username }}</p>
         {% endfor %}
 
     </body>

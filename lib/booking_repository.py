@@ -45,5 +45,5 @@ class BookingRepository():
         return None
     
     def confirm(self, id):
-        self._connection.execute('UPDATE bookings SET confirmed=TRUE')
+        self._connection.execute('UPDATE bookings SET confirmed=TRUE WHERE id = %s', [id])
         return None

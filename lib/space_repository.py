@@ -27,9 +27,8 @@ class SpaceRepository:
     
     def create(self, space):
         self._connection.execute(
-            "INSERT INTO spaces (id, space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s,%s, %s)",
+            "INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES (%s, %s, %s, %s, %s,%s, %s)",
             [   
-                space.id,
                 space.space_name,
                 space.location,
                 space.description,
@@ -137,6 +136,7 @@ class SpaceRepository:
             Space(
                 row["id"],
                 row["space_name"],
+                row["location"],
                 row["description"],
                 row["price"],
                 row["user_id"],
@@ -145,7 +145,6 @@ class SpaceRepository:
             )
             for row in rows
         ]
-        if len(result) == 0:
-            result = "No results found"
+
         return result
     
