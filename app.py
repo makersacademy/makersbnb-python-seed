@@ -60,6 +60,7 @@ app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
 app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+
 #send email function 
 def send_email(subject, recipients, body):
     email_success = False
@@ -245,11 +246,6 @@ def create_booking(current_user):
 def get_bookings_success(current_user):
     return render_template("bookings/success.html")
 
-
-@app.route("/send_mail")
-def email_test():
-    send_email('test subject', ['louisdench12@gmail.com'], "test\nhello")
-    return "email sent"
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
