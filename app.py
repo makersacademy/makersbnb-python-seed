@@ -116,16 +116,16 @@ def get_login():
     if token:
         try:
             jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-            # User already logged in, redirecting to home page
+            # User already logged in, redirecting to spaces page
             return redirect("/spaces")
         except jwt.ExpiredSignatureError:
             # Token is expired - user needs to log in again
             # not 'required' but catches any unforeseen errors
             flash("Your session has expired. Please log in again.", "warning")
-            return redirect("login")
+            return redirect("/login")
         except:
             # Invalid token - continue with normal login
-            return redirect("login")
+            return redirect("/login")
 
     if request.method == "POST":
         username = request.form.get("username")
