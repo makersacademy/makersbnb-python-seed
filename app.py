@@ -16,6 +16,7 @@ from lib.spaces import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 
+from flask_mail import Mail, Message
 
 # Auth token generation
 def token_required(f):
@@ -50,6 +51,28 @@ app = Flask(__name__)
 # Need work? ### NOT SECURE ###
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
+
+#email config
+app.config['MAIL_SERVER']="smtp.gmail.com"
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
+app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+#email function
+def send_email(subject, recipients, body):
+    email_success = False
+    msg = Message(subject)
+    msg.sender ='MakersBnbJan2024@gmail.com'
+    msg.sender=('MakersBnB', 'MakersBnbJan2024@gmail.com')
+    msg.recipients= recipients
+    msg.body = body
+    try:
+        mail.send(msg)
+    except Exception as e:
+            print(str(e))
 
 # == Your Routes Here ==
 
@@ -307,4 +330,4 @@ def post_reject_booking(current_user):
     return redirect(f"/requests/{booking_id}")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
+    app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
