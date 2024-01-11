@@ -39,7 +39,9 @@ def token_required(f):
 
         try:
             # Decode the token to get user data
-            data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            data = jwt.decode(
+                token, app.config["SECRET_KEY"], algorithms=["HS256"]
+            )
             current_user = data["user"]
         except:
             # If token is invalid, return an error message with 403 Forbidden status
@@ -100,7 +102,9 @@ def register():
         connection = get_flask_database_connection(app)
         user_repo = UserRepository(connection)
 
-        if user_repo.create_user(username, email, password):  # pass the plain password
+        if user_repo.create_user(
+            username, email, password
+        ):  # pass the plain password
             return render_template("success.html")
         else:
             return render_template("userexists.html")
@@ -147,7 +151,8 @@ def get_login():
             token = jwt.encode(
                 {
                     "user": username,
-                    "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24),
+                    "exp": datetime.datetime.utcnow()
+                    + datetime.timedelta(hours=24),
                 },
                 app.config["SECRET_KEY"],
             )
@@ -206,7 +211,9 @@ def create_space(current_user):
     )
     repository.add_space(new_space)
     repository.add_date(
-        request.form["availableFrom"], request.form["availableTo"], new_space.id
+        request.form["availableFrom"],
+        request.form["availableTo"],
+        new_space.id,
     )
     return redirect("/spaces")
 
