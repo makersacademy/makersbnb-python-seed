@@ -53,6 +53,7 @@ def get_index():
     return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page)
 
 
+
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
 @app.route('/login', methods=['GET', 'POST'])
 def get_login_details():
@@ -128,7 +129,6 @@ def create_space():
 
 
 @app.route('/space/<int:id>', methods=['GET', 'POST'])
-@login_required
 def get_space_done(id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
