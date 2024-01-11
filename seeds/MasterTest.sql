@@ -22,7 +22,7 @@ CREATE TABLE Spaces(
 CREATE TABLE requests(
     req_id int,
     space_id int,
-    date_req text,
+    date_req date,
     stat text,
     constraint fk_spaces foreign key(space_id)
     references spaces(id)
