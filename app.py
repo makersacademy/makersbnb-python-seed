@@ -188,6 +188,13 @@ def get_my_listings():
     spaces = repo.find_by_user(int(session.get('user_id')))
     return render_template('my_listings.html', spaces = spaces)
 
+@app.route('/my-profile', methods = ['GET'])
+def get_myprofile():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    user = repo.find_user(int(session.get('user_id')))
+    return render_template('my_profile.html', user = user)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
