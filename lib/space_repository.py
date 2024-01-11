@@ -12,13 +12,28 @@ class SpaceRepository():
             list_to_return.append(space)
         if len(list_to_return):
             return list_to_return
-        
+
     def find(self, id):
+        #if not(id == 0) and not(id == None):
         rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
         if rows:
             row = rows[0]
-        space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+            space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
         return space
+        
+    def filter(self, user_id):
+        rows = self._connection.execute(
+            'SELECT * from spaces WHERE user_id = %s', [user_id]
+            )
+        # TODOs: Implement error checks insted of IF
+        if rows:
+            space_list = []
+            for row in rows:
+                space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+                space_list.append(space)
+            if len(space_list):
+                return space_list
+        return "Error fetching data"
     
     def add(self, space:Space):
         self._connection.execute("INSERT INTO spaces (name, descr, price, user_id) VALUES (%s, %s, %s, %s)", [space.name, space.desc, space.price, space.user_id])

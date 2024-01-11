@@ -34,7 +34,11 @@ def index_subsection(home_page_section):
     _connection = get_flask_database_connection(app)
     space_repository = SpaceRepository(_connection)
     if 'id' in session:
-        rows = space_repository.all()
+        if home_page_section == 'index':
+            rows = space_repository.all()
+        elif home_page_section == 'user':    
+            space_repo = SpaceRepository(get_flask_database_connection(app))
+            rows = space_repo.filter(session['id'])        
     else:
         rows = []
     data = {
@@ -100,19 +104,28 @@ def user(section):
 #
 #   
 # 
-@app.route('/spaces/edit/<id>')
+@app.route('/spaces/edit/')
+def spaces():
+    return redirect('/spaces/edit/0')
+
+@app.route('/spaces/edit/<id>', methods=['GET'])
 def edit_spaces(id):
-    if id:
-        space_repo = SpaceRepository(get_flask_database_connection(app))
-        space = space_repo.find(id)
+    if 'id' in session:
+        if not(int(id) == 0):
+            # this will populate the form for us
+            space_repo = SpaceRepository(get_flask_database_connection(app))
+            space = space_repo.find(id)
+        else:
+            #  this will not pupulate the form
+            space = ""
+        return render_template("space_edit.html", space=space)
     else:
-        space = ""
-    return render_template("space_edit.html", space=space)
+        return "Not Authorized"
 
 @app.route('/spaces', methods=['GET'])
 def shows_user_spaces():
-        space_repo = SpaceRepository(get_flask_database_connection(app))
-        space = space_repo.filter(user_id)
+        # space_repo = SpaceRepository(get_flask_database_connection(app))
+        # space = space_repo.filter(user_id)
     return redirect('/')
 
 
@@ -144,26 +157,19 @@ def add_spaces():
 
     return redirect('/')
 
-@app.route('/add')
-def get_add():
-    if 'id' in session:
-        return render_template("space_add.html")
-    else:
-        return "Not Authorized"
+
 
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
+    # checks
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
+    return render_template("space_view.html", space=space)
 
-    return render_template("single_space.html", space=space)
 
 @app.route('/mylisting', methods=['GET'])
-def user_listings(id):
-    space_repo = SpaceRepository(get_flask_database_connection(app))
-    space = space_repo.find(id)
-
-    return render_template("my_listings.html", space=space)
+def user_listings():
+    return redirect('/user')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
