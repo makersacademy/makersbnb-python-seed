@@ -47,3 +47,10 @@ class BookingRepository():
     def confirm(self, id):
         self._connection.execute('UPDATE bookings SET confirmed=TRUE WHERE id = %s', [id])
         return None
+    
+    def already_booked(self, booking):
+        bookings = self.find_all_by_space(booking.space_id)
+        for item in bookings:
+            if item.date == booking.date and item.confirmed:
+                return True
+        return False

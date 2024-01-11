@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>SpaceBnB</title>
+        <meta charset="utf-8">
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <div class="links" >
+            <a href="/login">Login</a>
+
+            <a href="">About</a>
+        </div>
+
+        <h1>Space BnB</h1>
+        <h2>{{ error }}</h2>
+        <h3><a href="/space/{{ id }}">Return to space</a></h3>
+
+    </body>
+</html>
