@@ -6,22 +6,36 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     </head>
     <body>
-        <header>
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/index.html" style="color: #DDE6ED;">
+                <img src="/static/images/logo.jpeg" width="45" height="50" alt="logo-img">
+                MakersBnB
+            </a>
             {% if current_user.is_authenticated %}
-                <h1>MakersBnB</h1>  
-                <a class="nav-link" href="{{ url_for('profile_page') }}">Hi, {{ user.user_name }}</a>
-                <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('profile_page') }}">Hi, {{ user.user_name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
+                    </li>
             {% else %}
-                <h1>MakersBnB</h1>
-                <a class="nav-link" href="{{ url_for('get_login_details') }}">Sign In</a>
-                <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_login_details') }}">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_create_account') }}">Create Account</a>
+                    </li>
+                </ul>
+            </div>
             {% endif %}
-        </header>
+        </nav>
         <div class ="description-container">
                 <div><h1>Welcome to MakersBnB</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl urna, venenatis id  pharetra, Curabitur velit dolor, aliquet et ipsum et, euismod gravida elit. Pellentesque posuere varius dignissim. Donec in orci ac metus euismod efficitur sed at arcu. Suspendisse vestibulum ut arcu at vehicula. Aenean in tincidunt purus. Mauris ultrices augue id purus vehicula, eu elementum enim blandit. Maecenas sagittis vulputate nulla, nec molestie risus egestas nec. Donec elementum eu massa quis aliquet. Donec pharetra sed erat vitae fringilla.</p></div>
                 <div><img src="static/images/200.jpeg" height="250ox" width="300px"></a></div>
-             
+            
         </div>
         <div class="image-container">
             {% for listing in listings %}

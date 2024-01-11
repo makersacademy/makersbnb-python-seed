@@ -149,7 +149,7 @@ def get_space_done(id):
         else:
             flash("Please log in to make a booking")
 
-    return render_template("space.html", space=space)
+    return render_template("space.html", space=space, user=current_user)
 
 
 
