@@ -52,6 +52,7 @@ def get_index():
     return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page, user=current_user)
 
 
+
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
 @app.route('/login', methods=['GET', 'POST'])
 def get_login_details():
