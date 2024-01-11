@@ -60,6 +60,7 @@ app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
 app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+#send email function 
 def send_email(subject, recipients, body):
     email_success = False
     msg = Message(subject)
