@@ -1,4 +1,4 @@
-from lib.user_repository import UserRepository, hash_pass, is_valid
+from lib.user_repository import UserRepository, is_valid
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 import os
@@ -7,7 +7,7 @@ from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
 from functools import wraps
-from flask import request, jsonify, make_response, session
+from flask import request, jsonify, make_response, session, flash
 from itertools import zip_longest
 
 from lib.user_repository import UserRepository
@@ -16,6 +16,7 @@ from lib.spaces import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 
+from flask_mail import Mail, Message
 
 # Auth token generation
 def token_required(f):
@@ -50,6 +51,28 @@ app = Flask(__name__)
 # Need work? ### NOT SECURE ###
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
+
+#email config
+app.config['MAIL_SERVER']="smtp.gmail.com"
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
+app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+#email function
+def send_email(subject, recipients, body):
+    email_success = False
+    msg = Message(subject)
+    msg.sender ='MakersBnbJan2024@gmail.com'
+    msg.sender=('MakersBnB', 'MakersBnbJan2024@gmail.com')
+    msg.recipients= recipients
+    msg.body = body
+    try:
+        mail.send(msg)
+    except Exception as e:
+            print(str(e))
 
 # == Your Routes Here ==
 
@@ -111,6 +134,22 @@ def success(current_user):
 # login page
 @app.route("/login", methods=["GET", "POST"])
 def get_login():
+    # Check if user is already logged in
+    token = request.cookies.get("token")
+    if token:
+        try:
+            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            # User already logged in, redirecting to spaces page
+            return redirect("/spaces")
+        except jwt.ExpiredSignatureError:
+            # Token is expired - user needs to log in again
+            # not 'required' but catches any unforeseen errors
+            flash("Your session has expired. Please log in again.", "warning")
+            return redirect("/login")
+        except:
+            # Invalid token - continue with normal login
+            return redirect("/login")
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -133,7 +172,6 @@ def get_login():
             response = make_response(redirect("/spaces"))
             response.set_cookie("token", token, httponly=True)
             return response
-
         else:
             return render_template("/login.html", error="Invalid credentials")
 
@@ -327,4 +365,4 @@ def view_user_spaces(current_user):
     return render_template('/listspace.html', host_spaces=host_spaces)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=int(os.environ.get("PORT", 3000)))
+    app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
