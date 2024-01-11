@@ -11,6 +11,7 @@
             <input type="radio" id={{date.isoformat()}} name="date_option" value="{{date.isoformat()}}">
             <label for={{date.isoformat()}}>{{date.isoformat()}}</label><br>
             {% endfor %}
+            <br>
             <input type="hidden" name="space_id" value="{{space.id}}">
             <input class="button" type="submit" value="Request to Book">
         </form>
