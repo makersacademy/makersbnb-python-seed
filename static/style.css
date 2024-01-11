@@ -366,6 +366,10 @@ fieldset{
     width: 100%;
   }
 
+.btn.btn-primary {
+    margin-top: 100px;
+}
+
   /* Pagination */
 .pagination {
     display: flex;

@@ -88,7 +88,7 @@ def profile_page():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('get_login_details'))
+    return redirect(url_for('get_index'))
 
 
 @app.route('/create_account', methods=['GET', 'POST'])
@@ -148,7 +148,7 @@ def get_space_done(id):
         flash("Please log in to make a booking")
 
 
-    return render_template("space.html", space=space, form=form)
+    return render_template("space.html", space=space, form=form, user=current_user)
 
 
 
