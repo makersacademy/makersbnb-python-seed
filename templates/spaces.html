@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <br>You are logged in as test@test.com</br>
+        <b>You are logged in as {{ session['email'] }}</b>
         <h1>Stay at any of these spaces.</h1>
 
         {% for space in spaces %}

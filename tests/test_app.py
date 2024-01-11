@@ -43,12 +43,8 @@ def test_user_name_displays_on_page(page, test_web_address):
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name='email']", "test@test.com")
     page.fill("input[name='password']", "password1")
-    # page.click("text='Login'")
-    page.click("button:has-text('Login')")
+    page.click('input[type="submit"][value="Login"]') #Zak, I've fixed this
+    
+    b_tag = page.locator("b")
 
-    h1_tag = page.locator("h1")
-
-    expect(h1_tag).to_have_text("Stay at any of these spaces.")
-    # bold_tag = page.locator("br")
-
-    # expect(bold_tag).to_have_text("You are logged in as test@test.com")
+    expect(b_tag).to_have_text("You are logged in as test@test.com")

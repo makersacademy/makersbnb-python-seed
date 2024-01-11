@@ -37,7 +37,7 @@ def login_page():
 def user_login():
     # connection = get_flask_database_connection(app)
     # repository = UserRepository(connection)
-    # session['email'] = request.form['email']
+    session['email'] = request.form['email']
     return redirect("/spaces")
 
 # @app.route('/dashboard', methods=['GET', 'POST'])
