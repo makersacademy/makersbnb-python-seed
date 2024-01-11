@@ -5,26 +5,37 @@
     {% block header %} {{ super() }} {% endblock %}
 
     {%block content%}
-    <h1>Sign Up</h1>
+    <div><center>
+    <label class="title">Sign Up</label>
     <form method="POST" action="/signup">
-        <label for="first_name">First Name:</label>
-        <input type="text" name="first_name" required><br>
-    
-        <label for="last_name">Last Name:</label>
-        <input type="text" name="last_name" required><br>
-    
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
-    
-        <label for="telephone_number">Phone Number:</label>
-        <input type="text" name="telephone_number" required><br>
-    
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-    
-        <input type="submit" value="Sign Up">
+        <p class='form_heading'>
+        <label for="first_name" class="headers">First Name:</label><br>
+        <input type="text" name="first_name" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="last_name" class="headers">Last Name:</label><br>
+        <input type="text" name="last_name" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="email" class="headers">Email:</label><br>
+        <input type="email" name="email" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="telephone_number" class="headers">Phone Number:</label><br>
+        <input type="text" name="telephone_number" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="password" class="headers">Password:</label><br>
+        <input type="password" name="password" class="form_input" required>
+        </p>
+
+        <input type="submit" value="Sign Up" class="button">
     </form>
-</head>
+</center></div>
 <body>
     
     {% if error_message %}
