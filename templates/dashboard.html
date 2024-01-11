@@ -84,20 +84,21 @@
                 Status: {{approval.stat}}
             </p>
         </div>    
-    <form method="post" action="/dashboard">
-    <input hidden="True" type="text" name="space_id" value='{{approval.space_id}}'>
-    <input hidden="True" type="text" name="req_id" value={{approval.req_id}}>
-    <input hidden="True" type="text" name="date_req" text={{approval.date_req}}>
+        <form method="post" action="/dashboard">
 
-    <button type="submit" id="accept">Accept</button>
-    <button type="submit" id="decline">Decline</button>
-    </form>
+        <input hidden="True" type="text" id="space_id" name="space_id" value='{{approval.space_id}}'>
+        <input hidden="True" type="text" id="req_id" name="req_id" value={{approval.req_id}}>
+        <input hidden="True" type="text" id="date_req" name="date_req" value={{approval.date_req}}>
+
+        <button type="submit" name="approve_or_decline" value="approve">Accept</button>
+        <button type="submit" name="approve_or_decline" value="decline">Decline</button>
+        </form>
         
         <p><br><br></p>
 
         {% else %}
             <div id="textContainer">
-                <h2>No Requests Available</h2>
+                <h2>No Approvals Available</h2>
             </div>
         {% endfor %}</div>
             
