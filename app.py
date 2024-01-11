@@ -108,9 +108,9 @@ def get_requests():
     return render_template('requests.html', spaces_and_bookings=spaces_and_bookings, space_bookings_users_rec=space_bookings_users_rec)
 
   
-@app.route("/request", methods=["GET"])
-def get_request():
-    return render_template("request.html")
+# @app.route("/request", methods=["GET"])
+# def get_request():
+#     return render_template("request.html")
 
 
 @app.route("/logout", methods=["GET"])
