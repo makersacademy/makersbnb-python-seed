@@ -21,6 +21,22 @@ app.secret_key = b"_5#2LF34nxec]"
 ########################            
 
 
+# STRUCTURE
+# ==========
+# home page menu: about  | login  |  register
+# standard menu: spaces | my listings | requests | signout
+# HOME ROUTES:
+# / GET
+#       /<home_page_section>  GET        shows all listings or user listings, nav menu: standard
+# ACCOUNT ROUTES:
+# /account/<section>  GET    shows login or logout, nav menu: shows only cancel
+# /user/<section>  POST     submit form
+# SPACES ROUTES:
+# /spaces/edit/<id>   GET       allow to list a new space or edit an existing space,  na menu: show only cancel
+#       /spaces/add POST        add 1 space (no html) --> /
+#       /spaces/update POST        update 1 space (no html) --> /
+#
+
 # ==== Home Page - routes
 #
 #   active_user: None or user_instance
@@ -106,6 +122,13 @@ def user(section):
 #
 #   
 # 
+
+@app.route('/spaces', methods=['GET'])
+def shows_all_spaces():
+    return redirect('/')
+
+
+
 @app.route('/spaces/edit/')
 def spaces():
     return redirect('/spaces/edit/0')
@@ -120,34 +143,12 @@ def edit_spaces(id):
         else:
             #  this will not pupulate the form
             space = ""
-    
-    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
-    availabilities = availability_repo.find(space.id)
-
-    return render_template("space_edit.html", space=space, availabilities=availabilities)
+        availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+        availabilities = availability_repo.find(space.id)
+        return render_template("space_edit.html", space=space, availabilities=availabilities)
     else:
         return "Not Authorized"
 
-@app.route('/spaces', methods=['GET'])
-def shows_user_spaces():
-        # space_repo = SpaceRepository(get_flask_database_connection(app))
-        # space = space_repo.filter(user_id)
-    return redirect('/')
-
-
-
-@app.route('/spaces/update', methods=['POST'])
-def update_spaces():
-    id = request.form['id']
-    name = request.form['name']
-    desc = request.form['desc']
-    price = request.form['price']
-
-    space = Space(id, name, desc, price)
-    space_repo = SpaceRepository(get_flask_database_connection(app))
-    space_repo.update(space)
-
-    return redirect('/spaces/listings')
 
 @app.route('/spaces/add', methods=['POST'])
 def add_spaces():
@@ -171,27 +172,76 @@ def add_spaces():
 
     return redirect('/')
 
-@app.route('/add')
-def get_add():
-    if 'id' in session:
-        return render_template("space_add.html")
-    else:
-        return "Not Authorized"
 
-@app.route('/spaces/<id>', methods=['GET'])
-def get_space(id):
-    # checks
+@app.route('/spaces/update', methods=['POST'])
+def update_spaces():
+    id = request.form['id']
+    name = request.form['name']
+    desc = request.form['desc']
+    price = request.form['price']
+
+    space = Space(id, name, desc, price)
     space_repo = SpaceRepository(get_flask_database_connection(app))
-    space = space_repo.find(id)
-    return render_template("space_view.html", space=space)
+    space_repo.update(space)
+
+    return redirect('/spaces/listings')
 
 
-@app.route('/mylisting', methods=['GET'])
-def user_listings(id):
+#===? 
+#
+# @app.route('/add')
+# def get_add():
+#     if 'id' in session:
+#         return render_template("space_add.html")
+#     else:
+#         return "Not Authorized"
+
+
+
+# @app.route('/spaces/<id>', methods=['GET'])
+# def get_space(id):
+#     # checks
+#     space_repo = SpaceRepository(get_flask_database_connection(app))
+#     space = space_repo.find(id)
+#     return render_template("space_view.html", space=space)
+
+
+
+@app.route('/availability/add', methods=['POST'])
+def add_availability():
+    space_id = request.form['id']
+    date_from = request.form['date_from']
+    date_to = request.form['date_to']
+
+    availability = Availability(date_from, date_to, space_id)
+    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+    availability_repo.add(availability)
+    
+    url = '/spaces/edit/' + space_id
+
+    return redirect(url)
+
+
+
+
+# @app.route('/mylisting', methods=['GET'])
+# def user_listings(id):
+#     space_repo = SpaceRepository(get_flask_database_connection(app))
+#     space = space_repo.find(id)
+
+#     return render_template("my_listings.html", space=space)
+
+@app.route('/spaces/listings')
+def spaces_listings():
+    user_id = session['id']
     space_repo = SpaceRepository(get_flask_database_connection(app))
-    space = space_repo.find(id)
+    spaces = space_repo.find(user_id, "user_id")
+    print(spaces)
 
-    return render_template("my_listings.html", space=space)
+    return render_template("space_listings.html", spaces=spaces)
+
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

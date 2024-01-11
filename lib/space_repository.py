@@ -15,37 +15,26 @@ class SpaceRepository():
 
     def find(self, id, filter="id"):
         if filter == "id":
-            #if not(id == 0) and not(id == None):
-        rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
+            rows = self._connection.execute("SELECT * FROM spaces WHERE id=%s", [id])
             if rows:
                 row = rows[0]
-                    space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
-            return space
-        
-        if filter == "user_id":
+                space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
+                return space
+            else:
+                return "Error fetching data"
+        elif filter == "user_id":
             rows = self._connection.execute("SELECT * FROM spaces WHERE user_id=%s", [id])
             if rows:
                 spaces = []
-                
                 for row in rows:
                     space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
                     spaces.append(space)
-                
-                return spaces
+                    return spaces
+            else:
+                return "Error fetching data"
+        else:
+            return "Generic Error"
         
-    def filter(self, user_id):
-        rows = self._connection.execute(
-            'SELECT * from spaces WHERE user_id = %s', [user_id]
-            )
-        # TODOs: Implement error checks insted of IF
-        if rows:
-            space_list = []
-            for row in rows:
-                space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
-                space_list.append(space)
-            if len(space_list):
-                return space_list
-        return "Error fetching data"
     
     def add(self, space:Space):
         self._connection.execute("INSERT INTO spaces (name, descr, price, user_id) VALUES (%s, %s, %s, %s)", [space.name, space.desc, space.price, space.user_id])
