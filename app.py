@@ -4,9 +4,9 @@ from lib.database_connection import get_flask_database_connection
 from datetime import datetime
 from lib.user import User
 from lib.user_repository import UserRepository
+from lib.DashboardRepository import DashboardRepository
 from lib.RequestRepository import RequestRepository
 from lib.Request import Request
-
 from lib.SpacesRepository import SpacesRepository
 
 # test
@@ -157,12 +157,25 @@ def list_spaces():
 @app.route('/dashboard', methods=['GET'])
 def get_dashboard():
     connection = get_flask_database_connection(app)
-    repository = SpacesRepository(connection)
-    user_spaces = repository.get_by_user(session["user_id"])
+    space_repository = SpacesRepository(connection)
+    dash_repository = DashboardRepository(connection)
+    try:
+        if session['email']:
+            user_spaces = space_repository.get_by_user(session["user_id"])
+            user_requests = dash_repository.list_req(session["user_id"])
+            user_approvals = dash_repository.list_approvals(session["user_id"]) 
+            return render_template('/dashboard.html', spaces = user_spaces, requests = user_requests, approvals = user_approvals, username = session['email']) 
+        
+    except:
+        return redirect('/spaces') 
     
-    
-    return render_template('/dashboard.html', spaces = user_spaces, username = session['email']) # , username = session['email'], user_id = session['user_id']
+@app.route('/dashboard', methods=['POST'])
+def post_accept():
+    pass
 
+@app.route('/dashboard', method=['POST'])
+def post_decline():
+    pass
 
 
 @app.route('/sign_out')
