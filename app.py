@@ -17,7 +17,6 @@ from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 
 
-
 # Auth token generation
 def token_required(f):
     @wraps(f)
@@ -73,6 +72,7 @@ def get_bookings():
 def goto_booking():
     space_id = request.form["id"]
     return redirect("new_booking")
+
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -143,7 +143,7 @@ def get_login():
 @app.route("/logout")
 def logout():
     # Create a response object for redirection
-    response = make_response(redirect("/"))
+    response = make_response(render_template("logout.html"))
 
     # Clear the token cookie
     response.set_cookie("token", "", expires=0)
@@ -198,19 +198,21 @@ def space(space_id, current_user=None):
     dates = repository.get_available_dates(space_id)
     return render_template("/spaces/space.html", space=space, dates=dates)
 
-@app.route('/bookings/new', methods=['POST'])
+
+@app.route("/bookings/new", methods=["POST"])
 @token_required
 def create_booking(current_user):
     guest_username = current_user
-    space_id = request.form['space_id']
-    booking_date = datetime.date.fromisoformat(request.form['date_option'])
+    space_id = request.form["space_id"]
+    booking_date = datetime.date.fromisoformat(request.form["date_option"])
 
     connection = get_flask_database_connection(app)
     guest_id = connection.execute(
         """
         SELECT id FROM users WHERE username=%s;
-        """, [guest_username]
-    )[0]['id']
+        """,
+        [guest_username],
+    )[0]["id"]
     # space_repo = SpaceRepository(connection)
     # host_id = space_repo.get_space_by_id(space_id).host_id
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
@@ -218,10 +220,12 @@ def create_booking(current_user):
     booking_repo.create(new_booking)
     return redirect("/bookings/success")
 
-@app.route('/bookings/success', methods=['GET'])
+
+@app.route("/bookings/success", methods=["GET"])
 @token_required
 def get_bookings_success(current_user):
     return render_template("bookings/success.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
