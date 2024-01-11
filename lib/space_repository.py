@@ -107,8 +107,7 @@ class SpaceRepository:
         if len(result) == 0:
             result = "No results found"
         return result
-      
-      
+
     def find_by_space_name(self, space_name):
         rows = self._connection.execute("SELECT * FROM spaces WHERE space_name = %s", [space_name])
 
@@ -152,3 +151,4 @@ class SpaceRepository:
         rows = self._connection.execute(
             "SELECT * FROM spaces WHERE %s between start_date AND end_date AND id = %s", [date, space.id])
         return len(rows) > 0
+    
