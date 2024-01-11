@@ -30,10 +30,24 @@
                         <label class="form-label fs-5">Description</label>
                         <textarea rows="4" class="form-control" type="text" name="desc"></textarea>
                     </div>
-                    <div class="col-11 mt-3 mx-auto pb-3">
+                    <div class="col-11 mt-3 mx-auto">
                         <label class="form-label fs-5">Price</label>
                         <input class="form-control" type="number" name="price">
                         <input type="hidden" name="id">
+                    </div>
+                    <div class="col-11 mt-3 mx-auto pb-3">
+                        <label class="form-label fs-5">Availability</label>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" type="date" name="date_from">
+                            </div>
+                            <div class="col-4 text-center">
+                                -
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" type="date" name="date_to">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-11 mt-3 mx-auto pb-4 d-flex justify-content-end">
                         <input class="btn btn-primary" type="submit" id="submit" value="Add">
