@@ -14,6 +14,7 @@ from lib.booking_repository import *
 # Create a new Flask app
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = '1'
+users = []
 # == Your Routes Here ==
 
 # GET /index
@@ -23,7 +24,7 @@ app.secret_key = '1'
 @app.route('/index', methods=['GET'])
 def get_index():
     if 'user_id' in session:
-        user_name = session['user_email']
+        user_name = session['user_first_name']
         return render_template('index.html', user_name=user_name)
     else:
         return render_template('index.html')
@@ -37,6 +38,7 @@ def get_template():
 def get_login():
     return render_template('login.html')
 
+#
 @app.route('/login', methods=['POST'])
 def post_login():
     connection = get_flask_database_connection(app)
@@ -49,6 +51,7 @@ def post_login():
     if password == existing_user.password:
         session['user_id'] = existing_user.id
         session['user_email'] = existing_user.email
+        session['user_first_name'] = existing_user.first_name
         return redirect(url_for('get_index'))
     else:
         return render_template('login.html', error_message="Incorrect password.")
@@ -86,10 +89,6 @@ def signup():
         'password': password,
     }
     users.append(user)
-    print(f"User '{email}' signed up with user_id {user_id}.")
-    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
-
-    # Continue with user registration if the email is unique
     new_user = User(
         id=None,
         first_name=first_name,
@@ -99,7 +98,8 @@ def signup():
         password=password
     )
     repository.create(new_user)
-    return render_template('signup.html', success_message="Sign-up successful!")
+    print(f"User '{email}' signed up with user_id {user_id}.")
+    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
 
 @app.route('/signup')
 def show_signup():
@@ -133,13 +133,13 @@ def get_space_by_month(id):
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
     return render_template('addnewspace.html')
-
+#
 @app.route('/addnewspace', methods = ['POST'])
 def add_space():
     connection = get_flask_database_connection(app)
     repo_space = SpaceRepository(connection)
     repo_avaliblity = AvailabilityRepository(connection)
-    userid = request.form['userID']
+    userid = session.get('user_id')
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']
@@ -157,7 +157,6 @@ def add_space():
     for a_date in dates:
         repo_avaliblity.create(Availability(None, space.id, a_date))
     return redirect('/spaces')
-
 
 @app.route('/spaces/<int:id>/booking-request', methods = ['POST'])
 def bookaspace(id):
@@ -177,7 +176,6 @@ def bookaspace(id):
         repo_booking.create(Booking(None, night_id, user_id, status))
     space = repo_space.find(id)    
     return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
-
 
 
 # These lines start the server if you run this file directly
