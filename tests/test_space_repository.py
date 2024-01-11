@@ -112,6 +112,7 @@ def test_empty_all_function(db_connection):
     spaces = repository.find_by_space_name("koala")
 
     assert spaces == "No results found"
+
     
 def test_get_available_spaces(db_connection):
     db_connection.seed('seeds/bnb.sql')
@@ -128,3 +129,17 @@ def test_get_available_spaces(db_connection):
     
     result_3 = repository.get_available_spaces('2025-03-05', '2025-03-15')
     assert result_3 == "No results found"
+
+
+def test_check_by_availabilty_if_available(db_connection):
+    db_connection.seed("seeds/bnb.sql")
+    repository = SpaceRepository(db_connection)
+    space = repository.find_by_id(1)[0]
+    assert repository.space_available('2024-02-02', space) == True
+
+def test_check_by_availabilty_if_not_available(db_connection):
+    db_connection.seed("seeds/bnb.sql")
+    repository = SpaceRepository(db_connection)
+    space = repository.find_by_id(1)[0]
+    assert repository.space_available('2026-02-02', space) == False
+
