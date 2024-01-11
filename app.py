@@ -8,6 +8,7 @@ from lib.forms import RegisterForm, LoginForm, NewListing
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from lib.user import User
 from flask_bcrypt import Bcrypt
+from flask_paginate import Pagination, get_page_args
 from lib.booking_repository import BookingRepository
 from datetime import datetime, date
 from lib.booking import Booking
@@ -42,7 +43,14 @@ def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     listings = repo.all()
-    return render_template('index.html', listings = listings)
+    
+    page, per_page, offset= get_page_args()
+    total = len(listings)
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+    paginated_products = listings[offset: offset + per_page]
+    current_page = int(request.args.get('page', 1))
+    
+    return render_template('index.html', listings=paginated_products, pagination=pagination, paginated_products=paginated_products, current_page=current_page)
 
 
 #THIS FUNCTION HANDES THE SING IN, IF USER AND PASSWORD IS CORRECT THEN IT WILL REDIRECT TO THE PROFILE PAGE
