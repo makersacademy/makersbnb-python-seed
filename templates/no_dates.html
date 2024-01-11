@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+    <head>
+        
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+    </head>
+    <body>       
+        <div class="content">
+            <p>No nights are available for that property. Please try another</p>
+        </div>
+    </body>    
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</html>

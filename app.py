@@ -116,6 +116,9 @@ def get_spaces():
 def get_space(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
+    print(repo.find_space_with_availabilities(id))
+    if repo.find_space_with_availabilities(id) == None:
+        return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities(id)
     return render_template('individual_space.html', space = space, availability = dates)
 
@@ -169,8 +172,7 @@ def bookaspace(id):
     repo_space = SpaceRepository(connection)
     repo_booking = BookingRepository(connection)
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
-    # user_id = session["user_id"] #When session is functional we can uncomment this line
-    user_id = 2 #Remove this line once session is live
+    user_id = int(session.get('user_id'))
     status = "pending"
     for night_id in night_ids:
         repo_booking.create(Booking(None, night_id, user_id, status))

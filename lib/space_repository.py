@@ -41,6 +41,9 @@ class SpaceRepository:
             """, 
             [space_id, 'TRUE']
         )
+        print (rows)
+        if rows == []:
+            return None
         #gets all availabilities as class objects
         availabilities = [Availability(row['availability_id'], row['space_id'], row['date'], row['status']) for row in rows]
         #gets dates from class objects in  a list

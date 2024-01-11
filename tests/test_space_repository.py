@@ -93,3 +93,9 @@ def test_find_by_user(db_connection):
         Space(1, 1, 'Beach House 1', 'A beautiful beach side property with a pool', 101),
         Space(2, 1, 'Beach House 2', 'A beautiful beach side property with a pool', 102),
         ]
+
+def test_find_space_with_availabilities_none(db_connection):
+    db_connection.seed('seeds/makers_bnb.sql')
+    space_repository = SpaceRepository(db_connection)
+    result = space_repository.find_space_with_availabilities(3)
+    assert result == None
