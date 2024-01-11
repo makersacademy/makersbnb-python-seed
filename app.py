@@ -9,7 +9,8 @@ from flask_login import login_user, LoginManager, login_required, logout_user, c
 from lib.user import User
 from flask_bcrypt import Bcrypt
 from lib.booking_repository import BookingRepository
-from datetime import date
+from datetime import datetime
+from lib.booking import Booking
 import hashlib
 
 # Create a new Flask app
@@ -119,14 +120,25 @@ def create_space():
     return render_template("new_listing.html", form=form, user=current_user)
 
 
-
-@app.route('/space/<int:id>', methods=['GET'])
-def get_space_page(id):
+@app.route('/space/<int:id>', methods=['GET', 'POST'])
+@login_required
+def get_space_done(id):
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
-    space = repo.find(id)
-    return render_template("space.html", space=space)
+    repo = BookingRepository(connection)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(id)
 
+    if request.method == 'POST':
+        date = request.form['date']
+        date_booked = datetime.strptime(date, '%Y-%m-%d')
+        if current_user:
+            booking = Booking(None, current_user.id, space.id, date_booked, space.name)
+            repo.create(booking)
+            return redirect(url_for('profile_page'))
+        else:
+            flash("You need to be logged in to make a booking")
+
+    return render_template("space.html", space=space)
 
 
 
