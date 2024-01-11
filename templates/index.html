@@ -19,7 +19,7 @@
         <div class="image-container">
             {% for listing in listings %}
             <div class='listing-container'><a href="/space/{{listing.id}}"><img src="static/{{listing.image_path}}"></a>
-            <div class="listing-details">{{listing.name}} - £{{listing.price}}/night</div></div>
+            <div class="listing-details"><p class="card-space-name">{{listing.name}}</p><p class="card-space-price"><strong>£{{listing.price}}</strong> per night</p></div></div>
             {% endfor %}
         </div>
         <footer>©MakerBnB</footer>

@@ -5,7 +5,6 @@ body {
     height: 100vh;
     margin: 0px;
     background-color: #f8f9fa; 
-    /* background-color: #96bce3;  */
 }
 
 header {
@@ -75,9 +74,30 @@ header a:nth-of-type(1) {
 .image-container img {
     width: 300px;
     height: 200px;
-    border: 2px solid black;
     display: block;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 2px solid #27374D;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.listing-details {
+    background-color: white;    
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    padding: 10px;
+}
+
+.card-space-price {
+    margin-left: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.card-space-price,
+.card-space-name {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .image-container-space {
