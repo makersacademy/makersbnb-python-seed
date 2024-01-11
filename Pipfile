@@ -13,6 +13,7 @@ py = "*"
 flask-wtf = "*"
 flask-login = "*"
 flask-bcrypt = "*"
+flask-paginate = "*"
 
 [dev-packages]
 autopep8 = "*"
