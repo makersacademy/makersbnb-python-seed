@@ -1,4 +1,4 @@
-from lib.user_repository import UserRepository, hash_pass, is_valid
+from lib.user_repository import UserRepository, is_valid
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 import os
@@ -7,7 +7,7 @@ from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
 from functools import wraps
-from flask import request, jsonify, make_response, session
+from flask import request, jsonify, make_response, flash
 
 
 from lib.user_repository import UserRepository
@@ -111,6 +111,22 @@ def success(current_user):
 # login page
 @app.route("/login", methods=["GET", "POST"])
 def get_login():
+    # Check if user is already logged in
+    token = request.cookies.get("token")
+    if token:
+        try:
+            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            # User already logged in, redirecting to spaces page
+            return redirect("/spaces")
+        except jwt.ExpiredSignatureError:
+            # Token is expired - user needs to log in again
+            # not 'required' but catches any unforeseen errors
+            flash("Your session has expired. Please log in again.", "warning")
+            return redirect("/login")
+        except:
+            # Invalid token - continue with normal login
+            return redirect("/login")
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -133,7 +149,6 @@ def get_login():
             response = make_response(redirect("/spaces"))
             response.set_cookie("token", token, httponly=True)
             return response
-
         else:
             return render_template("/login.html", error="Invalid credentials")
 
