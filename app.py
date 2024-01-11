@@ -42,8 +42,7 @@ def load_user(user_id):
 def get_index():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
-    listings = repo.all()
-    
+    listings = repo.all()    
     page, per_page, offset= get_page_args()
     total = len(listings)
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
