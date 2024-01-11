@@ -181,6 +181,8 @@ def bookaspace(id):
 def get_my_listings():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
+    if session.get('user_id') == None:
+        return redirect('/spaces')
     spaces = repo.find_by_user(int(session.get('user_id')))
     return render_template('my_listings.html', spaces = spaces)
 
