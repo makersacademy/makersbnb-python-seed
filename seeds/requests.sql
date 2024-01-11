@@ -1,6 +1,7 @@
 CREATE TABLE requests(
     id SERIAL PRIMARY KEY,
-    title text,
-    daterange text,
-    stat text,
-)
+    req_id int,
+    space_id int,
+    date_req text,
+    stat text
+);
