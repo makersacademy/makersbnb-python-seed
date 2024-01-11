@@ -28,7 +28,7 @@ def get_login():
 def get_new_space():
     if "user_id" not in session:
         return redirect("/")
-    return render_template("new_space.html")
+    return render_template("new_space.html", user=show_user())
 
 
 @app.route("/new_space", methods=["POST"])
@@ -52,7 +52,7 @@ def create_new_space():
     space_repo.create(new_space)
     all_spaces = space_repo.all()
 
-    return render_template("list_spaces.html", spaces=all_spaces)
+    return render_template("list_spaces.html", spaces=all_spaces, user=show_user())
 
 
 @app.route("/space/<space_id>", methods=["GET"])
@@ -63,7 +63,7 @@ def get_space(space_id):
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(space_id)[0]
-    return render_template("space.html", space=space)
+    return render_template("space.html", space=space, user=show_user())
 
 
 @app.route("/book/<id>", methods=["POST"])
@@ -79,11 +79,11 @@ def book(id):
     booking = Booking(None, booking_date, False, False, session["user_id"], id)
     if booking_repo.already_booked(booking):
         return render_template(
-            "/booking_failed.html", id=id, error="Booking already taken"
+            "/booking_failed.html", id=id, error="Booking already taken", user=show_user()
         )
     if not space_repo.space_available(booking_date, space):
         return render_template(
-            "/booking_failed.html", id=id, error="Space not available on this date"
+            "/booking_failed.html", id=id, error="Space not available on this date", user=show_user()
         )
     booking_id = booking_repo.create(booking)
     booking.id = booking_id
@@ -124,6 +124,7 @@ def get_requests():
         "requests.html",
         spaces_and_bookings=spaces_and_bookings,
         space_bookings_users_rec=space_bookings_users_rec,
+        user=show_user()
     )
 
 
@@ -131,7 +132,7 @@ def get_requests():
 def get_logout():
     if "user_id" not in session:
         return redirect("/")
-    return render_template("logout.html")
+    return render_template("logout.html", user=show_user()) # CHECK THIS LINE TOMORROW
 
 
 @app.route("/viewspace/<int:space_id>", methods=["GET"])
@@ -141,18 +142,23 @@ def get_viewspace(space_id):
 
     space_details = space_id
     if space_details:
-        return render_template("request.html", space_details=space_details)
+        return render_template("request.html", space_details=space_details, user=show_user())
     else:
         # Handle the case where the space with the given ID is not found
-        return render_template("error.html", message="Space not found"), 404
+        return render_template("error.html", message="Space not found", user=show_user()), 404
 
+def show_user():
+    connection = get_flask_database_connection(app)
+    user_repo = UserRepo(connection)
+    user = user_repo.find_user_by_id(session["user_id"])
+    return user
 
 @app.route("/list_spaces", methods=["GET", "POST"])
 def spaces():
     if "user_id" not in session:
         return redirect("/")
     if request.method == "GET":
-        return render_template("list_spaces.html")
+        return render_template("list_spaces.html", user=show_user())
     elif request.method == "POST":
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
@@ -161,10 +167,10 @@ def spaces():
             available_to = request.form["available_to"]
             spaces = repository.get_available_spaces(available_from, available_to)
             if not spaces or spaces == "No results found":
-                return render_template("list_spaces.html", spaces=[], no_results=True)
+                return render_template("list_spaces.html", spaces=[], no_results=True, user=show_user())
             else:
-                return render_template("list_spaces.html", spaces=spaces)
-    return render_template("list_spaces.html")
+                return render_template("list_spaces.html", spaces=spaces, user=show_user())
+    return render_template("list_spaces.html", user=show_user())
 
 
 @app.route("/login", methods=["POST"])
@@ -179,7 +185,7 @@ def login():
         session["user_id"] = user.id
         return redirect("/list_spaces")
     else:
-        return render_template("login.html", errors=["Invalid username or password"])
+        return render_template("login.html", errors=["Invalid username or password"], user=show_user())
 
 
 @app.route("/", methods=["POST"])
