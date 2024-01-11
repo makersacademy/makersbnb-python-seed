@@ -99,3 +99,9 @@ def test_find_space_with_availabilities_none(db_connection):
     space_repository = SpaceRepository(db_connection)
     result = space_repository.find_space_with_availabilities(3)
     assert result == None
+
+def test_find_space_with_availabilities_month_none(db_connection):
+    db_connection.seed('seeds/makers_bnb.sql')
+    space_repository = SpaceRepository(db_connection)
+    result = space_repository.find_space_with_availabilities_month(1,'May')
+    assert result == None

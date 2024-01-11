@@ -130,6 +130,8 @@ def get_space_by_month(id):
     repo = SpaceRepository(connection)
     if month == 'show-all':
         return redirect(f'/spaces/{id}')
+    if repo.find_space_with_availabilities_month(id, month) == None:
+        return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities_month(id, month)
     return render_template('individual_space.html', space = space, availability = dates, month = month)
 
