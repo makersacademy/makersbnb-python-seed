@@ -11,11 +11,7 @@ app.secret_key = '20240110'
 
 # == Your Routes Here ==
 
-@app.route('/', methods=['GET']) #To-Do integrate def home into def get_homepage
-# def home():
-    # if "username" in session:
-    #     return f"Logged in as {session['username']}"
-    # return "You are not logged in"
+@app.route('/', methods=['GET'])
 def get_homepage():
     return render_template('homepage.html')
 
@@ -65,7 +61,7 @@ def add_new_user():
     if not user.is_valid():
         return 400
 
-    user = repository.create(user)
+    repository.create(user)
     session['email'] = request.form['email']
     return redirect("/spaces")
 

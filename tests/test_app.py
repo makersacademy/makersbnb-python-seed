@@ -60,7 +60,3 @@ def test_homepage_appears(page, test_web_address, web_client):
     expect(h1_tag).to_have_text("Welcome to MakersBnB")
 
     assert response.status_code == 200
-
-"""
-Test that signup function works
-"""
