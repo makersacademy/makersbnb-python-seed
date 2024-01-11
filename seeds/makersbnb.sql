@@ -21,7 +21,7 @@ CREATE TABLE spaces (
 	address text,
 	name text,
     price int,
-    image_path BYTEA,
+    image_path text,
     description text,
     date_added date,
     date_available date,
