@@ -191,3 +191,14 @@ body {
 .logoMakersBnB img {
   padding: 0px 15px;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  margin: auto;
+}
+
+.removePadding {
+  margin: 0;
+}

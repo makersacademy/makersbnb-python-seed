@@ -4,6 +4,7 @@
 
 <body>
     <h1>Requests</h1>
+
     <h3 class="centeredText">See all the requests for spaces you have made and received, and their current status.</h3>
     <div class="requestsMadeRecieved">
 
@@ -11,18 +12,28 @@
     <div class="requestsList requestReceived">
 
         <h2 class="centeredText">Requests I've made</h2>
-        {% for request in requests_made %}
-        <div class="spaceIndividual">
+        {% for request, space in made_zipped_data %}
+          <div class="spaceIndividual">
 
             <a class="row" href="/requests/{{ request.id }}">
-                <p>{{request.id}}</p><br>
-                {% if request.confirmed == True %}
-                <p>Approved</p>
-                {% elif request.confirmed == False %}
-                <p>Rejected</p>
-                {% else %}
-                <p>Awaiting Response</p>
-                {% endif %}
+              <div class="column">
+
+                <div>
+                  
+                  <p class="removePadding">{{space.name}}</p><br>
+                  <p class="removePadding">{{space.description}}</p>
+                </div>
+                <div>
+                  
+                  {% if request.confirmed == True %}
+                  <p>Approved</p>
+                  {% elif request.confirmed == False %}
+                  <p>Rejected</p>
+                  {% else %}
+                  <p>Awaiting Response</p>
+                  {% endif %}
+                </div>
+              </div>
                 <svg
                 fill="#000000"
                 height="50px"
@@ -57,20 +68,19 @@
 
         <h2 class="centeredText">Requests I've recieved</h2>
         
-        {% for request in requests_received %}
+        {% for request, space in received_zipped_data %}
         <div class="spaceIndividual">
             <a class="row" href="/requests/{{ request.id }}">
-            <p>{{request.id}}</p><br>
+              <div class="column">
+
+                <p>{{space.name}}</p><br>
+                <p>{{space.description}}</p>
+              </div>
             {% if request.confirmed == True %}
             <p>You approved this.</p>
             {% elif request.confirmed == False %}
             <p>You rejected this.</p>
             {% else %}
-            <!-- <div class="centeredText">
-                <a class="button" href="/requests/{{ request.id }}">
-                    <p>Make a decision</p>
-                </a>
-            </div> -->
             <svg
             fill="#000000"
             height="50px"

@@ -5,16 +5,14 @@
 
     <h1>My Account</h2>
 
-    <ul>
-        <li><strong>Username:</strong> [Your Username]</li>
+        <p><strong>Username:<br></strong>{{user.username}}</p>
         <br>
-        <li><strong>Email:</strong> [Your Email]</li>
+        <p><strong>Email:<br></strong>{{user.email}}</p>
         <br>
-        <li><strong>My Spaces</strong> <a href="/myspaces">/spaces</a></li>
+        <p><a class='button' href="/myspaces">My Spaces</a></p>
         <br>
         <!-- an extra feature maybe at some point  -->
         <!-- <li><a href="#">Change Password</a></li> -->
-    </ul>
 
 </body>
 {% endblock %}
