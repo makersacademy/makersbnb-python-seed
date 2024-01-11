@@ -171,7 +171,8 @@ def get_new_space(current_user):
 def create_space(current_user):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
-    host = 1
+    user_repo = UserRepository(connection)
+    host = user_repo.username_to_id(current_user)
     new_space = Space(
         None,
         request.form["name"],
