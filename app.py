@@ -71,7 +71,7 @@ def book(id):
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(id)[0]
     booking_date = request.form['date']
-    booking = Booking(None, booking_date, False, session['user_id'], id)
+    booking = Booking(None, booking_date, False, False, session['user_id'], id)
     if booking_repo.already_booked(booking):
         return render_template('/booking_failed.html', id=id, error='Booking already taken')
     if not space_repo.space_available(booking_date, space):
@@ -226,6 +226,26 @@ def approve(id):
     booking_repo.confirm(id)
     return redirect('/requests')
 
+@app.route('/reject_request/<id>', methods=['POST'])
+def reject_request(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking_repo.reject(id)
+    return redirect('/requests')
+
+@app.route('/delete_request/<id>', methods=['POST'])
+def delete_request(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking_repo.delete(id)
+    return redirect('/requests')
+
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -237,7 +257,6 @@ def logout():
         return render_template("login.html")
     else:
         return render_template("logout.html", errors=["Nobody logged in"])
-
 
 
 if __name__ == "__main__":

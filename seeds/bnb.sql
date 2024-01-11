@@ -31,6 +31,7 @@ CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     date DATE,
     confirmed boolean,
+    rejected boolean,
     user_id int,
     constraint fk_user foreign key(user_id)
         references users(id)
@@ -49,6 +50,6 @@ INSERT INTO spaces (space_name, location, description, price, user_id, start_dat
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('BnB villa', 'Rome', 'city', 300, 1, '2024-02-01', '2024-09-01');
 INSERT INTO spaces (space_name, location, description, price, user_id, start_date, end_date) VALUES ('Town cottage', 'Newcastle', 'city', 125, 1, '2024-03-01', '2024-11-01');
 
-INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-01', False, 1, 1);
-INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-02', False, 1, 2);
-INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES ('2024-01-03', False, 2, 2);
+INSERT INTO bookings (date, confirmed, rejected, user_id, space_id) VALUES ('2024-01-01', False, False, 1, 1);
+INSERT INTO bookings (date, confirmed, rejected, user_id, space_id) VALUES ('2024-01-02', False, False, 1, 2);
+INSERT INTO bookings (date, confirmed, rejected, user_id, space_id) VALUES ('2024-01-03', False, False, 2, 2);
