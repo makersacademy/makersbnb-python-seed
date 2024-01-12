@@ -59,6 +59,7 @@
                     <div class="date-from">
                         <label for="date-from">Date from:</label>
                         <select name="date-from" id="date-from" onchange="getInputValue()">
+                            <option value="none">Select a date</option>
                             {% for date in availability %}
                             <option value={{date}}>{{date}}</option>
                             {% endfor %}
@@ -67,7 +68,8 @@
                 <div class="date-to">
                     <label for="date-to">Date to:</label>
 
-                    <select name="date-to" id="date-to">
+                    <select name="date-to" id="date-to" onchange="getInputValue()">
+                        <option value = "none">Select a date</option>
                         {% for date in availability2 %}
 
                         <option value={{date}}>{{date}}</option>
@@ -76,8 +78,9 @@
                     </div>
                 </div>
 
-            <p id="demo"></p>
+            <p id="demo">
             <script>
+                //document.getElementById("demo").innerHTML = "No of nights - " + Difference_In_Days + " Total - £" + {{space.price_per_night}} * Difference_In_Days;
                 function getInputValue() {
                     let fromDate = document.getElementById("date-from").value;
                     let fromDatesplit = fromDate.split("-");
@@ -91,10 +94,12 @@
     
                     let Difference_In_Time = toDatemydate.getTime() - fromDatemydate.getTime();
                     let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+                    //document.getElementById("demo").innerHTML = "This"
                     document.getElementById("demo").innerHTML = "No of nights - " + Difference_In_Days + " Total - £" + {{space.price_per_night}} * Difference_In_Days;
+                    console.log("working")
                 }
                 
-            </script>               
+            </script>      </p>         
                 <input type="submit" value="Submit Request">
             </form>
             
