@@ -3,10 +3,6 @@ h1, h2, h3, h4, h5 {
     text-align: center;
 }
 
-p {
-    text-indent: 40px;
-}
-
 form {
     width: 60vw;
     max-width: 500px;
