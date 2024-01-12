@@ -175,6 +175,12 @@ def test_get_bookings(test_web_address, db_connection, browser):
             break
     expect(page).to_have_url(f"http://{test_web_address}/requests")
 
+"""
+We can signup and login as two different users.
+The host can create a new space and the guest can book it for a night.
+The guest can see that they have made a request.
+The host can see that a request has been made.
+"""
 def test_make_and_view_bookings(test_web_address, db_connection, browser):
     host_details = {"username": "NewHostUser1",
                     "email": "newhostuser1@test.com",
@@ -211,6 +217,32 @@ def test_make_and_view_bookings(test_web_address, db_connection, browser):
     space_button_texts = [tag.inner_text()
                      for tag in page.locator(".spacebutton").all()]
     assert "64 Zoo Lane" in space_button_texts
+    page = setup.logout(page)
+    page = setup.register(page, test_web_address, user_details=guest_details)
+    page = setup.login(page, test_web_address, user_details=guest_details)
+    a_tags = page.locator("a").all()
+    for tag in a_tags:
+        if tag.get_attribute("href") == f"/spaces/6":
+            tag.click()
+            break
+    expect(page).to_have_url(f"http://{test_web_address}/spaces/6")
+    inputs = page.locator("input").all()
+    for input in inputs:
+        if input.get_attribute("id") == "2024-02-01":
+            input.click()
+            break
+    for input in inputs:
+        if input.get_attribute("value") == "Request to Book":
+            input.click()
+            break
+    expect(page).to_have_url(f"http://{test_web_address}/bookings/success")
+    a_tags = page.locator("a").all()
+    for tag in a_tags:
+        if tag.get_attribute("href") == f"/requests":
+            tag.click()
+            break
+    expect(page).to_have_url(f"http://{test_web_address}/requests")
+    #a_tags_in_requestsMade = page.locator()
 
 
 # """
