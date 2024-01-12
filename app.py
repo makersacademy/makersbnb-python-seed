@@ -1,7 +1,6 @@
 from lib.user_repository import UserRepository, is_valid
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
-import os
 from flask import Flask, request, render_template, redirect, url_for
 from lib.database_connection import get_flask_database_connection
 import jwt
@@ -110,6 +109,18 @@ def goto_booking():
 
 @app.route("/", methods=["GET", "POST"])
 def register():
+    # Check if user is already logged in
+    token = request.cookies.get("token")
+    if token:
+        try:
+            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            # Redirect to /spaces if user is already logged in
+            return redirect(url_for("get_all_spaces"))
+        except jwt.ExpiredSignatureError:
+            flash("Your session has expired. Please log in again.", "warning")
+        except:
+            # Handle other exceptions
+            pass
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
