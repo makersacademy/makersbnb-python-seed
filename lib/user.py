@@ -81,3 +81,5 @@ class UserRepo:
             'SELECT * FROM users WHERE username = %s AND password = %s',
             [username, hashed_password_attempt])
         return len(rows) > 0
+    
+    

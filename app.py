@@ -148,10 +148,12 @@ def get_viewspace(space_id):
         return render_template("error.html", message="Space not found", user=show_user()), 404
 
 def show_user():
-    connection = get_flask_database_connection(app)
-    user_repo = UserRepo(connection)
-    user = user_repo.find_user_by_id(session["user_id"])
-    return user
+    if "user_id" in session:
+        connection = get_flask_database_connection(app)
+        user_repo = UserRepo(connection)
+        user = user_repo.find_user_by_id(session["user_id"])
+        return user
+    return None
 
 @app.route("/list_spaces", methods=["GET", "POST"])
 def spaces():
@@ -177,6 +179,8 @@ def spaces():
 def login():
     username = request.form["username"].strip().lower()
     password = request.form["password"]
+    if not username or not password:
+        return render_template("login.html", errors=["Invalid username or password"],user=show_user())
 
     connection = get_flask_database_connection(app)
     user_repo = UserRepo(connection)
@@ -185,7 +189,7 @@ def login():
         session["user_id"] = user.id
         return redirect("/list_spaces")
     else:
-        return render_template("login.html", errors=["Invalid username or password"], user=show_user())
+        return render_template("login.html", errors=["Invalid username or password"],user=show_user())
 
 
 @app.route("/", methods=["POST"])
