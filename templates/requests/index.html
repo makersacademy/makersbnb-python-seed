@@ -1,8 +1,11 @@
 {% extends "layout.html" %} {% block body %}
 
 <body>
-  <h1>Requests</h1>
-    <h3 class="centeredText">See all the requests for spaces you have made and received, and their current status.</h3>
+
+    <h1>Requests</h1>
+
+    <h2 class="centeredText">See all the requests for spaces you have made and received, and their current status.</h2>
+
     <div class="requestsMadeRecieved">
 
 
@@ -10,10 +13,10 @@
 
         <h2 class="centeredText">Requests I've made</h2>
         {% for request, space in made_zipped_data %}
-          <div class="spaceIndividual">
+          <div aria-label="{{space.name}}" class="spaceIndividual">
 
-            <a class="row" href="/requests/{{ request.id }}">
-              <div class="column">
+            <a aria-label="{{space.name}}" class="row" href="/requests/{{ request.id }}">
+              <div aria-label="{space.name}" class="column">
 
                 <div>
                   
@@ -66,8 +69,8 @@
         <h2 class="centeredText">Requests I've recieved</h2>
         
         {% for request, space in received_zipped_data %}
-        <div class="spaceIndividual">
-            <a class="row" href="/requests/{{ request.id }}">
+        <div aria-label="{{space.name}}" class="spaceIndividual">
+            <a aria-label="{{space.name}}" class="row" href="/requests/{{ request.id }}">
               <div class="column">
 
                 <p>{{space.name}}</p><br>
