@@ -196,7 +196,7 @@ def get_login():
             response.set_cookie("token", token, httponly=True)
             return response
         else:
-            return render_template("/login.html", error="Invalid credentials")
+            return render_template("/login.html", error=f"Invalid credentials: {username, password}")
 
     return render_template("login.html")
 
@@ -258,6 +258,7 @@ def create_space(current_user):
 @app.route("/spaces/<int:space_id>")
 @token_required
 def space(space_id, current_user=None):
+    error = request.args.get("error")
     # 'current_user=None' is set to prevent argument conflicts.
     # Without this default value, Flask would pass 'space_id' from the URL
     # and 'current_user' from the decorator, leading to a TypeError.
@@ -265,7 +266,7 @@ def space(space_id, current_user=None):
     repository = SpaceRepository(connection)
     space = repository.get_space_by_id(space_id)
     dates = repository.get_available_dates(space_id)
-    return render_template("/spaces/space.html", space=space, dates=dates)
+    return render_template("/spaces/space.html", space=space, dates=dates, error=error)
 
 
 @app.route("/bookings/new", methods=["POST"])
@@ -284,20 +285,21 @@ def create_booking(current_user):
     )[0]["id"]
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
-    booking_repo.create(new_booking)
-    space_repo = SpaceRepository(connection)
-    space = space_repo.get_space_by_id(space_id)
-    user_repo = UserRepository(connection)
-    user = user_repo.find_user_by_username(user_repo.id_to_username(space.host_id))
-    email_thread = threading.Thread(target = send_email, args=('Your space has been requested!', [user.email], f'Hello {user.username}, Your space ({space.name}) has been requested.\nPlease confirm or deny.\nThanks!'))
-    email_thread.start()
-    # Commented lines below may later be useful for notification sending to host
-    # space_repo = SpaceRepository(connection)
-    # host_id = space_repo.get_space_by_id(space_id).host_id
-    # user_repo = UserRepository(connection)
-    # host_username = user_repo.id_to_username(host_id)
-    return redirect("/bookings/success")
 
+    try:
+        booking_repo.create(new_booking)
+        
+        space_repo = SpaceRepository(connection)
+        space = space_repo.get_space_by_id(space_id)
+        user_repo = UserRepository(connection)
+        user = user_repo.find_user_by_username(user_repo.id_to_username(space.host_id))
+        email_thread = threading.Thread(target = send_email, args=('Your space has been requested!', [user.email], f'Hello {user.username}, Your space ({space.name}) has been requested.\nPlease confirm or deny.\nThanks!'))
+        email_thread.start()
+        
+        return redirect("/bookings/success")
+    except Exception as err:
+        fail_route = url_for('space', space_id=space_id, error=str(err))
+        return redirect(fail_route)
 
 @app.route("/bookings/success", methods=["GET"])
 @token_required

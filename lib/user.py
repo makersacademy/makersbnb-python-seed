@@ -11,4 +11,3 @@ class User:
     def __repr__(self):
         # return f"User({self.id}, {self.username}, {self.email}, {self.password}, {self.spaces})"
         return f"User({self.username}, {self.email}, {self.password}, {self.spaces})"
-
