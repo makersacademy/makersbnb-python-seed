@@ -25,9 +25,9 @@ users = []
 def get_index():
     if 'user_id' in session:
         user_name = session['user_first_name']
-        return render_template('index.html', user_name=user_name)
+        return render_template('index.html', user_name=user_name, title = "Homepage")
     else:
-        return render_template('index.html')
+        return render_template('index.html', title = "Homepage")
 
 @app.route('/template', methods=['GET'])
 def get_template():
@@ -36,7 +36,7 @@ def get_template():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    return render_template('login.html', title = "Login Page")
 
 #
 @app.route('/login', methods=['POST'])
@@ -54,7 +54,7 @@ def post_login():
         session['user_first_name'] = existing_user.first_name
         return redirect(url_for('get_index'))
     else:
-        return render_template('login.html', error_message="Incorrect password.")
+        return render_template('login.html', error_message="Incorrect password.", title = "Login Page")
     
 
 @app.route('/logout', methods=['GET'])
@@ -77,7 +77,7 @@ def signup():
     # Check if the email already exists in the database
     existing_user = repository.find_by_email(email)
     if existing_user:
-        return render_template('signup.html', error_message="Email already exists. Please choose a different email.")
+        return render_template('signup.html', error_message="Email already exists. Please choose a different email.", title = "Sign Up")
 
     user_id = len(users) + 1
     user = {
@@ -101,7 +101,7 @@ def signup():
     print(f"User '{email}' signed up with user_id {user_id}.")
     return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
 
-@app.route('/signup')
+@app.route('/signup', methods = ['GET'])
 def show_signup():
     return render_template('signup.html', title='Signup Page')
 
@@ -110,7 +110,7 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     spaces = repo.all()
-    return render_template('spaces.html', spaces = spaces)
+    return render_template('spaces.html', spaces = spaces, title = "Spaces")
 
 @app.route('/spaces/<int:id>', methods = ['GET'])
 def get_space(id):
@@ -120,7 +120,7 @@ def get_space(id):
     if repo.find_space_with_availabilities(id) == None:
         return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities(id)
-    return render_template('individual_space.html', space = space, availability = dates)
+    return render_template('individual_space.html', space = space, availability = dates, title = f'Spaces = {id}')
 
 @app.route('/spaces/<int:id>/filter', methods = ['POST'])
 def get_space_by_month(id):
@@ -131,13 +131,13 @@ def get_space_by_month(id):
     if month == 'show-all':
         return redirect(f'/spaces/{id}')
     if repo.find_space_with_availabilities_month(id, month) == None:
-        return render_template('no_dates.html')
+        return render_template('no_dates.html', title = "No dates available")
     space, dates = repo.find_space_with_availabilities_month(id, month)
     return render_template('individual_space.html', space = space, availability = dates, month = month)
 
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
-    return render_template('addnewspace.html')
+    return render_template('addnewspace.html', title = "Upload a new space")
 #
 @app.route('/addnewspace', methods = ['POST'])
 def add_space():
@@ -190,23 +190,23 @@ def get_my_listings():
     if session.get('user_id') == None:
         return redirect('/spaces')
     spaces = repo.find_by_user(int(session.get('user_id')))
-    return render_template('my_listings.html', spaces = spaces)
+    return render_template('my_listings.html', spaces = spaces, title = "My Listings")
 
 @app.route('/my-profile', methods = ['GET'])
 def get_myprofile():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
     user = repo.find_user(int(session.get('user_id')))
-    return render_template('my_profile.html', user = user)
+    return render_template('my_profile.html', user = user, title = "My profile")
 
-@app.route('/my-requests')
+@app.route('/my-requests', methods = ['GET'])
 def get_my_requests():
     connection = get_flask_database_connection(app)
     bookings_repository = BookingRepository(connection)
     userid = session.get('user_id')
     requests = bookings_repository.find_all_bookings_and_spaces_by_user_id(userid)
 
-    return render_template('my_requests.html', requests = requests)
+    return render_template('my_requests.html', requests = requests, title = "My requests")
 
 
 
