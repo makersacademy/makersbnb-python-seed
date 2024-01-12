@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block header %}
@@ -10,21 +9,31 @@
         <div class="example-container">
 
             {% if user_name %}
-                <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
-                
+                <h1 style="font-size: 20px;">Hello, {{ user_name }}!</h1>
             {% else %}
-
-            Hello there. Please log in or sign up to gain full access.
+                Hello there. Please log in or sign up to gain full access.
             {% endif %}
             <br>
-            <button class="button"><a href="{{ url_for('get_spaces') }}" style="color: white;" class="button-link">Book a space</a></button>
             <br>
+            <form action="{{ url_for('get_spaces') }}" method="get">
+                <button style="font-size: 18px; width: 200px;" class="button" type="submit">Book a space</button>
+            </form>
+
+            <br>
+
             {% if user_name %}
-            <button class="button"><a href="{{ url_for('logout') }}" style="color: white;" class="button">Logout</a></button>
+                <br>
+                <form action="{{ url_for('logout') }}" method="post">
+                    <button style="font-size: 18px; width: 200px;" class="button" type="submit">Logout</button>
+                </form>
             {% else %}
-            <button class="button"><a href="{{ url_for('get_login') }}" style="color: white;" class="button-link">Log in</a></button>
-            <br>
-            <button class="button"><a href="{{ url_for('signup') }}" style="color: white;" class="button">Sign Up</a></button>
+                <form action="{{ url_for('get_login') }}" method="get">
+                    <button style="font-size: 18px; width: 200px;" class="button" type="submit">Log in</button>
+                </form>
+                <br>
+                <form action="{{ url_for('signup') }}" method="get">
+                    <button style="font-size: 18px; width: 200px;" class="button" type="submit">Sign Up</button>
+                </form>
             {% endif %}
             <br>
 
@@ -36,4 +45,3 @@
 {% block footer %}
     {{ super() }}
 {% endblock %}
-

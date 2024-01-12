@@ -21,7 +21,7 @@ users = []
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
     if 'user_id' in session:
         user_name = session['user_first_name']
@@ -178,7 +178,6 @@ def bookaspace(id):
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
     user_id = session.get('user_id')
     status = "pending"
-
     if 'user_id' in session:
         for night_id in night_ids:
             repo_booking.create(Booking(None, night_id, user_id, status))
@@ -201,6 +200,8 @@ def get_my_listings():
 def get_myprofile():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
+    if session.get('user_id') == None:
+        return render_template('login.html')
     user = repo.find_user(int(session.get('user_id')))
     return render_template('my_profile.html', user = user)
 
@@ -210,7 +211,6 @@ def get_my_requests():
     bookings_repository = BookingRepository(connection)
     userid = session.get('user_id')
     requests = bookings_repository.find_all_bookings_and_spaces_by_user_id(userid)
-
     return render_template('my_requests.html', requests = requests)
 
 

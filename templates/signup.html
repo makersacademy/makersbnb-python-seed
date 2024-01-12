@@ -1,55 +1,41 @@
 {% extends 'base.html' %}
 
-<body>
-    
-    {% block header %} {{ super() }} {% endblock %}
+{% block content %}
+    <main>
+        <div class="example-container">
+            <label class="title">Sign Up</label>
+            <form method="POST" action="/signup" style="text-align: center;">
+                <p class='form-heading'>
+                    <label for="first_name" class="headers">First Name:</label><br>
+                    <input type="text" name="first_name" class="form-input" required>
+                </p>
 
-    {%block content%}
-    <div><center>
-    <label class="title">Sign Up</label>
-    <form method="POST" action="/signup">
-        <p class='form_heading'>
-        <label for="first_name" class="headers">First Name:</label><br>
-        <input type="text" name="first_name" class="form_input" required>
-        </p>
+                <p class='form-heading'>
+                    <label for="last_name" class="headers">Last Name:</label><br>
+                    <input type="text" name="last_name" class="form-input" required>
+                </p>
 
-        <p class='form_heading'>
-        <label for="last_name" class="headers">Last Name:</label><br>
-        <input type="text" name="last_name" class="form_input" required>
-        </p>
+                <p class='form-heading'>
+                    <label for="email" class="headers">Email:</label><br>
+                    <input type="email" name="email" class="form-input" required>
+                </p>
 
-        <p class='form_heading'>
-        <label for="email" class="headers">Email:</label><br>
-        <input type="email" name="email" class="form_input" required>
-        </p>
+                <p class='form-heading'>
+                    <label for="telephone_number" class="headers">Phone Number:</label><br>
+                    <input type="text" name="telephone_number" class="form-input" required>
+                </p>
 
-        <p class='form_heading'>
-        <label for="telephone_number" class="headers">Phone Number:</label><br>
-        <input type="text" name="telephone_number" class="form_input" required>
-        </p>
+                <p class='form-heading'>
+                    <label for="password" class="headers">Password:</label><br>
+                    <input type="password" name="password" class="form-input" required>
+                </p>
 
-        <p class='form_heading'>
-        <label for="password" class="headers">Password:</label><br>
-        <input type="password" name="password" class="form_input" required>
-        </p>
+                <input style="font-size: 16px; width: 150px;" type="submit" value="Sign Up" class="button">
+            </form>
 
-        <input type="submit" value="Sign Up" class="button">
-    </form>
-</center></div>
-<body>
-    
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-
-    {% if success_message %}
-    <p style="color: green;">{{ success_message }}</p>
-    {% endif %}
-    <a href="{{ url_for('get_index') }}">Go to Homepage</a>
-    
-    {% endblock %}
-
-    {% block footer %} {{ super() }} {% endblock %}
-
-</body>
-</html>
+            {% if error_message %}
+                <p style="color: red; text-align: center;">{{ error_message }}</p>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
