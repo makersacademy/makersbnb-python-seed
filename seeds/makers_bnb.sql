@@ -65,6 +65,10 @@ INSERT INTO availability (space_id, date, status) VALUES (3,'2025-01-02',FALSE);
 INSERT INTO availability (space_id, date, status) VALUES (4,'2025-01-02',FALSE);
 INSERT INTO availability (space_id, date, status) VALUES (5,'2025-01-02',TRUE);
 INSERT INTO availability (space_id, date, status) VALUES (6,'2025-01-02',TRUE);
+INSERT INTO availability (space_id, date, status) VALUES (6,'2025-02-03',TRUE);
+INSERT INTO availability (space_id, date, status) VALUES (6,'2025-02-04',TRUE);
+INSERT INTO availability (space_id, date, status) VALUES (6,'2025-02-05',TRUE);
+INSERT INTO availability (space_id, date, status) VALUES (6,'2025-02-06',TRUE);
 
 INSERT INTO bookings (night_id, user_id, status) VALUES (1, 2, 'pending');
 INSERT INTO bookings (night_id, user_id, status) VALUES (1, 3, 'pending');
@@ -72,3 +76,7 @@ INSERT INTO bookings (night_id, user_id, status) VALUES (4, 2, 'confirmed');
 INSERT INTO bookings (night_id, user_id, status) VALUES (4, 3, 'declined');
 INSERT INTO bookings (night_id, user_id, status) VALUES (5, 1, 'confirmed');
 INSERT INTO bookings (night_id, user_id, status) VALUES (6, 2, 'confirmed');
+INSERT INTO bookings (night_id, user_id, status) VALUES (9, 1, 'pending');
+INSERT INTO bookings (night_id, user_id, status) VALUES (10, 1, 'pending');
+INSERT INTO bookings (night_id, user_id, status) VALUES (11, 1, 'pending');
+INSERT INTO bookings (night_id, user_id, status) VALUES (12, 1, 'pending');

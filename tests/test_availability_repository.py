@@ -30,7 +30,11 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
         Availability(5, 3, date(2025,1,2), False),
         Availability(6, 4, date(2025,1,2), False),
         Availability(7, 5, date(2025,1,2), True),
-        Availability(8, 6, date(2025,1,2), True)
+        Availability(8, 6, date(2025,1,2), True),
+        Availability(9, 6, date(2025,2,3), True),
+        Availability(10, 6, date(2025,2,4), True),
+        Availability(11, 6, date(2025,2,5), True),
+        Availability(12, 6, date(2025,2,6), True)
     ]
 
 def test_create(db_connection):
@@ -52,7 +56,11 @@ def test_create(db_connection):
         Availability(6, 4, date(2025,1,2), False),
         Availability(7, 5, date(2025,1,2), True),
         Availability(8, 6, date(2025,1,2), True),
-        Availability(9, 5, date(2025,2,2), True)
+        Availability(9, 6, date(2025,2,3), True),
+        Availability(10, 6, date(2025,2,4), True),
+        Availability(11, 6, date(2025,2,5), True),
+        Availability(12, 6, date(2025,2,6), True),
+        Availability(13, 5, date(2025,2,2), True)
     ]
 #we have the space id, space name and available date 
 def test_find_id(db_connection):

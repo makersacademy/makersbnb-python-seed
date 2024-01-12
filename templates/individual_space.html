@@ -58,7 +58,7 @@
                 <div class="booking-dates">
                     <div class="date-from">
                         <label for="date-from">Date from:</label>
-                        <select name="date-from" id="date-from">
+                        <select name="date-from" id="date-from" onchange="getInputValue()">
                             {% for date in availability %}
                             <option value={{date}}>{{date}}</option>
                             {% endfor %}
@@ -66,13 +66,35 @@
                     </div>
                 <div class="date-to">
                     <label for="date-to">Date to:</label>
+
                     <select name="date-to" id="date-to">
-                        {% for date in availability %}
+                        {% for date in availability2 %}
+
                         <option value={{date}}>{{date}}</option>
                         {% endfor %}
-                    </select>
+                    </select>           
                     </div>
                 </div>
+
+            <p id="demo"></p>
+            <script>
+                function getInputValue() {
+                    let fromDate = document.getElementById("date-from").value;
+                    let fromDatesplit = fromDate.split("-");
+                    let fromDatereformatted = [ fromDatesplit[1], fromDatesplit[0], fromDatesplit[2] ].join('/');
+                    let fromDatemydate = new Date(fromDatereformatted);
+        
+                    let toDate = document.getElementById("date-to").value;
+                    let toDatesplit = toDate.split("-");
+                    let toDatereformatted = [ toDatesplit[1], toDatesplit[0], toDatesplit[2] ].join('/');
+                    let toDatemydate = new Date(toDatereformatted);
+    
+                    let Difference_In_Time = toDatemydate.getTime() - fromDatemydate.getTime();
+                    let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+                    document.getElementById("demo").innerHTML = "No of nights - " + Difference_In_Days + " Total - £" + {{space.price_per_night}} * Difference_In_Days;
+                }
+                
+            </script>               
                 <input type="submit" value="Submit Request">
             </form>
             
