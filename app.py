@@ -36,7 +36,7 @@ def get_template():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html', title = "Login Page")
+    return render_template('login.html', title = "Log In Page")
 
 #
 @app.route('/login', methods=['POST'])
@@ -54,7 +54,7 @@ def post_login():
         session['user_first_name'] = existing_user.first_name
         return redirect(url_for('get_index'))
     else:
-        return render_template('login.html', error_message="Incorrect password.", title = "Login Page")
+        return render_template('login.html', error_message="Incorrect password.", title = "Log In Page")
     
 
 @app.route('/logout', methods=['GET'])
@@ -77,7 +77,7 @@ def signup():
     # Check if the email already exists in the database
     existing_user = repository.find_by_email(email)
     if existing_user:
-        return render_template('signup.html', error_message="Email already exists. Please choose a different email.", title = "Sign Up")
+        return render_template('signup.html', error_message="Email already exists. Please choose a different email.", title = "Sign Up Page")
 
     user_id = len(users) + 1
     user = {
@@ -99,11 +99,11 @@ def signup():
     )
     repository.create(new_user)
     print(f"User '{email}' signed up with user_id {user_id}.")
-    return render_template('signup.html', success_message="Sign-up successful!", title='Signup Page')
+    return render_template('signup.html', success_message="Sign-up successful!", title='Sign Up Page')
 
 @app.route('/signup', methods = ['GET'])
 def show_signup():
-    return render_template('signup.html', title='Signup Page')
+    return render_template('signup.html', title='Sign Up Page')
 
 @app.route('/spaces', methods = ['GET'])
 def get_spaces():
@@ -118,7 +118,7 @@ def get_space(id):
     repo = SpaceRepository(connection)
     print(repo.find_space_with_availabilities(id))
     if repo.find_space_with_availabilities(id) == None:
-        return render_template('no_dates.html')
+        return render_template('no_dates.html', title = "No dates available")
     space, dates = repo.find_space_with_availabilities(id)
     dates2 = []
     dates = [datetime.strptime(date, "%d-%m-%Y").date() for date in dates]
@@ -147,7 +147,7 @@ def get_space_by_month(id):
         dates2.append(new_date)
     dates = [date.strftime('%d-%m-%Y') for date in dates]
     dates2 = [date.strftime('%d-%m-%Y') for date in dates2]
-    return render_template('individual_space.html', space = space, availability = dates, availability2 = dates2, month = month)
+    return render_template('individual_space.html', space = space, availability = dates, availability2 = dates2, month = month, title = f'Spaces - id:{id}')
 
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
@@ -273,7 +273,7 @@ def get_authorization():
                             booking_name.append(space.name)
         except:
             error_message = "You need to be logged in to access this page"
-    return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message, booking_id=booking_id)
+    return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message, booking_id=booking_id, title = "Bookings for your spaces")
 
 @app.route('/authorization', methods = ['POST'])
 def post_authorization():
