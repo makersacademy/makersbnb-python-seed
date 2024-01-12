@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+    <main>
+        <div class="example-container">
+            <div class="addnewspace">
+                {% if 'user_id' in session %}
+            <p>Welcome, {{ session['user_first_name'] }}!</p>
+            <!-- Add other personalized content as needed for logged-in users -->
+        {% else %}
+            <p>You are not logged in! Please sign up or log in.</p><!-- Content for users who are not logged in -->
+        {% endif %}
+                <h3><a href="/addnewspace">Add New Space</a></h3>
+                <h3><a href="/authorization">Approve requests</a></h3>
+                <hr>
+            </div>
+            {% for space in spaces %}
+            <div class="t-property">
+                <h2><a href="/spaces/{{space.id}}">{{space.name}}</a></h2>
+                <p>Description: {{space.description}}</p>
+                <p>Price per night: £{{space.price_per_night}}</p>
+            </div>
+            <hr>
+            
+            {% endfor %}
+        
+        </div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</body>
+</html>

@@ -1,0 +1,73 @@
+from lib.availability import Availability
+from lib.availability_repository import AvailabilityRepository
+from datetime import date
+
+# CREATE TABLE availability (
+#     id SERIAL NOT NULL UNIQUE,
+#     space_id int,
+#     date date,
+#     status boolean,
+#     primary key (space_id, date),
+#     constraint fk_space foreign key(space_id) references spaces(id) on delete cascade
+# );
+
+"""
+When we call AvailabilityRepository#all
+We get a list of Available list of spaces reflecting the seed data.
+"""
+def test_get_all_records(db_connection): # See conftest.py to learn what `db_connection` is.
+    db_connection.seed("seeds/makers_bnb.sql") # Seed our database with some test data
+    repository = AvailabilityRepository(db_connection) # Create a new AvailabilityRepository
+
+    availablespaces = repository.all() # Get all spaces
+
+    # Assert on the results
+    assert availablespaces == [
+        Availability(1, 1, date(2025,1,1), True),
+        Availability(2, 1, date(2025,1,2), True),
+        Availability(3, 1, date(2025,2,3), True),
+        Availability(4, 2, date(2025,1,2), False),
+        Availability(5, 3, date(2025,1,2), False),
+        Availability(6, 4, date(2025,1,2), False),
+        Availability(7, 5, date(2025,1,2), True),
+        Availability(8, 6, date(2025,1,2), True),
+        Availability(9, 6, date(2025,2,3), True),
+        Availability(10, 6, date(2025,2,4), True),
+        Availability(11, 6, date(2025,2,5), True),
+        Availability(12, 6, date(2025,2,6), True)
+    ]
+
+def test_create(db_connection):
+    db_connection.seed("seeds/makers_bnb.sql") # Seed our database with some test data
+    repository = AvailabilityRepository(db_connection) # Create a new AvailabilityRepository
+
+    space = Availability(None, 5, date(2025,2,2))
+    repository.create(space)
+
+    availablespaces = repository.all() # Get all spaces
+
+    # Assert on the results
+    assert availablespaces == [
+        Availability(1, 1, date(2025,1,1), True),
+        Availability(2, 1, date(2025,1,2), True),
+        Availability(3, 1, date(2025,2,3), True),
+        Availability(4, 2, date(2025,1,2), False),
+        Availability(5, 3, date(2025,1,2), False),
+        Availability(6, 4, date(2025,1,2), False),
+        Availability(7, 5, date(2025,1,2), True),
+        Availability(8, 6, date(2025,1,2), True),
+        Availability(9, 6, date(2025,2,3), True),
+        Availability(10, 6, date(2025,2,4), True),
+        Availability(11, 6, date(2025,2,5), True),
+        Availability(12, 6, date(2025,2,6), True),
+        Availability(13, 5, date(2025,2,2), True)
+    ]
+#we have the space id, space name and available date 
+def test_find_id(db_connection):
+    db_connection.seed("seeds/makers_bnb.sql") # Seed our database with some test data
+    repository = AvailabilityRepository(db_connection) # Create a new AvailabilityRepository
+    space_id = 1
+    first_date = date(2025,1,1)
+    last_date = date(2025,1,2)
+    result = repository.find_id(space_id,first_date,last_date)
+    assert result == [1,2]

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+    <main>
+        <div class="example-container">
+            <div class="addnewspace">
+                {% if 'user_id' in session %}
+            <p>Welcome, {{ session['user_first_name'] }}!</p>
+            <!-- Add other personalized content as needed for logged-in users -->
+        {% else %}
+            <p>You are not logged in! Please <a href = '/signup'>sign up</a> or <a href = '/login'>log in.</a></p><!-- Content for users who are not logged in -->
+        {% endif %}
+                <hr>
+            </div>
+            <div class="t-property">
+                <p>First Name: {{user.first_name}}</p>
+                <p>Last Name: {{user.last_name}}</p>
+                <p>Email: {{user.email}}</p>
+                <p>Telephone Number: {{user.telephone_number}}</p>
+            </div>
+            <hr>
+            
+        
+        </div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</body>
+</html>
