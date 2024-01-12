@@ -144,7 +144,10 @@ class BookingRepository:
                 [date.isoformat(), space_id, booking.guest_id, confirmed],
             )
             if self.global_mobilenum != "":
-                self.send_sms("Booking confirm", self.global_mobilenum)
+                self.send_sms(
+                    "Your booking request has been recieved. All bookings require a £20 deposit before they will be confirmed",
+                    self.global_mobilenum,
+                )
         else:
             raise Exception("That date is not available!")
         return None
@@ -198,7 +201,7 @@ class BookingRepository:
                 [booking.date.isoformat(), booking.space_id],
             )
             if self.global_mobilenum != "":
-                self.send_sms("Booking confirm", self.global_mobilenum)
+                self.send_sms("Booking confirmed", self.global_mobilenum)
             return True
         else:
             raise Exception("Booking does not exist.")
