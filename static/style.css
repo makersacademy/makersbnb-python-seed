@@ -1,3 +1,70 @@
 body {
-    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensure the page takes at least the full height of the viewport */
+    background-color: #1d1d1d; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    color: #FF5A5F; /* Orange heading */
+}
+
+p {
+    color: #cccccc; /* Light gray text */
+}
+
+.alert {
+    padding: 15px;
+    margin: 20px 0;
+    border: 1px solid #FF5A5F; /* Orange border */
+    background-color: #333333; /* Dark gray background */
+    color: #FF5A5F; /* Orange text */
+}
+
+.form-container {
+    background-color: #333333; /* Dark gray background for the form */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+label, input, button {
+    margin: 10px 0;
+    display: block;
+}
+
+input {
+    padding: 8px;
+}
+
+button {
+    background-color: #FF5A5F; /* Orange button */
+    color: #ffffff; /* White text on the button */
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #cc5500; /* Darker orange on hover */
+}
+
+.form-container {
+    background-color: #333333; /* Dark gray background for the form */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px; /* Set a specific width for the form container */
+}
+
+a {
+    color: pink; /* Set the link color to pink */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    color: #ff1493; /* Change link color on hover */
 }
