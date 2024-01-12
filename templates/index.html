@@ -13,7 +13,7 @@
 <body class="bg-yellow">
   <div class="row pt-2 ps-3 pe-3">
     <div class="col-4 fs-5 fw-bold">
-    {{ session['fullname'] }}
+      {{ session['fullname'] }}
     </div>
     <div class="col-8 fs-5 fw-bold text-end">
       {% if session['id'] %}
@@ -33,12 +33,12 @@
       MakersBNB
     </div>
   </div>
+  {% if session['id'] and data %}
   <div class="row d-flex justify-content-center">
     <div class="col-6 px-0">
       <a class="btn btn-primary" href="/spaces/show/add">Add Space</a>
     </div>
   </div>
-  {% if session['id'] and data %}
   {% for space in data %}
   <div class="row pt-4 d-flex justify-content-center">
     <div class="col-6 bg-white pt-2 p-4 px-5 rounded-3 shadow">
@@ -63,7 +63,11 @@
   </div>
   </div>
   {% else %}
-  <p>Please log in first</p>
+  <div class="row mt-5 d-flex justify-content-center">
+    <div class="col-6 fs-4 text-danger fw-bold text-center">
+      Login Required
+    </div>
+  </div>
   {% endif %}
   </div>
 
