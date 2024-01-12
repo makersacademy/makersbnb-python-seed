@@ -71,16 +71,20 @@
         {% for request, space in received_zipped_data %}
         <div aria-label="{{space.name}}" class="spaceIndividual">
             <a aria-label="{{space.name}}" class="row" href="/requests/{{ request.id }}">
-              <div class="column">
+              <div class="request1 column">
 
                 <p>{{space.name}}</p><br>
                 <p>{{space.description}}</p>
+                <div>
+                {% if request.confirmed == True %}
+
+                  <p>You approved this.</p>
+                  {% elif request.confirmed == False %}
+                  <p>You rejected this.</p>
+                  {% else %}
+                  {% endif %}
+                </div>
               </div>
-            {% if request.confirmed == True %}
-            <p>You approved this.</p>
-            {% elif request.confirmed == False %}
-            <p>You rejected this.</p>
-            {% else %}
             <svg
             fill="#000000"
             height="50px"
@@ -108,7 +112,7 @@
         </a>
         </div>
         <br>    
-        {% endif %}
+
         {% endfor %}
     </div>
 </div>
