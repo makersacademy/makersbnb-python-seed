@@ -88,7 +88,7 @@ def book(id):
     booking_id = booking_repo.create(booking)
     booking.id = booking_id
     user_repo.add_booking(booking)
-    return redirect("/list_spaces")
+    return redirect("/requests")
 
 
 @app.route("/requests", methods=["GET"])
