@@ -121,3 +121,7 @@ body {
 .date-to {
     margin-right: -20px;
 }
+
+.my-requests > p {
+    margin: 3px;
+}
