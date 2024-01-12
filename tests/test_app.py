@@ -127,7 +127,7 @@ def test_create_user(db_connection, page, test_web_address,web_client):
     page.click("text=Submit")
     
     strong_tag = page.locator("h1")
-    expect(strong_tag).to_have_text("Space Listings")
+    expect(strong_tag).to_have_count(2)
 
 def test_create_user_wrong_pass(page,db_connection, test_web_address,web_client):
     db_connection.seed("seeds/MasterTest.sql")

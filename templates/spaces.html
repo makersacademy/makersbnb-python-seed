@@ -12,9 +12,9 @@
     /* center items vertically */
     justify-content: space-between;
     position: inherit;
-    border: solid 3px black;
+    border: solid 3px darkgray;
     width: 350px;
-    height: 182px;
+    height: 192px;
     box-sizing: border-box;
     margin-top: 1%;
     margin-left: 1%;
@@ -26,26 +26,16 @@
     display:inline-block;
     justify-content:space-between;
     position: relative;
-    width: 1600px;
+    width: 80%;
     height: 260px;
     margin-left: 3%;
     margin-right: 3%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     align-items: center;
     flex-direction: row;
     outline: none;}
-  .button {
-      border: 2px solid rgb(0,0,0);
-      color: rgb(0, 0, 0);
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-    }
+  
     .button3 {
       border: 2px solid rgb(0,0,0);
       color: rgb(0, 0, 0);
@@ -61,15 +51,19 @@
     .button2 {background-color: #cbc9c9;} 
     .button3 {background-color: #cbc9c9;} 
     .flex-box {
-  display:flex;
-  justify-content:space-between;
-  outline: none;
-}
+      display:flex;
+      justify-content: center;
+      width: 100%;
+      margin-left: 72%;
+      flex-direction: row;
+      flex-basis: auto;
+  
+  outline: none;}
+
 .flex-box2 {
   display:flex;
   justify-content:space-between;
   width: 700px;
-  margin-left: 30%;
   align-items: center;
   
   outline: none;}
@@ -82,9 +76,13 @@
   <body>
     {% if signedin %}
     <span class="flex-box2"><a href="/newspace">List new space</a>|<a href='/dashboard'>Dashboard</a>
+      
     </span>
-    <p align="right" class="t-current_user">Signed in as {{ username }}</p>
-    <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+    <br>
+    <span class="flex-box">
+      <p class="t-current_user">Signed in as {{ username }}</p> &nbsp;&nbsp;
+      <p><button class="button" onclick="location.href='/sign_out';">Sign out</button></p>
+    </span>
     {% else %}
       <p align="right">
         <button class="button button1" onclick="location.href='/log_in';">Sign in!</button>
@@ -116,7 +114,7 @@
           </div>
           <p><br><br></p>
     {% if signedin %}
-    <h2 align="center">Your listings</h2>
+    <h1 align="center">Your listings</h1>
     <div class="flex-box3">
           {% for space in user_spaces %}
             <ui id="textContainer">
