@@ -231,6 +231,9 @@ def get_my_requests():
     bookings_repository = BookingRepository(connection)
     userid = session.get('user_id')
     requests = bookings_repository.find_all_bookings_and_spaces_by_user_id(userid)
+    for request in requests:
+        request['date_to'] = request['date_to'].strftime('%d-%m-%Y')
+        request['date_from'] = request['date_from'].strftime('%d-%m-%Y')
 
     return render_template('my_requests.html', requests = requests, title = "My requests")
 
