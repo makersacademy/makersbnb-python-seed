@@ -5,8 +5,20 @@
     {% block header %} {{ super() }} {% endblock %}
 
     {%block content%}
-        <main> {% for booking in bookings %}
-            <div> <h2> booking. </h2> </div>
+        <main> 
+            {% if error == "" %}
+            {% for i in range(number) %}
+            <div> <center> 
+                <h2> {{names[i]}} </h2> 
+                <p>  {{dates[i]}} </p>
+                <p> <button class="button" type="submit"> accept </button> <button class="button" type="submit"> decline </button> </p>
+            </center> </div>
+
+            {%endfor%}
+            {% else %}
+            <h2 class="error"> <center> {{error}} </center>  </h2>
+            {% endif %}
+
         </main>
     {% endblock %}
 
