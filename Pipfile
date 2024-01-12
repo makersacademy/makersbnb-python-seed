@@ -12,6 +12,8 @@ pytest-xprocess = "*"
 py = "*"
 pyjwt = "*"
 pytest-asyncio = "*"
+stripe = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"
