@@ -21,7 +21,7 @@ users = []
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def get_index():
     if 'user_id' in session:
         user_name = session['user_first_name']
@@ -116,6 +116,9 @@ def get_spaces():
 def get_space(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
+    print(repo.find_space_with_availabilities(id))
+    if repo.find_space_with_availabilities(id) == None:
+        return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities(id)
     return render_template('individual_space.html', space = space, availability = dates)
 
@@ -127,6 +130,8 @@ def get_space_by_month(id):
     repo = SpaceRepository(connection)
     if month == 'show-all':
         return redirect(f'/spaces/{id}')
+    if repo.find_space_with_availabilities_month(id, month) == None:
+        return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities_month(id, month)
     return render_template('individual_space.html', space = space, availability = dates, month = month)
 
@@ -140,6 +145,8 @@ def add_space():
     repo_space = SpaceRepository(connection)
     repo_avaliblity = AvailabilityRepository(connection)
     userid = session.get('user_id')
+    if userid is None:
+        return redirect('/login')
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']
@@ -169,14 +176,43 @@ def bookaspace(id):
     repo_space = SpaceRepository(connection)
     repo_booking = BookingRepository(connection)
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
-    # user_id = session["user_id"] #When session is functional we can uncomment this line
-    user_id = 2 #Remove this line once session is live
+    user_id = session.get('user_id')
     status = "pending"
-    for night_id in night_ids:
-        repo_booking.create(Booking(None, night_id, user_id, status))
+
+    if 'user_id' in session:
+        for night_id in night_ids:
+            repo_booking.create(Booking(None, night_id, user_id, status))
+    else:
+        return render_template('login.html')
     space = repo_space.find(id)
     noofnights = (last_date - first_date).days
     return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date, noofnights = noofnights)
+
+@app.route('/my-listings', methods = ['GET'])
+def get_my_listings():
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    if session.get('user_id') == None:
+        return redirect('/spaces')
+    spaces = repo.find_by_user(int(session.get('user_id')))
+    return render_template('my_listings.html', spaces = spaces)
+
+@app.route('/my-profile', methods = ['GET'])
+def get_myprofile():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    user = repo.find_user(int(session.get('user_id')))
+    return render_template('my_profile.html', user = user)
+
+@app.route('/my-requests')
+def get_my_requests():
+    connection = get_flask_database_connection(app)
+    bookings_repository = BookingRepository(connection)
+    userid = session.get('user_id')
+    requests = bookings_repository.find_all_bookings_and_spaces_by_user_id(userid)
+
+    return render_template('my_requests.html', requests = requests)
+
 
 
 # These lines start the server if you run this file directly

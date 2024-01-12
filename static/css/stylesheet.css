@@ -61,6 +61,8 @@ body {
     justify-content: center;
     background-color: var(--colour-3);
     opacity: 0.8;
+    a {text-decoration: none; };
+    a:visited {color: var(--colour-1)}
 }
 
 .navbar > div {
@@ -118,4 +120,8 @@ body {
 
 .date-to {
     margin-right: -20px;
+}
+
+.my-requests > p {
+    margin: 3px;
 }
