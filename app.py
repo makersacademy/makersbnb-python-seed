@@ -197,6 +197,17 @@ def get_myprofile():
     user = repo.find_user(int(session.get('user_id')))
     return render_template('my_profile.html', user = user)
 
+@app.route('/my-requests')
+def get_my_requests():
+    connection = get_flask_database_connection(app)
+    bookings_repository = BookingRepository(connection)
+    userid = session.get('user_id')
+    requests = bookings_repository.find_all_bookings_and_spaces_by_user_id(userid)
+
+    return render_template('my_requests.html', requests = requests)
+
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
