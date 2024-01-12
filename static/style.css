@@ -1,3 +1,204 @@
 body {
-    font-size: 18px;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.listSpaceForm {
+  text-align: center;
+  border: 2px solid black;
+  width: 50%;
+  margin: auto;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.listSpace {
+  text-align: center;
+}
+
+.spaceWithDates {
+  text-align: center;
+}
+
+.button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  color: black;
+  border: 2px solid black;
+  background: #f2f2f2;
+}
+
+.button:hover {
+  background-color: #555555;
+  color: white;
+  border: 2px solid black;
+}
+
+.spacesList {
+  border: 2px solid black;
+  width: 50%;
+  margin: auto;
+  background: #f2f2f2;
+}
+
+.spaceIndividual {
+  border: 2px solid black;
+  width: 70%;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  background: #faf9f6;
+}
+
+.spaceIndividual:hover {
+  background-color: #d9d9d9;
+  color: white;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.spacebutton {
+  /* max-width: 70%; */
+  padding-left: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+label {
+  padding-top: 20px;
+}
+
+.formStyling {
+  padding: 20px 0px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  width: 100vw;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  line-height: 50px;
+}
+.topnav img {
+  float: left;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04aa6d;
+  color: white;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+.centeredText {
+  text-align: center;
+}
+
+.requestsMadeRecieved {
+  display: flex;
+  flex-direction: row;
+}
+
+.requestsList {
+  border: 2px solid black;
+  width: 40%;
+  margin: auto;
+  background: #f2f2f2;
+}
+
+.requestReceived {
+  margin-top: 0;
+}
+
+.buttonStyling {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.approveDeny {
+  margin: 0 10px;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  font-family: sans-serif;
+  color: #212427;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.logoMakersBnB {
+  font-size: 25px !important;
+  padding: 15px 0px;
+}
+
+.logoMakersBnB img {
+  padding: 0px 15px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  margin: auto;
+}
+
+.removePadding {
+  margin: 0;
 }

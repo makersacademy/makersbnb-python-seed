@@ -1,0 +1,16 @@
+{% extends "layout.html" %} {% block body %}
+<body>
+  <div style="text-align: center">
+    <h1>Your booking request has been sent!</h1>
+    <form action="{{ url_for('create_checkout_session') }}" method="post">
+      <input type="hidden" name="booking_id" value="{{ booking_id }}" />
+      <input type="submit" value="Pay Deposit" />
+    </form>
+    <p>
+      All bookings require a deposit of £20 before they will be confirmed. You
+      will be redirected to an external page to pay the deposit.
+    </p>
+  </div>
+
+</body>
+{% endblock %}

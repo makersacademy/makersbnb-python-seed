@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersBnB</title>
+    <meta name="description" content="Discover unique spaces and creative havens on MakersBnB, your go-to destination for extraordinary stays. Immerse yourself in a world of artisanal accommodations designed by makers, artists, and innovators. From cozy studios to inspiring workshops, unlock the door to a stay as unique as you are. Welcome to MakersBnB – where creativity meets comfort, and every stay tells a story.">
+    <link rel="icon" href="{{ url_for('static', filename='MakersBnB.png') }}" type="image/png">
+    <link rel="stylesheet" href="/static/style.css" >
+</head>
+<body>
+    <nav>
+        <div class="topnav">
+            {% if 'token' in request.cookies %}
+            <a class="logoMakersBnB" href="/spaces">
+            {% else %}
+            <a href="/" >
+            {% endif %}
+            <img src="{{ url_for('static', filename='MakersBnB.png') }}">
+            MakersBnB
+            </a>
+            <div class="topnav-right">
+                
+                <!-- this only displays if a user is logged in -->
+                {% if 'token' in request.cookies %}
+                <a href="/account">Account</a>
+                <a href="/spaces">Spaces</a>
+                <a href="/requests">Requests</a>
+                <a href="/logout" >Logout</a>
+
+                <!-- this only displays if a user is logged out -->
+                {% else %}
+                <a href="/login" >Login</a>
+                {% endif %}
+
+                                
+            </div>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+
+
+
+</body>
+</html>

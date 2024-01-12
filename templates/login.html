@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<body>
+        <h1 style="text-align:center;">Log in to MakersBnB</h1>
+<form action="/login" method="POST" style="text-align:center;">
+Username
+<br>
+<input type="text" name="username">
+<br>
+<br>
+Password
+<br>
+<input type="password" name="password">
+<br>
+<p>Please note: Usernames & Passwords are case sensitive</p>
+
+<input type="submit" value="login">
+</form>
+</body>
+{% endblock %}

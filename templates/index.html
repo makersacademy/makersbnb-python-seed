@@ -1,15 +1,42 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
+{% extends "layout.html" %}
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <p>This is the homepage.</h1>
-    </body>
-</html>
+{% block body %}
+
+  <body>
+    <h1 style="text-align: center">Feel at home, anywhere</h1>
+    <h2 style="text-align: center">Sign up to MakersBnB</h2>
+    <form action="/" method="POST" style="text-align: center">
+      Username
+      <br />
+      <input type="text" name="username" />
+      <br />
+      <br />
+      Email
+      <br />
+      <input type="email" name="email" />
+      <br />
+      <br />
+      Password
+      <br />
+      <!--input type=password placeholder="P@ssw0rd"-->
+      <input
+        type="password"
+        name="password"
+        pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+        title="Password must be at least 8 characters long and include both a special character and a number."
+      />
+      <!--input input type="password" id="pwd" name="pwd" minlength="8" pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$" required><br><br> -->
+      <br />
+      <br />
+      Password Confirmation
+      <br />
+      <!--input type=password placeholder="P@ssw0rd"> -->
+      <input type="password" name="password_confirmation" />
+      <br />
+      <br />
+      <input type="submit" value="Submit" />
+      <br />
+      <br />
+    </form>
+  </body>
+{% endblock %}

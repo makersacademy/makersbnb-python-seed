@@ -1,0 +1,24 @@
+{% extends "layout.html" %} {% block body %}
+<body>
+  <h1>{{space.name}}</h1>
+  <p>{{space.description}}</p>
+  <p>£{{space.price}} per night</p>
+  <div class="spaceWithDates">
+    <form class="createBookingForm" action="/bookings/new" method="post">
+      {% for date in dates %}
+      <input
+        type="radio"
+        id="{{date.isoformat()}}"
+        name="date_option"
+        value="{{date.isoformat()}}"
+        required
+      />
+      <label for="{{date.isoformat()}}">{{date.isoformat()}}</label><br />
+      {% endfor %}
+      <br />
+      <input type="hidden" name="space_id" value="{{space.id}}" />
+      <input class="button" type="submit" value="Request to Book" />
+    </form>
+  </div>
+</body>
+{% endblock %}
