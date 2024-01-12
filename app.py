@@ -49,6 +49,8 @@ def create_new_space():
     price = request.form["price"]
     start_date = request.form["start_date"]
     end_date = request.form["end_date"]
+    if user == "" or space_name == "" or location == "" or description == "" or price == "" or start_date == "" or end_date == "":
+        return redirect("/new_space")
     space_repo = SpaceRepository(connection)
     new_space = Space(
         None, space_name, location, description, price, user.id, start_date, end_date
@@ -80,6 +82,8 @@ def book(id):
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(id)[0]
     booking_date = request.form["date"]
+    if booking_date == "":
+        return redirect(f"/space/{id}")
     booking = Booking(None, booking_date, False, False, session["user_id"], id)
     if booking_repo.already_booked(booking):
         return render_template(
@@ -168,14 +172,15 @@ def spaces():
     elif request.method == "POST":
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
-        if "available_from" in request.form and "available_to" in request.form:
-            available_from = request.form["available_from"]
-            available_to = request.form["available_to"]
-            spaces = repository.get_available_spaces(available_from, available_to)
-            if not spaces or spaces == "No results found":
-                return render_template("list_spaces.html", spaces=[], no_results=True, user=show_user())
-            else:
-                return render_template("list_spaces.html", spaces=spaces, user=show_user())
+        available_from = request.form["available_from"]
+        available_to = request.form["available_to"]
+        if available_to == "" or available_from == "":
+            return redirect("/list_spaces")
+        spaces = repository.get_available_spaces(available_from, available_to)
+        if not spaces or spaces == "No results found":
+            return render_template("list_spaces.html", spaces=[], no_results=True, user=show_user())
+        else:
+            return render_template("list_spaces.html", spaces=spaces, user=show_user())
     return render_template("list_spaces.html", user=show_user())
 
 
