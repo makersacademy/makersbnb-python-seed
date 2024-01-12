@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang=“en”>
-<style>
+<!-- <style>
  #textContainer {
     /* make element inline flex-container */
     /* this will make its children flex-items */
@@ -57,23 +57,16 @@
       margin: 4px 2px;
       cursor: pointer;
     }
-    .button1 {background-color: #cbc9c9;} 
-    .button2 {background-color: #cbc9c9;} 
-    .button3 {background-color: #cbc9c9;} 
+    
     .flex-box {
   display:flex;
   justify-content:space-between;
   outline: none;
 }
-.flex-box2 {
-  display:flex;
-  justify-content:space-between;
-  width: 700px;
-  margin-left: 30%;
-  align-items: center;
+
   
   outline: none;}
-  </style>
+  </style> -->
   <head>
     <link rel="stylesheet" href="/static/style.css">
     <title>Spaces</title>
@@ -83,8 +76,8 @@
     {% if signedin %}
     <span class="flex-box2"><a href="/newspace">List new space</a>|<a href='/dashboard'>Dashboard</a>
     </span>
-    <p align="right" class="t-current_user">Signed in as {{ username }}</p>
-    <p align='right'><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+    <h5 class="t-current_user">Signed in as {{ username }}</h5>
+    <p><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
     {% else %}
       <p align="right">
         <button class="button button1" onclick="location.href='/log_in';">Sign in!</button>
@@ -116,7 +109,7 @@
           </div>
           <p><br><br></p>
     {% if signedin %}
-    <h2 align="center">Your listings</h2>
+    <h1 align="center">Your listings</h1>
     <div class="flex-box3">
           {% for space in user_spaces %}
             <ui id="textContainer">
