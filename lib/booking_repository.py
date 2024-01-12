@@ -1,0 +1,33 @@
+from lib.booking import Booking
+
+class BookingRepository():
+    def __init__(self, connection):
+        self._connection = connection
+
+
+# get all, create, delete, confirm (True/False)
+        
+    def all(self):
+        rows = self._connection.execute('SELECT * from bookings')
+        bookings = []
+        for row in rows:
+            item = Booking(row["id"], str(row["date"]), row["confirmed"], row["user_id"], row["space_id"])
+            bookings.append(item)
+        return bookings
+    
+    def find(self, id):
+        rows = self._connection.execute('SELECT * FROM bookings WHERE id = %s', [id])
+        row = rows[0]
+        return Booking(row["id"], str(row["date"]), row["confirmed"], row["user_id"], row["space_id"])
+
+    def create(self, booking):
+        self._connection.execute('INSERT INTO bookings (date, confirmed, user_id, space_id) VALUES (%s, %s, %s, %s)', [booking.date, booking.confirmed, booking.user_id, booking.space_id])
+        return None
+    
+    def delete(self, id):
+        self._connection.execute('DELETE FROM bookings WHERE id = %s', [id])
+        return None
+    
+    def confirm(self, id):
+        self._connection.execute('UPDATE bookings SET confirmed=TRUE')
+        return None
