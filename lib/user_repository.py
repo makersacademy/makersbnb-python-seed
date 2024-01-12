@@ -62,8 +62,6 @@ class UserRepository:
             stored_password = user["password"]
             # hash the inputted password and create
             hashed_password = hash_pass(password)
-            print(f"stored_password: {stored_password}")
-            print(f"hashed_password: {hashed_password}")
 
             # compare the hashed pword with the stored password
             if stored_password == hashed_password:
@@ -82,12 +80,14 @@ class UserRepository:
         return self._connection.execute(
             """
             SELECT id FROM users WHERE username=%s;
-            """, [username]
-        )[0]['id']
-    
+            """,
+            [username],
+        )[0]["id"]
+
     def id_to_username(self, id):
         return self._connection.execute(
             """
             SELECT username FROM users WHERE id=%s;
-            """, [id]
-        )[0]['username']
+            """,
+            [id],
+        )[0]["username"]
