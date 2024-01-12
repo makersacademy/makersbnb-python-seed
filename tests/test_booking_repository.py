@@ -91,6 +91,20 @@ def test_booking_repo_create(db_connection):
         booking_repo.create(bad_booking)
     assert str(err.value) == "That date is not available!"
 
+def test_booking_repo_create_no_duplicates(db_connection):
+    """
+    Tests that a new booking is inserted into the database
+    by the #create method ONLY when there is no previous booking
+    for the same space, date, guest combination
+    """
+    db_connection.seed("seeds/makersbnb.sql")
+    booking_repo = BookingRepository(db_connection)
+    new_booking = Booking(None, date(2024,2,1), 1, 3, None)
+    assert booking_repo.create(new_booking) == None
+    with pytest.raises(Exception) as err:
+        booking_repo.create(new_booking)
+    assert str(err.value) == "You have already made a booking request for this space on that date!"
+
 def test_booking_repo_delete(db_connection):
     """
     Tests that the #delete method removes the booking with id == id

@@ -37,6 +37,9 @@
             </div>
         </div>
     </nav>
+    {% if error %}
+    <p class="error">Error: {{ error }}</p>
+  {% endif %}
     {% block body %}{% endblock %}
 
 
