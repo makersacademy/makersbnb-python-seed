@@ -203,11 +203,10 @@ body {
   margin: 0;
 }
 
+.centerButton {
+  text-align: center;
+}
 
 .error {
   color: #d40f0f;
-}
-
-.createAccountButton {
-  text-align: center;
 }

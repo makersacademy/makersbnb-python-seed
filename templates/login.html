@@ -3,9 +3,6 @@
 {% block body %}
 <body>
         <h1 style="text-align:center;">Log in to MakersBnB</h1>
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
 <form action="/login" method="POST" style="text-align:center;">
 
 Username
@@ -19,12 +16,12 @@ Password
 <br>
 <p>Please note: Usernames & Passwords are case sensitive</p>
 
-<input type="submit" value="login">
+<input class="button" type="submit" value="login">
 </form>
 <br>
 <br>
 <p>If you don't have an account, please go to our signup page:</p>
-<div class="createAccountButton">
+<div class="centerButton">
         <a class="button" href="/">Create account</a> <br>
 </div>
 </body>
