@@ -18,7 +18,7 @@
         <h2></h2>
         <h3>{{ space.space_name }}</h3>
         <h4>{{ space.description }}</h4>
-        <h4>{{ space.price }}</h4>
+        <h4>£{{ space.price }}</h4>
         <div>
         <form  class="book-space-form"  method="post" action="/book/{{ space.id }}">
             Pick a night: <input type="date" name="date">
