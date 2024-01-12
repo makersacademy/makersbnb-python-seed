@@ -110,19 +110,45 @@ a:hover {
 }
 
 .flex-box3 {
-    display: flex;
-    justify-content: space-around;
+    /* display: flex; */
+    /* justify-content: space-around; */
     border: 2px solid #333; /* Add a border to the flex container */
     padding: 10px; /* Optional: Add some padding for better visual appearance */
+    
+    display:inline-block;
+    justify-content:space-between;
+    position: inherit;
+    width: 80%;
+    height: 260px;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-items: center;
+    flex-direction: row;
+    outline: none;
   }
   
   /* Style for each flex item (box) */
   #textContainer {
-    border: 1px solid #ddd; /* Add a border to each flex item */
-    padding: 10px; /* Optional: Add some padding for better visual appearance */
-    margin: 10px; /* Optional: Add margin to separate the items */
-    width: 200px; /* Optional: Set a fixed width for each box */
-    box-sizing: border-box; /* Ensure padding and border are included in the box size */
+    /* make element inline flex-container */
+    /* this will make its children flex-items */
+    display: inline-block;
+    /* align-items items in column */
+    flex-direction: column;
+    /* center items horizontally */
+    align-items: center;
+    /* center items vertically */
+    justify-content: space-between;
+    position: inherit;
+    border: solid 3px darkgray;
+    width: 350px;
+    height: 192px;
+    box-sizing: border-box;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 1%;
+    margin-bottom: 2%;
   }
 
 

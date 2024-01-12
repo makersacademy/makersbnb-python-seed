@@ -82,16 +82,15 @@
   <body>
     {% if signedin %}
     <span class="flex-box2"><a href="/newspace">List new space</a>|<a href='/dashboard'>Dashboard</a>
+      <p><button class="button" onclick="location.href='/sign_out';">Sign out</button></p>
       
     </span>
     <br>
     <span class="flex-box">
-      <p class="t-current_user">Signed in as {{ username }}</p> &nbsp;&nbsp;
-      <p><button class="button" onclick="location.href='/sign_out';">Sign out</button></p>
+      <h5 class="t-current_user">Signed in as {{ username }}</h5> &nbsp;&nbsp;
     </span>
 
-    <h5 class="t-current_user">Signed in as {{ username }}</h5>
-    <p><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+   
 
 
     {% else %}
