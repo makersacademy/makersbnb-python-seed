@@ -129,10 +129,10 @@ def register():
         password_confirmation = request.form.get("password_confirmation")
 
         if password != password_confirmation:
-            return "Passwords do not match", 400
+            return render_template('index.html', error="Passwords do not match")
 
         if not is_valid(password):
-            return "Invalid password", 400
+            return render_template('index.html', error="Invalid password")
 
         connection = get_flask_database_connection(app)
         user_repo = UserRepository(connection)
