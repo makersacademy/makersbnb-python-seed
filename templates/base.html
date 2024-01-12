@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Title</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}"></head>
 {% block header %}
 <header>
@@ -30,7 +30,7 @@
 
 {% block footer %}
 <footer>
-    <div class="footer"></div>>
+    <div class="footer"></div>
 </footer>
 {% endblock %}
 </html>

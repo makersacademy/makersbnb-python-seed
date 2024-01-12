@@ -69,3 +69,8 @@ class BookingRepository:
             requests.append(current_request)
         
         return requests
+
+
+    def update_status(self, button_press, booking_id):
+        self._connection.execute('UPDATE bookings SET status = %s WHERE id = %s', [button_press, booking_id])
+        return None

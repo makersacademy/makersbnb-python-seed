@@ -19,7 +19,11 @@ def test_all_bookings(db_connection):
         Booking(3 ,4, 2, 'confirmed'),
         Booking(4 ,4, 3, 'declined'),
         Booking(5 ,5, 1, 'confirmed'),
-        Booking(6 ,6, 2, 'confirmed')
+        Booking(6 ,6, 2, 'confirmed'),
+        Booking(7, 9, 1, 'pending'),
+        Booking(8, 10, 1, 'pending'),
+        Booking(9, 11, 1, 'pending'),
+        Booking(10, 12, 1, 'pending'),
     ]
 
 """
@@ -48,7 +52,11 @@ def test_create_booking(db_connection):
         Booking(4 ,4, 3, 'declined'),
         Booking(5 ,5, 1, 'confirmed'),
         Booking(6 ,6, 2, 'confirmed'),
-        Booking(7, 2, 3, 'pending')
+        Booking(7, 9, 1, 'pending'),
+        Booking(8, 10, 1, 'pending'),
+        Booking(9, 11, 1, 'pending'),
+        Booking(10, 12, 1, 'pending'),
+        Booking(11, 2, 3, 'pending')
     ]
 
 """
@@ -77,12 +85,13 @@ def test_find_all_bookings_and_spaces_by_user_id_with_consecutive_dates(db_conne
     availability_repository.create(Availability(None, 7, date(2023, 1, 1), True))
     availability_repository.create(Availability(None, 7, date(2023, 1, 2), True))
     availability_repository.create(Availability(None, 7, date(2023, 1, 3), True))
-    booking_repository.create(Booking(None, 9, 2, 'pending'))
-    booking_repository.create(Booking(None, 10, 2, 'pending'))
-    booking_repository.create(Booking(None, 11, 2, 'pending'))
+    booking_repository.create(Booking(None, 13, 2, 'pending'))
+    booking_repository.create(Booking(None, 14, 2, 'pending'))
+    booking_repository.create(Booking(None, 15, 2, 'pending'))
     bookings = booking_repository.find_all_bookings_and_spaces_by_user_id(2)
-    assert bookings == [{'booking_id': 1, 'name': 'Beach House 1', 'space_id': 1, 'date_from': date(2025, 1, 1), 'date_to': date(2025, 1, 1), 'price_per_night': 101, 'status': 'pending', 'nights': 0},
-                        {'booking_id': 3, 'name': 'Beach House 2', 'space_id': 2, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 102, 'status': 'confirmed', 'nights': 0},
-                        {'booking_id': 6, 'name': 'Glamping Pod 2', 'space_id': 4, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 104, 'status': 'confirmed', 'nights': 0},
-                        {'booking_id': 7, 'name': 'Treehouse', 'space_id': 7, 'date_from': date(2023, 1, 1), 'date_to': date(2023, 1, 3), 'price_per_night': 200, 'status': 'pending', 'nights': 2}]
+    assert bookings == [{'booking_id': 1, 'name': 'Beach House 1', 'space_id': 1, 'date_from': date(2025, 1, 1), 'date_to': date(2025, 1, 1), 'price_per_night': 101, 'status': 'pending'},
+                        {'booking_id': 3, 'name': 'Beach House 2', 'space_id': 2, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 102, 'status': 'confirmed'},
+                        {'booking_id': 6, 'name': 'Glamping Pod 2', 'space_id': 4, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 104, 'status': 'confirmed'},
+                        {'booking_id': 11, 'name': 'Treehouse', 'space_id': 7, 'date_from': date(2023, 1, 1), 'date_to': date(2023, 1, 3), 'price_per_night': 200, 'status': 'pending'}]
+
 
