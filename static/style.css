@@ -21,7 +21,7 @@ body::after {
     right: 0;
     position: absolute;
     z-index: -1;   
-  }
+}
 
 body {   
     color : white;
@@ -36,9 +36,9 @@ label {
 }
 
 input {
-    background-color: #0a0a23;
+    background-color: #d9d9e9;
     border: 1px solid #0a0a23;
-    color: #ffffff;
+    color: #050000;
     margin: 10px 0 0 0;
     width: 100%;
     min-height: 2em;
@@ -50,10 +50,11 @@ input[type="submit"] {
     margin: 1em auto;
     height: 2em;
     font-size: 1.1rem;
-    background-color: #3b3b4f;
+    background-color: #151520;
     border-color: white;
     min-width: 300px;
     transition: background-color 0.3s ease;
+    color: #ffffff
 }
 input[type="submit"]:hover {
     background-color: #22994f;
@@ -128,3 +129,15 @@ a[tabindex]:focus {
     clear: both;
 }
 
+textarea {
+    height: 12em;
+    width: 35em;
+}
+
+strong {
+    color: #cf8cf6;
+}
+
+strong:hover {
+    color: #f2edf5;
+}

@@ -47,7 +47,7 @@
             {% elif booking.rejected %}
                 <p>{{ space.space_name }} - Rejected</p>
             {% else %}
-                <a href="/request/{{ booking.id }}">{{ space.space_name }}</a></p>
+                <a href="/request/{{ booking.id }}"><strong>{{ space.space_name }}</strong></a>
             {% endif %}
             <p>{{ booking.date }}</p>
             <p>Request by {{ user.username }}</p>
