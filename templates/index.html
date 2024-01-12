@@ -11,13 +11,7 @@
     </head>
     <body>
         {% include "banner.html" %}
-        <div class='username'>
-            <code>
-                {% if session.user_id %}
-                    <p>{{ user.username }} signed in</p>
-                {% endif %}
-            <code>
-        </div>
+
         <div class="links" >
             <a href="/login">Login</a>
         </div>

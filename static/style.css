@@ -61,6 +61,10 @@ input[type="Spacetable"]{
     border-color: transparent;
     min-width: 65px;
 }
+
+.delete-button {
+    width: 40%;
+}
 .links {
     text-align: right;
     color: #f5f6f7;
@@ -91,40 +95,28 @@ a[tabindex]:focus {
 }
 
 
-/* .centered-div {
-    text-align: center;
-} */
-
-/* Split the screen in half */
-.split {
-    height: 90%;
-    width: 50%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-  /* Control the left side */
-.left {
-    left: 0;
-}
-
-  /* Control the right side */
-.right {
-    right: 0;
-}
-
-  /* If you want the content centered horizontally and vertically */
-.centered {
-    top: 50%;
-    margin-top: 25%;
-    text-align: center;
-}
-
 .title {
     font-size: 4em;
     margin-top: 1%;
+    padding-bottom: 0;
+    margin-bottom: 3%;
+}
+
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 

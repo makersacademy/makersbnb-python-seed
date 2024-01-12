@@ -20,8 +20,9 @@
         </div>
 
         <h1 class="title">My requests</h1>
-        <div class="split left">
-            <div class="centered">
+        <div class="row">
+            <div class="column">
+            
         <h2>Requests I've made</h2>
         {% for booking, space in spaces_and_bookings %}
             <p>{{ space.space_name }}</p>
@@ -34,13 +35,11 @@
                 <p>Pending...</p>
             {% endif %}
             <form action="/delete_request/{{ booking.id }}" method="POST" name="delete_request" id="delete_request">
-                <button type="" name="delete_request">Delete</button>
+                <input type="submit" class="delete-button" name="delete_request" value="Delete">
             </form>
         {% endfor %}
         </div>
-            </div>
-        <div class="split right">
-            <div class="centered">
+        <div class="column">
         <h2>Requests I've received</h2>
         {% for space, booking, user in space_bookings_users_rec %}
             {% if booking.confirmed %}
@@ -53,7 +52,7 @@
             <p>{{ booking.date }}</p>
             <p>Request by {{ user.username }}</p>
             <form action="/delete_request/{{ booking.id }}" method="POST" name="delete_request" id="delete_request">
-                <button type="" name="delete_request">Delete</button>
+                <input type="submit" name="delete_request" value="Delete">
             </form>
         {% endfor %}
         </div>

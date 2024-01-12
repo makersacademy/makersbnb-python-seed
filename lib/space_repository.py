@@ -152,8 +152,7 @@ class SpaceRepository:
         rows = self._connection.execute(
             "SELECT * FROM spaces WHERE %s between start_date AND end_date AND id = %s", [date, space.id])
         return len(rows) > 0
-     
-    
+
     def get_available_spaces(self, start_date, end_date):
         rows = self._connection.execute(
         "SELECT * FROM spaces WHERE (start_date, end_date) OVERLAPS (%s, %s)", 
