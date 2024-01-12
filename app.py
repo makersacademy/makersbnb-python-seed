@@ -188,7 +188,7 @@ def get_my_listings():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     if session.get('user_id') == None:
-        return redirect('/spaces')
+        return redirect('/login')
     spaces = repo.find_by_user(int(session.get('user_id')))
     return render_template('my_listings.html', spaces = spaces, title = "My Listings")
 
@@ -196,7 +196,9 @@ def get_my_listings():
 def get_myprofile():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
-    user = repo.find_user(int(session.get('user_id')))
+    if session.get('user_id') == None:
+        return redirect('/login')
+    user = repo.find_user(session.get('user_id'))
     return render_template('my_profile.html', user = user, title = "My profile")
 
 @app.route('/my-requests', methods = ['GET'])
