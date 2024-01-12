@@ -1,8 +1,5 @@
 {% extends "layout.html" %} {% block body %}
 <body>
-  {% if error %}
-    <p class="error">{{ error }}</p>
-  {% endif %}
   <h1>{{space.name}}</h1>
   <p>{{space.description}}</p>
   <p>£{{space.price}} per night</p>
