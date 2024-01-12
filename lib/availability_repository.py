@@ -20,3 +20,13 @@ class AvailabilityRepository:
         self._connection.execute('INSERT INTO availability (space_id, date, status) VALUES (%s, %s, %s)', 
                                 [space.space_id, space.date, space.status])
         return None
+
+    def find_id(self, space_id, first_date, last_date):
+        rows = self._connection.execute('SELECT id FROM availability WHERE space_id = %s AND (date BETWEEN %s AND %s)',
+                                        [space_id, first_date, last_date])
+        ids = []
+        for row in rows:
+            id = row["id"]
+            ids.append(id)
+        return ids
+    

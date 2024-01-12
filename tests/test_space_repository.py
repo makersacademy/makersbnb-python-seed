@@ -85,3 +85,23 @@ def test_find_space_with_availabilities_month_jan(db_connection):
         '01-01-2025',
         '02-01-2025'
         ]
+    
+def test_find_by_user(db_connection):
+    db_connection.seed('seeds/makers_bnb.sql')
+    space_repository = SpaceRepository(db_connection)
+    assert space_repository.find_by_user(1) == [
+        Space(1, 1, 'Beach House 1', 'A beautiful beach side property with a pool', 101),
+        Space(2, 1, 'Beach House 2', 'A beautiful beach side property with a pool', 102),
+        ]
+
+def test_find_space_with_availabilities_none(db_connection):
+    db_connection.seed('seeds/makers_bnb.sql')
+    space_repository = SpaceRepository(db_connection)
+    result = space_repository.find_space_with_availabilities(3)
+    assert result == None
+
+def test_find_space_with_availabilities_month_none(db_connection):
+    db_connection.seed('seeds/makers_bnb.sql')
+    space_repository = SpaceRepository(db_connection)
+    result = space_repository.find_space_with_availabilities_month(1,'May')
+    assert result == None

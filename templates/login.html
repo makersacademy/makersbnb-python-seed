@@ -19,7 +19,13 @@
                     <input type="password" id="password" class="form_input" name="password">
                 </p>
                 <button type='submit' id="submit" class="button">Submit</button>
+                <br>
+                <button class="button"><a href="{{ url_for('get_index') }}" class="button-link">Home</a></button>
+
             </form>
+            <div>
+                <p class="body">Not a member? Sign up <a href="/signup">here</a></p>
+            </div>
         
             {% if error_message %}
                 <h2 style="color: red;">{{ error_message }}</h2>
@@ -29,15 +35,10 @@
                 <p style="color: green;">{{ success_message }}</p>
             {% endif %}
         </center></div>
+
     </main>
     {% endblock %}
 
-<<<<<<< HEAD
-    <footer>
-        <div class="footer"></div>
-    </footer>
-=======
     {% block footer %} {{ super() }} {% endblock %}
->>>>>>> origin/main
 </body>
 </html>

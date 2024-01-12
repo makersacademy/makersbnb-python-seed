@@ -4,30 +4,51 @@
     
     {% block header %} {{ super() }} {% endblock %}
 
-    {%block content%}
-        <h1 style="text-align:center;" > List a Space </h1>
-        <form action="/addnewspace" method = "post">
-        <!--delete userID once login working-->
-        <label for="user_id">UserID:</label><br>
-        <input type="integer" id="userID" name="userID" value=""><br>
-        <!--to here-->
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value=""><br>
-        <label for="description">Description</label><br><textarea id="description" name = "description" rows = "5" cols = "50">
-        </textarea><br>
-        <label for="pricepernight">Price per night (£)</label><br>
-        <input type="integer" id="pricepernight" name="pricepernight" value=""><br>
-        <label for="availablefrom">Available from (DD/MM/YY)</label><br>
-        <input type="date" id="availablefrom" name="availablefrom" value=""><br>
-        <label for="availableto">Available to (DD/MM/YY)</label><br>
-        <input type="date" id="availableto" name="availableto" value=""><br><br>
-        <input type="submit" value="Submit">
-        </form>
+    {% block content %}
+        <main>
+            <div class="example-container">
+                {% if 'user_id' in session %}
+                    <p>Welcome, {{ session['user_first_name'] }}!</p>
+                    <!-- Add other personalized content as needed for logged-in users -->
+                {% else %}
+                    <p>You are not logged in! Please sign up or log in.</p><!-- Content for users who are not logged in -->
+                {% endif %}
+
+                <h1 style="text-align:center;">List a Space</h1>
+                <form action="/addnewspace" method="post">
+                    <label for="user_id" style="display:none;">UserID:</label><br>
+                    <input type="text" style="display:none;" id="user_id" name="user_id" value="{{ session.get('user_id', '') }}"><br>
+
+                    <label for="name">Name of Property:</label><br>
+                    <input type="text" id="name" name="name" value=""><br>
+
+                    <label for="description">Description of property:</label><br>
+                    <textarea id="description" name="description" rows="5" cols="50"></textarea><br>
+
+                    <label for="pricepernight">Price per night (£):</label><br>
+                    <input type="text" id="pricepernight" name="pricepernight" value=""><br>
+
+                    <label for="availablefrom">Available from (DD/MM/YY):</label><br>
+                    <input type="date" id="availablefrom" name="availablefrom" value=""><br>
+
+                    <label for="availableto">Available to (DD/MM/YY):</label><br>
+                    <input type="date" id="availableto" name="availableto" value=""><br><br>
+
+                    <input type="submit" value="Submit">
+                </form>
+
+                {% for space in spaces %}
+                    <div class="t-property">
+                        <h2><a href="/spaces/{{space.id}}">{{space.name}}</a></h2>
+                        <p>Description: {{space.description}}</p>
+                        <p>Price per night: £{{space.price_per_night}}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+        </main>
     {% endblock %}
 
     {% block footer %} {{ super() }} {% endblock %}
-
-
-    </body>
-
+</body>
 </html>
