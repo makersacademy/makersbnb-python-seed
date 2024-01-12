@@ -68,18 +68,20 @@ def test_get_add_spaces(page, test_web_address,db_connection,web_client):
     page.click("text=Submit")
     
     page.click('text=List new space')
-    page.screenshot(path="screenshot.png", full_page=True)
     strong_tag = page.locator("h1")
+    
     expect(strong_tag).to_have_text("Create new listing")
     
     response = web_client.get('/newspace')
     assert response.status_code == 302
 
-def test_list_spaces(page,test_web_address,db_connection):
+def test_list_spaces(page,test_web_address,db_connection,web_client):
     db_connection.seed("seeds/MasterTest.sql")
     page.goto(f"http://{test_web_address}/spaces")
     h3_tag = page.locator('h3')
     expect(h3_tag).to_have_count(5)
+    response = web_client.get('/spaces')
+    assert response.status_code == 200
     
 def test_adding_a_space(page,test_web_address,db_connection,web_client):
     db_connection.seed("seeds/MasterTest.sql")
@@ -127,8 +129,35 @@ def test_create_user(db_connection, page, test_web_address,web_client):
     strong_tag = page.locator("h1")
     expect(strong_tag).to_have_text("Space Listings")
 
-def test_create_user_wrong_pass(web_client):
+def test_create_user_wrong_pass(page,db_connection, test_web_address,web_client):
+    db_connection.seed("seeds/MasterTest.sql")
+    page.goto(f"http://{test_web_address}/index")
+    
+    # Then we fill out the field with the name attribute 'email'
+    page.fill("input[name='email']", "test_user@mail.com")
+    
+    # And the field with the name attribute 'passw'
+    page.fill("input[name='passw']", "testpassword123")
+
+    page.fill("input[name='passw_conf']", "estpassword123")
+    
+    page.click("text=Submit")
+    
+    h1_tag = page.locator('h1')
+    expect(h1_tag).to_have_text('Welcome to MakersBnB.')
     response = web_client.post('/signup', data={'email':'testemail@mail.com','passw':'estpass','passw_conf':'testpass'})
     assert response.status_code == 302
     response = web_client.post('/signup', data={'email':'user_1@mail.com','passw':'testpass','passw_conf':'testpass'})
     assert response.status_code == 302
+
+def test_get_dashboard(page,db_connection,test_web_address,web_client):
+    response = web_client.get('/dashboard')
+    assert response.status_code == 302
+
+def test_sign_out_response(web_client):
+    response = web_client.get('/sign_out')
+    assert response.status_code == 302
+
+def test_requestspace_returns_page(web_client):
+    response = web_client.get('/requestspace/1')
+    assert response.status_code == 200
