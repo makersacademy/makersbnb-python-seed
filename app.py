@@ -16,11 +16,15 @@ app.secret_key = secrets.token_hex(16)
 
 @app.route("/", methods=["GET"])
 def get_index():
+    if 'user_id' in session:
+        return redirect('/list_spaces')
     return render_template("index.html")
 
 
 @app.route("/login", methods=["GET"])
 def get_login():
+    if 'user_id' in session:
+        return redirect('/list_spaces')
     return render_template("login.html")
 
 
