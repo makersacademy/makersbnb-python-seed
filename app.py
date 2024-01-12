@@ -21,7 +21,7 @@ users = []
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def get_index():
     if 'user_id' in session:
         user_name = session['user_first_name']
@@ -145,6 +145,8 @@ def add_space():
     repo_space = SpaceRepository(connection)
     repo_avaliblity = AvailabilityRepository(connection)
     userid = session.get('user_id')
+    if userid is None:
+        return redirect('/login')
     name = request.form['name']
     description = request.form['description']
     price = request.form['pricepernight']

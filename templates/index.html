@@ -1,28 +1,39 @@
-<!DOCTYPE html>
+
 {% extends 'base.html' %}
-<html>
-    <head>
-        {% block header %} {{ super() }} {% endblock %}
 
-        {%block content%}
-    </head>
-    <body>
-        <p>Welcome to the MakersBnB homepage.</h1>
-        <body>
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="example-container">
+
             {% if user_name %}
-            <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
-            <a href="{{ url_for('logout') }}">Logout</a>
+                <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
+                
             {% else %}
-                <p>Please <a href="{{ url_for('get_login') }}">log in</a> to access the dashboard.</p>
-                {% endif %}
-        <br>
-        <button type="button">Sign up</button>
-        <br>
-        <button type="button">Sign in</button>
-        <br>
-        <button type="button">book a space</button>
-    </body>
-    {% endblock %}
 
-    {% block footer %} {{ super() }} {% endblock %}
-</html>
+            Hello there. Please log in or sign up to gain full access.
+            {% endif %}
+            <br>
+            <button class="button"><a href="{{ url_for('get_spaces') }}" style="color: white;" class="button-link">Book a space</a></button>
+            <br>
+            {% if user_name %}
+            <button class="button"><a href="{{ url_for('logout') }}" style="color: white;" class="button">Logout</a></button>
+            {% else %}
+            <button class="button"><a href="{{ url_for('get_login') }}" style="color: white;" class="button-link">Log in</a></button>
+            <br>
+            <button class="button"><a href="{{ url_for('signup') }}" style="color: white;" class="button">Sign Up</a></button>
+            {% endif %}
+            <br>
+
+            {# Add any additional content here #}
+        </div>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
