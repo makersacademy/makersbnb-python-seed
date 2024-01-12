@@ -21,8 +21,11 @@
     <div class="my-listings"><a href = "/my-listings">My Listings</a></div>
     <div class="my-profile"><a href = "/my-profile">My Profile</a></div>
     <div class="my-requests"><a href = "/my-requests">My Requests</a></div>
+    {% if session['logged_in'] != True %}
     <div class="sign-up"><a href = "/login">Login/Signup</a></div>
+    {% else %}
     <div class="logout"><a href = "{{ url_for('logout') }}">Logout</a></div>
+    {% endif %}
 </nav>
 {% endblock %}
 

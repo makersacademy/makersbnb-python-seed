@@ -14,8 +14,8 @@ html, body, h1, h3, hr {
 body {
     background-image: url(pic.jpeg);
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 100% 100%;
+    background-attachment:local;
+    background-size: auto;
 }
 
 .page-title {

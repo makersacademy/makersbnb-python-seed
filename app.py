@@ -52,6 +52,7 @@ def post_login():
         session['user_id'] = existing_user.id
         session['user_email'] = existing_user.email
         session['user_first_name'] = existing_user.first_name
+        session['logged_in'] = True
         return redirect(url_for('get_index'))
     else:
         return render_template('login.html', error_message="Incorrect password.", title = "Log In Page")
@@ -62,6 +63,7 @@ def logout():
     if 'user_id' in session:
         session.pop('user_id')
         session.pop('user_email')
+        session['logged_in'] = False
     return redirect(url_for('get_index'))
 
 @app.route('/signup', methods=['POST'])
