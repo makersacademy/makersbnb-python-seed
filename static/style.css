@@ -206,3 +206,7 @@ body {
 .centerButton {
   text-align: center;
 }
+
+.error {
+  color: #d40f0f;
+}
