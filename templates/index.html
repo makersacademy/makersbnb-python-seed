@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block header %}
@@ -7,10 +8,12 @@
 {% block content %}
     <main>
         <div class="example-container">
+
             {% if user_name %}
                 <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
                 
             {% else %}
+
             Hello there. Please log in or sign up to gain full access.
             {% endif %}
             <br>
@@ -33,3 +36,4 @@
 {% block footer %}
     {{ super() }}
 {% endblock %}
+

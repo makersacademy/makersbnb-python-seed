@@ -41,6 +41,9 @@ class SpaceRepository:
             """, 
             [space_id, 'TRUE']
         )
+        print (rows)
+        if rows == []:
+            return None
         #gets all availabilities as class objects
         availabilities = [Availability(row['availability_id'], row['space_id'], row['date'], row['status']) for row in rows]
         #gets dates from class objects in  a list
@@ -59,7 +62,8 @@ class SpaceRepository:
             """, 
             [space_id, 'TRUE', f'{month}']
         )
-        print(rows)
+        if rows == []:
+            return None
         #gets all availabilities as class objects
         availabilities = [Availability(row['availability_id'], row['space_id'], row['date'], row['status']) for row in rows]
         #gets dates from class objects in  a list
@@ -68,3 +72,8 @@ class SpaceRepository:
         formatted_dates = [date.strftime('%d-%m-%Y') for date in dates]
         space = Space(rows[0]['space_id'], rows[0]['user_id'],rows[0]['name'], rows[0]['description'], rows[0]['price_per_night'])
         return space, formatted_dates
+
+    def find_by_user(self, user_id):
+        rows = self._connection.execute('SELECT * FROM spaces WHERE user_id = %s',[user_id])
+        return [Space(row['id'], row['user_id'], row['name'], row['description'], row['price_per_night']) for row in rows]
+    
