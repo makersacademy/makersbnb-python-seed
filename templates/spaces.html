@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang=“en”>
-<style>
+<!-- <style>
  #textContainer {
     /* make element inline flex-container */
     /* this will make its children flex-items */
@@ -47,10 +47,15 @@
       margin: 4px 2px;
       cursor: pointer;
     }
-    .button1 {background-color: #cbc9c9;} 
-    .button2 {background-color: #cbc9c9;} 
-    .button3 {background-color: #cbc9c9;} 
+    
     .flex-box {
+
+  display:flex;
+  justify-content:space-between;
+  outline: none;
+}
+
+
       display:flex;
       justify-content: center;
       width: 100%;
@@ -65,9 +70,10 @@
   justify-content:space-between;
   width: 700px;
   align-items: center;
+
   
   outline: none;}
-  </style>
+  </style> -->
   <head>
     <link rel="stylesheet" href="/static/style.css">
     <title>Spaces</title>
@@ -83,6 +89,11 @@
       <p class="t-current_user">Signed in as {{ username }}</p> &nbsp;&nbsp;
       <p><button class="button" onclick="location.href='/sign_out';">Sign out</button></p>
     </span>
+
+    <h5 class="t-current_user">Signed in as {{ username }}</h5>
+    <p><button class="button button3" onclick="location.href='/sign_out';">Sign out</button></p>
+
+
     {% else %}
       <p align="right">
         <button class="button button1" onclick="location.href='/log_in';">Sign in!</button>
