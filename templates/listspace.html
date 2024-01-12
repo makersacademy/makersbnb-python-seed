@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<body>
+    <h1>List of my Spaces</h1>
+    {% for space in host_spaces %}
+    <h2 class="centeredText">{{space.name}}</h2>
+    <p>{{space.description}}</p>
+    <p>£{{space.price}}</p>
+    {% endfor %}
+</body>
+
+{% endblock %}
