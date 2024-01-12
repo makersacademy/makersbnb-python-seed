@@ -178,13 +178,15 @@ def bookaspace(id):
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
     user_id = session.get('user_id')
     status = "pending"
+
     if 'user_id' in session:
         for night_id in night_ids:
             repo_booking.create(Booking(None, night_id, user_id, status))
     else:
         return render_template('login.html')
-    space = repo_space.find(id)    
-    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
+    space = repo_space.find(id)
+    noofnights = (last_date - first_date).days
+    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date, noofnights = noofnights)
 
 @app.route('/my-listings', methods = ['GET'])
 def get_my_listings():
