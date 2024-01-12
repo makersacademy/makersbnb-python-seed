@@ -311,12 +311,6 @@ def get_requests(current_user):
         for booking in booking_repo.find_by_space_id(space.id):
             requests_received.append(booking)
 
-        return render_template(
-            "requests/index.html",
-            requests_made=requests_made,
-            requests_received=requests_received,
-        )
-
     space_for_request_received = []
     for space in requests_received:
         space_for_request_received.append(space_repo.get_space_by_id(space.space_id))
