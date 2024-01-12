@@ -116,12 +116,14 @@ class BookingRepository:
     def create(self, booking):
         date = booking.date
         space_id = booking.space_id
+        guest_id = booking.guest_id
         if confirmed := booking.confirmed:
             confirmed = "1"
         elif confirmed == False:
             confirmed = "0"
         else:
             confirmed = None
+        # Check that the space is listed for the requested date.
         date_rows = self._connection.execute(
             """
             SELECT * FROM dates where date=%s AND space_id=%s;
@@ -129,6 +131,12 @@ class BookingRepository:
             [date.isoformat(), space_id],
         )
         if len(date_rows) > 0:
+            # Check if this booking has been made before.
+            guest_bookings = self.find_by_guest_id(guest_id)
+            if (str(date), str(space_id)) in [(str(booking.date), str(booking.space_id))
+                                    for booking
+                                    in guest_bookings]:
+                raise Exception("You have already made a booking request for this space on that date!")
             self._connection.execute(
                 """
                 INSERT INTO bookings (date, space_id, guest_id, confirmed) VALUES (%s, %s, %s, %s);
