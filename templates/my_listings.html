@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 <body>
     
     {% block header %} {{ super() }} {% endblock %}
@@ -13,9 +12,10 @@
             <p>Welcome, {{ session['user_first_name'] }}!</p>
             <!-- Add other personalized content as needed for logged-in users -->
         {% else %}
-            <p>You are not logged in! Please <a href = '/signup'>sign up</a> or <a href = '/login'>log in.</a></p><!-- Content for users who are not logged in -->
+            <p>You are not logged in! Please sign up or log in.</p><!-- Content for users who are not logged in -->
         {% endif %}
                 <h3><a href="/addnewspace">Add New Space</a></h3>
+                <h3><a href="/authorization">Approve requests</a></h3>
                 <hr>
             </div>
             {% for space in spaces %}

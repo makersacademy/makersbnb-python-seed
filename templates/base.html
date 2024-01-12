@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Title</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}"></head>
 {% block header %}
 <header>
@@ -16,10 +16,12 @@
 
 <nav class ="navbar">
     <div class="flex-nav"></div>
-    <div class="properties-listed">Property Listings</div>
-    <div class="my-listings">My Listings</div>
-    <div class="my-profile">My Profile</div>
-    <div class="my-requests">My Requests</div>
+    <div class="properties-listed"><a href = "/spaces">Property Listings</a></div>
+    <div class="my-listings"><a href = "/my-listings">My Listings</a></div>
+    <div class="my-profile"><a href = "/my-profile">My Profile</a></div>
+    <div class="my-requests"><a href = "/my-requests">My Requests</a></div>
+    <div class="sign-up"><a href = "/login">Login/Signup</a></div>
+    <div class="logout"><a href = "{{ url_for('logout') }}">Logout</a></div>
 </nav>
 {% endblock %}
 

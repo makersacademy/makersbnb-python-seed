@@ -18,8 +18,9 @@
             </style>
           <div class="content">
             <h3>Your booking details</h3>
-              <p>{{space.name}}<br>Description : {{space.description}}<br>Price per night £{{space.price_per_night}}</p>
-              <p>Your booking has been requested from {{ date_from }} to {{date_to}}</p>
+              <p>Booking ID: {{booking_id}}</p>
+              <p>{{space.name}}<br>Description : {{space.description}}<br>Price per night £{{space.price_per_night}}<br>No of nights: {{noofnights}} nights</p>
+              <p>Your booking has been requested from {{ date_from }} to {{date_to}}<br> Totalprice £{{space.price_per_night * noofnights}}.00</p>
       </body>    
       {% endblock %}
 
