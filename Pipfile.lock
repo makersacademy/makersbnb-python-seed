@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "152bdf2d0139963f5fe27da750689fcf2427e09ba3ec42249181ccbbd45ecc47"
+            "sha256": "93cbac92ef42266066369cc2eedbdb35e89a1b803e90704f3c03a26d63677866"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -144,6 +144,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==3.0.0"
+        },
+        "flask-mail": {
+            "hashes": [
+                "sha256:22e5eb9a940bf407bcf30410ecc3708f3c56cc44b29c34e1726fe85006935f41"
+            ],
+            "index": "pypi",
+            "version": "==0.9.1"
         },
         "greenlet": {
             "hashes": [
@@ -482,7 +489,7 @@
                 "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783",
                 "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "python_version >= '3.8'",
             "version": "==4.9.0"
         },
         "urllib3": {

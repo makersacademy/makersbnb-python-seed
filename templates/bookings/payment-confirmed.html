@@ -1,15 +1,20 @@
-<!doctype html>
+{% extends "layout.html" %}
+
+{% block body %}
+<!--doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Confirmed</title>
-  </head>
+  </head>-->
   <body>
     <div style="text-align: center">
       <h1>Deposit accepted - your host will contact you with further info</h1>
       <br />
-      <a href="/requests">See your bookings</a>
+      <p><a class='button' href="/requests">See your bookings</a></p>
     </div>
   </body>
-</html>
+<!--</html>-->
+
+{% endblock %}
