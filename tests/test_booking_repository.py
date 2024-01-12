@@ -92,5 +92,5 @@ def test_find_all_bookings_and_spaces_by_user_id_with_consecutive_dates(db_conne
     assert bookings == [{'booking_id': 1, 'name': 'Beach House 1', 'space_id': 1, 'date_from': date(2025, 1, 1), 'date_to': date(2025, 1, 1), 'price_per_night': 101, 'status': 'pending'},
                         {'booking_id': 3, 'name': 'Beach House 2', 'space_id': 2, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 102, 'status': 'confirmed'},
                         {'booking_id': 6, 'name': 'Glamping Pod 2', 'space_id': 4, 'date_from': date(2025, 1, 2), 'date_to': date(2025, 1, 2), 'price_per_night': 104, 'status': 'confirmed'},
-                        {'booking_id': 7, 'name': 'Treehouse', 'space_id': 7, 'date_from': date(2023, 1, 1), 'date_to': date(2023, 1, 3), 'price_per_night': 200, 'status': 'pending'}]
+                        {'booking_id': 11, 'name': 'Treehouse', 'space_id': 7, 'date_from': date(2023, 1, 1), 'date_to': date(2023, 1, 3), 'price_per_night': 200, 'status': 'pending'}]
 
