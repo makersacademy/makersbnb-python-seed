@@ -10,21 +10,24 @@
         <div class="example-container">
 
             {% if user_name %}
-                <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
+                <h1 style="font-size: 20px;">Hello, {{ user_name }}!</h1>
                 
             {% else %}
 
             Hello there. Please log in or sign up to gain full access.
             {% endif %}
             <br>
-            <button class="button"><a href="{{ url_for('get_spaces') }}" style="color: white;" class="button-link">Book a space</a></button>
+            <button style="font-size: 18px; width: 200px;" class="button"><a href="{{ url_for('get_spaces') }}" style="color: white;" class="button-link">Book a space</a></button>
+            <br>
             <br>
             {% if user_name %}
-            <button class="button"><a href="{{ url_for('logout') }}" style="color: white;" class="button">Logout</a></button>
-            {% else %}
-            <button class="button"><a href="{{ url_for('get_login') }}" style="color: white;" class="button-link">Log in</a></button>
             <br>
-            <button class="button"><a href="{{ url_for('signup') }}" style="color: white;" class="button">Sign Up</a></button>
+            <button style="font-size: 18px; width: 200px;" class="button"><a href="{{ url_for('logout') }}" style="color: white;" class="button">Logout</a></button>
+            {% else %}
+            <button style="font-size: 18px; width: 200px;" class="button"><a href="{{ url_for('get_login') }}" style="color: white;" class="button-link">Log in</a></button>
+            <br>
+            <br>
+            <button style="font-size: 18px; width: 200px;" class="button"><a href="{{ url_for('signup') }}" style="color: white;" class="button">Sign Up</a></button>
             {% endif %}
             <br>
 
