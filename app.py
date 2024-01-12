@@ -202,11 +202,11 @@ def signup():
     errors = []
     if password != password_confirmation:
         errors = ["Password and password confirmation don't match"]
-
+    print(username, email, password, password_confirmation)
     new_user = User(None, username, email, password, None)
     if not new_user.is_valid():
         errors.append("Invalid Entries")
-
+    
     connection = get_flask_database_connection(app)
     user_repo = UserRepo(connection)
     errors.extend(user_repo.check_user(new_user))
