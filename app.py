@@ -204,7 +204,7 @@ def bookaspace(id):
     space = repo_space.find(id)
     noofnights = (last_date - first_date).days
 
-    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date + timedelta(days=1), noofnights = noofnights, booking_id = booking_id, title = "Booking Requested")
+    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date + timedelta(days=1), noofnights = noofnights + 1, booking_id = booking_id, title = "Booking Requested")
 
 
 @app.route('/my-listings', methods = ['GET'])
