@@ -15,6 +15,7 @@
         <div class="my-requests space-container">
                 <h2>My Requests</h2>
                 {% for request in requests %}
+                <p>Booking ID: {{request.booking_id}}</p>
                 <p>{{request.name}}</p>
                 <p>£{{request.price_per_night}}.00 per night</p>
                 <p>Date from: {{request.date_from}}</p>
