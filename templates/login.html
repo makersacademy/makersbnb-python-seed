@@ -20,6 +20,9 @@
                 </p>
                 <button type='submit' id="submit" class="button">Submit</button>
             </form>
+            <div>
+                <p class="body">Not a member? Sign up <a href="/signup">here</a></p>
+            </div>
         
             {% if error_message %}
                 <h2 style="color: red;">{{ error_message }}</h2>
@@ -29,6 +32,7 @@
                 <p style="color: green;">{{ success_message }}</p>
             {% endif %}
         </center></div>
+
     </main>
     {% endblock %}
 

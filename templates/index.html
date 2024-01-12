@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 <html>
     <head>
-        <title>MakersBnB</title>
+        {% block header %} {{ super() }} {% endblock %}
 
-
-        <link rel="stylesheet" href="/static/style.css" >
+        {%block content%}
     </head>
     <body>
         <p>Welcome to the MakersBnB homepage.</h1>
@@ -22,4 +22,7 @@
         <br>
         <button type="button">book a space</button>
     </body>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
 </html>
