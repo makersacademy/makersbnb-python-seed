@@ -188,6 +188,7 @@ def get_authorization():
     booking_status = []
     booking_date = []
     booking_name = []
+    booking_id = []
     repo_availability = AvailabilityRepository(connection)
     availability = repo_availability.all()
     repo_spaces = SpaceRepository(connection)
@@ -201,6 +202,7 @@ def get_authorization():
                 booking_status.append(booking.status)
                 for a in availability:
                     if booking.night_id == a.id:
+                        booking_id.append(booking.id)
                         space_id = a.space_id
                         booking_date.append(a.date)
                 for space in spaces:
@@ -208,11 +210,16 @@ def get_authorization():
                         booking_name.append(space.name)
         except:
             error_message = "You need to be logged in to access this page"
-    return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message)
+    return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message, booking_id=booking_id)
 
 @app.route('/authorization', methods = ['POST'])
 def post_authorization():
-    pass
+    connection=get_flask_database_connection(app)
+    repo_booking = BookingRepository(connection)
+    button_value = request.form['button_press']
+    booking_id = request.form['bookingid']
+    repo_booking.update_status(button_value, booking_id)
+    return redirect("/authorization")
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

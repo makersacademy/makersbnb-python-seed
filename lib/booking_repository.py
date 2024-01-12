@@ -18,3 +18,7 @@ class BookingRepository:
             booking.night_id, booking.user_id, booking.status
         ])
         return None
+
+    def update_status(self, button_press, booking_id):
+        self._connection.execute('UPDATE bookings SET status = %s WHERE id = %s', [button_press, booking_id])
+        return None

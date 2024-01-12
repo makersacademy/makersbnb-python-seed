@@ -9,9 +9,13 @@
             {% if error == "" %}
             {% for i in range(number) %}
             <div> <center> 
-                <h2> {{names[i]}} </h2> 
-                <p>  {{dates[i]}} </p>
-                <p> <button class="button" type="submit"> accept </button> <button class="button" type="submit"> decline </button> </p>
+                <h2 class="house_name"> {{names[i]}} </h2> 
+                <p class="headers">  {{dates[i]}} </p>
+                <form method="POST" action="/authorization"> 
+                    <input type="hidden" name="bookingid" value={{booking_id[i]}}> </input>
+                    <button class="button" type="submit" name="button_press" value="confirmed"> Confirm </button> 
+                    <button class="button" type="submit" name="button_press" value="declined"> Decline </button> 
+                </form>
             </center> </div>
 
             {%endfor%}

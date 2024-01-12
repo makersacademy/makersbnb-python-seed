@@ -39,6 +39,12 @@ body {
     font-size: large;
 }
 
+.house_name {
+    color: var(--colour-1);
+    opacity: 0.8;
+    font-size: x-large;
+}
+
 .page-title {
     width: 100%;
     text-align: center;
