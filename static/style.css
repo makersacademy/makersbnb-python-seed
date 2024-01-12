@@ -202,3 +202,7 @@ body {
 .removePadding {
   margin: 0;
 }
+
+.createAccountButton {
+  text-align: center;
+}
