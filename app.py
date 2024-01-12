@@ -120,7 +120,14 @@ def get_space(id):
     if repo.find_space_with_availabilities(id) == None:
         return render_template('no_dates.html')
     space, dates = repo.find_space_with_availabilities(id)
-    return render_template('individual_space.html', space = space, availability = dates, title = f'Spaces = {id}')
+    dates2 = []
+    dates = [datetime.strptime(date, "%d-%m-%Y").date() for date in dates]
+    for date in dates:
+        new_date = date + timedelta(days=1)
+        dates2.append(new_date)
+    dates = [date.strftime('%d-%m-%Y') for date in dates]
+    dates2 = [date.strftime('%d-%m-%Y') for date in dates2]
+    return render_template('individual_space.html', space = space, availability = dates, availability2 = dates2, title = f'Spaces - id:{id}')
 
 @app.route('/spaces/<int:id>/filter', methods = ['POST'])
 def get_space_by_month(id):
@@ -133,7 +140,14 @@ def get_space_by_month(id):
     if repo.find_space_with_availabilities_month(id, month) == None:
         return render_template('no_dates.html', title = "No dates available")
     space, dates = repo.find_space_with_availabilities_month(id, month)
-    return render_template('individual_space.html', space = space, availability = dates, month = month)
+    dates2 = []
+    dates = [datetime.strptime(date, "%d-%m-%Y").date() for date in dates]
+    for date in dates:
+        new_date = date + timedelta(days=1)
+        dates2.append(new_date)
+    dates = [date.strftime('%d-%m-%Y') for date in dates]
+    dates2 = [date.strftime('%d-%m-%Y') for date in dates2]
+    return render_template('individual_space.html', space = space, availability = dates, availability2 = dates2, month = month)
 
 @app.route('/addnewspace', methods = ['GET'])
 def add_space_page():
@@ -171,7 +185,7 @@ def bookaspace(id):
     first_date = request.form['date-from']
     last_date = request.form['date-to']
     first_date = datetime.strptime(first_date, "%d-%m-%Y").date()
-    last_date = datetime.strptime(last_date, "%d-%m-%Y").date()
+    last_date = datetime.strptime(last_date, "%d-%m-%Y").date() - timedelta(days=1)
     repo_avaliblity = AvailabilityRepository(connection)
     repo_space = SpaceRepository(connection)
     repo_booking = BookingRepository(connection)
@@ -181,7 +195,7 @@ def bookaspace(id):
     for night_id in night_ids:
         repo_booking.create(Booking(None, night_id, user_id, status))
     space = repo_space.find(id)    
-    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
+    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date + timedelta(days=1))
 
 @app.route('/my-listings', methods = ['GET'])
 def get_my_listings():
