@@ -19,7 +19,8 @@ def test_all_bookings(db_connection):
         Booking(3 ,4, 2, 'confirmed'),
         Booking(4 ,4, 3, 'declined'),
         Booking(5 ,5, 1, 'confirmed'),
-        Booking(6 ,6, 2, 'confirmed')
+        Booking(6 ,6, 2, 'confirmed'),
+        Booking(7, 7, 1, 'pending')
     ]
 
 """
@@ -48,7 +49,8 @@ def test_create_booking(db_connection):
         Booking(4 ,4, 3, 'declined'),
         Booking(5 ,5, 1, 'confirmed'),
         Booking(6 ,6, 2, 'confirmed'),
-        Booking(7, 2, 3, 'pending')
+        Booking(7, 7, 1, 'pending'),
+        Booking(8, 2, 3, 'pending')
     ]
 
 """
