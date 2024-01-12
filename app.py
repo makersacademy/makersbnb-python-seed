@@ -25,6 +25,8 @@ app.secret_key = b"_5#2LF34nxec]"
 # ==========
 # home page menu: about  | login  |  register
 # standard menu: spaces | my listings | requests | signout
+# forms menu: cancel
+#
 # HOME ROUTES:
 # / GET
 #       /<home_page_section>  GET        shows all listings or user listings, nav menu: standard
@@ -51,21 +53,12 @@ def index():
 
 @app.route('/<home_page_section>', methods=['GET'])
 def index_subsection(home_page_section):
-    _connection = get_flask_database_connection(app)
-    space_repository = SpaceRepository(_connection)
     if 'id' in session:
-        if home_page_section == 'index':
-            rows = space_repository.all()
-        elif home_page_section == 'user':    
-            space_repo = SpaceRepository(get_flask_database_connection(app))
-            rows = space_repo.filter(session['id'])        
+        space_repository = SpaceRepository(get_flask_database_connection(app))
+        rows = space_repository.all(session['id'])       
     else:
         rows = []
-    data = {
-        'home_page_section': home_page_section,
-        'spaces_list': rows
-        }
-    return render_template('index.html', data=data)
+    return render_template('index.html', data=rows)
 
 
 
@@ -190,13 +183,13 @@ def get_add():
 
 @app.route('/spaces/show/<id>', methods=['GET'])
 def get_space(id):
-    # checks
     space_repo = SpaceRepository(get_flask_database_connection(app))
     space = space_repo.find(id)
-
-    availability_repo = AvailabilityRepository(get_flask_database_connection(app))
-    availabilities = availability_repo.find(space.id)
-    return render_template("space_view.html", space=space, availabilities=availabilities)
+    if space:
+        availability_repo = AvailabilityRepository(get_flask_database_connection(app))
+        availabilities = availability_repo.find(space.id)
+        return render_template("space_view.html", space=space, availabilities=availabilities)
+    #return redirect('/')
 
 
 @app.route('/availability/add', methods=['POST'])
@@ -209,7 +202,7 @@ def add_availability():
     availability_repo = AvailabilityRepository(get_flask_database_connection(app))
     availability_repo.add(availability)
     
-    url = '/spaces/edit/' + space_id
+    url = '/spaces/show/edit/' + space_id
 
     return redirect(url)
 
