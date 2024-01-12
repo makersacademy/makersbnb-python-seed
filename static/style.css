@@ -21,7 +21,7 @@ body::after {
     right: 0;
     position: absolute;
     z-index: -1;   
-  }
+}
 
 body {   
     color : white;
@@ -134,3 +134,10 @@ textarea {
     width: 35em;
 }
 
+strong {
+    color: #cf8cf6;
+}
+
+strong:hover {
+    color: #f2edf5;
+}

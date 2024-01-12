@@ -69,7 +69,13 @@ def get_space(space_id):
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     space = space_repo.find_by_id(space_id)[0]
-    return render_template("space.html", space=space, user=show_user())
+    booking_repo = BookingRepository(connection)
+    bookings = booking_repo.find_all_by_space(space.id)
+    dates_booked = []
+    for booking in bookings:
+        if booking.confirmed:
+            dates_booked.append(booking.date)
+    return render_template("space.html", space=space, user=show_user(), dates_booked=dates_booked)
 
 
 @app.route("/book/<id>", methods=["POST"])
