@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {% block content%}
+    <main>
+        <div><center>
+            <label class="title">Login</label>
+            <form action="/login" method="post">
+                <p class='form_heading'>
+                    <label for="email" class="headers">Email:</label><br>
+                    <input type="text" id="email" class="form_input" name="email">
+                </p>
+                <p class='form_heading'>
+                    <label for="password" class="headers">Password:</label><br>
+                    <input type="password" id="password" class="form_input" name="password">
+                </p>
+                <button type='submit' id="submit" class="button">Submit</button>
+            </form>
+        
+            {% if error_message %}
+                <h2 style="color: red;">{{ error_message }}</h2>
+            {% endif %}
+        
+            {% if success_message %}
+                <p style="color: green;">{{ success_message }}</p>
+            {% endif %}
+        </center></div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+<body>
+    {% block header %} {{ super() }} {% endblock %}
+    
+    <nav class ="navbar">
+        <div class="flex-nav"></div>
+        <div class="properties-listed">Property Listings</div>
+        <div class="my-listings">My Listings</div>
+        <div class="my-profile">My Profile</div>
+        <div class="my-requests">My Requests</div>
+    </nav>
+
+    {%block content%}
+    <main>
+        <div class="space-container">
+            <div class="property">
+                {% if 'user_id' in session %}
+            <p>Welcome, {{ session['user_first_name'] }}!</p>
+            <!-- Add other personalized content as needed for logged-in users -->
+        {% else %}
+            <p>You are not logged in! Please sign up or log in.</p><!-- Content for users who are not logged in -->
+        {% endif %}
+                <h2>{{space.name}}</h2>
+                <p>Description: {{space.description}}</p>
+                <p>Price per night: £{{space.price_per_night}}.00</p>
+            </div>
+            <div class="space-availability">
+                <h2>Availability</h2>
+                <form action="/spaces/{{space.id}}/filter" method='POST'>
+                    <div class="month-selector">
+                        <label for="month-selector">Filter by month:</label>
+                        <select name="month-selector" id="month-selector">
+                            <option value="show-all">Show All</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                        <input type="submit" value="Filter">
+                    </div>
+                </form>
+                {% for date in availability %}
+                    <p>{{date}}</p>
+                    {% endfor %}
+            </div>
+            <hr>
+            <h2>Booking Request</h2>
+
+            <form action="/spaces/{{space.id}}/booking-request" method="POST">
+                <div class="booking-dates">
+                    <div class="date-from">
+                        <label for="date-from">Date from:</label>
+                        <select name="date-from" id="date-from">
+                            {% for date in availability %}
+                            <option value={{date.id}}>{{date}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                <div class="date-to">
+                    <label for="date-to">Date to:</label>
+                    <select name="date-to" id="date-to">
+                        {% for date in availability %}
+                        <option value={{date.id}}>{{date}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                </div>
+                <input type="submit" value="Submit Request">
+            </form>
+            
+</div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+</body>
+</html>

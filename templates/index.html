@@ -3,13 +3,23 @@
     <head>
         <title>MakersBnB</title>
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
+
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</h1>
+        <p>Welcome to the MakersBnB homepage.</h1>
+        <body>
+            {% if user_name %}
+            <h1 style="font-size: smaller;">Hello, {{ user_name }}!</h1>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <p>Please <a href="{{ url_for('get_login') }}">log in</a> to access the dashboard.</p>
+                {% endif %}
+        <br>
+        <button type="button">Sign up</button>
+        <br>
+        <button type="button">Sign in</button>
+        <br>
+        <button type="button">book a space</button>
     </body>
 </html>
