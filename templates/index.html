@@ -5,23 +5,22 @@
   display:flex;
   justify-content:space-between;
   width: 275px;
-  align-items: left;
+  align-items: center;
   flex-direction: column;
   outline: none;}
     </style>
+    
     <head>
         <title>MakersBnB</title>
-
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
+        <!-- Link to the CSS stylesheet -->
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <h1>Welcome to MakersBnB.</h1>
-        <p>Sign up to MakersBnB or <a href="/log_in">login here.</a></p>
 
+        <img src="/static/logo.png" alt="MakersBnB Logo">
+        <h1>Welcome to MakersBnB</h1>
+        <p>Sign up to MakersBnB or <a href="/log_in">login here.</a></p>
+    
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -43,28 +42,17 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
-
+    
         <form class="flex-box" method="post" action="/signup">
-        <!-- <label for="email">E-mail Address:</label><br>
-        <input type="text" id="email" name="email"><br>
-        <label for="passw">Password:</label><br>
-        <input type="text" id="passw" name="passw"><br>
-        <label for="passw_conf">Password Confirmation:</label><br>
-        <input type="text" id="passw_conf" name="passw_conf"><br>
-        <button type="submit" id="submit">Submit</button> -->
-
-
-        
-        <label for="email" align="center">E-mail Address:</label>
-        <input type="text" id="email" name="email"><br>
-        <label for="passw" align="center">Password:</label>
-        <input type="password" id="passw" name="passw"><br>
-
-        <label for="passw_conf" align="center">Password Confirmation:</label>
-        <input type="password" id="passw_conf" name="passw_conf"><br>
-
-        <button type="submit">Submit</button>
-
+            <label for="email" align="center">E-mail Address:</label>
+            <input type="text" id="email" name="email"><br>
+            <label for="passw" align="center">Password:</label>
+            <input type="password" id="passw" name="passw"><br>
+    
+            <label for="passw_conf" align="center">Password Confirmation:</label>
+            <input type="password" id="passw_conf" name="passw_conf"><br>
+    
+            <button type="submit">Submit</button>
         </form>
     </body>
-</html>
+    </html>
