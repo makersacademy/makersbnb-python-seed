@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>SpaceBnB - space</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+    <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
+        <h1></h1>
+        <h2></h2>
+        <h3>{{ space.space_name }}</h3>
+        <h4>{{ space.description }}</h4>
+        <h4>{{ space.price }}</h4>
+        <div>
+        <form  class="book-space-form"  method="post" action="/book/{{ space.id }}">
+            Pick a night: <input type="date" name="date">
+            <input type="submit" value="Request to book">
+        </form>
+        </div>
+    </body>
+</html>

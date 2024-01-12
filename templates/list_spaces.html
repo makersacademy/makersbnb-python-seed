@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>SpaceBnB - list of spaces</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+    <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
+        <h1></h1>
+        <h2></h2>
+        <h3>Book a Space</h3>
+        <h4>Lots of writing that means nothing</h4>
+        <div class="list-space-button">
+        <a href="/new_space">List a space</a>
+        </div>
+
+        <div>
+            <form class="list-space-form" method="post">
+                Available From: <input type="date" name="available_from">
+                Available To: <input type="date" name="available_to">
+                <input type="submit" value="List Spaces">
+            </form>
+        </div>
+
+        <style>
+            table, th, td {
+                border: 1px solid white;
+            }
+        </style>
+        <h1>Spaces</h1>
+        <form>
+            <table>
+                <tr>
+                    <th>Space Name</th>
+                    <th>Space Location</th>
+                    <th>Space Description</th>
+                    <th>Space Price</th>
+                    <th>View Space</th>
+                    
+                </tr>
+                {% for space in spaces %}
+                <tr>
+                    
+                    <td>{{ space.space_name }}</td>
+                    <td>{{ space.location }}</td>
+                    <td>{{ space.description }}</td>
+                    <td>£{{ space.price }}</td>
+                    <!-- <td><input type="Spacetable" value="Request" href="/request/{{ space.space_id }}"></td> -->
+                    <!-- <td><a href="/request/{{ space.id }}">Request</a></td> -->
+                    <td><a href="{{ url_for('get_space', space_id=space.id) }}">View Space</a></td>
+                    
+                    
+                        <!-- Assuming space_id is a unique identifier for each space -->
+                    
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </body>
+</html>

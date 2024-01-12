@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>SpaceBnB - login</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+    <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
+        <div class="links" >
+            <a href="/login">Login</a>
+
+            <a href="">About</a>
+        </div>
+        <h1></h1>
+        <h2></h2>
+        <h3>Log in to SpaceBnB</h3>
+
+        <form  method="post">
+            <fieldset>
+                {% if errors %}
+                {% for error in errors %}
+                <div class="error">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            <label for="username">User Name: <input type="text" name="username" id="username"></label>
+            <label for="password">Password: <input type="password" name="password" id="password"><label>
+            <label for="login"><input type="submit" value="Log in" name="login"></label>
+            </fieldset>
+        </form>
+    </body>
+</html>
