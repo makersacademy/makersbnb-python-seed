@@ -25,7 +25,7 @@ def test_get_index(page, test_web_address,web_client):
 
     # We assert that it has the text "This is the homepage."
 
-    expect(strong_tag).to_have_text("Welcome to MakersBnB.")
+    expect(strong_tag).to_have_text("Welcome to MakersBnB")
 # test
 
 """
@@ -144,7 +144,7 @@ def test_create_user_wrong_pass(page,db_connection, test_web_address,web_client)
     page.click("text=Submit")
     
     h1_tag = page.locator('h1')
-    expect(h1_tag).to_have_text('Welcome to MakersBnB.')
+    expect(h1_tag).to_have_text('Welcome to MakersBnB')
     response = web_client.post('/signup', data={'email':'testemail@mail.com','passw':'estpass','passw_conf':'testpass'})
     assert response.status_code == 302
     response = web_client.post('/signup', data={'email':'user_1@mail.com','passw':'testpass','passw_conf':'testpass'})
