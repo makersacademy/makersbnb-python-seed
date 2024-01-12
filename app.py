@@ -40,9 +40,7 @@ def token_required(f):
 
         try:
             # Decode the token to get user data
-            data = jwt.decode(
-                token, app.config["SECRET_KEY"], algorithms=["HS256"]
-            )
+            data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
             current_user = data["user"]
         except:
             # If token is invalid, return an error message with 403 Forbidden status
@@ -63,27 +61,29 @@ app = Flask(__name__)
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
 
-#email config
-app.config['MAIL_SERVER']="smtp.gmail.com"
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
-app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+# email config
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = "MakersBnbJan2024@gmail.com"
+app.config["MAIL_PASSWORD"] = "qtwi adua ptjq bygh"
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
 mail = Mail(app)
 
-#email function
+
+# email function
 def send_email(subject, recipients, body):
     email_success = False
     msg = Message(subject)
-    msg.sender ='MakersBnbJan2024@gmail.com'
-    msg.sender=('MakersBnB', 'MakersBnbJan2024@gmail.com')
-    msg.recipients= recipients
+    msg.sender = "MakersBnbJan2024@gmail.com"
+    msg.sender = ("MakersBnB", "MakersBnbJan2024@gmail.com")
+    msg.recipients = recipients
     msg.body = body
     try:
         mail.send(msg)
     except Exception as e:
-            print(str(e))
+        print(str(e))
+
 
 # == Your Routes Here ==
 
@@ -125,9 +125,7 @@ def register():
         connection = get_flask_database_connection(app)
         user_repo = UserRepository(connection)
 
-        if user_repo.create_user(
-            username, email, password
-        ):  # pass the plain password
+        if user_repo.create_user(username, email, password):  # pass the plain password
             return render_template("success.html")
         else:
             return render_template("userexists.html")
@@ -174,8 +172,7 @@ def get_login():
             token = jwt.encode(
                 {
                     "user": username,
-                    "exp": datetime.datetime.utcnow()
-                    + datetime.timedelta(hours=24),
+                    "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24),
                 },
                 app.config["SECRET_KEY"],
             )
@@ -303,12 +300,11 @@ def get_requests(current_user):
         for booking in booking_repo.find_by_space_id(space.id):
             requests_received.append(booking)
 
-    return render_template(
-        "requests/index.html",
-        requests_made=requests_made,
-        requests_received=requests_received,
-    )
-
+        return render_template(
+            "requests/index.html",
+            requests_made=requests_made,
+            requests_received=requests_received,
+        )
 
     space_for_request_received = []
     for space in requests_received:
@@ -318,18 +314,18 @@ def get_requests(current_user):
     for space in requests_made:
         space_for_request_made.append(space_repo.get_space_by_id(space.space_id))
 
-    #Need to zip to access both the space info to display and the request info for routing in the html
+    # Need to zip to access both the space info to display and the request info for routing in the html
     made_zipped_data = zip_longest(requests_made, space_for_request_made)
     received_zipped_data = zip_longest(requests_received, space_for_request_received)
 
-    return render_template("requests/index.html",
-                           requests_made=requests_made,
-                           requests_received=requests_received,
-                           host_spaces = host_spaces,
-                           received_zipped_data=received_zipped_data,
-                           made_zipped_data=made_zipped_data
-                           )
-
+    return render_template(
+        "requests/index.html",
+        requests_made=requests_made,
+        requests_received=requests_received,
+        host_spaces=host_spaces,
+        received_zipped_data=received_zipped_data,
+        made_zipped_data=made_zipped_data,
+    )
 
 
 @app.route("/requests/<int:booking_id>", methods=["GET"])
@@ -377,7 +373,6 @@ def post_reject_booking(current_user):
     return redirect(f"/requests/{booking_id}")
 
 
-
 # Stripe Integration
 @app.route("/create-checkout-session", methods=["POST"])
 @token_required
@@ -418,15 +413,16 @@ def payment_cancel(current_user):
     return render_template("bookings/payment-cancelled.html")
 
 
-@app.route('/account', methods=['GET'])
+@app.route("/account", methods=["GET"])
 @token_required
 def view_account_details(current_user):
     connection = get_flask_database_connection(app)
     user_repo = UserRepository(connection)
     user = user_repo.find_user_by_username(current_user)
-    return render_template('/account.html', user=user)
+    return render_template("/account.html", user=user)
 
-@app.route('/myspaces', methods=['GET'])
+
+@app.route("/myspaces", methods=["GET"])
 @token_required
 def view_user_spaces(current_user):
     connection = get_flask_database_connection(app)
@@ -434,7 +430,7 @@ def view_user_spaces(current_user):
     user_id = user_repo.username_to_id(current_user)
     space_repo = SpaceRepository(connection)
     host_spaces = space_repo.get_spaces_by_host_id(user_id)
-    return render_template('/listspace.html', host_spaces=host_spaces)
+    return render_template("/listspace.html", host_spaces=host_spaces)
 
 
 if __name__ == "__main__":
