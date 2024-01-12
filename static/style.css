@@ -89,3 +89,42 @@ a[tabindex]:focus {
     color: red;
     font-size: 0.8rem;
 }
+
+
+/* .centered-div {
+    text-align: center;
+} */
+
+/* Split the screen in half */
+.split {
+    height: 90%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+  /* Control the left side */
+.left {
+    left: 0;
+}
+
+  /* Control the right side */
+.right {
+    right: 0;
+}
+
+  /* If you want the content centered horizontally and vertically */
+.centered {
+    top: 50%;
+    margin-top: 25%;
+    text-align: center;
+}
+
+.title {
+    font-size: 4em;
+    margin-top: 1%;
+}
+

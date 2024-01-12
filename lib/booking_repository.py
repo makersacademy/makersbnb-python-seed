@@ -54,6 +54,8 @@ class BookingRepository():
     def already_booked(self, booking):
         bookings = self.find_all_by_space(booking.space_id)
         for item in bookings:
+            print(item.date, booking.date)
+            print(type(item.date), type(booking.date))
             if item.date == booking.date and item.confirmed:
                 return True
         return False
