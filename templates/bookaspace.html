@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+    <head>
+          
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+    </head>
+    <body>       
+          <style>
+            .content {
+              max-width: 600px;
+              margin: auto;
+              background: rgb(177, 220, 246);
+              padding: 10px;
+            }
+            </style>
+          <div class="content">
+            <h3>Your booking details</h3>
+              <p>Booking ID: {{booking_id}}</p>
+              <p>{{space.name}}<br>Description : {{space.description}}<br>Price per night £{{space.price_per_night}}<br>No of nights: {{noofnights}} nights</p>
+              <p>Your booking has been requested from {{ date_from }} to {{date_to}}<br> Total price £{{space.price_per_night * noofnights}}.00</p>
+      </body>    
+      {% endblock %}
+
+      {% block footer %} {{ super() }} {% endblock %}
+</html>

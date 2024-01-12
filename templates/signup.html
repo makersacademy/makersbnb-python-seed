@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+    <div><center>
+    <label class="title">Sign Up</label>
+    <form method="POST" action="/signup">
+        <p class='form_heading'>
+        <label for="first_name" class="headers">First Name:</label><br>
+        <input type="text" name="first_name" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="last_name" class="headers">Last Name:</label><br>
+        <input type="text" name="last_name" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="email" class="headers">Email:</label><br>
+        <input type="email" name="email" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="telephone_number" class="headers">Phone Number:</label><br>
+        <input type="text" name="telephone_number" class="form_input" required>
+        </p>
+
+        <p class='form_heading'>
+        <label for="password" class="headers">Password:</label><br>
+        <input type="password" name="password" class="form_input" required>
+        </p>
+
+        <input type="submit" value="Sign Up" class="button">
+    </form>
+    <p> Already a member? Login <a href="/login">here</a></p>
+</center></div>
+<body>
+    
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if success_message %}
+    <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+    <a href="{{ url_for('get_index') }}">Go to Homepage</a>
+    
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+
+</body>
+</html>
