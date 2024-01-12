@@ -1,8 +1,7 @@
 from lib.user_repository import UserRepository, is_valid
 from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
-import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for
 from lib.database_connection import get_flask_database_connection
 import jwt
 import datetime
@@ -15,8 +14,17 @@ from lib.spaces_repository import SpaceRepository
 from lib.spaces import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
-
 from flask_mail import Mail, Message
+
+import stripe
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
 
 # Auth token generation
 def token_required(f):
@@ -52,27 +60,29 @@ app = Flask(__name__)
 SECRET_KEY = os.environ.get("SECRET_KEY") or "this is a secret"
 app.config["SECRET_KEY"] = SECRET_KEY
 
-#email config
-app.config['MAIL_SERVER']="smtp.gmail.com"
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = "MakersBnbJan2024@gmail.com"
-app.config['MAIL_PASSWORD'] = "qtwi adua ptjq bygh"
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+# email config
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = "MakersBnbJan2024@gmail.com"
+app.config["MAIL_PASSWORD"] = "qtwi adua ptjq bygh"
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
 mail = Mail(app)
 
-#email function
+
+# email function
 def send_email(subject, recipients, body):
     email_success = False
     msg = Message(subject)
-    msg.sender ='MakersBnbJan2024@gmail.com'
-    msg.sender=('MakersBnB', 'MakersBnbJan2024@gmail.com')
-    msg.recipients= recipients
+    msg.sender = "MakersBnbJan2024@gmail.com"
+    msg.sender = ("MakersBnB", "MakersBnbJan2024@gmail.com")
+    msg.recipients = recipients
     msg.body = body
     try:
         mail.send(msg)
     except Exception as e:
-            print(str(e))
+        print(str(e))
+
 
 # == Your Routes Here ==
 
@@ -99,6 +109,18 @@ def goto_booking():
 
 @app.route("/", methods=["GET", "POST"])
 def register():
+    # Check if user is already logged in
+    token = request.cookies.get("token")
+    if token:
+        try:
+            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            # Redirect to /spaces if user is already logged in
+            return redirect(url_for("get_all_spaces"))
+        except jwt.ExpiredSignatureError:
+            flash("Your session has expired. Please log in again.", "warning")
+        except:
+            # Handle other exceptions
+            pass
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
@@ -193,7 +215,9 @@ def get_all_spaces(current_user):
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.list_all_spaces()
-    return render_template("/spaces/index.html", spaces=spaces, current_user=current_user)
+    return render_template(
+        "/spaces/index.html", spaces=spaces, current_user=current_user
+    )
 
 
 @app.route("/spaces/new", methods=["GET"])
@@ -218,7 +242,9 @@ def create_space(current_user):
     )
     repository.add_space(new_space)
     repository.add_date(
-        request.form["availableFrom"], request.form["availableTo"], new_space.id
+        request.form["availableFrom"],
+        request.form["availableTo"],
+        new_space.id,
     )
     return redirect("/spaces")
 
@@ -247,8 +273,9 @@ def create_booking(current_user):
     guest_id = connection.execute(
         """
         SELECT id FROM users WHERE username=%s;
-        """, [guest_username]
-    )[0]['id']
+        """,
+        [guest_username],
+    )[0]["id"]
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
     booking_repo.create(new_booking)
@@ -265,7 +292,8 @@ def create_booking(current_user):
 def get_bookings_success(current_user):
     return render_template("bookings/success.html")
 
-@app.route('/requests', methods=['GET'])
+
+@app.route("/requests", methods=["GET"])
 @token_required
 def get_requests(current_user):
     connection = get_flask_database_connection(app)
@@ -291,19 +319,21 @@ def get_requests(current_user):
     for space in requests_made:
         space_for_request_made.append(space_repo.get_space_by_id(space.space_id))
 
-    #Need to zip to access both the space info to display and the request info for routing in the html
+    # Need to zip to access both the space info to display and the request info for routing in the html
     made_zipped_data = zip_longest(requests_made, space_for_request_made)
     received_zipped_data = zip_longest(requests_received, space_for_request_received)
 
-    return render_template("requests/index.html",
-                           requests_made=requests_made,
-                           requests_received=requests_received,
-                           host_spaces = host_spaces,
-                           received_zipped_data=received_zipped_data,
-                           made_zipped_data=made_zipped_data
-                           )
+    return render_template(
+        "requests/index.html",
+        requests_made=requests_made,
+        requests_received=requests_received,
+        host_spaces=host_spaces,
+        received_zipped_data=received_zipped_data,
+        made_zipped_data=made_zipped_data,
+    )
 
-@app.route('/requests/<int:booking_id>', methods=['GET'])
+
+@app.route("/requests/<int:booking_id>", methods=["GET"])
 @token_required
 def get_request_by_id(booking_id, current_user):
     connection = get_flask_database_connection(app)
@@ -318,40 +348,86 @@ def get_request_by_id(booking_id, current_user):
     host_username = user_repo.id_to_username(space.host_id)
     current_user_id = user_repo.username_to_id(current_user)
 
-    return render_template("bookings/booking.html",
-                           current_user_id=current_user_id,
-                           space=space,
-                           host_username=host_username,
-                           guest_username=guest_username,
-                           booking=booking)
+    return render_template(
+        "bookings/booking.html",
+        current_user_id=current_user_id,
+        space=space,
+        host_username=host_username,
+        guest_username=guest_username,
+        booking=booking,
+    )
 
-@app.route('/bookings/confirm', methods=['POST'])
+
+@app.route("/bookings/confirm", methods=["POST"])
 @token_required
 def post_confirm_booking(current_user):
-    booking_id = request.form['booking_id']
+    booking_id = request.form["booking_id"]
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.confirm(int(booking_id))
     return redirect(f"/requests/{booking_id}")
 
-@app.route('/bookings/reject', methods=['POST'])
+
+@app.route("/bookings/reject", methods=["POST"])
 @token_required
 def post_reject_booking(current_user):
-    booking_id = int(request.form['booking_id'])
+    booking_id = int(request.form["booking_id"])
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.reject(booking_id)
     return redirect(f"/requests/{booking_id}")
 
-@app.route('/account', methods=['GET'])
+
+# Stripe Integration
+@app.route("/create-checkout-session", methods=["POST"])
+@token_required
+def create_checkout_session(current_user):
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "gbp",
+                        "product_data": {
+                            "name": "To confirm your booking a deposit of £20 is required",
+                        },
+                        "unit_amount": 2000,  # price in pence
+                    },
+                    "quantity": 1,
+                }
+            ],
+            mode="payment",
+            success_url=url_for("payment_success", _external=True),
+            cancel_url=url_for("payment_cancel", _external=True),
+        )
+        return redirect(checkout_session.url, code=303)
+    except Exception as e:
+        return str(e), 403
+
+
+@app.route("/payment-confirmed")
+@token_required
+def payment_success(current_user):
+    return render_template("bookings/payment-confirmed.html")
+
+
+@app.route("/payment-cancelled")
+@token_required
+def payment_cancel(current_user):
+    return render_template("bookings/payment-cancelled.html")
+
+
+@app.route("/account", methods=["GET"])
 @token_required
 def view_account_details(current_user):
     connection = get_flask_database_connection(app)
     user_repo = UserRepository(connection)
     user = user_repo.find_user_by_username(current_user)
-    return render_template('/account.html', user=user)
+    return render_template("/account.html", user=user)
 
-@app.route('/myspaces', methods=['GET'])
+
+@app.route("/myspaces", methods=["GET"])
 @token_required
 def view_user_spaces(current_user):
     connection = get_flask_database_connection(app)
@@ -359,7 +435,8 @@ def view_user_spaces(current_user):
     user_id = user_repo.username_to_id(current_user)
     space_repo = SpaceRepository(connection)
     host_spaces = space_repo.get_spaces_by_host_id(user_id)
-    return render_template('/listspace.html', host_spaces=host_spaces)
+    return render_template("/listspace.html", host_spaces=host_spaces)
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
