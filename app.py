@@ -198,16 +198,19 @@ def get_authorization():
     for booking in bookings:
         try:
             if booking.user_id == session["user_id"]:
-                booking_counter += 1
-                booking_status.append(booking.status)
-                for a in availability:
-                    if booking.night_id == a.id:
-                        booking_id.append(booking.id)
-                        space_id = a.space_id
-                        booking_date.append(a.date)
-                for space in spaces:
-                    if space_id == space.id:
-                        booking_name.append(space.name)
+                if booking.status != "pending":
+                    pass
+                else:
+                    booking_counter += 1
+                    booking_status.append(booking.status)
+                    for a in availability:
+                        if booking.night_id == a.id:
+                            booking_id.append(booking.id)
+                            space_id = a.space_id
+                            booking_date.append(a.date)
+                    for space in spaces:
+                        if space_id == space.id:
+                            booking_name.append(space.name)
         except:
             error_message = "You need to be logged in to access this page"
     return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message, booking_id=booking_id)
