@@ -9,10 +9,13 @@ class SpaceRepository():
             rows = self._connection.execute('SELECT * FROM spaces WHERE user_id <> %s', [filter])
         else:
             rows = self._connection.execute('SELECT * FROM spaces')
+        
         list_to_return = []
+
         for row in rows:
             space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
             list_to_return.append(space)
+
         if len(list_to_return):
             return list_to_return
 

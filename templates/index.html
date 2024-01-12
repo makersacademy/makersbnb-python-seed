@@ -2,64 +2,71 @@
 <html>
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <link href="{{ url_for('static', filename='/css/style.css') }}" rel="stylesheet">
 </head>
 
-
-
- <body class="bg-light">
-  <div style="background-color:rgb(246, 207, 106); padding:20px; margin-bottom:30px;">
-    <div class="row pt-2 pe-3">
-      <div class="col-12 fs-5 fw-bold text-end">
-        {% if session['id'] %}
-          <a class="link-underline link-underline-opacity-0 pe-4" href="/index">Spaces</a>
-          <a class="link-underline link-underline-opacity-0 pe-4" href="/spaces/listings">My Listings</a>
-          <a class="link-underline link-underline-opacity-0 pe-4" href="/requests">Requests</a>
-          <a class="link-underline link-underline-opacity-0" href="/account/logout">Sign Out</a>
-        {% else %}
-          <a class="link-underline link-underline-opacity-0 pe-4" href="/about">About</a>
-          <a class="link-underline link-underline-opacity-0 pe-4" href="/account/login">Login</a>
-          <a class="link-underline link-underline-opacity-0" href="/account/register">Register</a>
-        {% endif %}
-      </div>
+<body class="bg-yellow">
+  <div class="row pt-2 ps-3 pe-3">
+    <div class="col-4 fs-5 fw-bold">
+    {{ session['fullname'] }}
     </div>
-    <div class="row pt-4 d-flex justify-content-center">
-      <div class="col-4 fs-1 fw-bold text-center">
-          MakersBNB
-      </div>
-    <div class="row pt-4 d-flex justify-content-center">
-      <div class="col-4 fs-4 fw-bold text-center">
-        <h3>Login as: {{ session['fullname'] }}</h3>
-          <p><a href="/spaces/show/add">List a Space</a><p>
-          <hr width="80%" />     
-      </div>
-    </div>
-    </div>
-      {% if session['id'] and data: %}
-        {% for space in data: %}
-          <a style="text-decoration:none;" href="/spaces/show/{{space.id}}">
-          <div class="row pt-4 d-flex justify-content-center">
-            <div class="col-6 bg-white p-4 px-5 rounded-3 shadow">
-              <h3 class="text-center">{{ space.name }}</h3>
-              <p class="text-justify">{{ space.desc }}</p>
-              <p class="text-center">Cost p/n: £{{ space['price'] }}</p>
-            </div>
-          </div>
-          </a>
-        {% endfor %}
-        </div>
-      </div>
+    <div class="col-8 fs-5 fw-bold text-end">
+      {% if session['id'] %}
+      <a class="link-underline link-underline-opacity-0 pe-4" href="/index">Spaces</a>
+      <a class="link-underline link-underline-opacity-0 pe-4" href="/spaces/listings">My Listings</a>
+      <a class="link-underline link-underline-opacity-0 pe-4" href="/requests">Requests</a>
+      <a class="link-underline link-underline-opacity-0" href="/account/logout">Sign Out</a>
       {% else %}
-        <p>Please log in first</p>
+      <a class="link-underline link-underline-opacity-0 pe-4" href="/about">About</a>
+      <a class="link-underline link-underline-opacity-0 pe-4" href="/account/login">Login</a>
+      <a class="link-underline link-underline-opacity-0" href="/account/register">Register</a>
       {% endif %}
     </div>
   </div>
+  <div class="row pt-4 d-flex justify-content-center">
+    <div class="col-4 fs-1 fw-bold text-center">
+      MakersBNB
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="col-6 px-0">
+      <a class="btn btn-primary" href="/spaces/show/add">Add Space</a>
+    </div>
+  </div>
+  {% if session['id'] and data %}
+  {% for space in data %}
+  <div class="row pt-4 d-flex justify-content-center">
+    <div class="col-6 bg-white pt-2 p-4 px-5 rounded-3 shadow">
+      <a class="link-underline link-underline-opacity-0 text-dark" href="/spaces/show/{{space.id}}">
+        <div class="row fs-3 fw-bold">
+          <div class="col-12 text-center">{{space.name}}</div>
+        </div>
+        <div class="row pt-3 fs-5">
+          <div class="col-12">
+            {{space.desc}}
+          </div>
+        </div>
+        <div class="row pt-4 fw-bold fs-4 d-flex justify-content-center">
+          <div class="col-12">
+            £{{space.price}}
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  </div>
+  {% else %}
+  <p>Please log in first</p>
+  {% endif %}
+  </div>
 
-  </body>
+</body>
 
 </html>
- 
