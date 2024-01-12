@@ -41,12 +41,15 @@ class BookingRepository:
         current_request = None
 
         for row in rows:
+            # print(current_request)
             if (current_request and 
                 current_request['space_id'] == row['space_id'] and 
                 current_request['date_to'] + timedelta(days=1) == row['date']):
                 current_request['date_to'] = row['date']
             else:
                 if current_request:
+                    delta = current_request['date_to'] - current_request['date_from']
+                    current_request['nights'] = delta.days
                     requests.append(current_request)
 
                 current_request = {
@@ -61,6 +64,8 @@ class BookingRepository:
         
         #catches last request and adds it to the requests list
         if current_request:
+            delta = current_request['date_to'] - current_request['date_from']
+            current_request['nights'] = delta.days
             requests.append(current_request)
         
         return requests
