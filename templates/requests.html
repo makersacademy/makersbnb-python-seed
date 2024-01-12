@@ -18,12 +18,12 @@
                 {% endif %}
             <code>
         </div>
+        <h1>Space BnB</h1>
+        <h2>My requests</h2>
+        <h3></h3>
+        <h4></h4>
+        <h5>Requests I've made</h5>
 
-        <h1 class="title">My requests</h1>
-        <div class="row">
-            <div class="column">
-            
-        <h2>Requests I've made</h2>
         {% for booking, space in spaces_and_bookings %}
             <p>{{ space.space_name }}</p>
             <p>{{ booking.date }}</p>
