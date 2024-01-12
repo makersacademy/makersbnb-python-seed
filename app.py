@@ -176,10 +176,13 @@ def bookaspace(id):
     repo_space = SpaceRepository(connection)
     repo_booking = BookingRepository(connection)
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
-    user_id = int(session.get('user_id'))
+    user_id = session.get('user_id')
     status = "pending"
-    for night_id in night_ids:
-        repo_booking.create(Booking(None, night_id, user_id, status))
+    if 'user_id' in session:
+        for night_id in night_ids:
+            repo_booking.create(Booking(None, night_id, user_id, status))
+    else:
+        return render_template('login.html')
     space = repo_space.find(id)    
     return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
 
