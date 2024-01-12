@@ -8,9 +8,9 @@
 
     <div class="spacesList">
       {% for space in spaces %}
-      <div class="spaceIndividual">
-        <a class="row" href="{{ url_for('space', space_id=space.id) }}">
-          <div>
+      <div aria-label="{{space.name}}" class="spaceIndividual">
+        <a aria-label="{{space.name}}" class="row" href="{{ url_for('space', space_id=space.id) }}">
+          <div aria-label="{{space.name}}">
             <h3 class="spacebutton">{{space.name}}</h3>
             <p class="spacebutton">{{space.description}}</p>
           </div>
