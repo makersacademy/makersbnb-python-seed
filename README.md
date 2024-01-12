@@ -1,5 +1,17 @@
 # MakersBnB app
 ###### Jan.2024 - Module6 project @MakersAcademy
+###### @Naim @Moesha @Jay @Ermin @Valerio
+##
+
+```
+> Stage completed:
+   Home page (pre-login)
+   Home Page (after login - list all spaces)
+     "user login/register" page
+     "view my listings" page
+       "view/Edit user space
+```
+
 ##
 User.py and User_repository.py (and relative test files) added
 Run on local machine:

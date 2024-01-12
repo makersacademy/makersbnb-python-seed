@@ -4,8 +4,11 @@ class SpaceRepository():
     def __init__(self, connection):
         self._connection = connection
     
-    def all(self):
-        rows = self._connection.execute('SELECT * FROM spaces')
+    def all(self, filter=None):
+        if filter:
+            rows = self._connection.execute('SELECT * FROM spaces WHERE user_id <> %s', [filter])
+        else:
+            rows = self._connection.execute('SELECT * FROM spaces')
         list_to_return = []
         for row in rows:
             space = Space(row['id'], row['name'], row['descr'], row['price'], row['user_id'])
