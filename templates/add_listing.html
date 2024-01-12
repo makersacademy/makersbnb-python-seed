@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block headings %} 
+  <h1>Add new space</h1>
+{% endblock %}
+
+{% block content %} 
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="content">
+      <div>
+        <div class="form-input">
+          <p class="label">Name</p>
+          <p class="input-box">{{ form.name(id='nameField') }}</p>
+        </div>
+        <div class="form-input">
+          <p class="label">Address</p>
+          <p class="input-box">{{ form.address(id='addressField') }}</p>
+        </div>
+        <div class="form-input">
+          <p class="label">Description</p>
+          <p class="input-box">{{ form.description(id='descriptionField') }}</p>
+        </div>
+        <div class="form-input">
+          <p class="label">Price / Night</p>
+          <p class="input-box">{{ form.price(id='priceField') }}</p>
+        </div>
+        <div class="form-input">
+          <p class="label">Image</p>
+          <p class="input-box">{{ form.image(id='imageField') }}</p>
+        </div>
+      </div>
+      <div class="button">
+        {{ form.submit(id='submitField') }}
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
