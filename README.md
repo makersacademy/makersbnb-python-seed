@@ -3,12 +3,14 @@
 ###### @Naim @Moesha @Jay @Ermin @Valerio
 ##
 
+```
 > Stage completed:
->  Home page (pre-login)
->  Home Page (after login - list all spaces)
->    "user login/register" page
->    "view my listings" page
->    "
+   Home page (pre-login)
+   Home Page (after login - list all spaces)
+     "user login/register" page
+     "view my listings" page
+       "view/Edit user space
+```
 
 ##
 User.py and User_repository.py (and relative test files) added
