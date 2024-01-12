@@ -15,14 +15,16 @@ class BookingRepository:
         return Booking(row['id'], row['night_id'], row['user_id'], row['status'])
     
     def create(self, booking):
-        self._connection.execute('INSERT INTO bookings (night_id, user_id, status) VALUES (%s, %s, %s)',[
+        rows = self._connection.execute('INSERT INTO bookings (night_id, user_id, status) VALUES (%s, %s, %s) RETURNING id',[
             booking.night_id, booking.user_id, booking.status
         ])
-        return None
+        row = rows[0]
+        booking.id = row['id']
+        return booking.id
     
     def find_all_bookings_and_spaces_by_user_id(self, user_id):
         rows = self._connection.execute('''
-                                        SELECT bookings.id, bookings.night_id, bookings.user_id, bookings.status,
+                                        SELECT bookings.id as booking_id, bookings.night_id, bookings.user_id, bookings.status,
                                         availability.id, availability.space_id, availability.date,
                                         spaces.name, spaces.price_per_night
                                         FROM bookings
@@ -39,7 +41,6 @@ class BookingRepository:
         current_request = None
 
         for row in rows:
-
             if (current_request and 
                 current_request['space_id'] == row['space_id'] and 
                 current_request['date_to'] + timedelta(days=1) == row['date']):
@@ -49,6 +50,7 @@ class BookingRepository:
                     requests.append(current_request)
 
                 current_request = {
+                    'booking_id' : row['booking_id'],
                     'name': row['name'],
                     'space_id': row['space_id'],
                     'date_from': row['date'],
@@ -62,3 +64,8 @@ class BookingRepository:
             requests.append(current_request)
         
         return requests
+
+
+    def update_status(self, button_press, booking_id):
+        self._connection.execute('UPDATE bookings SET status = %s WHERE id = %s', [button_press, booking_id])
+        return None
