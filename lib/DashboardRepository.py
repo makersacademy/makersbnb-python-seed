@@ -21,8 +21,9 @@ class DashboardRepository:
         return return_data
 
     def approve(self, req_id, space_id, date_req):
-        self._connection.execute("UPDATE requests SET stat = 'Approved' WHERE space_id = %s AND req_id = %s AND date_req = %s", [space_id, req_id, date_req])
+        self._connection.execute("UPDATE requests SET stat = 'Approved' WHERE space_id = %s AND req_id = %s AND date_req = %s;", [space_id, req_id, date_req])
+        self._connection.execute("UPDATE requests SET stat = 'Declined' WHERE space_id = %s AND date_req = %s AND NOT req_id = %s;", [space_id, date_req, req_id])
 
     def decline(self, req_id, space_id, date_req):
-        self._connection.execute("UPDATE requests SET stat = 'Declined' WHERE space_id = %s AND req_id = %s AND date_req = %s", [space_id, req_id, date_req])
+        self._connection.execute("UPDATE requests SET stat = 'Declined' WHERE space_id = %s AND req_id = %s AND date_req = %s;", [space_id, req_id, date_req])
 

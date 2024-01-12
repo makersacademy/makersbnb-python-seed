@@ -1,6 +1,7 @@
 from lib.user import User
 
-'''Constructs with id, email and password.
+'''
+Constructs with id, email and password.
 '''
 
 def test_construction():
