@@ -190,7 +190,7 @@ def bookaspace(id):
     repo_space = SpaceRepository(connection)
     repo_booking = BookingRepository(connection)
     night_ids = repo_avaliblity.find_id(id,first_date,last_date)
-    user_id = int(session.get('user_id'))
+    user_id = session.get('user_id')
     status = "pending"
     if 'user_id' in session:
         for index, night_id in enumerate(night_ids):
