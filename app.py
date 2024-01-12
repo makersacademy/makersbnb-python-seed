@@ -174,8 +174,9 @@ def bookaspace(id):
     status = "pending"
     for night_id in night_ids:
         repo_booking.create(Booking(None, night_id, user_id, status))
-    space = repo_space.find(id)    
-    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date)
+    space = repo_space.find(id)
+    noofnights = (last_date - first_date).days
+    return render_template('bookaspace.html', space = space, date_from = first_date, date_to = last_date, noofnights = noofnights)
 
 
 # These lines start the server if you run this file directly
