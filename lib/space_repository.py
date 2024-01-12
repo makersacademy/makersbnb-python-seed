@@ -41,7 +41,6 @@ class SpaceRepository:
             """, 
             [space_id, 'TRUE']
         )
-        print (rows)
         if rows == []:
             return None
         #gets all availabilities as class objects

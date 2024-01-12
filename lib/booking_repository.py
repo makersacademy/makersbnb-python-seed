@@ -60,6 +60,5 @@ class BookingRepository:
         #catches last request and adds it to the requests list
         if current_request:
             requests.append(current_request)
-        print(requests)
         
         return requests
