@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+<body>
+    
+    {% block header %} {{ super() }} {% endblock %}
+
+    {%block content%}
+        <main> 
+            {% if error == "" %}
+            {% for i in range(number) %}
+            <div> <center> 
+                <h2 class="house_name"> {{names[i]}} </h2> 
+                <p class="headers">  {{dates[i]}} </p>
+                <form method="POST" action="/authorization"> 
+                    <input type="hidden" name="bookingid" value={{booking_id[i]}}> </input>
+                    <button class="button" type="submit" name="button_press" value="confirmed"> Confirm </button> 
+                    <button class="button" type="submit" name="button_press" value="declined"> Decline </button> 
+                </form>
+            </center> </div>
+
+            {%endfor%}
+            {% else %}
+            <h2 class="error"> <center> {{error}} </center>  </h2>
+            {% endif %}
+
+        </main>
+    {% endblock %}
+
+    {% block footer %} {{ super() }} {% endblock %}
+
+
+</body>
+

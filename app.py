@@ -234,7 +234,50 @@ def get_my_requests():
 
     return render_template('my_requests.html', requests = requests, title = "My requests")
 
+@app.route('/authorization', methods = ['GET'])
+def get_authorization():
+    error_message = ""
+    connection=get_flask_database_connection(app)
+    repo_booking = BookingRepository(connection)
+    bookings = repo_booking.all()
+    booking_status = []
+    booking_date = []
+    booking_name = []
+    booking_id = []
+    repo_availability = AvailabilityRepository(connection)
+    availability = repo_availability.all()
+    repo_spaces = SpaceRepository(connection)
+    spaces = repo_spaces.all()
+    space_id = 0
+    booking_counter = 0
+    for booking in bookings:
+        try:
+            if booking.user_id == session["user_id"]:
+                if booking.status != "pending":
+                    pass
+                else:
+                    booking_counter += 1
+                    booking_status.append(booking.status)
+                    for a in availability:
+                        if booking.night_id == a.id:
+                            booking_id.append(booking.id)
+                            space_id = a.space_id
+                            booking_date.append(a.date)
+                    for space in spaces:
+                        if space_id == space.id:
+                            booking_name.append(space.name)
+        except:
+            error_message = "You need to be logged in to access this page"
+    return render_template('authorization.html', names=booking_name, dates=booking_date, status=booking_status, number=booking_counter, error=error_message, booking_id=booking_id)
 
+@app.route('/authorization', methods = ['POST'])
+def post_authorization():
+    connection=get_flask_database_connection(app)
+    repo_booking = BookingRepository(connection)
+    button_value = request.form['button_press']
+    booking_id = request.form['bookingid']
+    repo_booking.update_status(button_value, booking_id)
+    return redirect("/authorization")
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
