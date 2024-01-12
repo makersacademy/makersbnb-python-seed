@@ -20,6 +20,7 @@ import stripe
 
 from dotenv import load_dotenv
 import os
+import threading
 
 load_dotenv()
 
@@ -72,16 +73,16 @@ mail = Mail(app)
 
 # email function
 def send_email(subject, recipients, body):
-    email_success = False
-    msg = Message(subject)
-    msg.sender = "MakersBnbJan2024@gmail.com"
-    msg.sender = ("MakersBnB", "MakersBnbJan2024@gmail.com")
-    msg.recipients = recipients
-    msg.body = body
-    try:
-        mail.send(msg)
-    except Exception as e:
-        print(str(e))
+    with app.app_context():
+        msg = Message(subject)
+        msg.sender = "MakersBnbJan2024@gmail.com"
+        msg.sender = ("MakersBnB", "MakersBnbJan2024@gmail.com")
+        msg.recipients = recipients
+        msg.body = body
+        try:
+            mail.send(msg)
+        except Exception as e:
+            print(str(e))
 
 
 # == Your Routes Here ==
@@ -137,6 +138,8 @@ def register():
         user_repo = UserRepository(connection)
 
         if user_repo.create_user(username, email, password):  # pass the plain password
+            email_thread = threading.Thread(target = send_email, args=('Welcome to MakersBnB!', [email], f"Thank You, {username} for signing up to MakersBnB"))
+            email_thread.start()
             return render_template("success.html")
         else:
             return render_template("userexists.html")
@@ -246,6 +249,9 @@ def create_space(current_user):
         request.form["availableTo"],
         new_space.id,
     )
+    user = user_repo.find_user_by_username(current_user)
+    email_thread = threading.Thread(target =send_email, args=('New Space Created!', [user.email], f'Hello {user.username}, You have successfully created a space\nName: {request.form["name"]}\nDescription: {request.form["description"]}\nPrice Per Night: {float(request.form["pricePerNight"])}\nAvailable From: {request.form["availableFrom"]}\nAvailable To: {request.form["availableTo"]}\nIf there are any errors, please update your space.\nThank You!'))
+    email_thread.start()
     return redirect("/spaces")
 
 
@@ -279,13 +285,17 @@ def create_booking(current_user):
     )[0]["id"]
     new_booking = Booking(None, booking_date, space_id, guest_id, None)
     booking_repo = BookingRepository(connection)
+
     try:
         booking_repo.create(new_booking)
-    # Commented lines below may later be useful for notification sending to host
-    # space_repo = SpaceRepository(connection)
-    # host_id = space_repo.get_space_by_id(space_id).host_id
-    # user_repo = UserRepository(connection)
-    # host_username = user_repo.id_to_username(host_id)
+        
+        space_repo = SpaceRepository(connection)
+        space = space_repo.get_space_by_id(space_id)
+        user_repo = UserRepository(connection)
+        user = user_repo.find_user_by_username(user_repo.id_to_username(space.host_id))
+        email_thread = threading.Thread(target = send_email, args=('Your space has been requested!', [user.email], f'Hello {user.username}, Your space ({space.name}) has been requested.\nPlease confirm or deny.\nThanks!'))
+        email_thread.start()
+        
         return redirect("/bookings/success")
     except Exception as err:
         fail_route = url_for('space', space_id=space_id, error=str(err))
@@ -369,6 +379,14 @@ def post_confirm_booking(current_user):
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.confirm(int(booking_id))
+    current_booking = booking_repo.find(int(booking_id))
+    user_repo = UserRepository(connection)
+    username = user_repo.id_to_username(current_booking.guest_id)
+    user = user_repo.find_user_by_username(username)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.get_space_by_id(current_booking.space_id)
+    email_thread = threading.Thread(target = send_email, args=('Your booking has been confirmed!', [user.email], f'Hello, {username}, your booking has been confirmed at {space.name} on {current_booking.date}.'))
+    email_thread.start()
     return redirect(f"/requests/{booking_id}")
 
 
@@ -379,6 +397,14 @@ def post_reject_booking(current_user):
     connection = get_flask_database_connection(app)
     booking_repo = BookingRepository(connection)
     booking_repo.reject(booking_id)
+    current_booking = booking_repo.find(int(booking_id))
+    user_repo = UserRepository(connection)
+    username = user_repo.id_to_username(current_booking.guest_id)
+    user = user_repo.find_user_by_username(username)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.get_space_by_id(current_booking.space_id)
+    email_thread = threading.Thread(target = send_email, args=('Your booking has been rejected.', [user.email], f'Hello, {username}, your booking has been rejected at {space.name} on {current_booking.date}.'))
+    email_thread.start()
     return redirect(f"/requests/{booking_id}")
 
 

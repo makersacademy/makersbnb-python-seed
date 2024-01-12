@@ -10,9 +10,9 @@
     <br />
     {% if space.host_id == current_user_id %}
         {% if booking.confirmed == True %}
-        <p>You have already confirmed this booking!</p>
+        <p>You have confirmed this booking!</p>
         {% elif booking.confirmed == False %}
-        <p>You have already rejected this booking!</p>
+        <p>You have rejected this booking!</p>
         {% else %}
         <div class="buttonStyling">
             <form class="approveDeny" class='centeredText' method="post" action="/bookings/confirm">

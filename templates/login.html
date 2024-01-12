@@ -7,6 +7,7 @@
 <p class="error">{{ error }}</p>
 {% endif %}
 <form action="/login" method="POST" style="text-align:center;">
+
 Username
 <br>
 <input type="text" name="username">
@@ -20,5 +21,11 @@ Password
 
 <input type="submit" value="login">
 </form>
+<br>
+<br>
+<p>If you don't have an account, please go to our signup page:</p>
+<div class="createAccountButton">
+        <a class="button" href="/">Create account</a> <br>
+</div>
 </body>
 {% endblock %}
