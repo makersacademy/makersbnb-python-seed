@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users cascade;
 DROP SEQUENCE IF EXISTS users_id_seq;
 
 -- Then, we recreate them

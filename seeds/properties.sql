@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS properties;
+DROP TABLE IF EXISTS properties cascade;
 DROP SEQUENCE IF EXISTS properties_id_seq;
 
 CREATE SEQUENCE IF NOT EXISTS properties_id_seq;
