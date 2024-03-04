@@ -27,6 +27,11 @@ def get_sign_up():
 def get_spaces():
     return render_template("spaces.html")
 
+@app.route('/sign_up', methods=['POST'])
+def post_user_exists():
+    return render_template('sign_up.html')
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
