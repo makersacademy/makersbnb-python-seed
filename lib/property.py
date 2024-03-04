@@ -1,9 +1,8 @@
 class Property:
-    def __init__(self, name, description, price, date, owner, booked_status):
+    def __init__(self, name, description, price, owner, booked_status):
         self.name = name
         self.description = description
-        self.price = price
-        self.date = date 
+        self.price = price 
         self.owner = owner #possibly user_id
         self.booked_status = booked_status
         
