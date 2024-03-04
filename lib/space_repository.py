@@ -1,4 +1,4 @@
-from lib.space import Space
+from lib.spaces import Spaces
 
 class SpaceRepository:
     def __init__(self, connection):
@@ -19,7 +19,7 @@ class SpaceRepository:
     
 
     def create(self, space):
-        self._connection.execute('INSERT INTO makersbnb (id, name, description, price, owenr) VALUES (%s, %s, %s, %s, %s)', [
+        self._connection.execute('INSERT INTO makersbnb (id, name, description, price, owner) VALUES (%s, %s, %s, %s, %s)', [
                                 space.id, space.name, space.description, space.price, space.owner])
         return None
     
