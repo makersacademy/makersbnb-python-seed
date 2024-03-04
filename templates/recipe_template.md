@@ -59,9 +59,13 @@ Put the different nouns in this table. Replace the example with your own nouns.
 
 
 1. Name of the first table (always plural): `users` 
-   Column names: `user_name`, `user_password`, `user_spaces`
+   Column names: `user_name`, `user_password`, `user_id`
+#atm username is an email
 2. Name of the second table (always plural): `spaces` 
    Column names: `space_name`, `description`, `price_per_night`, `user_id`, `availability`, `status`
+#might need two collums for availability to represent range from - to ??
+3. Name of the third table (always plural): `bookings` 
+   Column names: `date`, `status`, `space_id`, `guest_id`,
 
 
 ## 3. Decide the column types
@@ -113,12 +117,12 @@ You'll then be able to say that:
 
 ## 5. Write the SQL
 ```sql
--- file: albums_table.sql
+-- file: bnb_table.sql
 -- Create the table without the foreign key first.
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   user_name text,
-  user_password text,
+  user_password text
 );
 
 -- Then the table with the foreign key second.
@@ -127,7 +131,7 @@ CREATE TABLE spaces (
   name text,
   description text,
   price_per_night numeric,
-  user_id int
+  user_id int,
 -- The foreign key name is always {other_table_singular}_id
   constraint fk_user foreign key(user_id)
     references users(id)
@@ -139,11 +143,11 @@ CREATE TABLE bookings (
   date date,
   status boolean,
   space_id int,
-  guest_id int
+  guest_id int,
 -- The foreign key name is always {other_table_singular}_id
   constraint fk_space foreign key(space_id)
     references spaces(id)
-    on delete cascade
+    on delete cascade,
   constraint fk_guest foreign key(guest_id)
     references users(id)
     on delete cascade
