@@ -10,8 +10,8 @@ app = Flask(__name__)
 # GET /index
 # Returns the homepage
 # Try it:
-#   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
+#   ; open http://localhost:5000
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
 
