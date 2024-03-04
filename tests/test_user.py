@@ -1,4 +1,4 @@
-from lib.user import User
+from lib.user import *
 import pytest
 
 """
@@ -33,7 +33,7 @@ def test_artists_are_equal():
 User constructs with all criteria, except password not to requirements
 Return Error message.
 """
-def test_user_constructs():
+def test_password_error_not_matching_criteria():
     user = User(1, "test@email.com", "Joe", "Blogs", "01234567890", "password")
     with pytest.raises(Exception) as e:
         user.password()
@@ -44,7 +44,7 @@ def test_user_constructs():
 New user constructed with phone number including white space.
 Returns amend phone number with no white space.
 """
-def test_user_constructs():
+def test_white_space_removal_from_phone_num():
     user = User(1, "test@email.com", "Joe", "Blogs", "01234 567 890", "P4ssword?")
     assert user.phone_num == "01234567890"
 
@@ -52,7 +52,7 @@ def test_user_constructs():
 New user constructed with capitalised email address.
 Returns lowercase email address
 """
-def test_user_constructs():
+def test_lowercase_email_formatting():
     user = User(1, "TEST@EMAIL.COM", "Joe", "Blogs", "01234567890", "P4ssword?")
     assert user.email == "test@email.com"
 
