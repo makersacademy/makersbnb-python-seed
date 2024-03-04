@@ -7,13 +7,29 @@ app = Flask(__name__)
 
 # == Your Routes Here ==
 
-# GET /index
+# GET /
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000
 @app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+# GET /places
+# Returns the places page
+# Try it:
+#   ; open http://localhost:5000/places
+@app.route('/places', methods=['GET'])
+def get_places():
+    return render_template('places/index.html')
+
+# GET /places/new
+# Returns the new place page
+# Try it:
+#   ; open http://localhost:5000/places/new
+@app.route('/places/new', methods=['GET'])
+def get_add_new_place():
+    return render_template('places/new.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
