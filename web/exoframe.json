@@ -1,11 +1,5 @@
 {
   "name": "cherry-makersbnb",
-  "domain": "cherry-makersbnb-simple-ci.xf.mkrs.link",
-  "port": "5000"
-}
-
-{
-  "name": "cherry-makersbnb",
   "domain": "cherry-makersbnb.xf.mkrs.link",
   "port": 5000,
   "env": {
