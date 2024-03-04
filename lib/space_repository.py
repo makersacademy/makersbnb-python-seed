@@ -8,7 +8,7 @@ class SpaceRepository:
         rows = self._connection.execute(
             'INSERT into spaces(description, price, user_id, name) VALUES (%s, %s, %s, %s) RETURNING id', [space.description, space.price, space.user_id, space.name]
         )
-        row = rows[0]['id']
+        space.id = rows[0]['id']
         return None
 
     def all(self):

@@ -7,7 +7,7 @@ def test_add_space(db_connection):
     space = Space(None, 'test description', 99.99, 1, 'test name')
     repository.add(space)
     result = repository.all()
-    assert space.id == 1
+    assert space.id == 3
     assert result == [Space(1, 'house with a pool', 99.99, 1, 'pool house'), Space(2, 'house with a garden', 199.99, 2, 'garden house'), Space(3, 'test description', 99.99, 1, 'test name')]
 
 def test_all(db_connection):
