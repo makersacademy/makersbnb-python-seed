@@ -24,7 +24,7 @@ CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     description VARCHAR(255),
-    price decimal(7, 2),
+    price float,
 -- The foreign key name is always {other_table_singular}_id
     user_id int,
     constraint fk_user foreign key(user_id)
@@ -45,7 +45,7 @@ INSERT INTO users (email_address, password) VALUES ('user_4@test.com', 'Jazz');
 
 
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO spaces (name, description, price, user_id) VALUES ('space_1', 'description_1', 45.5, 1);
+INSERT INTO spaces (name, description, price, user_id) VALUES ('space_1', 'description_1', 45.50, 1);
 INSERT INTO spaces (name, description, price, user_id) VALUES ('space_2', 'description_2', 14000.99, 2);    
 
 
