@@ -1,0 +1,10 @@
+{
+    "name": "cherry-makersbnb-database",
+    "domain": false,
+    "hostname": "cherry-makersbnb-database",
+    "image": "postgres:12",
+    "env": {
+      "POSTGRES_PASSWORD": "@cherry-makersbnb-postgres-password"
+    },
+    "volumes": ["cherry_makersbnb_database_volume:/var/lib/postgresql/data"]
+  }
