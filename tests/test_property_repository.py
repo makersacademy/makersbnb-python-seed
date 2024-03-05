@@ -1,0 +1,40 @@
+from lib.property_repository import *
+from lib.property import *
+
+'''
+When we call PropertyRepository #all
+We get a list of Property objects reflecting the seed data.
+
+'''
+
+def test_get_all_properties(db_connection):
+    db_connection.seed("seeds/blueberries_bnb.sql")
+    repository = PropertyRepository(db_connection)
+    properties = repository.all()
+    assert properties == [
+        Property(1, 'Property1', 1, 'hot', 25.40 ),
+        Property(2, 'Property2', 2, 'cold', 45.70),
+        Property(3, 'Property3', 3, 'windy', 83),
+        Property(4, 'Property4', 4, 'snow', 56.80),
+        Property(5, 'Property5', 4, 'cloud', 83.20),
+        ]
+    
+'''
+When we add a property, it is added to the list of properties
+
+'''
+
+def test_add_property(db_connection):
+    db_connection.seed("seeds/blueberries_bnb.sql")
+    repository = PropertyRepository(db_connection)
+    property_new = Property(None, 'Property6', 3, 'hello', 18.90)
+    repository.add(property_new)
+    properties = repository.all()
+    assert properties == [
+        Property(1, 'Property1', 1, 'hot', 25.40 ),
+        Property(2, 'Property2', 2, 'cold', 45.70),
+        Property(3, 'Property3', 3, 'windy', 83),
+        Property(4, 'Property4', 4, 'snow', 56.80),
+        Property(5, 'Property5', 4, 'cloud', 83.20),
+        Property(6, 'Property6', 3, 'hello', 18.90)
+        ]
