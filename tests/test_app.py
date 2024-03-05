@@ -49,9 +49,9 @@ We can check if a username exists
 def test_user_exists_sign_up(db_connection, page, test_web_address):
     db_connection.seed("seeds/users.sql") 
     page.goto(f"http://{test_web_address}/sign_up")
-    page.fill("input[name='name']","user1")
-    page.fill("input[name='email']",'user1@example.com')
-    page.fill("input[name='password']","abc123")
+    page.fill("input[name='name']", "user1")
+    page.fill("input[name='email']", 'user1@example.com')
+    page.fill("input[name='password']", "abc123")
     page.click("text = Submit")
     h1 = page.locator('h1')
     expect(h1).to_have_text("This user is already registered")
