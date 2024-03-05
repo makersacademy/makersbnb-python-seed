@@ -8,8 +8,8 @@ def test_user_constructs():
     user = User(1, "test@email.com", "Joe", "Blogs", "01234567890", "P4ssword?")
     assert user.id == 1
     assert user.email == "test@email.com"
-    assert user.first_name == "Joe"
-    assert user.last_name == "Blogs"
+    assert user.forename == "Joe"
+    assert user.surname == "Blogs"
     assert user.phone_number == "01234567890"
     assert user.password == "P4ssword?"
 
