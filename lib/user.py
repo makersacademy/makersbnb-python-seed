@@ -11,14 +11,16 @@ class User:
 
     def password_validator(self):
         password_rule = "r'^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$'"
-        try:
-            re.match(password_rule,self.password)
-            return
-        except Exception:
-            return "Password not OK"
+        match_result = re.match(password_rule,self.password)
+        if match_result is None:
+            raise InvalidPassword('Password not OK')
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
     def __repr__(self):
         return f"User({self.id}, {self.email}, {self.first_name}, {self.last_name}, {self.phone_num}, {self.password})"
+    
+
+class InvalidPassword(Exception):
+    pass
