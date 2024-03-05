@@ -31,8 +31,7 @@ We can render sign up page
 def test_get_sign_up(page, test_web_address):
     page.goto(f"http://{test_web_address}/sign_up")
     h1 = page.locator("h1")
-    expect(h1).to_have_text("This is sign up")
-
+    expect(h1).to_have_text("Sign up below")
 """
 We can render spaces page
 """
@@ -40,6 +39,36 @@ def test_get_spaces(page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces")
     h1 = page.locator('h1')
     expect(h1).to_have_text("SPACES")
+
+
+"""
+Check if sign up was successful
+"""
+
+def test_sign_up_successful(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "user4")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "abc1234")
+    page.click("text = Submit")
+    h1 = page.locator('h1')
+
+
+"""
+We can check if a username exists 
+"""
+
+# def test_user_exists_sign_up(db_connection, page, test_web_address):
+#     db_connection.seed("seeds/users.sql") 
+#     page.goto(f"http://{test_web_address}/sign_up")
+#     page.fill("input[name='name']", "user1")
+#     page.fill("input[name='email']", 'user1@example.com')
+#     page.fill("input[name='password']", "abc123")
+#     page.click("text = Submit")
+#     h1 = page.locator('h1')
+#     # expect(h1).to_have_text("SPACES")
+#     expect(h1).to_have_text("This user is already registered")
 
 
 """ 
@@ -89,3 +118,4 @@ def test_unsuccessful_login(db_connection, page, test_web_address):
 
     # author_element = page.locator(".t-author-name")
     # expect(author_element).to_have_text("Author: J.R.R. Tolkien")
+

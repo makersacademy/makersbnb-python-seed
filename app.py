@@ -29,6 +29,18 @@ def get_spaces():
     return render_template("spaces.html")
 
 
+
+@app.route('/sign_up', methods=['POST', 'GET'])
+def sign_up():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+    if repo.find(name, email, password):
+        return render_template("sign_up.html")
+    return render_template("spaces.html")
+
 @app.route('/login', methods=['POST'])
 def validate_login():
     connection = get_flask_database_connection(app)
@@ -39,7 +51,7 @@ def validate_login():
         return render_template("spaces.html")
     return render_template("login.html")
 
-       
+
 
 
 # @app.route('/books', methods=['POST'])
@@ -64,7 +76,7 @@ def validate_login():
 
 #         # Redirect to the book's show route to the user can see it
 #         return redirect(f"/books/{book.id}")
-   
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
