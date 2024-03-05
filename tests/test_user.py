@@ -10,7 +10,7 @@ def test_user_constructs():
     assert user.email == "test@email.com"
     assert user.first_name == "Joe"
     assert user.last_name == "Blogs"
-    assert user.phone_num == "01234567890"
+    assert user.phone_number == "01234567890"
     assert user.password == "P4ssword?"
 
 """
@@ -35,8 +35,8 @@ Return Error message.
 """
 def test_password_error_not_matching_criteria():
     user = User(1, "test@email.com", "Joe", "Blogs", "01234567890", "password")
-    with pytest.raises(Exception) as e:
-        user.password()
+    with pytest.raises(InvalidPassword) as e:
+        user.password_validator()
     error_message = str(e.value)
     assert error_message == "Password not OK"
 
@@ -44,9 +44,9 @@ def test_password_error_not_matching_criteria():
 New user constructed with phone number including white space.
 Returns amend phone number with no white space.
 """
-def test_white_space_removal_from_phone_num():
+def test_white_space_removal_from_phone_number():
     user = User(1, "test@email.com", "Joe", "Blogs", "01234 567 890", "P4ssword?")
-    assert user.phone_num == "01234567890"
+    assert user.phone_number == "01234567890"
 
 """
 New user constructed with capitalised email address.
