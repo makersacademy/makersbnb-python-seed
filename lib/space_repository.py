@@ -1,12 +1,12 @@
 from lib.space import *
-from datetime import datetime
+
 class SpaceRepository:
     def __init__(self, connection):
         self._connection = connection
 
     def add(self, space):
         rows = self._connection.execute(
-            'INSERT into spaces(description, price, user_id, name, fromdate, todate) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id', [space.description, space.price, space.user_id, space.name, space.fromdate, space.todate]
+            'INSERT into spaces(description, price, user_id, name, free_dates) VALUES (%s, %s, %s, %s, %s) RETURNING id', [space.description, space.price, space.user_id, space.name, space.free_dates]
         )
         space.id = rows[0]['id']
         return None
