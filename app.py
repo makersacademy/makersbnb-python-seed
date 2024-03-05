@@ -17,7 +17,7 @@ def get_index():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    pass 
+    return render_template('login.html')
 
 
 # GET /places
