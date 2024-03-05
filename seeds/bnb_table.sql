@@ -4,9 +4,9 @@
 -- database state, and that tests don't interfere with each other.
 
 -- First, we must delete (drop) all our tables
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS spaces;
 DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS spaces;
+DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
