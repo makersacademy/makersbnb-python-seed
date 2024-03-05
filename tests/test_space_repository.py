@@ -1,5 +1,6 @@
 from lib.space_repository import *
 from lib.space import *
+from datetime import date
 
 
 def test_add_space(db_connection):
