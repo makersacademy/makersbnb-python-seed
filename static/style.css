@@ -1,3 +1,122 @@
-body {
-    font-size: 18px;
+h1, h2, h3, h4 {
+    margin: 1em auto;
+    text-align: center;
 }
+
+form {
+    width: 60vw;
+    max-width: 500px;
+    min-width: 300px;
+    margin: 0 auto;
+    padding-bottom: 2em;
+}
+
+body {
+    background-image: url('nebula.png');
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #1b1b32;
+    color : white;
+    text-shadow: 0px 0px 4px #000000,0px 0px 4px #000000, 0px 0px 4px #000000, 0px 0px 4px #000000, 0px 0px 4px #000000, 0px 0px 4px #000000, 0px 0px 4px #000000, 0px 0px 4px #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+input {
+    background-color: #0a0a23;
+    border: 1px solid #0a0a23;
+    color: #ffffff;
+    margin: 10px 0 0 0;
+    width: 100%;
+    min-height: 2em;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 60%;
+    margin: 1em auto;
+    height: 2em;
+    font-size: 1.1rem;
+    background-color: #3b3b4f;
+    border-color: white;
+    min-width: 300px;
+    transition: background-color 0.3s ease;
+}
+input[type="submit"]:hover {
+    background-color: #22994f;
+}
+
+input[type="Spacetable"]{
+    display: inline;
+    width: 60%;
+    margin: 1em auto;
+    height: 2em;
+    font-size: 1.1rem;
+    background-color: transparent;
+    border-color: transparent;
+    min-width: 65px;
+}
+
+.delete-button {
+    width: 40%;
+}
+.links {
+    text-align: right;
+    color: #f5f6f7;
+}
+
+a {   
+    color: #f5f6f7;   
+}
+
+a:active {
+    color: blue;
+}
+
+a[tabindex]:focus {
+    color:blue;
+    outline: none;
+}
+
+
+.list-space-button {
+    text-align: center;
+
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+
+.title {
+    font-size: 4em;
+    margin-top: 1%;
+    padding-bottom: 0;
+    margin-bottom: 3%;
+}
+
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+

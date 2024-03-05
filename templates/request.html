@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>SpaceBnB - request</title>
+        <meta charset="utf-8">
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
+        <h1></h1>
+        <h2></h2>
+        <h3>Request for: {{ space.space_name }}</h3>
+        <h4>For the date of: {{ booking.date }}</h4>
+        <h4>Request made by: {{ user.username }}</h4>
+        <form action="/approve/{{ booking.id }}" method="POST" name="approve" id="approve">
+        <input type="submit" name="approve" value="Approve Booking">
+        </form>
+        <form action="/reject_request/{{ booking.id }}" method="POST" name="reject_request" id="reject_request">
+        <input type="submit" name="reject_request" value="Reject Request">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>SpaceBnB - requests</title>
+        <meta charset="utf-8">
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        {% include "banner.html" %}
+        <div class='username'>
+            <code>
+                {% if session.user_id %}
+                    <p>{{ user.username }} signed in</p>
+                {% endif %}
+            <code>
+        </div>
+
+        <h1 class="title">My requests</h1>
+        <div class="row">
+            <div class="column">
+            
+        <h2>Requests I've made</h2>
+        {% for booking, space in spaces_and_bookings %}
+            <p>{{ space.space_name }}</p>
+            <p>{{ booking.date }}</p>
+            {% if booking.confirmed %}
+                <p>Confirmed</p>
+            {% elif booking.rejected %}
+                <p>Rejected</p>
+            {% else %}
+                <p>Pending...</p>
+            {% endif %}
+            <form action="/delete_request/{{ booking.id }}" method="POST" name="delete_request" id="delete_request">
+                <input type="submit" class="delete-button" name="delete_request" value="Delete">
+            </form>
+        {% endfor %}
+        </div>
+        <div class="column">
+        <h2>Requests I've received</h2>
+        {% for space, booking, user in space_bookings_users_rec %}
+            {% if booking.confirmed %}
+                <p>{{ space.space_name }} - Confirmed</p>
+            {% elif booking.rejected %}
+                <p>{{ space.space_name }} - Rejected</p>
+            {% else %}
+                <a href="/request/{{ booking.id }}">{{ space.space_name }}</a></p>
+            {% endif %}
+            <p>{{ booking.date }}</p>
+            <p>Request by {{ user.username }}</p>
+            <form action="/delete_request/{{ booking.id }}" method="POST" name="delete_request" id="delete_request">
+                <input type="submit" name="delete_request" value="Delete">
+            </form>
+        {% endfor %}
+        </div>
+            </div>
+    </body>
+</html>
