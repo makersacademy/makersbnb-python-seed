@@ -3,21 +3,21 @@ from datetime import date
 
 
 def test_construct():
-    space = Space(1, "test description", 99.99, 1, "test name", 2024-1-1, 2024-1-31)
+    space = Space(1, "test description", 99.99, 1, "test name", '01-01-2024', '31-01-2024')
     assert space.id == 1
     assert space.description == "test description"
     assert space.price == 99.99
     assert space.user_id == 1
     assert space.name == "test name"
-    assert space.fromdate == 2024-1-1
-    assert space.todate == 2024-1-31
+    assert space.free_dates == ['01-01-2024', '02-01-2024', '03-01-2024', '04-01-2024', '05-01-2024', '06-01-2024', '07-01-2024', '08-01-2024', '09-01-2024', '10-01-2024', '11-01-2024', '12-01-2024', '13-01-2024', '14-01-2024', '15-01-2024', '16-01-2024', '17-01-2024', '18-01-2024', '19-01-2024', '20-01-2024', '21-01-2024', '22-01-2024', '23-01-2024', '24-01-2024', '25-01-2024', '26-01-2024', '27-01-2024', '28-01-2024', '29-01-2024', '30-01-2024', '31-01-2024']
+
 
 def test_format():
-    space = Space(1, "test description", 99.99, 1, "test name", datetime(2024, 1, 1), datetime (2024, 1, 31))
-    assert str(space) == 'Space(1, test description, 99.99, 1, test name, 2024-01-01, 2024-01-31)'
+    space = Space(1, "test description", 99.99, 1, "test name", '01-01-2024', '31-01-2024')
+    assert str(space) == "Space(1, test description, 99.99, 1, test name, ['01-01-2024', '02-01-2024', '03-01-2024', '04-01-2024', '05-01-2024', '06-01-2024', '07-01-2024', '08-01-2024', '09-01-2024', '10-01-2024', '11-01-2024', '12-01-2024', '13-01-2024', '14-01-2024', '15-01-2024', '16-01-2024', '17-01-2024', '18-01-2024', '19-01-2024', '20-01-2024', '21-01-2024', '22-01-2024', '23-01-2024', '24-01-2024', '25-01-2024', '26-01-2024', '27-01-2024', '28-01-2024', '29-01-2024', '30-01-2024', '31-01-2024'])"
 
 
 def test_equality():
-    space1 = Space(1, "test description", 99.99, 1, "test name", datetime(2024,1,1), datetime(2024,1,1))
-    space2 = Space(1, "test description", 99.99, 1, "test name", datetime(2024,1,1), datetime(2024,1,1))
+    space1 = Space(1, "test description", 99.99, 1, "test name", '01-01-2024', '31-01-2024')
+    space2 = Space(1, "test description", 99.99, 1, "test name", '01-01-2024', '31-01-2024')
     assert space1 == space2
