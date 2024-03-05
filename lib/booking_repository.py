@@ -5,7 +5,7 @@ class BookingRepository:
     def __init__(self, connection):
         self._connection = connection
 
-    # Retrieve all books
+    # Retrieve all bookings
     def all(self):
         rows = self._connection.execute('SELECT * from bookings')
         bookings = []
@@ -14,22 +14,22 @@ class BookingRepository:
             bookings.append(item)
         return bookings
 
-    # Find a single book by its id
+    # Find a single booking by its id
     def find(self, booking_id):
         rows = self._connection.execute(
             'SELECT * from bookings WHERE id = %s', [booking_id])
         row = rows[0]
         return Booking(row["id"], row["date"], row["status"], row["space_id"], row["guest_id"])
 
-    # Create a new book
+    # Create a new booking
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, booking):
         self._connection.execute('INSERT INTO bookings (date, status, space_id, guest_id) VALUES (%s, %s, %s, %s)', [
                                  booking.date, booking.status, booking.space_id, booking.guest_id])
         return None
 
-    # # Delete a book by its id
-    # def delete(self, book_id):
-    #     self._connection.execute(
-    #         'DELETE FROM books WHERE id = %s', [book_id])
-    #     return None
+    # Delete a booking by its id
+    def delete(self, booking_id):
+        self._connection.execute(
+            'DELETE FROM bookings WHERE id = %s', [booking_id])
+        return None

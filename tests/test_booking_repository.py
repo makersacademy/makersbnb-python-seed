@@ -47,18 +47,15 @@ def test_create_record(db_connection):
     ]
 
 # """
-# When we call BookRepository#delete
+# When we call BookingRepository#delete
 # We remove a record from the database.
 # """
-# def test_delete_record(db_connection):
-#     db_connection.seed("seeds/book_store.sql")
-#     repository = BookRepository(db_connection)
-#     repository.delete(3) # Apologies to Maggie Nelson fans
+def test_delete_record(db_connection):
+    db_connection.seed("seeds/bnb_table.sql")
+    repository = BookingRepository(db_connection)
+    repository.delete(1)
 
-#     result = repository.all()
-#     assert result == [
-#         Book(1, "Invisible Cities", "Italo Calvino"),
-#         Book(2, "The Man Who Was Thursday", "GK Chesterton"),
-#         Book(4, "No Place on Earth", "Christa Wolf"),
-#         Book(5, "Nevada", "Imogen Binnie"),
-#     ]
+    result = repository.all()
+    assert result == [
+        Booking(2, string_to_date('2024-06-25'), False, 2, 1)
+    ]
