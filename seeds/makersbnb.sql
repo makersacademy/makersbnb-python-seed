@@ -1,8 +1,5 @@
-DROP TABLE IF EXISTS makersbnb;
-DROP SEQUENCE IF EXISTS makersbnb_id_seq;
+DROP TABLE IF EXISTS spaces;
 
-
-CREATE SEQUENCE IF NOT EXISTS makersbnb_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name VARCHAR(255),

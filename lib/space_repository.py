@@ -8,7 +8,7 @@ class SpaceRepository:
         rows = self._connection.execute("SELECT * FROM makersbnb")
         spaces = []
         for row in rows:
-            space = Space(
+            space = Spaces(
                 row['id'],
                 row["name"], 
                 row["description"], 

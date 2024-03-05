@@ -20,10 +20,7 @@ Your tests will depend on data stored in PostgreSQL to run. If seed data is prov
 
 DROP TABLE IF EXISTS makersbnb;
 DROP TABLE IF EXISTS spaces;
-DROP SEQUENCE IF EXISTS makersbnb_id_seq;
 
-
-CREATE SEQUENCE IF NOT EXISTS makersbnb_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
     space_name VARCHAR(255),
@@ -41,8 +38,8 @@ INSERT INTO spaces(space_name, space_description, space_price, space_owner) VALU
 
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
 
-psql -h 127.0.0.1 makersbnb_test < makersbnb.sql
-
+psql -h 127.0.0.1 makersbnb_test < ~/Documents/Makers_Notes/group_project/makersbnb-python-seed/seeds/makersbnb.sql
+#this creates the databse in the makersbnb_test database
 
 3. Define the class names
 Usually, the Model class name will be the capitalised table name (single instead of plural). The same name is then suffixed by Repository for the Repository class name.
@@ -102,7 +99,7 @@ class Spaces:
 
 # Implementation of values into the book object
 
-    space_1 = Space(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
+    space_1 = Spaces(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
     assert space_1.id == (1)
     assert space_1.name == ("Bob House")
     assert space_1.location == ("Brighton")
@@ -198,7 +195,7 @@ def test_record_is_equal():
     space_2 = Spaces('Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
     assert space_1 == space_2
 
-    space_1 = Space(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
+    space_1 = Spaces(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
     assert space_1.id == (1)
     assert space_1.name == ("Bob House")
     assert space_1.location == ("Brighton")
@@ -210,7 +207,7 @@ def test_record_is_equal():
 Tests that Space object is returned in
 a nice format
 """
-def test_formats_book_records_nicely():
+def test_formats_spaces_records_nicely():
     space = Spaces('Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
     assert str(space) == "Property name: {self.name}. /n
         Property Description: {self.description}. /n
@@ -225,16 +222,16 @@ def test_formats_book_records_nicely():
 When we call SpacesRepository#all
 We get a list of spaces objects reflecting the seed data.
 """
-def test_get_all_records_from_books(db_connection): 
+def test_get_all_records_from_spaces(db_connection): 
     db_connection.seed("seeds/makersbnb.sql") 
     repository = SpaceRepository(db_connection)
     result = repository.all() # Get all spaces
     
     # Assert on the results
     assert result == [
-        Spaces('Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob');
-        Spaces('Jim House', 'London', '3 bedrooms, 3 bathrooms, Modern property', 350, 'Jim');
-        Spaces('Jane House', 'Newcastle', '4 bedrooms, 2 bathrooms, Georgian-era property', 450, 'Jane');
+        Spaces(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob');
+        Spaces(2, 'Jim House', 'London', '3 bedrooms, 3 bathrooms, Modern property', 350, 'Jim');
+        Spaces(3, 'Jane House', 'Newcastle', '4 bedrooms, 2 bathrooms, Georgian-era property', 450, 'Jane');
         Spaces('Megan House', 'Exmouth', '5 bedrooms, 5 bathrooms, Contemporary property', 600, 'Megan');
         Spaces('Phil House', 'Manchester', '2 bedrooms, 1 bathrooms, Barn-style property', 200, 'Phil')
     ]
