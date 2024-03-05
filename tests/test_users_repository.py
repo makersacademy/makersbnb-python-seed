@@ -35,8 +35,6 @@ def test_create_record(db_connection):
     print(result)
     assert result == User(7, 'fgtg@example.com', 'FG', 'TG', '6666666666', '@12Cupoftea34as')
 
-
-
 """
 When we call UsersRepository #find with an email address that doesn't exist
 We get an error 
