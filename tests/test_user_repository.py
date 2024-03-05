@@ -19,6 +19,6 @@ def test_create(db_connection):
     repository = UserRepository(db_connection)
 
 
-    repository.create(User(None, 'John', '12345', 'John@outlook.com'))
-    result = repository.find(6)
-    assert result == User(6, 'John', '12345', 'John@outlook.com')
+    user = repository.create(User(None, 'John', '12345', 'John@outlook.com'))
+    result = repository.find(user.id)
+    assert result == user
