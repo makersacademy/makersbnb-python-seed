@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
@@ -15,9 +15,15 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
-@app.route("/login", methods=['POST', 'GET'])
+@app.route("/login", methods=['GET'])
 def login():
     return render_template('login.html')
+
+@app.route("/login", methods=['POST'])
+def login_post():
+    username = request.form['user']
+    password = request.form['pass']
+    return redirect("/")
 
 
 # GET /places

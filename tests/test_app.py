@@ -68,12 +68,10 @@ def test_input_user_pass(page, test_web_address):
 """Tests the login button redirects us to the main index page"""
 
 def test_when_we_click_login_button(page, test_web_address):
+    page.set_default_timeout(1000)
     # we go to login page
     page.goto(f"http://{test_web_address}/login")
-
     # we click the button
-    page.click("text='Login'")
-
-    # we check new headers and assert we have been redirected
-    h1_tag = page.locator("h1")
-    expect(h1_tag).to_have_text("Makers BnB")
+    page.click("input[type=submit][value='Login']")
+    # we check url and assert we have been redirected
+    assert page.url == f"http://{test_web_address}/"
