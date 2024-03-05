@@ -13,11 +13,11 @@ def test_construct():
     assert space.todate == 2024-1-31
 
 def test_format():
-    space = Space(1, "test description", 99.99, 1, "test name", datetime(2024, 1, 1), datetime (2024, 1, 31))
+    space = Space(1, "test description", 99.99, 1, "test name", date(2024, 1, 1), date(2024, 1, 31))
     assert str(space) == 'Space(1, test description, 99.99, 1, test name, 2024-01-01, 2024-01-31)'
 
 
 def test_equality():
-    space1 = Space(1, "test description", 99.99, 1, "test name", datetime(2024,1,1), datetime(2024,1,1))
-    space2 = Space(1, "test description", 99.99, 1, "test name", datetime(2024,1,1), datetime(2024,1,1))
+    space1 = Space(1, "test description", 99.99, 1, "test name", date(2024, 1, 1), date(2024, 1, 1))
+    space2 = Space(1, "test description", 99.99, 1, "test name", date(2024, 1, 1), date(2024, 1, 1))
     assert space1 == space2
