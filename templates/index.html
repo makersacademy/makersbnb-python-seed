@@ -1,15 +1,50 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Feel at home anywhere</h1>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+    <h3>Sign up to CherryBnB</h3>
+    <form action="sign-up" method="post">
+
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+            <!-- If so, we show them. -->
+            <p class="t-errors">
+                There were errors with your submission: {{ errors }}
+            </p>
+        {% endif %}
+
+        <p>
+            <label for="email">email</label>
+            <input type="text" name="email" id="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password">
+        </p>
+        <p>
+            <label for="confirm-password">Password</label>
+            <input type="text" name="confirm-password" id="confirm-password">
+        </p>
+        <p>
+            <input type="submit" value="Create Book">
+        </p>
+    </form>
+
+{% endblock %}
+
+
+
+
+
+<!-- <!DOCTYPE html>
 <html>
     <head>
         <title>MakersBnB</title>
-
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
         <p>This is the homepage.</h1>
     </body>
-</html>
+</html> -->
