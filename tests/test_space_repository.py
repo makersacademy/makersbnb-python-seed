@@ -16,11 +16,23 @@ def test_get_all_records_from_spaces(db_connection):
         Space(5, 'Phil House', 'Manchester', '2 bedrooms, 1 bathrooms, Barn-style property', 200, 'Phil')
     ]
 
-def test_find_single_record(db_connection):
+def test_find_single_property_by_location(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
     repository = SpaceRepository(db_connection)
-    space = repository.find('Brighton')
+    space = repository.find_by_location('Brighton')
     assert space == Space(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
+
+def test_find_single_property_by_name(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = SpaceRepository(db_connection)
+    space = repository.find_by_property_name('Bob House')
+    assert space == Space(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
+
+# def test_find_single_property_by_column(db_connection):
+#     db_connection.seed("seeds/makersbnb.sql")
+#     repository = SpaceRepository(db_connection)
+#     space = repository.find_by_column_name('location', 'Brighton')
+#     assert space == Space(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
 
 def test_create_space(db_connection):
     db_connection.seed("seeds/makersbnb.sql")
@@ -49,3 +61,10 @@ def test_delete_space(db_connection):
         Space(4, 'Megan House', 'Exmouth', '5 bedrooms, 5 bathrooms, Contemporary property', 600, 'Megan'),
         Space(5, 'Phil House', 'Manchester', '2 bedrooms, 1 bathrooms, Barn-style property', 200, 'Phil')
     ]
+
+def test_update_space_price(db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    repository = SpaceRepository(db_connection)
+    repository.update_price(350, 'Bob House') # Update price Bob's House
+    result = repository.find_by_property_name("Bob House")
+    assert result == Space(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 350, 'Bob')
