@@ -1,18 +1,27 @@
 import os
-from flask import Flask, request, render_template
+import psycopg
+from flask import Flask, request, render_template, redirect, url_for 
 from lib.database_connection import get_flask_database_connection
+from markupsafe import escape
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
 
-@app.route('/', methods=['GET'])
+# Sign-up form page
+@app.route('/sign-up', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    return render_template('sign-up.html')
 
-@app.route("/", methods=["POST"])
+# Sign-up POST request
+@app.route("/sign-up", methods=["POST"])
 def post_index():
+    # We extract the message from the request
+    email = request.form.get("email")
+    password = request.form.get("password")
+    confirm_password = request.form.get("confirm-password")
+
 
 
 

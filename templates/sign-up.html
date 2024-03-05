@@ -2,11 +2,11 @@
 
 {% block content %}
     <div class="container">
-        <h1>Feel at home anywhere</h1>
+        <h1>feel at home <span class="highlight text-shadow">anywhere</span></h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
 
-        <h3>Sign up to CherryBnB</h3>
-        <form action="sign-up" method="post" class="form-container">
+        <h3>Sign up to <span class="highlight">Cherry</span>BnB</h3>
+        <form action="sign-up" method="post" class="form-container box-shadow">
 
             <!-- We check to see if there are any errors from a previous submission -->
             {% if errors %}
@@ -16,20 +16,20 @@
                 </p>
             {% endif %}
 
-            <p class="container">
+            <p class="input-container">
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email">
             </p>
-            <p class="container">
+            <p class="input-container">
                 <label for="password">Password</label>
                 <input type="text" name="password" id="password">
             </p>
-            <p class="container">
+            <p class="input-container">
                 <label for="confirm-password">Confirm Password</label>
                 <input type="text" name="confirm-password" id="confirm-password">
             </p>
             <p>
-                <input type="submit" value="Create Book">
+                <input class="button box-shadow" type="submit" value="Sign Up">
             </p>
         </form>
     </div>
