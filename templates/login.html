@@ -7,10 +7,18 @@
     <body>
         <h1>Login</h1>
         <br>
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+        <!-- If so, we show them. -->
+        <p class="t-errors">
+        Username or Password Invalid - Please Try Again
+        </p>
+        {% endif %}
+
         <form method="POST">
             <label>Username</label><br><input type="text" name="user"><br>
             <br>
-            <label>Password</label><br><textarea type="text" name="pass"></textarea><br>
+            <label>Password</label><br><input type="text" name="pass"><br>
             <br>
             <input type="submit" value="Login">
         </form>

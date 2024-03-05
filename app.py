@@ -23,7 +23,10 @@ def login():
 def login_post():
     username = request.form['user']
     password = request.form['pass']
-    return redirect("/")
+    if username == "" or password == "":
+        return render_template("login.html", errors="Username or Password Invalid")
+    else:
+        return redirect("/")
 
 
 # GET /places
