@@ -22,7 +22,7 @@ We can render the login page
 def test_get_login(page, test_web_address):
     page.goto(f"http://{test_web_address}/login")
     h1 = page.locator("h1")
-    expect(h1).to_have_text("This is login")
+    expect(h1).to_have_text("Login Details")
 
 
 """
@@ -40,3 +40,52 @@ def test_get_spaces(page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces")
     h1 = page.locator('h1')
     expect(h1).to_have_text("SPACES")
+
+
+""" 
+When we login with the correct username and password, we get redirected to the spaces page
+"""
+def test_successful_login(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='name']", "user3")
+    page.fill("input[name='password']", "letmein!")
+    page.click("text = Submit")
+    h1 = page.locator('h1')
+    expect(h1).to_have_text("SPACES")
+
+def test_unsuccessful_login(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='name']", "user2")
+    page.fill("input[name='password']", "letmein!")
+    page.click("text = Submit")
+    h1 = page.locator("h1")
+    expect(h1).to_have_text("Login Details")
+
+
+
+
+
+
+
+    # # This time we click the link with the text 'Add a new book'
+    # page.click("text=Add a new book")
+
+    # # Then we fill out the field with the name attribute 'title'
+    # page.fill("input[name='title']", "The Hobbit")
+
+    # # And the field with the name attribute 'author_name'
+    # page.fill("input[name='author_name']", "J.R.R. Tolkien")
+
+    # # Finally we click the button with the text 'Create Book'
+    # page.click("text=Create Book")
+
+    # # Just as before, the virtual browser acts just like a normal browser and
+    # # goes to the next page without us having to tell it to.
+
+    # title_element = page.locator(".t-title")
+    # expect(title_element).to_have_text("Title: The Hobbit")
+
+    # author_element = page.locator(".t-author-name")
+    # expect(author_element).to_have_text("Author: J.R.R. Tolkien")
