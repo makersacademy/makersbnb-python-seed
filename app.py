@@ -13,16 +13,15 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('spaces/index.html')
 
-@app.route('/spaces', methods=['GET'])
+
+
+@app.route('/index', methods=['GET'])
 def get_all_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all()
-    return render_template('spaces/index.html', spaces=spaces)
+    return render_template("spaces/index.html", spaces=spaces)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

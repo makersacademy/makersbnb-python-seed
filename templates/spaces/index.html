@@ -14,12 +14,33 @@
         <h1>
             Listings
         </h1>
+        <h2>hello</h2>
         {% for space in spaces %}
-            <article>
-                <h3>{{space.name}}</h3>
-            </article>
+        <ul>
+            <li>
+                Name: {{space.name}}
+                <p>Price per night: {{space.price}}</p>
+                <p>Description: {{space.description}}</p>
+            </li>
+        </ul>    
         {% endfor %}
     </body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head></head>
+  <body>
+      <h1>Albums</h1>
+
+    {% for album in albums %}
+      <div>
+        Title: {{album.title}}
+        Released: {{album.release_year}}
+      </div>
+    {% endfor %}
+  </body>
+</html> -->
 
 
