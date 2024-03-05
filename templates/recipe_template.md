@@ -156,6 +156,6 @@ CREATE TABLE bookings (
 
 ## 6. Create the tables
 ```bash
-psql -h 127.0.0.1 CHERRY_MAKERSBNB_PROJECT < bnb_table.sql
+psql -h 127.0.0.1 CHERRY_MAKERSBNB_PROJECT < seeds/bnb_table.sql
 ```
 
