@@ -1,37 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Feel at home anywhere</h1>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+    <div class="container">
+        <h1>Feel at home anywhere</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
 
-    <h3>Sign up to CherryBnB</h3>
-    <form action="sign-up" method="post">
+        <h3>Sign up to CherryBnB</h3>
+        <form action="sign-up" method="post" class="form-container">
 
-        <!-- We check to see if there are any errors from a previous submission -->
-        {% if errors %}
-            <!-- If so, we show them. -->
-            <p class="t-errors">
-                There were errors with your submission: {{ errors }}
+            <!-- We check to see if there are any errors from a previous submission -->
+            {% if errors %}
+                <!-- If so, we show them. -->
+                <p class="t-errors">
+                    There were errors with your submission: {{ errors }}
+                </p>
+            {% endif %}
+
+            <p class="container">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email">
             </p>
-        {% endif %}
-
-        <p>
-            <label for="email">email</label>
-            <input type="text" name="email" id="email">
-        </p>
-        <p>
-            <label for="password">Password</label>
-            <input type="text" name="password" id="password">
-        </p>
-        <p>
-            <label for="confirm-password">Password</label>
-            <input type="text" name="confirm-password" id="confirm-password">
-        </p>
-        <p>
-            <input type="submit" value="Create Book">
-        </p>
-    </form>
-
+            <p class="container">
+                <label for="password">Password</label>
+                <input type="text" name="password" id="password">
+            </p>
+            <p class="container">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="text" name="confirm-password" id="confirm-password">
+            </p>
+            <p>
+                <input type="submit" value="Create Book">
+            </p>
+        </form>
+    </div>
 {% endblock %}
 
 

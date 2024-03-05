@@ -11,7 +11,8 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
-
+@app.route("/", methods=["POST"])
+def post_index():
 
 
 
