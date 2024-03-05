@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MakersBnb</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Your bookings:</h1>
+            
+        {% for booking in my_bookings %}
+            <div>
+                <a href="/spaces/{{booking.space_id}}">{{spaces[booking.space_id - 1].name}}</a>
+                <a1 class="date">{{booking.date}}</a1> 
+                <br></br>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
