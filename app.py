@@ -15,6 +15,11 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    pass 
+
+
 # GET /places
 # Returns the places page
 # Try it:
