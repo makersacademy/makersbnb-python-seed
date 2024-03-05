@@ -1,10 +1,10 @@
 from lib.space_repository import *
 from lib.space import *
 
-
 def test_add_space(db_connection):
     db_connection.seed('seeds/makersbnb.sql')
     repository = SpaceRepository(db_connection)
+
     space = Space(None, 'test description', 99.99, 1, 'test name', '01-01-2024', '31-01-2024')
     print("HERE!!!!!")
     print(space.free_dates)
@@ -17,7 +17,7 @@ def test_all(db_connection):
     db_connection.seed('seeds/makersbnb.sql')
     repository = SpaceRepository(db_connection)
     spaces = repository.all()
-    assert spaces == [Space(1, 'house with a pool', 99.99, 1, 'pool house', datetime(2024, 3, 4), datetime(2024, 3, 31)), Space(2, 'house with a garden', 199.99, 2, 'garden house', datetime(2024, 4, 1), datetime(2024, 4, 30))]
+    assert spaces == [Space(1, 'house with a pool', 99.99, 1, 'pool house', date(2024, 3, 4), date(2024, 3, 31)), Space(2, 'house with a garden', 199.99, 2, 'garden house', date(2024, 4, 1), date(2024, 4, 30))]
 
 # def test_find():
 #     db_connection.seed('seeds/makersbnb.sql')
