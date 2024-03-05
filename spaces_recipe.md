@@ -142,14 +142,14 @@ Using comments, define the method signatures (arguments and return value) and wh
         rows = self._connection.execute(
             'SELECT * from spaces WHERE location = %s', [spaces_location])
         row = rows[0]
-        return Spaces(row["id"], row["name"], row["location"], row["description"], row["price"], row"["owner"])
+        return Spaces(row["id"], row["name"], row["location"], row["description"], row["price"], row["owner"])
 
 class SpaceRepository:
     def __init__(self, connection):
         self._connection = connection
 
     def all(self):
-        rows = self._connection.execute("SELECT * FROM makersbnb")
+        rows = self._connection.execute("SELECT * FROM spaces")
         spaces = []
         for row in rows:
             space = Space(
@@ -167,11 +167,7 @@ class SpaceRepository:
     # Executes the SQL query:
     # SELECT id, name, location, description, price, owner FROM spaces;
     # Returns an array of space objects.
-
-# How we instantiate the Space Repository class
-    db_connection.seed("seeds/makersbnb.sql") # Seed our database with some test data
-    repository = SpaceRepository(db_connection) # Create a new SpaceRepository
-    spaces = repository.all()
+    
 
 6. Write Test Examples
 Write Python code that defines the expected behaviour of the Repository class, following your design from the table written in step 5.
@@ -235,8 +231,8 @@ def test_get_all_records_from_spaces(db_connection):
         Spaces(1, 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob');
         Spaces(2, 'Jim House', 'London', '3 bedrooms, 3 bathrooms, Modern property', 350, 'Jim');
         Spaces(3, 'Jane House', 'Newcastle', '4 bedrooms, 2 bathrooms, Georgian-era property', 450, 'Jane');
-        Spaces('Megan House', 'Exmouth', '5 bedrooms, 5 bathrooms, Contemporary property', 600, 'Megan');
-        Spaces('Phil House', 'Manchester', '2 bedrooms, 1 bathrooms, Barn-style property', 200, 'Phil')
+        Spaces(4, 'Megan House', 'Exmouth', '5 bedrooms, 5 bathrooms, Contemporary property', 600, 'Megan');
+        Spaces(5, 'Phil House', 'Manchester', '2 bedrooms, 1 bathrooms, Barn-style property', 200, 'Phil')
     ]
 
 # Database connection test

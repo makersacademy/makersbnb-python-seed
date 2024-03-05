@@ -19,4 +19,4 @@ def test_record_is_equal():
 #Tests that Space object is returned in
 def test_formats_spaces_records_nicely():
     space = Space('1', 'Bob House', 'Brighton', '3 bedrooms, 2 bathrooms, Victorian-era property', 300, 'Bob')
-    assert str(space) == 'Property name: Bob House. Location: Brighton. Property Description: 3 bedrooms, 2 bathrooms, Victorian-era property. Price per night: £300. Owner name and contact: Bob.'
+    assert str(space) == 'ID: 1. Property name: Bob House. Location: Brighton. Property Description: 3 bedrooms, 2 bathrooms, Victorian-era property. Price per night: £300. Owner name and contact: Bob.'
