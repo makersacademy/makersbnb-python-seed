@@ -7,8 +7,8 @@ class RequestRepository:
 
     def add(self, request):
         rows = self._connection.execute(
-            'INSERT into requests(spaceid, date, guestid) VALUES (%s, %s, %s) RETURNING id', [
-                request.spaceid, request.date, request.guestid
+            'INSERT into requests(spaceid, date, guestid, hostid) VALUES (%s, %s, %s, %s) RETURNING id', [
+                request.spaceid, request.date, request.guestid, request.hostid
                 ]
         )
         request.id = rows[0]['id']
@@ -20,6 +20,6 @@ class RequestRepository:
         )
         request = []
         for row in rows:
-            item = Request(row['id'], row['spaceid'], row['date'], row['guestid'])
+            item = Request(row['id'], row['spaceid'], row['date'], row['guestid'], row['hostid'])
             request.append(item)
         return request
