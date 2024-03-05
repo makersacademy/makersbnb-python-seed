@@ -21,12 +21,12 @@ class BookingRepository:
         row = rows[0]
         return Booking(row["id"], row["date"], row["status"], row["space_id"], row["guest_id"])
 
-    # # Create a new book
-    # # Do you want to get its id back? Look into RETURNING id;
-    # def create(self, book):
-    #     self._connection.execute('INSERT INTO books (title, author_name) VALUES (%s, %s)', [
-    #                              book.title, book.author_name])
-    #     return None
+    # Create a new book
+    # Do you want to get its id back? Look into RETURNING id;
+    def create(self, booking):
+        self._connection.execute('INSERT INTO bookings (date, status, space_id, guest_id) VALUES (%s, %s, %s, %s)', [
+                                 booking.date, booking.status, booking.space_id, booking.guest_id])
+        return None
 
     # # Delete a book by its id
     # def delete(self, book_id):
