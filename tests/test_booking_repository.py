@@ -18,20 +18,16 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
         Booking(2, string_to_date('2024-06-25'), False, 2, 1)
     ]
 
-# Booking(1, datetime.strptime('2024-07-13', '%Y-%m-%d').date(), True, 1, 2)
+"""
+When we call BookingRepository#find
+We get a single Booking object reflecting the seed data.
+"""
+def test_get_single_record(db_connection):
+    db_connection.seed("seeds/bnb_table.sql")
+    repository = BookingRepository(db_connection)
 
-# datetime.strptime('2024-07-13', '%Y-%m-%d')
-
-# """
-# When we call BookRepository#find
-# We get a single Book object reflecting the seed data.
-# """
-# def test_get_single_record(db_connection):
-#     db_connection.seed("seeds/book_store.sql")
-#     repository = BookRepository(db_connection)
-
-#     book = repository.find(3)
-#     assert book == Book(3, "Bluets", "Maggie Nelson")
+    booking = repository.find(2)
+    assert booking == Booking(2, string_to_date('2024-06-25'), False, 2, 1)
 
 # """
 # When we call BookRepository#create

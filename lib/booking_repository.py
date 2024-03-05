@@ -14,12 +14,12 @@ class BookingRepository:
             bookings.append(item)
         return bookings
 
-    # # Find a single book by its id
-    # def find(self, book_id):
-    #     rows = self._connection.execute(
-    #         'SELECT * from books WHERE id = %s', [book_id])
-    #     row = rows[0]
-    #     return Book(row["id"], row["title"], row["author_name"])
+    # Find a single book by its id
+    def find(self, booking_id):
+        rows = self._connection.execute(
+            'SELECT * from bookings WHERE id = %s', [booking_id])
+        row = rows[0]
+        return Booking(row["id"], row["date"], row["status"], row["space_id"], row["guest_id"])
 
     # # Create a new book
     # # Do you want to get its id back? Look into RETURNING id;
