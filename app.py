@@ -28,7 +28,6 @@ def login_post():
     else:
         return redirect("/")
 
-
 # GET /places
 # Returns the places page
 # Try it:
