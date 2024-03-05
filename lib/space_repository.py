@@ -1,4 +1,4 @@
-from lib.spaces import Spaces
+from lib.space import Space
 
 class SpaceRepository:
     def __init__(self, connection):
@@ -8,7 +8,7 @@ class SpaceRepository:
         rows = self._connection.execute("SELECT * FROM makersbnb")
         spaces = []
         for row in rows:
-            space = Spaces(
+            space = Space(
                 row['id'],
                 row["name"], 
                 row["description"], 

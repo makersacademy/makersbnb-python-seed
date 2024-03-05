@@ -39,16 +39,17 @@ INSERT INTO spaces(space_name, space_description, space_price, space_owner) VALU
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
 
 psql -h 127.0.0.1 makersbnb_test < ~/Documents/Makers_Notes/group_project/makersbnb-python-seed/seeds/makersbnb.sql
-#this creates the databse in the makersbnb_test database
+
+#this creates the databse in the makersbnb_test database. Your route will be different!
 
 3. Define the class names
 Usually, the Model class name will be the capitalised table name (single instead of plural). The same name is then suffixed by Repository for the Repository class name.
 
-# Table name: spaces
+# Table name: space
 
 # Model class
 # (in lib/space.py)
-class Spaces:
+class Space:
 
 
 # Repository class
@@ -60,7 +61,7 @@ class SpaceRepository:
 Define the attributes of your Model class. You can usually map the table columns to the attributes of the class, including primary and foreign keys.
 
 # EXAMPLE
-# Table name: spaces
+# Table name: space
 
 # Model class
 # (in lib/space.py)
@@ -69,6 +70,7 @@ Define the attributes of your Model class. You can usually map the table columns
     def __init__(self, id, name, description, price, owner):
         id = int
         name = text
+        location = text
         description = text
         price = int
         owner = text
@@ -93,13 +95,14 @@ class Spaces:
 
     def __repr__(self):
         return f"Property name: {self.name}. /n
+        location: {self.location}. /n
         Property Description: {self.description}. /n
         Price per night: £{self.price}. /n 
         Owner name and contact: {self.owner}."
 
-# Implementation of values into the book object
+# Implementation of values into the space object
 
-    space_1 = Spaces(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
+    space_1 = Space(1, "Bob House", "Brighton", "3 bedrooms, 2 bathrooms, Victorian-era property", 300, "Bob")
     assert space_1.id == (1)
     assert space_1.name == ("Bob House")
     assert space_1.location == ("Brighton")
