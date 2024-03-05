@@ -31,8 +31,7 @@ We can render sign up page
 def test_get_sign_up(page, test_web_address):
     page.goto(f"http://{test_web_address}/sign_up")
     h1 = page.locator("h1")
-    expect(h1).to_have_text("This is sign up")
-
+    expect(h1).to_have_text("Sign up below")
 """
 We can render spaces page
 """
@@ -43,69 +42,33 @@ def test_get_spaces(page, test_web_address):
 
 
 """
-We can check if a username exists 
-"""
-
-def test_user_exists_sign_up(db_connection, page, test_web_address):
-    db_connection.seed("seeds/users.sql") 
-    page.goto(f"http://{test_web_address}/sign_up")
-    page.fill("input[name='name']", "user1")
-    page.fill("input[name='email']", 'user1@example.com')
-    page.fill("input[name='password']", "abc123")
-    page.click("text = Submit")
-    h1 = page.locator('h1')
-    expect(h1).to_have_text("This user is already registered")
-
-
-'''   response_post = web_client.post("/sign_up", data={
-        'name': 'user1',
-        'email': ,
-        'password': 'abc123'
-    })
-    assert response_post.status_code == 409
-    assert response_post.data.decode('utf-8') == "This user is already registered"'''
-
-
-
-"""
 Check if sign up was successful
 """
 
-'''def test_sign_up_successful(db_connection, page, test_web_address):
+def test_sign_up_successful(db_connection, page, test_web_address):
     db_connection.seed("seeds/users.sql")
     page.goto(f"http://{test_web_address}/sign_up")
-    page.fill("input[name='name']", "user1")
-    page.fill("input[name='email']", 'user1@example.com')
-    page.fill("input[name='password']", "abc123")
+    page.fill("input[name='name']", "user4")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "abc1234")
     page.click("text = Submit")
-    h1 = page.locator('h1')'''
-
-    
-
-
-
-
-'''def test_post_album(db_connection, web_client):
-    db_connection.seed("seeds/record_store.sql")
-    response_post = web_client.post("/albums", data={
-        'title': "Voyage",
-        'release_year': '2022',
-        'artist_id': '2'
-    })
-    assert response_post.status_code == 200
-    assert response_post.data.decode('utf-8') == ""
-
-    response_get = web_client.get('/albums')
-    assert response_get.status_code == 200
-    assert response_get.data.decode('utf-8') == "" \
-        "Album(1, PartyTime, 2003, 1)\n" \
-        "Album(2, Voyage, 2022, 2)"'''
+    h1 = page.locator('h1')
 
 
 """
-Check if email/password is missing data
+We can check if a username exists 
 """
 
+# def test_user_exists_sign_up(db_connection, page, test_web_address):
+#     db_connection.seed("seeds/users.sql") 
+#     page.goto(f"http://{test_web_address}/sign_up")
+#     page.fill("input[name='name']", "user1")
+#     page.fill("input[name='email']", 'user1@example.com')
+#     page.fill("input[name='password']", "abc123")
+#     page.click("text = Submit")
+#     h1 = page.locator('h1')
+#     # expect(h1).to_have_text("SPACES")
+#     expect(h1).to_have_text("This user is already registered")
 
 
 """ 

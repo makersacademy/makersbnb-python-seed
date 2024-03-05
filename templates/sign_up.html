@@ -8,12 +8,14 @@
 <body>
     <h1>Sign up below</h1>
 
-    <form action="/sign_up" method="post"
+    <form action="/sign_up" method="post">
 
+    </form>
+    
     {% if errors %}
-    <p class="t-errors">
+        <p class="t-errors">
         There were errors with your submission: {{ errors }}
-    </p>
+        </p>
     {% endif %}
 
         <p>
@@ -27,7 +29,7 @@
         </p>
         <p> 
             <label for="email">Email</label>
-            <input type="text" name="Email" id="email">
+            <input type="text" name="email" id="email">
         </p>
         <p>
             <label for="password">Password</label>
@@ -39,5 +41,5 @@
             <input type="submit" value="Submit">
         </p>
         </form>
-  </body>
+    </body>
 </html>
