@@ -34,13 +34,15 @@ def test_get_sign_up(page, test_web_address):
     page.goto(f"http://{test_web_address}/sign_up")
     h1 = page.locator("h1")
     expect(h1).to_have_text("Sign up below")
+
 """
 We can render spaces page
 """
-def test_get_spaces(page, test_web_address):
+def test_get_spaces(page, test_web_address, db_connection):
+    db_connection.seed('seeds/spaces.sql')
     page.goto(f"http://{test_web_address}/spaces")
-    h1 = page.locator('h1')
-    expect(h1).to_have_text("SPACES")
+    h1_tags = page.locator('h1')
+    expect(h1_tags).to_have_text("SPACES")
 
 
 """
@@ -166,9 +168,6 @@ def test_create_space(db_connection, page, test_web_address):
     page.fill("input[name='user_id']", "1")
     page.click("text = List My Space")
     h1 = page.locator('h1')
-
-
-
 
 
 

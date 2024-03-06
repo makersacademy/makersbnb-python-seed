@@ -2,6 +2,9 @@ import os
 from flask import Flask, redirect, request, render_template
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.space_repository import SpaceRepository
+from lib.space import Space
+
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 # Create a new Flask app
@@ -23,7 +26,10 @@ def get_login():
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
-    return render_template("spaces.html")
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    spaces = repo.all()
+    return render_template("spaces.html", spaces=spaces)
 
 
 
