@@ -28,6 +28,9 @@ def get_sign_up():
 def get_spaces():
     return render_template("spaces.html")
 
+@app.route('/spaces/new', methods=['GET'])
+def get_spaces_new():
+    return render_template("new_space.html")
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
