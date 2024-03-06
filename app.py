@@ -14,7 +14,6 @@ from markupsafe import escape
 app = Flask(__name__)
 
 # Log in logic
-
 # pass around parameter args <?>
 
 
@@ -129,9 +128,6 @@ def post_login():
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
 
-
-
-
 # == Your Routes Here ==
     # def add_space(self, name, description, price_per_night):
     #     new_space = {
@@ -166,4 +162,3 @@ if __name__ == '__main__':
     #     # Returns:
     #     #   Updates the status of booking in database based on the respond
     #     pass # No code here yet
-
