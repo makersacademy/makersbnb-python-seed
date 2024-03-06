@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # Log in logic
 
-current_user = None
+# pass around parameter args <?>
 
 
 # == Your Routes Here ==
@@ -24,7 +24,6 @@ def get_test():
     users = repository.all() # use the #all method from user_repo and save in the variable 'users'
     return render_template('test.html', users=users) # return an html template and pass the template the users data
 #====================================================================================#
-
 
 # Sign-up form page
 @app.route('/', methods=['GET'])
