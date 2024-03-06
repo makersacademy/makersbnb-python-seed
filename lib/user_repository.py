@@ -1,6 +1,4 @@
 from lib.user import User
-import psycopg2
-from psycopg2 import sql
 
 class UserRepository():
     
