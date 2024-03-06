@@ -1,6 +1,9 @@
 from lib.user import User
+import psycopg2
+from psycopg2 import sql
 
 class UserRepository():
+    
     def __init__(self, connection):
         self._connection = connection
 
@@ -12,8 +15,25 @@ class UserRepository():
             users.append(user)
         return users
     
-    def create_new_user():
-        pass
+    def create_new_user(self,user):
+        self._connection.execute('INSERT INTO users (id, email) VALUES (%s, %s)',[
+        user.id, user.email])
+        return None
+    
+    def find_user(self, email):
+        rows = self._connection.execute(f"SELECT * FROM users WHERE email = '{email}'")
+        print(f"find methods {rows}")
 
-    def log_user_in():
-        pass
+        try:
+            for row in rows:
+                return User(row['id'], row['email'])
+        except Exception as e:
+            print(f"Error: {e}")
+
+    
+    def check_email_exists(self,email):
+        user_email = email
+        if self.find_user(user_email) != None:
+            return "Logged in successfully!"
+        else:
+            return "Please create an account!"
