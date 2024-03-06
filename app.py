@@ -71,16 +71,15 @@ def get_spaces():
     return render_template('book-space.html', spaces=spaces)
 
 # add a new space to the databse use a form
-@app.route("/list-space/<user_id>", methods=["GET"])
-def add_space_form(user_id):
+@app.route("/list-space", methods=["GET"])
+def add_space_form():
     return render_template('list-space.html')
 
 # add a new space to the databse use a form
-@app.route("/list-space/<user_id>", methods=["GET", "POST"])
-def add_space(user_id):
+@app.route("/list-space", methods=["POST"])
+def add_space():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
-    user_id = user_id # THIS IS A QUERY PARAMETER
     name = request.form.get("name")
     description = request.form.get("description")
     price_per_night = request.form.get("price_per_night")
@@ -93,8 +92,8 @@ def add_space(user_id):
         None,
         name,
         description,
-        float(price_per_night),
-        int(user_id)
+        price_per_night,
+        1
     )
     # add new space to the database
     repository.create(space)
