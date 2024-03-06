@@ -2,6 +2,7 @@ import os
 import psycopg
 from flask import Flask, request, render_template, redirect, url_for 
 from lib.database_connection import get_flask_database_connection
+from lib.user import User
 from lib.user_repository import UserRepository
 from markupsafe import escape
 
@@ -31,15 +32,32 @@ def get_index():
     connection = get_flask_database_connection(app)
     return render_template('sign-up.html')
 
-# Sign-up POST request
+# Sign-up POST request - create new user
 @app.route("/", methods=["POST"])
 def post_index():
     connection = get_flask_database_connection(app)
-    # We extract the message from the request
+    repository = UserRepository(connection)
+    # get data from form when the user submits it (clicks button)
     email = request.form.get("email")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm-password")
-
+    # check passwords match
+    if password != confirm_password:
+        return "<p>passwords do not match!</p>"
+    # check username isn't already taken
+    users = repository.all()
+    for user in users:
+        if user.user_name == email:
+            return "<p>user with that email already exists!</p>"
+    # if we get to here we're ok to add a new user
+    user = User(
+        None,
+        email,
+        password
+    )
+    repository.create(user)
+    # redirect user to book a space
+    return redirect(f"/book-space")
 
 
 @app.route("/book-space", methods=["GET", "POST"])
