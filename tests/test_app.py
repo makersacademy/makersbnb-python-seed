@@ -24,6 +24,17 @@ def test_get_index(db_connection, web_client):
     assert get_response.status_code == 200
 
 
+
+
+
+
+
+
+
+
+
+
+
 # """
 # Testing client side functionality - web page design
 # """
@@ -37,9 +48,10 @@ def test_get_index(db_connection, web_client):
 #     expect(username_input).to_have_attribute("type", "text")
 
 
-
-
-
+#     # Test that username input is there
+#     username_input = page.locator("input[name='password']")
+#     expect(username_input).to_be_visible()
+#     expect(username_input).to_have_attribute("type", "password")
 
 
 
