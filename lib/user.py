@@ -3,7 +3,7 @@ class User:
     # Each column in the table should have an attribute here
     def __init__(self, id, name, email, password):
         self.id = id
-        self.title = title
+        self.name = name
         self.email = email
         self.password = password
 
@@ -14,4 +14,4 @@ class User:
 
     # This method makes it look nicer when we print an Artist
     def __repr__(self):
-        return f"User({self.id}, {self.title}, {self.email}, {self.password})"
+        return f"User({self.id}, {self.name}, {self.email}, {self.password})"
