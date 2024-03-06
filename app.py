@@ -41,9 +41,9 @@ def create_space():
     price = request.form['price']
     description = request.form['description']
     user_id = request.form['user_id']
-    availability_from = request.form['availability_from']
-    availability_to = request.form['availability_to']
-    repo.create(name, price, description, user_id, availability_from, availability_to)
+    #availability_from = request.form['availability_from']
+    #availability_to = request.form['availability_to']
+    repo.create(name, price, description, user_id)
 
     return render_template("spaces.html")
 

@@ -94,6 +94,21 @@ def test_unsuccessful_login(db_connection, page, test_web_address):
 
 
 
+"""
+we are checking if we can create a new space
+"""
+def test_create_space(db_connection, page, test_web_address):
+    db_connection.seed("seeds/spaces.sql")  
+    page.goto(f"http://{test_web_address}/spaces/new")
+    page.fill("input[name='name']", "London Bridge")
+    page.fill("input[name='price']", "15.99")
+    page.fill("input[name='description']", "It isnt the one you think it is")
+    page.fill("input[name='user_id']", "1")
+    page.click("text = List My Space")
+    h1 = page.locator('h1')
+
+
+
 
 
 
