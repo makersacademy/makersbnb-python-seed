@@ -53,7 +53,7 @@ Put the different nouns in this table. Replace the example with your own nouns.
 | 🍒 BnB 🍒   | Properties                                                                          |
 |------------|-------------------------------------------------------------------------------------|
 | User       | username, password, list of spaces,                                                 |
-| Space      | name, desciption, price, user_id (foreign key)                                      |
+| Space      | name, description, price, user_id (foreign key)                                      |
 | Booking    | date, status, space_id (foreign key), guest_id (foreign key)                        |
 
 
