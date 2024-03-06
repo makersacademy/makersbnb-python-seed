@@ -65,37 +65,44 @@
 
 <body>
 
-    <div class="navbar">
-        <img src="your-logo-url.png" alt="Logo">
-        <nav>
-            <a href="/spaces">Spaces</a>
-            <a href="/requests">Requests</a>
-            <a href="/signout">Sign Out</a>
-        </nav>
-    </div>
+    <form action="/spaces/new" method="post">
 
-    <div class="container">
-        <h1>List a Space</h1>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+        <div class="navbar">
+            <img src="your-logo-url.png" alt="Logo">
+            <nav>
+                <a href="/spaces">Spaces</a>
+                <a href="/requests">Requests</a>
+                <a href="/signout">Sign Out</a>
+            </nav>
+        </div>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
+        <div class="container">
+            <h1>List a Space</h1>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
-            <label for="price">Price per Night (£):</label>
-            <input type="number" id="price" name="price" min="0" step="0.01" required placeholder="0.00"><br>
+                <!-- Field for User ID -->
+                <label for="userid">User ID:</label>
+                <input type="text" id="userid" name="userid" required>
 
-            <label for="availability-from">Availability From:</label>
-            <input type="date" id="availability-from" name="availability-from" required>
 
-            <label for="availability-to">Availability To:</label>
-            <input type="date" id="availability-to" name="availability-to" required>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
 
-            <button type="submit">List My Space</button>
-        </form>
-    </div>
+                <label for="price">Price per Night (£):</label>
+                <input type="number" id="price" name="price" min="0" step="0.01" required placeholder="0.00"><br>
 
+                <label for="availability-from">Availability From:</label>
+                <input type="date" id="availability-from" name="availability-from" required>
+
+                <label for="availability-to">Availability To:</label>
+                <input type="date" id="availability-to" name="availability-to" required>
+
+                <button type="submit">List My Space</button>
+            </form>
+        </div>
+    </form>
 </body>
 
 </html>
