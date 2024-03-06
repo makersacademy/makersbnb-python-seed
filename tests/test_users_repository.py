@@ -32,7 +32,6 @@ def test_create_record(db_connection):
     repository.create(User(None, 'fgtg@example.com', 'FG', 'TG', '6666666666', '@12Cupoftea34as'))
 
     result = repository.find('fgtg@example.com')
-    print(result)
     assert result == User(7, 'fgtg@example.com', 'FG', 'TG', '6666666666', '@12Cupoftea34as')
 
 """
@@ -47,7 +46,7 @@ def test_get_error_no_matching_record(db_connection):
     error_message = str(e.value)
     assert error_message == "User not found"
 
-    """
+"""
 When we call UsersRepository #create to add a new user with an email address exists
 We get an error 
 """
@@ -55,7 +54,7 @@ def test_non_unique_email(db_connection):
 
     db_connection.seed("seeds/bnb.sql")
     repository = UsersRepository(db_connection)
-
-    result = repository.create(User(None, 'user123@gmail.com', 'FG', 'TG', '6666666666', '@12Cupoftea34as'))
-    print(result)
-    assert result == "Email already assigned to an account!"
+    with pytest.raises(AccountExists) as e:
+        repository.create(User(None, 'user123@gmail.com', 'FG', 'TG', '6666666666', '@12Cupoftea34as'))
+    error_message = str(e.value)
+    assert error_message == "Email already assigned to an account!"

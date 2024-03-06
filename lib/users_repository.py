@@ -33,7 +33,7 @@ class UsersRepository:
                                       credentials.phone_number,
                                       credentials.password])
         else:
-            return "Email already assigned to an account!"
+            raise AccountExists("Email already assigned to an account!")
 
 class EmailNotFound(Exception):
     pass

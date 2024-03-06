@@ -24,7 +24,7 @@ def test_user_format_nicely():
 We can compare two identical users
 And have them be equal
 """
-def test_artists_are_equal():
+def test_users_are_equal():
     user1 = User(1, "test@email.com", "Joe", "Blogs", "01234567890", "P4ssword?")
     user2 = User(1, "test@email.com", "Joe", "Blogs", "01234567890", "P4ssword?")
     assert user1 == user2
