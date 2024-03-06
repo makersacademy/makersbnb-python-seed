@@ -7,5 +7,6 @@ connection = DatabaseConnection(test_mode=False)
 connection.connect()
 connection.seed("seeds/users.sql")
 connection.seed("seeds/spaces.sql")
+connection.seed("seeds/availabilities.sql")
 # Add your own seed lines below...
 # E.g.connection.seed("seeds/your_seed.sql")
