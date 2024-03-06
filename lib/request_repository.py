@@ -8,7 +8,7 @@ class RequestRepository:
     def add(self, request):
         rows = self._connection.execute(
             'INSERT into requests(spaceid, date, guestid, hostid) VALUES (%s, %s, %s, %s) RETURNING id', [
-                request.spaceid, request.date, request.guestid, request.hostid
+                request.spaceid, request.date, request.guestid, request.hostid, request.approved
                 ]
         )
         request.id = rows[0]['id']
@@ -20,6 +20,14 @@ class RequestRepository:
         )
         request = []
         for row in rows:
-            item = Request(row['id'], row['spaceid'], row['date'], row['guestid'], row['hostid'])
+            item = Request(row['id'], row['spaceid'], row['date'], row['guestid'], row['hostid'], row['approved'])
             request.append(item)
         return request
+    
+    def get_request_by_id(self, id):
+        query = 'SELECT * FROM requests WHERE id = %s'
+        result = self._connection.execute(query, (id))
+        row = result.fetchone()
+        if row:
+            request = Request(*row)
+            return request
