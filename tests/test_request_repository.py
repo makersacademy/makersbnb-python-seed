@@ -9,8 +9,8 @@ def test_add_request(db_connection):
     result = repository.all()
     assert request.id == 2
     assert result == [
-        Request(1, 1, date(2024, 1, 1), 1),
-        Request(2, 2, date(2024, 2, 2), 2)
+        Request(1, 1, date(2024, 1, 1), 1, 2),
+        Request(2, 2, date(2024, 2, 2), 2, 3)
         ]
 
 def test_get_request(db_connection):
@@ -18,7 +18,7 @@ def test_get_request(db_connection):
     repository = RequestRepository(db_connection)
     request = repository.all()
     assert request == [
-        Request(1, 1, date(2024, 1, 1), 1)
+        Request(1, 1, date(2024, 1, 1), 1, 2)
     ]
 # def test_approve_request():
 
