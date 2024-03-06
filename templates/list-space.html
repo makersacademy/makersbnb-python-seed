@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>list a <span class="highlight text-shadow">space</span></h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+        <!-- filter spaces form -->
+        <form action="" method="post" class="form-container box-shadow">
+            <!-- We check to see if there are any errors from a previous submission -->
+            {% if errors %}
+                <!-- If so, we show them. -->
+                <p class="t-errors">
+                    There were errors with your submission: {{ errors }}
+                </p>
+            {% endif %}
+
+            <p class="input-container">
+                <label for="name">name</label>
+                <input type="text" name="name" id="name">
+            </p>
+            <p class="input-container">
+                <label for="description">description</label>
+                <textarea name="description" id="description" rows="8" cols="50"></textarea>
+            </p>
+            <p class="input-container">
+                <label for="price-per-night">price per night</label>
+                <input type="text" name="price-per-night" id="price-per-night">
+            </p>
+            <p class="input-container">
+                <label for="available-from">available from</label>
+                <input type="text" name="available-from" id="available-from">
+            </p>
+            <p class="input-container">
+                <label for="available-to">available to</label>
+                <input type="text" name="available-to" id="available-to">
+            </p>
+            <p>
+                <input class="button box-shadow" type="submit" value="list my space">
+            </p>
+        </form>
+    </div>
+{% endblock %}

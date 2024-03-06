@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>book a <span class="highlight text-shadow">space</span></h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+        <!-- TODO got to list a space form -->
+        <a href="">list a space</a>
+
+        <!-- filter spaces form -->
+        <form action="" method="post" class="form-container box-shadow">
+            <!-- We check to see if there are any errors from a previous submission -->
+            {% if errors %}
+                <!-- If so, we show them. -->
+                <p class="t-errors">
+                    There were errors with your submission: {{ errors }}
+                </p>
+            {% endif %}
+
+            <p class="input-container">
+                <label for="available-from">available from</label>
+                <input type="text" name="available-from" id="available-from">
+            </p>
+            <p class="input-container">
+                <label for="available-to">available to</label>
+                <input type="text" name="available-to" id="available-to">
+            </p>
+            <p>
+                <input class="button box-shadow" type="submit" value="list spaces">
+            </p>
+        </form>
+        <!-- TODO list all available spaces -->
+        <!-- <ul>
+            {% for space in spaces %}
+                <li>{{space}}</li>
+            {% endfor %}
+        </ul> -->
+    </div>
+{% endblock %}

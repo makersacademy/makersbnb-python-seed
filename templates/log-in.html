@@ -2,12 +2,11 @@
 
 {% block content %}
     <div class="container">
-        <h1>feel at home <span class="highlight text-shadow">anywhere</span></h1>
+        <h1>log in to <span class="highlight text-shadow">CherryBnB</span></h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
 
-        <h3>Sign up to <span class="highlight">Cherry</span>BnB</h3>
-        <form action="sign-up" method="post" class="form-container box-shadow">
-
+        <!-- filter spaces form -->
+        <form action="" method="post" class="form-container box-shadow">
             <!-- We check to see if there are any errors from a previous submission -->
             {% if errors %}
                 <!-- If so, we show them. -->
@@ -17,19 +16,15 @@
             {% endif %}
 
             <p class="input-container">
-                <label for="email">Email</label>
+                <label for="email">email</label>
                 <input type="text" name="email" id="email">
             </p>
             <p class="input-container">
-                <label for="password">Password</label>
-                <input type="text" name="password" id="password">
-            </p>
-            <p class="input-container">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="text" name="confirm-password" id="confirm-password">
+                <label for="password">password</label>
+                <input type="text" name="email" id="password">
             </p>
             <p>
-                <input class="button box-shadow" type="submit" value="Sign Up">
+                <input class="button box-shadow" type="submit" value="log in">
             </p>
         </form>
     </div>
