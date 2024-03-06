@@ -10,7 +10,7 @@ class UserRepository:
         rows = self._connection.execute('SELECT * from users')
         users = []
         for row in rows:
-            item = User(row["id"], row["username"], row["password"])
+            item = User(row["id"], row["user_name"], row["user_password"])
             users.append(item)
         return users
 
@@ -19,12 +19,12 @@ class UserRepository:
         rows = self._connection.execute(
             'SELECT * from bookings WHERE id = %s', [user_id])
         row = rows[0]
-        return User(row["id"], row["username"], row["password"])
+        return User(row["id"], row["user_name"], row["user_password"])
 
     # Create a new user
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, user):
-        self._connection.execute('INSERT INTO users (username, password) VALUES (%s, %s, %s, %s)', [
+        self._connection.execute('INSERT INTO users (user_name, user_password) VALUES (%s, %s)', [
                                  user.username, user.password])
         return None
 

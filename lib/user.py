@@ -2,7 +2,9 @@ import re
 import pytest
 
 class User:
-    def __init__(self, username, password):
+    def __init__(self, id, username, password):
+        self.id = id
+        
         if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', username):
             raise ValueError("Invalid username format, enter your email address")
         self.username = username

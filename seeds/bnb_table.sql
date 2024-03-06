@@ -53,8 +53,8 @@ CREATE TABLE bookings (
 
 -- Finally, we add any records that are needed for the tests to run
 -- Inserting data into the 'users' table
-INSERT INTO users (user_name, user_password) VALUES ('Adamexample@gmail.com', 'password123');
-INSERT INTO users (user_name, user_password) VALUES ('adam.takac24@outlook.com', 'password456');
+INSERT INTO users (user_name, user_password) VALUES ('Adamexample@gmail.com', 'password123!!!');
+INSERT INTO users (user_name, user_password) VALUES ('adam.takac24@outlook.com', 'password456!!!');
 
 -- Inserting data into the 'spaces' table
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Cozy Cottage', 'A charming cottage in the countryside.', 120.00, 1);

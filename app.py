@@ -2,37 +2,35 @@ import os
 import psycopg
 from flask import Flask, request, render_template, redirect, url_for 
 from lib.database_connection import get_flask_database_connection
+from lib.user_repository import UserRepository
 from markupsafe import escape
 
 # Create a new Flask app
 app = Flask(__name__)
 
-<<<<<<< HEAD
 # == Your Routes Here ==
 
 # Sign-up form page
-@app.route('/sign-up', methods=['GET'])
-=======
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5000/index
-@app.route('/index', methods=['GET'])
->>>>>>> 8b2c13e29750f60c9b428769beadc02db28730c8
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('sign-up.html')
 
 # Sign-up POST request
-@app.route("/sign-up", methods=["POST"])
+@app.route("/", methods=["POST"])
 def post_index():
     # We extract the message from the request
     email = request.form.get("email")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm-password")
 
-
-
-
+# TEST EXAMPLE OF GETTING DATA FROM THE DATABASE USING CONNECTION AND REPOSITORY
+@app.route("/test", methods=["GET"])
+def get_test():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    users = repository.all()
+    return render_template('test.html', users=users)
+#===============================================================================
 
 
 
