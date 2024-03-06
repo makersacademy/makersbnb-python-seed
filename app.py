@@ -13,7 +13,6 @@ app = Flask(__name__)
 current_user = None
 
 
-
 # == Your Routes Here ==
 
 #== TEST EXAMPLE OF GETTING DATA FROM THE DATABASE USING CONNECTION AND REPOSITORY ==#
