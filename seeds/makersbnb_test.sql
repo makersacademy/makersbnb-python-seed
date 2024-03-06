@@ -18,6 +18,8 @@ INSERT INTO spaces (description, price, user_id, name, fromdate, todate, free_da
 "01-21-2024", "01-22-2024", "01-23-2024", "01-24-2024", "01-25-2024", 
 "01-26-2024", "01-27-2024", "01-28-2024", "01-29-2024", "01-30-2024", 
 "01-31-2024"]');
+INSERT INTO spaces (description, price, user_id, name, fromdate, todate, free_dates) VALUES ('house on a lake', 99.99, 2, 'lake house', '02-01-2024', '03-01-2024', '["01-01-2024","02-01-2024"]');
+INSERT INTO spaces (description, price, user_id, name, fromdate, todate, free_dates) VALUES ('house on a hill', 99.99, 3, 'hill house', '01-02-2024', '02-02-2024', '["01-02-2024"."02-02-2024"]');
 INSERT INTO users (username, password) VALUES ('user1@test.com', 'password123');
 INSERT INTO users (username, password) VALUES ('user2@test.com', 'password000');
 INSERT INTO requests (spaceid, date, guestid, hostid) VALUES (1, '2024-01-01', 1, 2);
