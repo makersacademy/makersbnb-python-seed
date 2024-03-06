@@ -102,6 +102,27 @@ def test_sign_up_successful(db_connection, page, test_web_address):
     final_url = page.url
     assert final_url == f"http://{test_web_address}/spaces"
 
+
+"""
+Test if sign up gets to database
+"""
+
+def test_sign_up_successful(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "user4")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "abc1234")
+    page.click("text=Submit")
+
+    user = db_connection.execute("""
+        SELECT 1 AS found
+        FROM users 
+        WHERE email = %s
+""", ("user4@example.com",))
+    assert user is not None
+    
+
 """
 Check if error message appears on unsuccessful form fill
 """
