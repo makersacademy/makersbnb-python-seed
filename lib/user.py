@@ -1,5 +1,4 @@
 import re
-import pytest
 
 class User:
     def __init__(self, id, username, password):
