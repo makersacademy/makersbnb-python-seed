@@ -3,7 +3,11 @@ import psycopg
 from flask import Flask, request, render_template, redirect, url_for 
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
+from lib.space import Space
+from lib.booking import Booking
 from lib.user_repository import UserRepository
+from lib.space_repository import SpaceRepository
+from lib.booking_repository import BookingRepository
 from markupsafe import escape
 
 # Create a new Flask app
@@ -58,18 +62,44 @@ def post_index():
     # redirect user to book a space
     return redirect(f"/book-space")
 
-
-@app.route("/book-space", methods=["GET", "POST"])
+# show all spaces as a list
+@app.route("/book-space", methods=["GET"])
 def get_spaces():
     connection = get_flask_database_connection(app)
-    # TODO get all spaces
-    return render_template('book-space.html')
+    repository = SpaceRepository(connection)
+    spaces = repository.all()
+    return render_template('book-space.html', spaces=spaces)
 
-@app.route("/list-space", methods=["GET", "POST"])
-def list_space():
-    conection = get_flask_database_connection(app)
-    # TODO get data from form and create new space in db
+# add a new space to the databse use a form
+@app.route("/list-space/<user_id>", methods=["GET"])
+def add_space_form(user_id):
     return render_template('list-space.html')
+
+# add a new space to the databse use a form
+@app.route("/list-space/<user_id>", methods=["GET", "POST"])
+def add_space(user_id):
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    user_id = user_id # THIS IS A QUERY PARAMETER
+    name = request.form.get("name")
+    description = request.form.get("description")
+    price_per_night = request.form.get("price_per_night")
+    # these aren't currently being used 
+    available_from = request.form.get("available_from")
+    available_to = request.form.get("available_to")
+    # there should probably be some verification checks here
+    # make new Space object
+    space = Space(
+        None,
+        name,
+        description,
+        float(price_per_night),
+        int(user_id)
+    )
+    # add new space to the database
+    repository.create(space)
+    # redirect user to all spaces list
+    return redirect(f"/book-space")
 
 
 
@@ -83,37 +113,37 @@ if __name__ == '__main__':
 
 
 # == Your Routes Here ==
-    def add_space(self, name, description, price_per_night):
-        new_space = {
-            'name': name,
-            'description': description,
-            'price_per_night': price_per_night
-        }
-        self.spaces.append(new_space)
+    # def add_space(self, name, description, price_per_night):
+    #     new_space = {
+    #         'name': name,
+    #         'description': description,
+    #         'price_per_night': price_per_night
+    #     }
+    #     self.spaces.append(new_space)
 
-    def view_spaces(self):
-        return self.spaces
+    # def view_spaces(self):
+    #     return self.spaces
 
-    def request_rental(self, space_id, date):
-        # Parameters:
-        #   space_id: int
-        #   date: Date
-        # Returns:
-        #   Nothing. Creates a booking request in database for that specific date
-        pass # No code here yet
+    # def request_rental(self, space_id, date):
+    #     # Parameters:
+    #     #   space_id: int
+    #     #   date: Date
+    #     # Returns:
+    #     #   Nothing. Creates a booking request in database for that specific date
+    #     pass # No code here yet
 
-    def check_status(self, booking_id):
-        # Parameters:
-        #   booking_id: int
-        # Returns:
-        #   Returns the current status of the booking
-        pass # No code here yet
+    # def check_status(self, booking_id):
+    #     # Parameters:
+    #     #   booking_id: int
+    #     # Returns:
+    #     #   Returns the current status of the booking
+    #     pass # No code here yet
 
-    def respond(self, booking_id, respond):
-        # Parameters:
-        #   booking_id: int
-        #   response: string
-        # Returns:
-        #   Updates the status of booking in database based on the respond
-        pass # No code here yet
+    # def respond(self, booking_id, respond):
+    #     # Parameters:
+    #     #   booking_id: int
+    #     #   response: string
+    #     # Returns:
+    #     #   Updates the status of booking in database based on the respond
+    #     pass # No code here yet
 

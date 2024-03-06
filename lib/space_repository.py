@@ -24,9 +24,10 @@ class SpaceRepository:
     # Create a new space
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, space):
-        self._connection.execute('INSERT INTO spaces (name, description, price_per_night, user_id) VALUES (%s, %s, %s, %s)', [
+        rows = self._connection.execute('INSERT INTO spaces (name, description, price_per_night, user_id) VALUES (%s, %s, %s, %s) RETURNING id', [
             space.name, space.description, space.price_per_night, space.user_id])
-        return None
+        space.id = rows[0]["id"]
+        return space
 
     # Delete a space by its id
     def delete(self, space_id):
