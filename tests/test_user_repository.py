@@ -25,7 +25,7 @@ def test_create_new_user(db_connection):
     db_connection.seed("seeds/blueberries_b&b.sql")
     repository = UserRepository(db_connection)
 
-    repository.create_new_user(User(5, 'email5@email.com'))
+    repository.create_new_user(User(None, 'email5@email.com'))
 
     result = repository.all()
     assert result == [
