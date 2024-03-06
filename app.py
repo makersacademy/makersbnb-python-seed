@@ -8,6 +8,12 @@ from markupsafe import escape
 # Create a new Flask app
 app = Flask(__name__)
 
+# Log in logic
+
+current_user = None
+
+
+
 # == Your Routes Here ==
 
 #== TEST EXAMPLE OF GETTING DATA FROM THE DATABASE USING CONNECTION AND REPOSITORY ==#
