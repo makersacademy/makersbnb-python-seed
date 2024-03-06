@@ -20,8 +20,8 @@ Everyone in the team should then clone this fork to their local machine to work 
 # If you have problems with the above, contact your coach
 
 # Create a test and development database
-; createdb YOUR_PROJECT_NAME
-; createdb YOUR_PROJECT_NAME_TEST
+; createdb PeaHenBNB_PROJECT
+; createdb PeaHenBNB_PROJECT_TEST
 
 # Open lib/database_connection.py and change the database names
 ; open lib/database_connection.py
