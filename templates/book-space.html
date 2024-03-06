@@ -30,11 +30,19 @@
                 <input class="button box-shadow" type="submit" value="list spaces">
             </p>
         </form>
-        <!-- TODO list all available spaces -->
-        <!-- <ul>
-            {% for space in spaces %}
-                <li>{{space}}</li>
-            {% endfor %}
-        </ul> -->
+        <div class="space-heading">
+            <span>id</span>
+            <span>name</span>
+            <span>price per night</span>
+            <span>description</span>
+        </div>
+        {% for space in spaces %}
+            <div class="space-container">
+                <span>{{space.id}}</span>
+                <span>{{space.name}}</span>
+                <span>£{{space.price_per_night}}</span>
+                <span>{{space.description}}</span>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
