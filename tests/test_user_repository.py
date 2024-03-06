@@ -42,19 +42,19 @@ def test_all(db_connection):
 Create a new user, stored in users.sql
 """
 
-# def test_create_new_user(db_connection):
-#     db_connection.seeds("seeds/users.sql")
-#     repo = UserRepository(db_connection)
-#     created_user = user.create("HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123")
-#     assert created_user == User(4, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123"))
+def test_create_new_user(db_connection):
+    db_connection.seed("seeds/users.sql")
+    repo = UserRepository(db_connection)
+    created_user = repo.create(User(None, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123"))
+    assert created_user == User(4, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123")
 
-#     result = repo.all()
-#     assert result == [
-#         User(1, 'user1', 'user1@example.com', 'abc123'), 
-#         User(2, 'user2', 'user2@yahoo.com', 'password123'), 
-#         User(3, 'user3', 'user3@gmail.com', 'letmein!'),
-#         User(4, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123")
-#     ]
+    result = repo.all()
+    assert result == [
+        User(1, 'user1', 'user1@example.com', 'abc123'), 
+        User(2, 'user2', 'user2@yahoo.com', 'password123'), 
+        User(3, 'user3', 'user3@gmail.com', 'letmein!'),
+        User(4, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123")
+    ]
 
 # def test_all(db_connection):
 #     db_connection.seed("seeds/users.sql")
