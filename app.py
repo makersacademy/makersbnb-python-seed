@@ -3,7 +3,7 @@ from flask import Flask, redirect, request, render_template
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.database_connection import get_flask_database_connection
-
+from lib.space_repository import SpaceRepository
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -24,6 +24,27 @@ def get_login():
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     return render_template("spaces.html")
+
+
+
+@app.route('/spaces/new', methods=['GET'])
+def get_spaces_new():
+    return render_template("new_space.html")
+
+@app.route('/spaces/new', methods=['POST'])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    name = request.form['name']
+    price = request.form['price']
+    description = request.form['description']
+    user_id = request.form['user_id']
+    #availability_from = request.form['availability_from']
+    #availability_to = request.form['availability_to']
+    repo.create(name, price, description, user_id)
+
+    return render_template("spaces.html")
+
 
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
