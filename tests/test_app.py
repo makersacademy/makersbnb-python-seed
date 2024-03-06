@@ -1,4 +1,6 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, TimeoutError, expect
+import time
+
 
 # Tests for your routes go here
 
@@ -42,7 +44,48 @@ def test_get_spaces(page, test_web_address):
 
 
 """
-Check if sign up was successful
+Check if sign up was unsuccessful - missing name
+"""
+
+def test_sign_up_unsuccessful_no_name(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "abc1234")
+    page.click("text = Submit")
+    assert page.url == f"http://{test_web_address}/sign_up"
+
+
+"""
+Check if sign up was unsuccessful - missing email
+"""
+
+def test_sign_up_unsuccessful_no_email(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "user4")
+    page.fill("input[name='email']", '')
+    page.fill("input[name='password']", "abc1234")
+    page.click("text = Submit")
+    assert page.url == f"http://{test_web_address}/sign_up"
+
+"""
+Check if sign up was unsuccessful - missing password
+"""
+
+def test_sign_up_unsuccessful_no_password(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "user4")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "")
+    page.click("text = Submit")
+    assert page.url == f"http://{test_web_address}/sign_up"
+
+
+"""
+Check if sign up was successful - through to spaces page
 """
 
 def test_sign_up_successful(db_connection, page, test_web_address):
@@ -51,8 +94,25 @@ def test_sign_up_successful(db_connection, page, test_web_address):
     page.fill("input[name='name']", "user4")
     page.fill("input[name='email']", 'user4@example.com')
     page.fill("input[name='password']", "abc1234")
-    page.click("text = Submit")
-    h1 = page.locator('h1')
+
+    page.click("text=Submit")
+
+    final_url = page.url
+    assert final_url == f"http://{test_web_address}/spaces"
+
+"""
+Check if error message appears on unsuccessful form fill
+"""
+
+def test_unsuccessful_error_message(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/sign_up")
+    page.fill("input[name='name']", "")
+    page.fill("input[name='email']", 'user4@example.com')
+    page.fill("input[name='password']", "abc1234")
+    page.click("input[type='submit']")
+    error_message = page.locator(".t-errors")
+    expect(error_message).to_have_text("There were errors with your submission: All fields are required.")
 
 
 """

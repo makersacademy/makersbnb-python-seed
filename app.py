@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, redirect, request, render_template
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.database_connection import get_flask_database_connection
@@ -21,31 +21,11 @@ def get_index():
 def get_login():
     return render_template('login.html')
 
-@app.route('/sign_up', methods=['GET'])
-def get_sign_up():
-    return render_template('sign_up.html')
-
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     return render_template("spaces.html")
 
-
-
 @app.route('/sign_up', methods=['POST', 'GET'])
-
-#Commented out the below, as it's not for Minimum Viable Product. 
-#AND.. I can't get it to play nice
-
-# def check_user_exists():
-#     connection = get_flask_database_connection(app)
-#     repo = UserRepository(connection)
-#     name = request.form['name']
-#     email = request.form['email']
-#     password = request.form['password']
-#     if repo.find(name, email, password):
-#         return render_template("sign_up.html")
-#     return render_template("spaces.html")
-
 def sign_up():
     if request.method == 'POST':
         connection = get_flask_database_connection(app)
@@ -62,12 +42,25 @@ def sign_up():
         created_user = repo.create(new_user)
 
         if created_user:
-            return render_template("spaces.html")
+            return redirect("/spaces", code=302)
         else:
             return render_template("sign_up.html")
+        
     else:
         return render_template("sign_up.html")
         
+#Commented out the below, as it's not for Minimum Viable Product. 
+#AND.. I can't get it to play nice
+
+# def check_user_exists():
+#     connection = get_flask_database_connection(app)
+#     repo = UserRepository(connection)
+#     name = request.form['name']
+#     email = request.form['email']
+#     password = request.form['password']
+#     if repo.find(name, email, password):
+#         return render_template("sign_up.html")
+#     return render_template("spaces.html")
 
 @app.route('/login', methods=['POST'])
 def validate_login():
