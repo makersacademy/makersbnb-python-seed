@@ -72,33 +72,54 @@ def get_spaces():
 
 # add a new space to the databse use a form
 @app.route("/list-space", methods=["GET"])
-def add_space_form():
+def get_add_space_form():
     return render_template('list-space.html')
 
 # add a new space to the databse use a form
 @app.route("/list-space", methods=["POST"])
-def add_space():
+def post_add_space():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     name = request.form.get("name")
     description = request.form.get("description")
     price_per_night = request.form.get("price_per_night")
-    # these aren't currently being used 
+    # these aren't currently being used
+    # they should probably be used to create entries in the bookings table with a loop
     available_from = request.form.get("available_from")
     available_to = request.form.get("available_to")
-    # there should probably be some verification checks here
+    # there should probably be some verification checks here...
     # make new Space object
     space = Space(
         None,
         name,
         description,
         price_per_night,
-        1
+        1 # hardcoded for now
     )
     # add new space to the database
     repository.create(space)
     # redirect user to all spaces list
     return redirect(f"/book-space")
+
+@app.route("/log-in", methods=["GET"])
+def get_login():
+    return render_template('log-in.html')
+
+@app.route("/log-in", methods=["POST"])
+def post_login():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    users = repository.all()
+    username = request.form.get("email")
+    password = request.form.get("password")
+    # TODO implement login authentication logic (using query params?)
+    for user in users:
+        if user.user_name == username and user.user_password == password:
+            # TODO log the user in here
+            return redirect(f"/book-space")
+    else:
+        return "<p>no such user, please register first</p>"
+
 
 
 
