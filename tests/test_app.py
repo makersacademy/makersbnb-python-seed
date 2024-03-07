@@ -191,6 +191,14 @@ def test_create_space(db_connection, page, test_web_address):
     h1 = page.locator('h1')
 
 
+def test_visit_space_show_page(db_connection, page, test_web_address):
+    db_connection.seed("seeds/spaces.sql") 
+    page.goto(f"http://{test_web_address}/spaces")
+    page.click("text='London Bridge'")
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("London Bridge")
+
+
 
 
     # # This time we click the link with the text 'Add a new book'
