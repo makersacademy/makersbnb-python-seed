@@ -51,7 +51,7 @@ INSERT INTO users (email) VALUES ('email3@email.com');
 INSERT INTO users (email) VALUES ('email4@email.com');
 INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property1', 1, 'hot', 25.40);
 INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property2', 2, 'cold', 45.70);
-INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property3', 3, 'windy', 83);
+INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property3', 3, 'windy', 83.00);
 INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property4', 4, 'snow', 56.80);
 INSERT INTO properties (property_name, user_id, description, price_per_night) VALUES ('Property5', 4, 'cloud', 83.20);
 INSERT INTO bookings (property_id, dates_booked_from, dates_booked_to, approved, booker_id) VALUES (1, '2024-03-27', '2024-03-29', TRUE, 2);
