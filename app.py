@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.space_repository import SpaceRepository
@@ -96,7 +96,7 @@ def validate_login():
     name = request.form['name']
     password = request.form['password']
     if repo.find(name, password):
-        return render_template("spaces.html")
+        return redirect("spaces")
     return render_template("login.html")
 
 
