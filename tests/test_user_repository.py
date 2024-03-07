@@ -13,8 +13,8 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
 
     # Assert on the results
     assert users== [
-        User(1,'Adamexample@gmail.com', 'password123!'),
-        User(2,'adam.takac24@outlook.com', 'Password456!'),
+        User(1,'Adamexample@gmail.com', 'password123!!!'),
+        User(2,'adam.takac24@outlook.com', 'password456!!!'),
     ]
 
 """
@@ -25,8 +25,8 @@ def test_get_single_record(db_connection):
     db_connection.seed("seeds/bnb_table.sql")
     repository = UserRepository(db_connection)
 
-    booking = repository.find(2)
-    assert booking == User(2,'adam.takac24@outlook.com', 'Password456!')
+    user = repository.find(2)
+    assert user == User(2,'adam.takac24@outlook.com', 'password456!!!')
 
 """
 When we call UserRepository#create
@@ -40,8 +40,8 @@ def test_create_record(db_connection):
 
     result = repository.all()
     assert result == [
-        User(1,'adam.email@gmail.com', 'Password123!'),
-        User(2,'example.email@outlook.com', 'Superpassword123!'),
+        User(1,'Adamexample@gmail.com', 'password123!!!'),
+        User(2,'adam.takac24@outlook.com', 'password456!!!'),
         User(3,'new.email123@gmail.com', 'Newpassword$')
     ]
 
@@ -56,6 +56,6 @@ def test_delete_record(db_connection):
 
     result = repository.all()
     assert result == [
-        User(2,'example.email@outlook.com', 'Superpassword123!'),
+        User(2,'adam.takac24@outlook.com', 'password456!!!'),
 
     ]

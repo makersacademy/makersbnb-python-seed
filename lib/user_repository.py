@@ -17,7 +17,7 @@ class UserRepository:
     # Find a single user by its id
     def find(self, user_id):
         rows = self._connection.execute(
-            'SELECT * from bookings WHERE id = %s', [user_id])
+            'SELECT * from users WHERE id = %s', [user_id])
         row = rows[0]
         return User(row["id"], row["user_name"], row["user_password"])
 
