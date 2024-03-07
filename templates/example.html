@@ -1,0 +1,54 @@
+<!-- This Jinja will wrap the base.html around our "block content" -->
+{% extends 'base.html' %}
+
+<!-- This Jinja syntax starts our "block content" -->
+{% block content %}
+    <!-- "class" is used mainly to assign CSS styling defined in /static/style.css -->
+    <!-- e.g. to set a CSS style on tags with the class "container" we'd reference ".container" in the CSS file -->
+    <!-- <div> tags are used to seperater content into different dividers or 'boxes' -->
+    <!--  you can think of a series of divs as boxes on the page and they can be nested as well -->
+    <div class="container">
+        <!-- <h1> through <h6> are headers, typically only 1 <h1> per page -->
+        <h1>big text <span class="highlight text-shadow">red text</span></h1>
+        <!-- <p> hold a block of text that starts on a new line and ends with a new line -->
+        <p>some paragraph text, ends in a new line</p>
+        <!-- <span> tags do not start or end on a new line -->
+        <!-- <br /> is a self closing line break tag that explicitly starts a new line -->
+        <span>a span </span><span>doesn't start </span><span>a new line </span><br />
+        
+        <!-- the "action" is which endpoint in app.py with get the POST request -->
+        <form action="/log-in" method="post" class="form-container box-shadow">
+            <!-- each input is wrapped in <p> tags and has a <label> for accessibility -->
+            <p class="input-container">
+                <label for="email">email</label>
+                <input type="text" name="email" id="email">
+            </p>
+            <!-- notice the "type" here is password not text. Inputs can have different types -->
+            <p class="input-container">
+                <label for="password">password</label>
+                <input type="password" name="password" id="password">
+            </p>
+            <!-- this input has the type "submit" which acts like a button for the user to click -->
+            <!-- when this is clicked the form data the user filled in will be POSTed to the endpoint -->
+            <!-- that we defined as the "action" of the form i.e. "/log-in" -->
+            <p>
+                <input class="button box-shadow" type="submit" value="log in">
+            </p>
+        </form>
+
+        <!-- Here's an unordered list (bullet points) containing list items -->
+        <ul>
+            <li>John</li>
+            <li>Paul</li>
+            <li>George</li>
+            <li>Ringo</li>
+        </ul>
+        <!-- Here's an ordered list (numbered) containing list items -->
+        <ol>
+            <li>item 1</li>
+            <li>item 2</li>
+            <li>item 3</li>
+        </ol>
+    </div>
+<!-- This Jinja syntax ends our "block content" -->
+{% endblock %}
