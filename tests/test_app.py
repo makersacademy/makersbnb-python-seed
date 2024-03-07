@@ -185,7 +185,7 @@ def test_create_space(db_connection, page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces/new")
     page.fill("input[name='name']", "London Bridge")
     page.fill("input[name='price']", "15.99")
-    page.fill("input[name='description']", "It isnt the one you think it is")
+    page.fill("textarea[name='description']", "It isnt the one you think it is")
     page.fill("input[name='user_id']", "1")
     page.click("text = List My Space")
     h1 = page.locator('h1')
