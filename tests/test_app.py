@@ -208,15 +208,13 @@ def test_delete_space_from_user(db_connection, page, test_web_address):
     page.fill("input[name='name']", "user1")
     page.fill("input[name='password']", "abc123")
     page.click("text = Submit")
-    print('submit complete')
+
     initial_space_count = len(db_connection.execute("SELECT * FROM spaces"))
-    print('initial count taken')
+    
     page.click("text = Delete")
     page.wait_for_timeout(1000)
-    print('timeout wait complete')
+
     updated_space_count = len(db_connection.execute("SELECT * FROM spaces"))
-    print('update counted')
-    # try:
     assert updated_space_count == initial_space_count - 1, (
         f"Initial Space Count: {initial_space_count} Updated Space Count: {updated_space_count}")
 

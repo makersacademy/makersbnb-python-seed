@@ -10,6 +10,8 @@ from lib.space_repository import SpaceRepository
 # Create a new Flask app
 app = Flask(__name__)
 
+app.secret_key = "i'm a magical cookie key"
+
 # == Your Routes Here ==
 
 # GET /index
@@ -31,13 +33,26 @@ def get_spaces():
     spaces = repo.all()
     return render_template("spaces.html", spaces=spaces)
 
-@app.route('/user/<int:id>', methods=['GET'])
+@app.route('/user/<int:id>', methods=['GET', 'POST'])
 def get_single_user(id):
         connection = get_flask_database_connection(app)
         user_repository = UserRepository(connection)
-        user = user_repository.user_details(id)
         space_repository = SpaceRepository(connection)
+
+        if request.method == 'POST':  # Check for POST request (delete action)
+            space_id = request.form.get('space_id')
+            if space_id:  # Ensure space_id is present in form data
+                # try:
+                space_repository.delete(space_id)
+                #     flash("Space deleted successfully!", "success")
+                # except Exception as e:
+                #     flash(f"Error deleting space: {e}", "error")
+                
+        user = user_repository.user_details(id)
         spaces = space_repository.find_user_spaces(id)
+
+        session['user_id'] = id
+
         return render_template('user_homepage.html', user=user, spaces=spaces)
 
 
@@ -59,27 +74,6 @@ def create_space():
     repo.create(name, price, description, user_id)
 
     return render_template("spaces.html")
-
-@app.route('/delete_space<int:space_id>', methods=['POST'])
-def delete_space(space_id):
-    connection = get_flask_database_connection(app)
-    space_repo = SpaceRepository(connection)
-
-    space_repo.delete(space_id)
-
-    if not space_repo.find(space_id):
-        user_repo = UserRepository(connection)
-
-        user_id = session.get('user_id')
-
-        if user_id:
-            user = user_repo.user_details(user_id)
-            spaces = space_repo.find_user_spaces(user.id)
-            return render_template('user_homepage.html', user=user, spaces=spaces)
-
-
-
-
 
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
