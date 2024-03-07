@@ -10,7 +10,7 @@ class User:
 
         special_characters = '!@$%&'
         if len(password) <= 7 or all(char not in password for char in special_characters):
-            raise ValueError("Password does not meet the criteria, password needs to be 8 characters long and contain special character")
+            raise ValueError("Password does not meet the criteria, password needs to be 8 characters long and contain a special character")
         self.user_password = password
 
     # This method allows our tests to assert that the objects it expects

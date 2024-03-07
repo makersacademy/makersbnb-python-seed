@@ -72,8 +72,8 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Cozy C
 INSERT INTO spaces (name, description, price_per_night, user_id) VALUES ('Luxurious apartment', 'Stunning luxurious apartment in the city center.', 250.00, 2);
 
 -- Inserting data into the 'bookings' table
-INSERT INTO bookings (date, status, space_id, guest_id) VALUES ('2024-07-13', True, 1, 2);
-INSERT INTO bookings (date, status, space_id, guest_id) VALUES ('2024-06-25', False, 2, 1);
+INSERT INTO bookings (date, status, space_id, guest_id) VALUES ('2024-07-13', true, 1, 2);
+INSERT INTO bookings (date, status, space_id, guest_id) VALUES ('2024-06-25', false, 2, 1);
 
 -- Inserting data into the 'booking_request' table
 INSERT INTO booking_requests (booking_id, request_status) VALUES (1, 'pending');

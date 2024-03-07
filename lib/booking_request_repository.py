@@ -32,4 +32,4 @@ class BookingRequestRepository:
     def delete(self, booking_id):
         self._connection.execute(
             'DELETE FROM booking_requests WHERE id = %s', [booking_id])
-        return None
+        return None 
