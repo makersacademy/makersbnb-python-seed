@@ -185,17 +185,36 @@ def test_create_space(db_connection, page, test_web_address):
     page.goto(f"http://{test_web_address}/spaces/new")
     page.fill("input[name='name']", "London Bridge")
     page.fill("input[name='price']", "15.99")
-    page.fill("input[name='description']", "It isnt the one you think it is")
+    page.fill("textarea[name='description']", "It isnt the one you think it is")
     page.fill("input[name='user_id']", "1")
     page.click("text = List My Space")
     h1 = page.locator('h1')
+
+
+""" 
+When we create a new space, 
+a new record in the spaces table and the availability table gets created
+"""
+
+def test_create_space(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/spaces/new")
+    page.fill("input[name='name']", "Stonehenge")
+    page.fill("input[name='price']", "49.99")
+    page.fill("textarea[name='description']", "a bit draughty but nice")
+    page.fill("input[name='user_id']", "2")
+    page.fill("input[name='availability_from']", "2024-12-20")
+    page.fill("input[name='availability_to']", "2024-12-27")
+    page.click("text = List My Space")
+    h1 = page.locator("h1")
+    expect(h1).to_have_text("SPACES")
 
 
 def test_visit_space_show_page(db_connection, page, test_web_address):
     db_connection.seed("seeds/spaces.sql") 
     page.goto(f"http://{test_web_address}/spaces")
     page.click("text='London Bridge'")
-    h1_tag = page.locator("h1")
+    h1_tag = page.locator("h1:has-text('London Bridge')")
     expect(h1_tag).to_have_text("London Bridge")
 
 """
