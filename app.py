@@ -116,10 +116,11 @@ def validate_login():
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
-    space = repo.find(id)
-    return render_template("space_show.html", space=space)
-
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find(id)
+    avail_repo = AvailabilityRepository(connection)
+    availabilities = avail_repo.find_space(id)
+    return render_template("space_show.html", space=space, availabilities=availabilities)
 
 
 @app.route('/bookings', methods=['GET'])

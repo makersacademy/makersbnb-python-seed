@@ -27,3 +27,11 @@ class AvailabilityRepository:
         
     def delete(self, id):
         self._connection.execute('DELETE FROM availabilities WHERE id = %s', [id])
+
+    def find_space(self, space_id):
+        rows = self._connection.execute('SELECT * FROM availabilities WHERE space_id = %s', [space_id])
+        availabilities = []
+        for row in rows:
+            item = Availability(row['id'], row['availability_from'], row['availability_to'], row['space_id'])
+            availabilities.append(item)
+        return availabilities

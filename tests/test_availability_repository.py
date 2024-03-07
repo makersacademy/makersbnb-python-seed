@@ -37,3 +37,9 @@ def test_delete(db_connection):
     repo = AvailabilityRepository(db_connection)
     repo.delete(4)
     assert repo.all() == [Availability(1, '2024-10-12', '2024-10-25', 1), Availability(2, '2024-05-21', '2024-06-01', 3), Availability(3, '2024-11-02', '2024-12-02', 4)]
+
+def test_find_by_space(db_connection):
+    db_connection.seed("seeds/spaces.sql")
+    repo = AvailabilityRepository(db_connection)
+    availability = repo.find_space(2)
+    assert availability == [Availability(4, '2024-06-10', '2024-06-28', 2)]

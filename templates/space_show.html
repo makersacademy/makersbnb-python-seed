@@ -23,5 +23,13 @@
         <p>{{space.description}}</p>
         <button type="button" class="btn btn-outline-primary"><a href="/spaces" style="text-decoration: none;">Look at all the other lovely options</a></button>
     </div>
+    <div class="container">
+        {% for availability in availabilities %}
+        <h1 class="mb-3">Availability</h1>
+        <h5>Availability Start Date: {{availability.availability_from}}</h5>
+        <h5>Availability End Date: {{availability.availability_to}}</h5>
+        {% endfor %}
+        <button type="button" class="btn btn-outline-primary"><a href="/bookings" style="text-decoration: none;">Make A Booking</a></button>
+    </div>
 </body>
 </html>
