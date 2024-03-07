@@ -62,7 +62,7 @@ def create_space():
     space = space_repo.all()[-1]
     avail_repo.create(availability_from, availability_to, space.id)
 
-    return render_template("spaces.html")
+    return redirect("/spaces")
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
