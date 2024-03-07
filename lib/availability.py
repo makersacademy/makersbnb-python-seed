@@ -13,7 +13,10 @@ class Availability:
     # This method allows our tests to assert that the objects it expects
     # are the objects we made based on the database records.
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (self.id == other.id and
+                str(self.availability_from) == str(other.availability_from) and
+                str(self.availability_to) == str(other.availability_to) and
+                self.space_id == other.space_id)
 
     # This method makes it look nicer when we print an Artist
     def __repr__(self):
