@@ -99,6 +99,13 @@ def validate_login():
         return redirect("spaces")
     return render_template("login.html")
 
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    connection = get_flask_database_connection(app)
+    repo = SpaceRepository(connection)
+    space = repo.find(id)
+    return render_template("space_show.html", space=space)
+
 
 
 
