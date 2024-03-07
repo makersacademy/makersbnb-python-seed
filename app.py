@@ -32,6 +32,15 @@ def get_spaces():
     spaces = repo.all()
     return render_template("spaces.html", spaces=spaces)
 
+@app.route('/user/<int:id>', methods=['GET'])
+def get_single_user(id):
+        connection = get_flask_database_connection(app)
+        user_repository = UserRepository(connection)
+        user = user_repository.user_details(id)
+        space_repository = SpaceRepository(connection)
+        spaces = space_repository.find_user_spaces(id)
+        return render_template('user_homepage.html', user=user, spaces=spaces)
+
 
 @app.route('/spaces/new', methods=['GET'])
 def get_spaces_new():
@@ -68,11 +77,24 @@ def validate_login():
     repo = UserRepository(connection)
     name = request.form['name']
     password = request.form['password']
+    user_id = repo.get_user_id(name)
     if repo.find(name, password):
-        return redirect("spaces")
+        return redirect("user/{}".format(user_id))
     return render_template("login.html")
 
 
+
+@app.route('/bookings', methods=['GET'])
+def get_bookings_new():
+    return render_template("bookings.html")
+
+@app.route('/bookings', methods=['GET'])
+def include_dates():
+    connection = get_flask_database_connection(app)
+    cursor = connection.cursor()
+    repo = AvailabilityRepository(connection)
+    result = repo.find(1)
+    return render_template('bookings.html', min_date=result.availability_from.strftime('%Y-%m-%d'), max_date=result.availability_to.strftime('%Y-%m-%d'))
 
 
 # @app.route('/books', methods=['POST'])
