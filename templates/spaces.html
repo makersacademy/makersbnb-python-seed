@@ -15,16 +15,14 @@
         <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
                 <div class="">
-                    <h5 class="card-title">
-                        <a href="/spaces/{{space.id}}">{{space.name}}</a>
-                    </h5>
-                    <h6 class="card-subtitle">{{space.price}}</h6>
+                    <h5 class="card-title"><a href="/spaces/{{space.id}}" style="text-decoration: none;">{{space.name}}</a></h5>
+                    <h6 class="card-subtitle">£{{space.price}} per night</h6>
                     <p class="card-text">{{space.description}}</p>
                 </div>
             </div>
         </div>
         {% endfor %}
+        <button type="button" class="btn btn-outline-primary"><a href="/spaces/new" style="text-decoration: none;">List a Space</a></button>
     </div>
-    
 </body>
 </html>
