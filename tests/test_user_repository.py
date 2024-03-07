@@ -56,6 +56,14 @@ def test_create_new_user(db_connection):
         User(4, "HansGruber", "HansGruber@NakatomiPlaza.org", "iloveJohnMcClane123")
     ]
 
+"""
+If a valid user name is used, the user id will be returned
+"""
+def test_get_user_id(db_connection):
+    db_connection.seed("seeds/users.sql")
+    repo = UserRepository(db_connection)
+    user_id = repo.get_user_id("user1")
+    assert user_id == 1
 # def test_all(db_connection):
 #     db_connection.seed("seeds/users.sql")
 #     pass
