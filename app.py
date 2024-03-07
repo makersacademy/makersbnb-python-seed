@@ -1,7 +1,10 @@
 import os
 from flask import Flask, request, render_template, redirect
 from lib.user_repository import UserRepository
+from lib.user import User
 from lib.space_repository import SpaceRepository
+from lib.space import Space
+
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 # Create a new Flask app
@@ -21,16 +24,13 @@ def get_index():
 def get_login():
     return render_template('login.html')
 
-@app.route('/sign_up', methods=['GET'])
-def get_sign_up():
-    return render_template('sign_up.html')
-
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     spaces = repo.all()
     return render_template("spaces.html", spaces=spaces)
+
 
 
 @app.route('/spaces/new', methods=['GET'])
@@ -51,16 +51,43 @@ def create_space():
 
     return render_template("spaces.html")
 
+
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
-    connection = get_flask_database_connection(app)
-    repo = UserRepository(connection)
-    name = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
-    if repo.find(name, email, password):
+    if request.method == 'POST':
+        connection = get_flask_database_connection(app)
+        repo = UserRepository(connection)
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+
+        if not name or not email or not password:
+            errors = "All fields are required."
+            return render_template("sign_up.html", errors=errors)
+        
+        new_user = User(id=None, name=name, email=email, password=password)
+        created_user = repo.create(new_user)
+
+        if created_user:
+            return redirect("/spaces", code=302)
+        else:
+            return render_template("sign_up.html")
+        
+    else:
         return render_template("sign_up.html")
-    return render_template("spaces.html")
+        
+#Commented out the below, as it's not for Minimum Viable Product. 
+#AND.. I can't get it to play nice
+
+# def check_user_exists():
+#     connection = get_flask_database_connection(app)
+#     repo = UserRepository(connection)
+#     name = request.form['name']
+#     email = request.form['email']
+#     password = request.form['password']
+#     if repo.find(name, email, password):
+#         return render_template("sign_up.html")
+#     return render_template("spaces.html")
 
 @app.route('/login', methods=['POST'])
 def validate_login():
