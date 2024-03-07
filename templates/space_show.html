@@ -29,7 +29,21 @@
         <h5>Availability Start Date: {{availability.availability_from}}</h5>
         <h5>Availability End Date: {{availability.availability_to}}</h5>
         {% endfor %}
-        <button type="button" class="btn btn-outline-primary"><a href="/bookings" style="text-decoration: none;">Make A Booking</a></button>
+    
+    </div>
+    <div class="container">
+        
+        <h1 class="mb-3">Make a Booking</h1>
+        <form action="/spaces/{{space_id}}" method="post">
+            <div class="mb-3">
+              <label for="booking_from" class="form-label">Booking From:</label>
+              <input type="date" name="booking_from" class="form-control" id="booking_from", min="{{min_date}}", max = "{{max_date}}">
+            </div>
+            <div class="mb-3">
+                <label for="booking_to" class="form-label">Booking To:</label>
+                <input type="date" name="booking_to" class="form-control" id="booking_to" min="{{min_date}}", max = "{{max_date}}">
+              </div>
+              <button type="submit" class="btn btn-outline-primary">Make Request</button>
     </div>
 </body>
 </html>

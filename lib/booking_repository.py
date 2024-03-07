@@ -25,3 +25,11 @@ class BookingRepository:
         
     def delete(self, id):
         self._connection.execute('DELETE FROM bookings WHERE id = %s', [id])
+
+    def find_space(self, space_id):
+        rows = self._connection.execute('SELECT * FROM bookings WHERE space_id = %s', [space_id])
+        bookings = []
+        for row in rows:
+            item = Booking(row['id'], row['booking_from'], row['booking_to'], row['space_id'])
+            bookings.append(item)
+        return bookings
