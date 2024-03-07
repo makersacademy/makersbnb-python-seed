@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.space_repository import SpaceRepository
@@ -11,6 +11,8 @@ from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
 app = Flask(__name__)
+
+app.secret_key = "i'm a magical cookie key"
 
 # == Your Routes Here ==
 
@@ -33,13 +35,26 @@ def get_spaces():
     spaces = repo.all()
     return render_template("spaces.html", spaces=spaces)
 
-@app.route('/user/<int:id>', methods=['GET'])
+@app.route('/user/<int:id>', methods=['GET', 'POST'])
 def get_single_user(id):
         connection = get_flask_database_connection(app)
         user_repository = UserRepository(connection)
-        user = user_repository.user_details(id)
         space_repository = SpaceRepository(connection)
+
+        if request.method == 'POST':  # Check for POST request (delete action)
+            space_id = request.form.get('space_id')
+            if space_id:  # Ensure space_id is present in form data
+                # try:
+                space_repository.delete(space_id)
+                #     flash("Space deleted successfully!", "success")
+                # except Exception as e:
+                #     flash(f"Error deleting space: {e}", "error")
+                
+        user = user_repository.user_details(id)
         spaces = space_repository.find_user_spaces(id)
+
+        session['user_id'] = id
+
         return render_template('user_homepage.html', user=user, spaces=spaces)
 
 
@@ -63,7 +78,6 @@ def create_space():
     space = space_repo.all()[-1]
     avail_repo.create(availability_from, availability_to, space.id)
     return redirect("/spaces")
-
 
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():

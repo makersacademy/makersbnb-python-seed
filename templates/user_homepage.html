@@ -46,6 +46,12 @@
                     <h5 class="card-title">{{space.name}}</h5>
                     <h6 class="card-subtitle">{{space.price}}</h6>
                     <p class="card-text">{{space.description}}</p>
+                    <form action="/user/{{user.id}}" method="post">
+
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="space_id" value="{{space.id}}">  
+                            <button type="submit" class=""btn btn-danger">Delete</button>
+                        </form>
                 </div>
             </div>
         </div>
@@ -61,7 +67,8 @@
                     <button type="submit">Deny Request</button>
                 </div>
             </div>
-        </div>
+
+       </div>
         <h3>Bookings</h3>
         <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
@@ -70,16 +77,20 @@
                     <h6 class="card-subtitle">Placeholder - name of host(i.e. user.name for the space requested)</h6>
                     <p class="card-subtitle">Placeholder - requested start date</p>
                     <p class="card-text">Placeholder - requested end date</p>
-                    <button type="submit">Accept Request</button>
+                    <button type="submit">Accept Request</button> -->
+
                 </div>
             </div>
         </div>
 
-    </div>
 
+   
+        
+        </body>
+        </html>
+            <!-- <p>
+              <a href="/albums">Back to homepage</a>
 
-    <!-- <p>
-            <a href="/albums">Back to homepage</a>
             </p> -->
 </body>
 
