@@ -15,7 +15,9 @@ class AvailabilityRepository:
     def find(self, id):
         rows = self._connection.execute('SELECT * FROM availabilities WHERE id = %s', [id])
         row = rows[0]
-        return Availability(row['id'], row['availability_from'], row['availability_to'], row['space_id'])
+        availability_from = row['availability_from']
+        availability_to = row['availability_to']
+        return Availability(row['id'], availability_from, availability_to, row['space_id'])
     
     def create(self, availability_from, availability_to, space_id):
         self._connection.execute('INSERT INTO availabilities (availability_from, availability_to, space_id) VALUES (%s, %s, %s)', [availability_from, availability_to, space_id])

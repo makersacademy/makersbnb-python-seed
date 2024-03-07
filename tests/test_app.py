@@ -164,7 +164,7 @@ def test_successful_login(db_connection, page, test_web_address):
     page.fill("input[name='password']", "letmein!")
     page.click("text = Submit")
     h1 = page.locator('h1')
-    expect(h1).to_have_text("SPACES")
+    expect(h1).to_have_text("User Homepage")
 
 def test_unsuccessful_login(db_connection, page, test_web_address):
     db_connection.seed("seeds/users.sql")
@@ -189,6 +189,25 @@ def test_create_space(db_connection, page, test_web_address):
     page.fill("input[name='user_id']", "1")
     page.click("text = List My Space")
     h1 = page.locator('h1')
+
+
+""" 
+When we create a new space, 
+a new record in the spaces table and the availability table gets created
+"""
+
+def test_create_space(db_connection, page, test_web_address):
+    db_connection.seed("seeds/users.sql")
+    page.goto(f"http://{test_web_address}/spaces/new")
+    page.fill("input[name='name']", "Stonehenge")
+    page.fill("input[name='price']", "49.99")
+    page.fill("input[name='description']", "a bit draughty but nice")
+    page.fill("input[name='user_id']", "2")
+    page.fill("input[name='availability_from']", "2024-12-20")
+    page.fill("input[name='availability_to']", "2024-12-27")
+    page.click("text = List My Space")
+    h1 = page.locator("h1")
+    expect(h1).to_have_text("SPACES")
 
 
 def test_visit_space_show_page(db_connection, page, test_web_address):
