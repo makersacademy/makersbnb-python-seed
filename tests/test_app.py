@@ -164,7 +164,7 @@ def test_successful_login(db_connection, page, test_web_address):
     page.fill("input[name='password']", "letmein!")
     page.click("text = Submit")
     h1 = page.locator('h1')
-    expect(h1).to_have_text("SPACES")
+    expect(h1).to_have_text("User Homepage")
 
 def test_unsuccessful_login(db_connection, page, test_web_address):
     db_connection.seed("seeds/users.sql")
@@ -198,8 +198,27 @@ def test_visit_space_show_page(db_connection, page, test_web_address):
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("London Bridge")
 
+"""
+Check if we can delete a space from user_homepage.html
+"""
 
-
+def test_delete_space_from_user(db_connection, page, test_web_address):
+    db_connection.seed("seeds/spaces.sql")
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name='name']", "user1")
+    page.fill("input[name='password']", "abc123")
+    page.click("text = Submit")
+    print('submit complete')
+    initial_space_count = len(db_connection.execute("SELECT * FROM spaces"))
+    print('initial count taken')
+    page.click("text = Delete")
+    page.wait_for_timeout(1000)
+    print('timeout wait complete')
+    updated_space_count = len(db_connection.execute("SELECT * FROM spaces"))
+    print('update counted')
+    # try:
+    assert updated_space_count == initial_space_count - 1, (
+        f"Initial Space Count: {initial_space_count} Updated Space Count: {updated_space_count}")
 
     # # This time we click the link with the text 'Add a new book'
     # page.click("text=Add a new book")

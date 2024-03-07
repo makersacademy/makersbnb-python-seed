@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.space_repository import SpaceRepository
@@ -59,6 +59,26 @@ def create_space():
     repo.create(name, price, description, user_id)
 
     return render_template("spaces.html")
+
+@app.route('/delete_space<int:space_id>', methods=['POST'])
+def delete_space(space_id):
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+
+    space_repo.delete(space_id)
+
+    if not space_repo.find(space_id):
+        user_repo = UserRepository(connection)
+
+        user_id = session.get('user_id')
+
+        if user_id:
+            user = user_repo.user_details(user_id)
+            spaces = space_repo.find_user_spaces(user.id)
+            return render_template('user_homepage.html', user=user, spaces=spaces)
+
+
+
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
