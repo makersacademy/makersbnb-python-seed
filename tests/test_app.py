@@ -1,4 +1,11 @@
+import os
 from playwright.sync_api import Page, expect
+import pytest
+import psycopg
+from flask import Flask, request, render_template, redirect, url_for 
+from lib.database_connection import get_flask_database_connection
+import app
+
 
 
 """
@@ -16,14 +23,60 @@ def test_get_index(page, test_web_address):
 # == Your Test Routes Here ==
 
 """
-Tests if the flask route works correctly and renders the right template
+Request: GET/  (home page)
+Response: this testst if the flask route works correctly and renders the right template
 """
-def test_get_index(db_connection, web_client):
+def test_get_index_(db_connection, web_client):
     get_response = web_client.get("/")
     db_connection.seed("seeds/bnb_table.sql")
     assert get_response.status_code == 200
 
+"""
+Request: POST/  (home page)
+Response: checks if the user creation behaves as expected
+"""
+def test_post_index(db_connection, web_client):
+    db_connection.seed("seeds/bnb_table.sql")
+    # Testing with valid data
+    valid_post_response = web_client.post("/", data={'email': "adam.email@gmail.com", 'password': 'newpass333!', 'confirm-password': 'newpass333!'})
+    # User is expected to be redirected after successful registration, hence 302 code
+    assert valid_post_response.status_code in [200, 302]
 
+
+#     # # Testing when passwords do not match
+#     # mismatch_password_response = web_client.post("/", data={'email': "Adamexample@gmail.com", 'password': 'password123!!!', 'confirm-password': 'password456!!!'})
+#     # with pytest.raises(Exception) as e:
+#     #      app.post_index() 
+#     # error_message = str(e.value)
+#     # error_message == "Password does not meet the criteria, password needs to be 8 characters long and contain special character"
+#     # assert mismatch_password_response.status_code == 400
+#     # #assert mismatch_password_response.data.decode('utf-8') == "passwords do not match"
+
+
+# """
+# Request: POST/  (home page)
+# Response: checks if the password is valid
+# """
+# def test_post_index_invalid_passwords(db_connection, web_client):
+#     # Password too short and without special character
+#     response_short_no_special = web_client.post("/", data={'email': "user@example.com", 'password': 'short', 'confirm-password': 'short'})
+#     with pytest.raises(Exception) as e:
+#         app.post_index() 
+#     error_message = str(e.value)
+#     assert error_message == 'Password does not meet the criteria, password needs to be 8 characters long and contain special character'
+#     assert response_short_no_special.status_code == 400
+#     # error_message = response_short_no_special.data.decode('utf-8') == 
+
+
+#     # Password long enough but without special character
+#     response_no_special = web_client.post("/", data={'email': "user@example.com", 'password': 'longpassword', 'confirm-password': 'longpassword'})
+#     assert response_no_special.status_code == 400
+#     assert response_no_special.data.decode('utf-8') == "Password does not meet the criteria, password needs to be 8 characters long and contain a special character" 
+
+#     # Password with special character but too short
+#     response_short_with_special = web_client.post("/", data={'email': "user@example.com", 'password': 'short!', 'confirm-password': 'short!'})
+#     assert response_short_with_special.status_code == 400
+#     assert response_short_with_special.data.decode('utf-8') == "Password does not meet the criteria, password needs to be 8 characters long and contain a special character"
 
 
 
