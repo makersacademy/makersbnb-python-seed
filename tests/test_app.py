@@ -6,12 +6,15 @@ from lib.database_connection import DatabaseConnection
 """
 We can render the index page
 """
-def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
+# def test_get_index(page, test_web_address):
+#     pass
+def test_no_properties(page, test_web_address):
     page.goto(f"http://{test_web_address}/index")
+    heading_tag = page.locator("h2")
+    expect(heading_tag).to_have_text("There are currently no properties to book.")
 
-    # We look at the <p> tag
-    strong_tag = page.locator("p")
+    # # We load a virtual browser and navigate to the /index page
+    # #page.goto(f"http://{test_web_address}/index")
 
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("This is the blueberries b&b homepage.")
@@ -89,4 +92,3 @@ def test_post_property_incomplete(db_connection, web_client):
     response = web_client.post('/add_property', data = {'user_id': "3", 'description' : "wet", 'price_per_night' : "23.40"})
     assert response.status_code == 400
     assert response.data.decode('utf-8') == 'One of the inputs is not filled in!'
-
