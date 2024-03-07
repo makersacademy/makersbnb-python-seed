@@ -10,8 +10,8 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "BLUEBERRIES_B&B"
-    TEST_DATABASE_NAME = "BLUEBERRIES_B&B_TEST"
+    DEV_DATABASE_NAME = "BLUEBERRIES_BnB"
+    TEST_DATABASE_NAME = "BLUEBERRIES_BnB_TEST"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
@@ -73,6 +73,6 @@ class DatabaseConnection:
 def get_flask_database_connection(app):
     if not hasattr(g, 'flask_database_connection'):
         g.flask_database_connection = DatabaseConnection(
-            test_mode=os.getenv('APP_ENV') == 'test')
+            test_mode=os.getenv('APP_ENV' , 'test') == 'test')
         g.flask_database_connection.connect()
     return g.flask_database_connection
