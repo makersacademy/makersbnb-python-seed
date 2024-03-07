@@ -57,26 +57,18 @@ def test_post_index_invalid_passwords(db_connection, web_client):
     # Password too short and without special character
     response_short_no_special = web_client.post("/", data={'email': "user@example.com", 'password': 'short', 'confirm-password': 'short'})
     assert response_short_no_special.status_code == 400
-    assert response_short_no_special.data.decode('utf-8') == "Password does not meet the criteria, password needs to be 8 characters long and contain a special character" 
+    assert response_short_no_special.data.decode('utf-8') == "<p>Password does not meet the criteria, password needs to be 8 characters long and contain a special character</p>"
 
 
     # Password long enough but without special character
     response_no_special = web_client.post("/", data={'email': "user@example.com", 'password': 'longpassword', 'confirm-password': 'longpassword'})
     assert response_no_special.status_code == 400
-    assert response_no_special.data.decode('utf-8') == "Password does not meet the criteria, password needs to be 8 characters long and contain a special character" 
+    assert response_no_special.data.decode('utf-8') == "<p>Password does not meet the criteria, password needs to be 8 characters long and contain a special character</p>"
 
     # Password with special character but too short
     response_short_with_special = web_client.post("/", data={'email': "user@example.com", 'password': 'short!', 'confirm-password': 'short!'})
     assert response_short_with_special.status_code == 400
-    assert response_short_with_special.data.decode('utf-8') == "Password does not meet the criteria, password needs to be 8 characters long and contain a special character"
-
-
-
-
-
-
-
-
+    assert response_short_with_special.data.decode('utf-8') == "<p>Password does not meet the criteria, password needs to be 8 characters long and contain a special character</p>"
 
 
 

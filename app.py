@@ -44,9 +44,9 @@ def post_index():
     password = request.form.get("password")
     confirm_password = request.form.get("confirm-password")
     #check if valid password
-    # special_characters = '!@$%&'
-    # if len(password) <= 7 or all(char not in password for char in special_characters):
-    #     return "<p>Password does not meet the criteria, password needs to be 8 characters long and contain a special character</p>", 400
+    special_characters = '!@$%&'
+    if len(password) <= 7 or all(char not in password for char in special_characters):
+        return "<p>Password does not meet the criteria, password needs to be 8 characters long and contain a special character</p>", 400
 
     # check passwords match
     if password != confirm_password:

@@ -39,7 +39,7 @@ CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
   id SERIAL PRIMARY KEY,
   date date,
-  status text,
+  status boolean,
   space_id int,
   guest_id int,
 -- The foreign key name is always {other_table_singular}_id
