@@ -4,9 +4,10 @@ from lib.user_repository import UserRepository
 from lib.user import User
 from lib.space_repository import SpaceRepository
 from lib.space import Space
+from lib.availability_repository import AvailabilityRepository
 
 from lib.database_connection import get_flask_database_connection
-from lib.space_repository import SpaceRepository
+
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -49,14 +50,17 @@ def get_spaces_new():
 @app.route('/spaces/new', methods=['POST'])
 def create_space():
     connection = get_flask_database_connection(app)
-    repo = SpaceRepository(connection)
+    space_repo = SpaceRepository(connection)
+    avail_repo = AvailabilityRepository(connection)
     name = request.form['name']
     price = request.form['price']
     description = request.form['description']
     user_id = request.form['user_id']
-    #availability_from = request.form['availability_from']
-    #availability_to = request.form['availability_to']
-    repo.create(name, price, description, user_id)
+    availability_from = request.form['availability_from']
+    availability_to = request.form['availability_to']
+    space_repo.create(name, price, description, user_id)
+    space = space_repo.all()[-1]
+    avail_repo.create(availability_from, availability_to, space.id)
 
     return render_template("spaces.html")
 

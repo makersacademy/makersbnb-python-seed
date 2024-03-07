@@ -14,8 +14,8 @@ class Availability:
     # are the objects we made based on the database records.
     def __eq__(self, other):
         return (self.id == other.id and
-                str(self.availability_from) == str(other.availability_from) and
-                str(self.availability_to) == str(other.availability_to) and
+                (self.availability_from) == (other.availability_from) and
+                (self.availability_to) == (other.availability_to) and
                 self.space_id == other.space_id)
 
     # This method makes it look nicer when we print an Artist

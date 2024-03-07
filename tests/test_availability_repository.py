@@ -13,6 +13,7 @@ def test_find(db_connection):
     repo = AvailabilityRepository(db_connection)
     availability = repo.find(2)
     assert availability == Availability(2, '2024-05-21', '2024-06-01', 3)
+    availability.availability_from == '2024-05-21'
 
 def test_create(db_connection):
     db_connection.seed("seeds/spaces.sql")
