@@ -6,7 +6,7 @@
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
 
         <!-- filter spaces form -->
-        <form action="" method="post" class="form-container box-shadow">
+        <form action="/list-space" method="post" class="form-container box-shadow">
             <!-- We check to see if there are any errors from a previous submission -->
             {% if errors %}
                 <!-- If so, we show them. -->
@@ -24,16 +24,16 @@
                 <textarea name="description" id="description" rows="8" cols="50"></textarea>
             </p>
             <p class="input-container">
-                <label for="price-per-night">price per night</label>
-                <input type="text" name="price-per-night" id="price-per-night">
+                <label for="price_per_night">price per night</label>
+                <input type="text" name="price_per_night" id="price_per_night">
             </p>
             <p class="input-container">
-                <label for="available-from">available from</label>
-                <input type="text" name="available-from" id="available-from">
+                <label for="available_from">available from</label>
+                <input type="text" name="available_from" id="available_from">
             </p>
             <p class="input-container">
-                <label for="available-to">available to</label>
-                <input type="text" name="available-to" id="available-to">
+                <label for="available_to">available to</label>
+                <input type="text" name="available_to" id="available_to">
             </p>
             <p>
                 <input class="button box-shadow" type="submit" value="list my space">

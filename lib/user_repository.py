@@ -24,9 +24,10 @@ class UserRepository:
     # Create a new user
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, user):
-        self._connection.execute('INSERT INTO users (user_name, user_password) VALUES (%s, %s)', [
-                                 user.user_name, user.user_password])
-        return None
+        rows = self._connection.execute('INSERT INTO users (user_name, user_password) VALUES (%s, %s) RETURNING id', [
+            user.user_name, user.user_password])
+        user.id = rows[0]["id"]
+        return user
 
     # Delete user by its id
     def delete(self, user_id):

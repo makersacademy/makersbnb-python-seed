@@ -24,9 +24,10 @@ class BookingRepository:
     # Create a new booking
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, booking):
-        self._connection.execute('INSERT INTO bookings (date, status, space_id, guest_id) VALUES (%s, %s, %s, %s)', [
+        rows = self._connection.execute('INSERT INTO bookings (date, status, space_id, guest_id) VALUES (%s, %s, %s, %s) RETURNING id', [
             booking.date, booking.status, booking.space_id, booking.guest_id])
-        return None
+        booking.id = rows[0]["id"]
+        return booking
 
     # Delete a booking by its id
     def delete(self, booking_id):
