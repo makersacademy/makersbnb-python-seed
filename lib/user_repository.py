@@ -14,7 +14,7 @@ class UserRepository():
         return users
     
     def create_new_user(self,user):
-        self._connection.execute('INSERT INTO users ( email) VALUES (%s)',[user.email])
+        self._connection.execute('INSERT INTO users (email) VALUES (%s)',[user.email])
         return None
     
     def find_user(self, email):
