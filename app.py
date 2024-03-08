@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
+from flask_session import Session
 from lib.database_connection import get_flask_database_connection
 from lib.property_repository import PropertyRepository
 from lib.property import Property
@@ -8,26 +9,19 @@ from lib.property import Property
 app = Flask(__name__)
 
 # == Your Routes Here ==
-properties_name = [
-    {"name": "Amazing sea views", "location": "Canary Islands", "price": "£400 a night", "description": "Minutes from the beach, perfect for early morning walks and watching the besutiful sunset in the evenings."},
-    {"name": "Location, Location, Location...", "location": "London", "price": "£1000 a night", "description": "close to central London and its ameneties"},
-    {"name": "Earthen home", "location": "Terrasini, Italy", "price": "$1,000,000", "description": "A sophisticated chest, cozy, immersed in nature and unmistakable style."}
-]
+
 
 # GET /index
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5001/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html', properties=properties_name)
 
-@app.get('/properties')
+@app.route('/', methods=['GET'])
 def get_properties():
     connection = get_flask_database_connection(app)
     repository = PropertyRepository(connection)
     properties = repository.all()
-    return "\n".join(f"Property({property._id}, {property._property_name}, {property._user_id}, {property._description}, {property._price_per_night:.2f})" for property in properties), 200
+    return render_template('index.html', properties=properties), 200
   
 # Placeholder for property booking
 @app.route('/properties/<int:id>', methods=['GET'])
