@@ -80,10 +80,9 @@ def test_find_property_by_property_id(db_connection):
     db_connection.seed("seeds/blueberries_bnb.sql")
     repository = PropertyRepository(db_connection)
     test_id = 2
-    filtered_list = repository.find_property_by_id(test_id)
-    assert filtered_list == [
-        Property(2, 'Property2', 2, 'cold', 45.70)
-        ]
+    property = repository.find_property_by_id(test_id)
+    assert property == Property(2, 'Property2', 2, 'cold', 45.70)
+        
 
 
 '''
@@ -95,6 +94,5 @@ def test_find_property_by_property_id_no_id(db_connection):
     db_connection.seed("seeds/blueberries_bnb.sql")
     repository = PropertyRepository(db_connection)
     test_id = 9
-    filtered_list = repository.find_property_by_id(test_id)
-    assert filtered_list == [
-        ]
+    property = repository.find_property_by_id(test_id)
+    assert property == "property not found"

@@ -23,10 +23,12 @@ def get_properties():
     properties = repository.all()
     return render_template('index.html', properties=properties), 200
   
-# Placeholder for property booking
+
 @app.route('/properties/<int:id>', methods=['GET'])
 def show_property_by_id(id):
-    property = Property(1, "Burnaston Road", 1, "hot", 20.50)
+    connection = get_flask_database_connection(app)
+    repository = PropertyRepository(connection)
+    property = repository.find_property_by_id(id)
     return render_template('get_property.html', property=property)
 
 @app.route('/add_property', methods = ['POST'])
