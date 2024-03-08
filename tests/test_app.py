@@ -45,10 +45,23 @@ def test_get__individual_property(page, test_web_address, db_connection):
     labels = page.locator("label")
     button = page.get_by_role("button")
 
-    expect(h1_tag).to_have_text("Burnaston Road")
+    expect(h1_tag).to_have_text("Property1")
     expect(inputs).to_have_count(3)
     expect(labels).to_have_count(2)
     expect(button).to_have_count(1)
+
+    page.goto(f"http://{test_web_address}/properties/2")
+    
+    h1_tag = page.locator("h1")
+    inputs = page.locator("input")
+    labels = page.locator("label")
+    button = page.get_by_role("button")
+    
+    expect(h1_tag).to_have_text("Property2")
+    expect(inputs).to_have_count(3)
+    expect(labels).to_have_count(2)
+    expect(button).to_have_count(1)
+
 
 '''
 When I call get/properties I see a list of the properties from the database
