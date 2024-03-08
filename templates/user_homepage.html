@@ -56,32 +56,40 @@
             </div>
         </div>
         {% endfor %}
+
         <h3>Requests</h3>
+        {% for userrequest in userrequests %}
+       
         <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
                 <div class="">
-                    <h5 class="card-title">Placeholder - name of space</h5>
-                    <p class="card-subtitle">Placeholder - requested start date</p>
-                    <p class="card-text">Placeholder - requested end date</p>
+                    <h5 class="card-title">{{ userrequest.space_name}}</h5>
+                    <p class="card-subtitle">{{userrequest.booking_from}}</p>
+                    <p class="card-text">{{userrequest.booking_to}}</p>
                     <button type="submit">Accept Request</button>
                     <button type="submit">Deny Request</button>
                 </div>
-            </div>
+            </div>     
+        </div>
+        {% endfor %}
+     
 
-       </div>
         <h3>Bookings</h3>
+        {% for userbooking in userbookings %}
         <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
                 <div class="">
-                    <h5 class="card-title">Placeholder - name of space</h5>
-                    <h6 class="card-subtitle">Placeholder - name of host(i.e. user.name for the space requested)</h6>
-                    <p class="card-subtitle">Placeholder - requested start date</p>
-                    <p class="card-text">Placeholder - requested end date</p>
-                    <button type="submit">Accept Request</button> -->
+                    <h5 class="card-title">Booking space request for: {{userbooking.space_name}}</h5>
+                    <h6 class="card-subtitle">Host: {{userbooking.user_name}}</h6>
+                    <p class="card-subtitle">{{userbooking.booking_from}}</p>
+                    <p class="card-text">{{userbooking.booking_to}}</p>
+                    <p class="card-text">Booking Confirmed? {{userbooking.booked}}</p>
+                    
 
                 </div>
             </div>
         </div>
+        {% endfor %}
 
 
    
