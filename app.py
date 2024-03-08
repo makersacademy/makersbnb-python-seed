@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, render_template, redirect, session
+from flask_session import Session
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.space_repository import SpaceRepository
@@ -15,6 +16,8 @@ from lib.database_connection import get_flask_database_connection
 app = Flask(__name__)
 
 app.secret_key = "i'm a magical cookie key"
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 # == Your Routes Here ==
 
@@ -36,6 +39,7 @@ def get_spaces():
     repo = SpaceRepository(connection)
     spaces = repo.all()
     return render_template("spaces.html", spaces=spaces)
+    session['user_id'] = id
 
 @app.route('/user/<int:id>', methods=['GET', 'POST'])
 def get_single_user(id):
@@ -131,6 +135,8 @@ def validate_login():
     password = request.form['password']
     user_id = repo.get_user_id(name)
     if repo.find(name, password):
+        session['logged_in'] = True
+        session['name'] = name
         return redirect("user/{}".format(user_id))
     return render_template("login.html")
 
