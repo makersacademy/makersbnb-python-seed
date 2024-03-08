@@ -59,9 +59,9 @@ def get_single_user(id):
                 #     flash("Space deleted successfully!", "success")
                 # except Exception as e:
                 #     flash(f"Error deleting space: {e}", "error")
-            userspace_id = request.form.get('userspace_id')
-            if userspace_id:
-                booking_repository.accept_booking(userspace_id)
+            booking_id = request.form.get('booking_id')
+            if booking_id:
+                booking_repository.accept_booking(booking_id)
                 
         user = user_repository.user_details(id)
         spaces = space_repository.find_user_spaces(id)

@@ -1,8 +1,9 @@
 class UserBooking:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
-    def __init__(self, id, user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked):
+    def __init__(self, id, booking_id, user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked):
         self.id = id
+        self.booking_id = booking_id
         self.user_id = user_id
         self.user_name = user_name
         self.space_name = space_name
@@ -28,4 +29,4 @@ class UserBooking:
 
     # This method makes it look nicer when we print an Artist
     def __repr__(self):
-        return f"UserBooking({self.id}, {self.user_id}, {self.user_name}, {self.space_name}, {self.space_id}, {self.booking_from}, {self.booking_to}, {self.bookers_id}, {self.request_outstanding}, {self.booked})"
+        return f"UserBooking({self.id}, {self.booking_id} {self.user_id}, {self.user_name}, {self.space_name}, {self.space_id}, {self.booking_from}, {self.booking_to}, {self.bookers_id}, {self.request_outstanding}, {self.booked})"

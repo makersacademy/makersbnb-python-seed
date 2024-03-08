@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS spaces CASCADE;
 DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS availabilities;
-DROP TABLE IF EXISTS users_bookings;
+DROP TABLE IF EXISTS users_bookings CASCADE;
 
 CREATE TABLE spaces (
   id SERIAL PRIMARY KEY,
@@ -53,6 +53,7 @@ INSERT INTO availabilities (availability_from, availability_to, space_id) VALUES
 CREATE TABLE users_bookings (
     -- Define columns based on the columns in the query result set
     id SERIAL PRIMARY KEY,
+    booking_id INT,
     user_id INT,
     user_name VARCHAR(255),
     space_name VARCHAR(255),
@@ -64,8 +65,8 @@ CREATE TABLE users_bookings (
     booked BOOLEAN
     );
 
-INSERT INTO users_bookings  (user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
-SELECT users.id, users.name, spaces.name, spaces.id, bookings.booking_from, bookings.booking_to, bookings.bookers_id, bookings.request_outstanding, bookings.booked
+INSERT INTO users_bookings  (booking_id, user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
+SELECT bookings.id, users.id, users.name, spaces.name, spaces.id, bookings.booking_from, bookings.booking_to, bookings.bookers_id, bookings.request_outstanding, bookings.booked
 FROM users
 JOIN spaces
 ON users.id = spaces.user_id
@@ -79,8 +80,9 @@ RETURNS TRIGGER as $$
 BEGIN
     
     -- Insert the updated row into users_bookings table
-    INSERT INTO users_bookings (user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
+    INSERT INTO users_bookings (booking_id, user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
     SELECT
+        NEW.id,
         users.id,
         users.name,
         spaces.name,
@@ -113,17 +115,18 @@ EXECUTE FUNCTION insert_user_bookings6();
 
 
 
-
+DROP FUNCTION IF EXISTS update_user_bookings();
 
 CREATE FUNCTION update_user_bookings()
 RETURNS TRIGGER as $$
 BEGIN
 
-    DELETE FROM users_bookings WHERE id = OLD.id;
+    DELETE FROM users_bookings WHERE booking_id = OLD.id;
     
     -- Insert the updated row into users_bookings table
-    INSERT INTO users_bookings (user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
+    INSERT INTO users_bookings (booking_id, user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
     SELECT
+        NEW.id,
         users.id,
         users.name,
         spaces.name,

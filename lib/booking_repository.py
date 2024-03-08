@@ -68,5 +68,5 @@ class BookingRepository:
             booking_to.append(item)
         return booking_to
 
-    def accept_booking(self, space_id):
-        self._connection.execute('UPDATE bookings SET booked = True WHERE id = %s', [space_id])
+    def accept_booking(self, bookers_id):
+        self._connection.execute('UPDATE bookings SET booked = True WHERE id = %s', [bookers_id])
