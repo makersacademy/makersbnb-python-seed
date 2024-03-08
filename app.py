@@ -49,6 +49,8 @@ def get_single_user(id):
         booking_repository = BookingRepository(connection)
         user_booking_repository = UserBookingRepository(connection)
 
+        userrequests = user_booking_repository.find_user_requests(id)
+
         if request.method == 'POST':  # Check for POST request (delete action)
             space_id = request.form.get('space_id')
             if space_id:  # Ensure space_id is present in form data
@@ -57,11 +59,14 @@ def get_single_user(id):
                 #     flash("Space deleted successfully!", "success")
                 # except Exception as e:
                 #     flash(f"Error deleting space: {e}", "error")
+            userspace_id = request.form.get('userspace_id')
+            if userspace_id:
+                booking_repository.accept_booking(userspace_id)
                 
         user = user_repository.user_details(id)
         spaces = space_repository.find_user_spaces(id)
         userbookings = user_booking_repository.find_user_bookings(id)
-        userrequests = user_booking_repository.find_user_requests(id)
+        
     
        
         session['user_id'] = id
