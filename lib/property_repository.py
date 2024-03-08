@@ -23,3 +23,25 @@ class PropertyRepository:
         return None
         
 
+    def find_property_by_user_id(self, user_id):
+        
+        rows = self._connection.execute("SELECT * FROM properties WHERE user_id = %s", [user_id])
+        print (rows)
+        properties = []
+        for row in rows:
+            property = Property(row["id"], row["property_name"], row["user_id"], row["description"], row["price_per_night"])
+            properties.append(property)
+        
+        return properties
+    
+
+    def find_property_by_id(self, id):
+    
+        rows = self._connection.execute("SELECT * FROM properties WHERE user_id = %s", [id])
+        print (rows)
+        properties = []
+        for row in rows:
+            property = Property(row["id"], row["property_name"], row["user_id"], row["description"], row["price_per_night"])
+            properties.append(property)
+        
+        return properties
