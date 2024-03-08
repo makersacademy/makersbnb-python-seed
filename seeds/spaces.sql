@@ -72,6 +72,8 @@ ON users.id = spaces.user_id
 JOIN bookings
 ON spaces.id = bookings.space_id;
 
+DROP FUNCTION IF EXISTS insert_user_bookings6();
+
 CREATE FUNCTION insert_user_bookings6()
 RETURNS TRIGGER as $$
 BEGIN
@@ -99,9 +101,52 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS insert_user_bookings_trigger6 ON bookings;
+
 CREATE TRIGGER insert_user_bookings_trigger6
 AFTER INSERT ON bookings
 FOR EACH ROW
-EXECUTE FUNCTION insert_user_bookings6()
+EXECUTE FUNCTION insert_user_bookings6();
+
+
+
+
+
+
+
+
+CREATE FUNCTION update_user_bookings()
+RETURNS TRIGGER as $$
+BEGIN
+
+    DELETE FROM users_bookings WHERE id = OLD.id;
+    
+    -- Insert the updated row into users_bookings table
+    INSERT INTO users_bookings (user_id, user_name, space_name, space_id, booking_from, booking_to, bookers_id, request_outstanding, booked)
+    SELECT
+        users.id,
+        users.name,
+        spaces.name,
+        NEW.space_id,
+        NEW.booking_from,
+        NEW.booking_to,
+        NEW.bookers_id,
+        NEW.request_outstanding,
+        NEW.booked
+    FROM
+        users
+    JOIN
+        spaces ON users.id = spaces.user_id
+    WHERE
+        spaces.id = NEW.space_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_user_bookings_trigger
+AFTER UPDATE ON bookings
+FOR EACH ROW
+EXECUTE FUNCTION update_user_bookings()
 
 

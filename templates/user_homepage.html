@@ -66,7 +66,13 @@
                     <h5 class="card-title">{{ userrequest.space_name}}</h5>
                     <p class="card-subtitle">{{userrequest.booking_from}}</p>
                     <p class="card-text">{{userrequest.booking_to}}</p>
-                    <button type="submit">Accept Request</button>
+                    <form action="/user/{{user.id}}" method="post">
+
+                        <input type="hidden" name="_method" value="UPDATE">
+                        <input type="hidden" name="userspace_id" value="{{userrequest.space_id}}">  
+                        <button type="submit" class=""btn btn-danger">Accept Request</button>
+                    </form>
+                    
                     <button type="submit">Deny Request</button>
                 </div>
             </div>     
