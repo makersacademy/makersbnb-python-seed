@@ -6,6 +6,8 @@ from lib.space_repository import SpaceRepository
 from lib.space import Space
 from lib.availability_repository import AvailabilityRepository
 from lib.booking_repository import BookingRepository
+from lib.user_booking_repository import UserBookingRepository
+from lib.user_booking import UserBooking
 
 from lib.database_connection import get_flask_database_connection
 
@@ -40,6 +42,8 @@ def get_single_user(id):
         connection = get_flask_database_connection(app)
         user_repository = UserRepository(connection)
         space_repository = SpaceRepository(connection)
+        booking_repository = BookingRepository(connection)
+        user_booking_repository = UserBookingRepository(connection)
 
         if request.method == 'POST':  # Check for POST request (delete action)
             space_id = request.form.get('space_id')
@@ -52,10 +56,13 @@ def get_single_user(id):
                 
         user = user_repository.user_details(id)
         spaces = space_repository.find_user_spaces(id)
-
+        userbookings = user_booking_repository.find_user_bookings(id)
+        userrequests = user_booking_repository.find_user_requests(id)
+    
+       
         session['user_id'] = id
 
-        return render_template('user_homepage.html', user=user, spaces=spaces)
+        return render_template('user_homepage.html', user=user, spaces=spaces, userrequests=userrequests, userbookings=userbookings)
 
 
 
@@ -142,7 +149,8 @@ def make_booking(id):
     booking_repo = BookingRepository(connection)
     booking_from = request.form['booking_from']
     booking_to = request.form['booking_to']
-    booking_repo.create(booking_from, booking_to, id)
+    bookers_id = request.form['bookers_id']
+    booking_repo.create(booking_from, booking_to, bookers_id, id)
     return redirect("/spaces")
 
 

@@ -43,7 +43,12 @@
                 <label for="booking_to" class="form-label">Booking To:</label>
                 <input type="date" name="booking_to" class="form-control" id="booking_to" min="{{min_date}}", max = "{{max_date}}">
               </div>
-              <button type="submit" class="btn btn-outline-primary">Make Request</button>
+            <div class="mb-3">
+                <label for="bookers_id" class="form-label">Bookers ID:</label>
+                <input type="number" name="bookers_id" class="form-control" id="bookers_id">
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Make Request</button>
+        </form>
     </div>
 </body>
 </html>

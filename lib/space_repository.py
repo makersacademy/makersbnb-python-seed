@@ -33,3 +33,12 @@ class SpaceRepository:
             item = Space(row['id'], row['name'], row['price'], row['description'], row['user_id'])
             spaces.append(item)
         return spaces
+
+    def get_space_name(self, space_id):
+        query = "SELECT name FROM spaces WHERE id = %s"
+        rows = self._connection.execute(query, [space_id])
+        space_names = []
+        for row in rows:
+            item = row['name']
+            space_names.append(item)
+        return space_names
