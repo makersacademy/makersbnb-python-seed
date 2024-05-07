@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS users_spaces_requests;
 DROP SEQUENCE IF EXISTS users_spaces_requests_id_seq;
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS spaces;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS users_id_seq;
 
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
@@ -20,7 +20,8 @@ CREATE TABLE spaces (
   name text,
   description text,
   price_per_night int,
-  active boolean
+  active boolean,
+  constraint fk_owner foreign key(owner) references users(id) on delete cascade
 );
 
 CREATE SEQUENCE IF NOT EXISTS users_spaces_requests_id_seq;
