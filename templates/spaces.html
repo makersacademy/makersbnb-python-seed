@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Spaces| MakersBnB</title>
+</head>
+<body>
+    <div>
+        <a href="/spaces"> Spaces</a> |
+        <a href="/requests"> Requests</a>|
+        <a href="/"> Sign out</a>
+    </div>
+    <div>
+    <h1>Book a Space</h1>
+    <form action="/spaces/new" method="post">
+    <p>
+        <input type="submit" value="List a Space">
+
+    </p>
+    </form>
+        <form action="/spaces" method="post">
+
+        <p>
+            <label for="available_from">Available from (DD/MM/YY)</label>
+            <br>
+            <input type="text" name="available_from" id="available_from">
+        </p>
+        <p>
+            <label for="available_to">Available to (DD/MM/YY)</label>
+            <br>
+            <input type="text" name="available_to" id="available_to">
+        </p>
+        <input type="submit" value="List Spaces">
+    </div>
+
+
+    </form>
+</body>
+</html>
