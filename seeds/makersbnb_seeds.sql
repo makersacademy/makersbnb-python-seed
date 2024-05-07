@@ -60,12 +60,12 @@ INSERT INTO spaces (name, description, price, user_id) VALUES ('Test Name 2', 'T
 INSERT INTO spaces (name, description, price, user_id) VALUES ('Test Name 3', 'Test Description 3', 30, 2);
 INSERT INTO spaces (name, description, price, user_id) VALUES ('Test Name 4', 'Test Description 4', 10, 1);
 
-INSERT INTO dates (date, confirmed, space_id) VALUES ('20-01-2024', True, 1);
-INSERT INTO dates (date, confirmed, space_id) VALUES ('21-01-2024', False, 2);
-INSERT INTO dates (date, confirmed, space_id) VALUES ('22-01-2024', False, 2);
-INSERT INTO dates (date, confirmed, space_id) VALUES ('23-01-2024', True, 3);
-INSERT INTO dates (date, confirmed, space_id) VALUES ('24-01-2024', False, 1);
-INSERT INTO dates (date, confirmed, space_id) VALUES ('25-01-2024', False, 4);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2024-01-20', True, 1);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2024-01-21', False, 2);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2024-01-22', False, 2);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2024-01-23', True, 3);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2024-01-24', False, 1);
+INSERT INTO dates (date, confirmed, space_id) VALUES ('2025-01-25', False, 4);
 
 INSERT INTO bookings (date_id, user_id) VALUES (1, 4);
 INSERT INTO bookings (date_id, user_id) VALUES (4, 3);
