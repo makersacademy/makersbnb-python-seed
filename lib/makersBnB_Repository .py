@@ -12,8 +12,19 @@ class MakersBnB_Repository:
         for row in rows:
             user = MakersBnb(row["id"], row["email"], row["password"])
             users.append(user)
-        return users 
+        return users
     
+    def add_users(self):
+        rows = self._connection.execute(
+            'INSERT INTO users (email, password) VALUES (%s, %s)',
+               [users.email, users.password]                    
+               )
+        
+        
+    
+    """password validation
+if user enters email already used, error message
+once submitted, info gets saved to ‘users’ table"""
 
 # from datetime import datetime
 
@@ -28,16 +39,7 @@ class MakersBnB_Repository:
 #         else:
 #             return False
         
-#     def add(self, service, password):
-#         if len(password) >= 8 and any(char in {'!', '@', '$', '%', '&'} for char in password) and not (password in self.passwords.values()):
-#             self.passwords[service] = password
-#             self.added_on[service] = datetime.now()
-
-#     def remove(self,service):
-#         if service in self.passwords:
-#             del self.passwords[service]
-#             del self.added_on[service]
-
+#
 #     def update(self,service,password):
 #         if service in self.passwords and self.is_password_Valid(password):
 #             self.passwords[service] = password
