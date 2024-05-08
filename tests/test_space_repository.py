@@ -62,3 +62,11 @@ def test_delete_space(db_connection):
         Space(4,'Test Name 4', 'Test Description 4', 10, 1)
     ]
 
+def test_find_space_and_dates(db_connection):
+    db_connection.seed("seeds/makersbnb_seeds.sql")
+    repository = SpaceRepository(db_connection)
+    result = repository.find_space_and_dates(1)
+    assert result == Space(1,'Test Name 1', 'Test Description 1', 10, 1, [
+        Date(1, '2024-01-20', True, 1),
+        Date(5, '2024-01-24', False, 1)
+    ])

@@ -1,4 +1,5 @@
 from lib.space import *
+from lib.date import *
 
 class SpaceRepository():
     def __init__(self, connection):
@@ -23,4 +24,14 @@ class SpaceRepository():
     def delete(self, space_id):
         self._connection.execute('DELETE from spaces WHERE id = %s', (space_id,))
         return None
+    
+    def find_space_and_dates(self, space_id):
+        rows = self._connection.execute('SELECT * from spaces JOIN dates ON spaces.id = dates.space_id WHERE spaces.id = %s', (space_id,))
+        dates = []
+        for row in rows:
+            date = Date(row["id"], str(row["date"]), row["confirmed"], row["space_id"])
+            dates.append(date)
+        space = Space(rows[0]['space_id'], rows[0]['name'], rows[0]['description'], rows[0]['price'], rows[0]['user_id'], dates)
+        return space
+
     

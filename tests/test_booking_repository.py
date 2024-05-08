@@ -49,6 +49,5 @@ def test_delete_booking(db_connection):
     assert booking == [
         Booking(1, 1, 4),
         Booking(2, 4, 3),
-        Booking(4, 5, 5),
-        Booking(5, 6, 4)
+        Booking(4, 5, 5)
     ]

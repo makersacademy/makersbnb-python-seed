@@ -1,6 +1,6 @@
 from lib.User import User
 
-class UserRepostiroy:
+class UserRepository:
     def __init__(self,connection):
         self.connection = connection
     def all(self):
