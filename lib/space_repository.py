@@ -8,7 +8,7 @@ class SpaceRepository():
         rows = self._connection.execute('SELECT * from spaces')
         all_spaces = []
         for row in rows:
-            item = Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]), row['userid'])
+            item = Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]), row['userid'], row['price'])
             all_spaces.append(item)
         return all_spaces
     
@@ -17,13 +17,13 @@ class SpaceRepository():
             'SELECT * from spaces WHERE id = %s', [space_id])
         if rows:
             row = rows[0]
-            return Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]),row['userid'])
+            return Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]),row['userid'],row['price'])
         else:
             raise Exception('Space not found!')
     
     def create(self, space):
-        rows = self._connection.execute('INSERT INTO spaces (title, start_date, end_date, userid) VALUES (%s, %s, %s, %s) RETURNING id', [
-                                space.title, space.start_date, space.end_date, space.userid])
+        rows = self._connection.execute('INSERT INTO spaces (title, start_date, end_date, userid, price) VALUES (%s, %s, %s, %s,%s) RETURNING id', [
+                                space.title, space.start_date, space.end_date, space.userid, space.price])
         row = rows[0]
         space.id = row["id"]
         return space

@@ -8,13 +8,13 @@ class UserRepository:
         rows = self.connection.execute('SELECT * FROM users WHERE id = %s',[id])
         if rows:
             row = rows[0]
-            return User(row['id'], row['email'],row['password'])
+            return User(row['id'], row['email_address'],row['password'])
         else:
             raise Exception("User not found!")
 
 
     def create(self, user):
-        rows = self.connection.execute('INSERT INTO users (email, password) Values(%s, %s) RETURNING id',[user.email, user.password])
+        rows = self.connection.execute('INSERT INTO users (email_address, password) Values(%s, %s) RETURNING id',[user.email, user.password])
         row = rows[0]
         user.id = row['id']
         return user
@@ -24,7 +24,7 @@ class UserRepository:
         rows = self.connection.execute('SELECT * FROM users')
         user_list = []
         for row in rows:
-            current_user = User(row['id'],row['email'],row['password'])
+            current_user = User(row['id'],row['email_address'],row['password'])
             user_list.append(current_user)
         return user_list
 
