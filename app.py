@@ -31,6 +31,8 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     spaces = repo.all()
+
+    # the following block is horrible. Works mostly. Oh well!
     if len(request.args) == 0 or request.args['start'] == "" or request.args['end'] == "":
         start = datetime.date(2000, 1, 1)
         end = datetime.date(3000, 1, 1)
@@ -58,7 +60,7 @@ def add_space():
      #   return render_template('space_form.html', space=space, errors=space.generate_errors()), 400
     
     repo.create(space)
-    return redirect('spaces.html')
+    return redirect('/spaces')
 
 # Returns page with space via id
 @app.route('/spaces/<id>')
