@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Create New Space</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Create New Space</h1>
+        <form action="/spaces" method="post">
+
+
+            {% if errors %}
+                <p class="t-errors">
+                    There were errors with your submission: {{errors}}
+                </p>
+            {% endif %}
+
+            <p>
+                <label for="name">Name</label>
+                <br>
+                <input type="text" name="name" id="name">
+            </p>
+            <p>
+                <label for="description">Description</label>
+                <br>
+                <input type="text" name="description" id="description">
+            </p>
+            <p>
+                <label for="price">Price</label>
+                <br>
+                <input type="float" name="price" id="price">
+            </p>
+            <p>
+                <label for="start_date">Available from:</label>
+                <br>
+                <input type="date" name="start_date" id="start_date">
+            </p>
+            <p>
+                <label for="end_date">Available until:</label>
+                <br>
+                <input type="date" name="end_date" id="end_date">
+            <p>
+                <input type="submit" value="Create Space">
+            </p>
+        </form>
+    </body>
+</html>
