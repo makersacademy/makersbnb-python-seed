@@ -1,0 +1,16 @@
+<html>
+    <head></head>
+    <body>
+        <a href="/spaces">Spaces</a>
+        <a href="/requests">Requests</a>
+        <a href="/index">Sign out</a>
+        <h1>Book a Space</h1>
+        <a href="/spaces/new">List a Space</a>
+        {% for space in spaces %}
+        <div>
+            <a href="/spaces/{{space.id}}">{{space.name}}</a><br>
+            Released: {{space.description}}
+        </div>
+        {% endfor %}
+    </body>
+    </html>
