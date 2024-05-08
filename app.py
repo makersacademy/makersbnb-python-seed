@@ -1,6 +1,7 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for, redirect
 from lib.database_connection import get_flask_database_connection
+import hashlib
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -14,6 +15,21 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        db_connection = get_flask_database_connection(app)
+        username = request.form['username']
+        password = request.form['password']
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('login.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
