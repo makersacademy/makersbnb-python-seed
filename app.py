@@ -4,8 +4,7 @@ from lib.database_connection import get_flask_database_connection
 
 # Create a new Flask app
 app = Flask(__name__)
-# global variable 
-id = 1
+
 
 # == Your Routes Here ==
 
