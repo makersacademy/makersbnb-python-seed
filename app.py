@@ -46,7 +46,7 @@ def login():
             if user.email == email and user.password == password:
                 user = User(user.id, email, password)
                 login_user(user)
-                return redirect(url_for('dashboard'))
+                return render_template('dashboard.html', user=user)
         
         return 'Invalid email or password'
     

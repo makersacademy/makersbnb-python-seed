@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, sync_playwright
 
 # Tests for your routes go here
 
@@ -22,4 +22,7 @@ def test_get_login(page, test_web_address):
     page.fill("input[name='password']",'password123')
     page.click("text='Login'")
     login_text = page.locator("h1")
-    expect(login_text).to_have_text("Hello, 1 (test1@gmail.com)! You are logged in.")
+    expect(login_text).to_have_text("Hello, test1@gmail.com! You are logged in.")
+    
+    
+
