@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS users cascade;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP SEQUENCE IF EXISTS users_id_seq;
-DROP TYPE IF EXISTS booking_status;
+DROP TYPE IF EXISTS status;
 -- DROP CONSTRAINT IF EXISTS fk_guest;
 -- DROP CONSTRAINT IF EXISTS fk_user;
 
@@ -65,7 +65,7 @@ INSERT INTO spaces (address, description, price, host_id) VALUES
 ('789 Oak St', 'Charming cottage near the beach', 120, 3),
 ('321 Pine St', 'Modern studio with rooftop access', 80, 4);
 
-INSERT INTO bookings (host_id, guest_id, space_id, booking_date, current_booking_status) VALUES
+INSERT INTO bookings (host_id, guest_id, space_id, booking_date, booking_status) VALUES
 (1, 2, 1, '2024-05-10', 'approved'),
 (2, 3, 2, '2024-05-15', 'pending'),
 (3, 4, 3, '2024-05-20', 'denied'),
