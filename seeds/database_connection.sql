@@ -10,9 +10,9 @@ DROP TABLE IF EXISTS bookings;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP SEQUENCE IF EXISTS spaces_id_seq;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
--- drop sequences
+-- drop sequences and tables
 
--- need to create sequence
+-- create sequence and table
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE users (
     password VARCHAR(200)
 );
 
--- need to create sequence
+-- create sequence and table
 CREATE SEQUENCE IF NOT EXISTS spaces_id_seq;
 CREATE TABLE spaces (
     id SERIAL PRIMARY KEY,
@@ -32,7 +32,7 @@ CREATE TABLE spaces (
     CONSTRAINT fk_userID FOREIGN KEY (userID) REFERENCES users(id)
 );
 
--- need to create sequence
+-- create sequence and table
 CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
@@ -44,11 +44,11 @@ CREATE TABLE bookings (
 );
 
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO users (email_address, password) VALUES ('Matthew', '12345');
-INSERT INTO users (email_address, password) VALUES ('Myrto', '678@gk');
-INSERT INTO users (email_address, password) VALUES ('Constantine', 'password123!');
-INSERT INTO users (email_address, password) VALUES ('John', 'hello67£');
-INSERT INTO users (email_address, password) VALUES ('Alice', 'fdfdfd21$');
+INSERT INTO users (email_address, password) VALUES ('matthew@gmail.com', 'Hello12345@');
+INSERT INTO users (email_address, password) VALUES ('myrto@hotmail.com', '6789@Gkx');
+INSERT INTO users (email_address, password) VALUES ('constantine@smith.net', 'Password123!');
+INSERT INTO users (email_address, password) VALUES ('john@yahoo.com', 'Hello67£');
+INSERT INTO users (email_address, password) VALUES ('alice@mail.com', 'Fdfdfd21$');
 INSERT INTO spaces (title, price, start_date, end_date, userID) VALUES ('Studio apartment', 100, '2024-05-20', '2025-05-20', 1);
 INSERT INTO spaces (title, price, start_date, end_date, userID) VALUES ('3 bedroom flat', 250, '2024-05-10', '2024-12-10', 2);
 INSERT INTO spaces (title, price, start_date, end_date, userID) VALUES ('Penthouse', 500, '2024-05-25', '2026-05-25', 3);
