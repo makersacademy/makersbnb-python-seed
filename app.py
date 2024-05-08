@@ -16,23 +16,13 @@ login_manager.init_app(app)  # Initialize the LoginManager with the Flask applic
 @login_manager.user_loader  # Register a user loader function with the LoginManager
 def load_user(user_id):  # Define a function to load a user given a user id
     connection = get_flask_database_connection(app)
-    # users = UserRepository(connection)
-    # for user_id, user_data in users.items():
-    # return User(user_id, users[user_id]['email'], users[user_id]['password'])  # Return a User object with the provided user id, email, and password
-    # Assuming UserRepository fetches user data from the database
     repo = UserRepository(connection)
     user_data = repo.find(user_id)
     if user_data:
-        # Assuming User model constructor takes (id, email, password) as arguments
         return User(user_data.id, user_data.email, user_data.password)
     return None
-#LINK: http://127.0.0.1:5001/login
 
-#-------------------------------------------------
-#Our mock user database
-# users = {'user1': {'email': 'user1@example.com', 'password': 'password1'}, 
-#          'user2': {'email': 'user2@example.com', 'password': 'password2'}}
-#-------------------------------------------------
+#LINK: http://127.0.0.1:5001/login
 
 #-------------------------------------------------HOME page
 @app.route('/')  # Define a route for the root URL
@@ -52,9 +42,6 @@ def login():
         connection = get_flask_database_connection(app)
         users = UserRepository(connection)
         users2 = users.all()
-        print(users2)
-        # for user in users2:
-            # if email == user.email:
         for user in users2:  # Iterate over the users dictionary
             if user.email == email and user.password == password:
                 user = User(user.id, email, password)
@@ -74,7 +61,7 @@ def login():
 @app.route('/dashboard')  
 @login_required  # Decorate the route to require authentication
 def dashboard():  # Define a function to handle requests to the dashboard page
-    return f'Hello, {current_user.id} ({current_user.email})! You are logged in.'  # Return a greeting message with the current user's id and email
+    return render_template("dashboard.html")  # Return a greeting message with the current user's id and email
 #------------------------------------------------- DASHBOARD
 
 
