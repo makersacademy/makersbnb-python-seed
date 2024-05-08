@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, url_for, redirect
 from lib.database_connection import get_flask_database_connection
 import hashlib
+from lib.space_routes import apply_space_routes
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -38,7 +39,7 @@ def login():
         user = db_connection.execute("SELECT FROM users WHERE username = %s AND password = %s", (username, hashed_password))
 
         if user:
-            return redirect(url_for('get_index'))
+            return redirect(url_for('get_spaces'))
         else:
             return render_template('login.html', error='Invalid username or password')
 
