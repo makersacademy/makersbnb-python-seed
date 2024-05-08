@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
-from lib.space import Space
+from lib.spaces import Space
 from lib.user_repository import UserRepository
 from lib.user import User
 
@@ -50,7 +50,7 @@ def add_space():
     return render_template('space.html')
 
 # Returns page with space via id
-@app.route('/spaces/<id:int>')
+@app.route('/spaces/<id>')
 def find_space(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
