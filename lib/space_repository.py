@@ -14,12 +14,13 @@ class SpaceRepository:
                         row["name"], 
                         row["description"], 
                         row["price_per_night"], 
-                        row["active"])
+                        row["start_date"],
+                        row["end_date"])
             spaces.append(item)
         return spaces
 
     def create(self, space):
-        self._connection.execute('INSERT INTO spaces(owner, name, description, price_per_night, active) VALUES (%s, %s, %s, %s, %s)', [space.owner, space.name, space.description, space.price_per_night, space.active])
+        self._connection.execute('INSERT INTO spaces(owner, name, description, price_per_night, start_date, end_date) VALUES (%s, %s, %s, %s, %s, %s)', [space.owner, space.name, space.description, space.price_per_night, space.start_date, space.end_date])
         return None 
     
     def find(self, space_id):
@@ -30,7 +31,8 @@ class SpaceRepository:
                         row["name"], 
                         row["description"], 
                         row["price_per_night"], 
-                        row["active"])
+                        row["start_date"],
+                        row["end_date"])
     
     def delete(self, user_id):
         self._connection.execute('DELETE FROM spaces WHERE id = %s', [user_id])
