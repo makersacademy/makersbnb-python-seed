@@ -19,6 +19,9 @@
     <h3>Login to MakersBNB</h3>
 
     <div class="regform">
+        {% if error_message %}
+          <p>{{ error_message }}</p>
+        {% endif %}
         <form id="login" method="post" action="/login">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
