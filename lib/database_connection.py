@@ -10,6 +10,7 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
+
     DEV_DATABASE_NAME = "database_setup"
     TEST_DATABASE_NAME = "database_setup_test"
 
