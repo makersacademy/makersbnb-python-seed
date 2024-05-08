@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template, url_for, redirect
 from lib.database_connection import get_flask_database_connection
+import hashlib
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -21,7 +22,8 @@ def register():
         db_connection = get_flask_database_connection(app)
         username = request.form['username']
         password = request.form['password']
-        db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, password))
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
         return redirect(url_for('login'))
     return render_template('register.html')
 
