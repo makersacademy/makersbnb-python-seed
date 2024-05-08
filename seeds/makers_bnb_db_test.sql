@@ -47,8 +47,6 @@ CREATE TABLE IF NOT EXISTS bookings (
     constraint fk_space foreign key(space_id)
         references spaces(id)
         on delete cascade
-    -- CONSTRAINT valid_booking_status
-    --     CHECK (current_booking_status IN ('pending', 'approved', 'denied'))
     );
 
 
