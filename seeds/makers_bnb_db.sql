@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS spaces (
         on delete cascade
     );
 
-CREATE TYPE booking_status AS ENUM('pending', 'approved', 'denied');
+CREATE TYPE status AS ENUM('pending', 'approved', 'denied');
 
 CREATE TABLE IF NOT EXISTS bookings (
     id SERIAL PRIMARY KEY,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     guest_id int,
     space_id int,
     booking_date date,
-    current_booking_status booking_status,
+    booking_status  status,
     constraint fk_guest foreign key(guest_id)
         references users(id)
         on delete cascade,
