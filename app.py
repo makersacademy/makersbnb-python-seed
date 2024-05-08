@@ -29,6 +29,19 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        db_connection = get_flask_database_connection(app)
+        username = request.form['username']
+        password = request.form['password']
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+        user = db_connection.execute("SELECT FROM users WHERE username = %s AND password = %s", (username, hashed_password))
+
+        if user:
+            return redirect(url_for('get_index'))
+        else:
+            return render_template('login.html', error='Invalid username or password')
+
     return render_template('login.html')
 
 # These lines start the server if you run this file directly
