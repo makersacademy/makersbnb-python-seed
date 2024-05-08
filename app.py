@@ -1,6 +1,8 @@
 import os
 from flask import Flask, request, render_template, redirect, flash, jsonify, url_for
 from lib.database_connection import get_flask_database_connection
+from lib.space import Space
+from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
 from lib.user import User
 
@@ -12,13 +14,16 @@ app = Flask(__name__)
 
 # == Your Routes Here ==
 
-# GET /index
+# GET /home
 # Returns the homepage
 # Try it:
-#   ; open http://localhost:5001/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+#   ; open http://localhost:5001/home
+@app.route('/home', methods=['GET'])
+def get_home():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    space_list = repository.all()
+    return render_template('home.html', spaces = space_list)
 
 # open sign up page
 @app.route('/signup')
