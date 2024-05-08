@@ -10,9 +10,9 @@ DROP TYPE IF EXISTS booking_status;
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username text UNIQUE,
+    username text,
     user_password text,
-    email text UNIQUE,
+    email text,
     full_name text
     );
 

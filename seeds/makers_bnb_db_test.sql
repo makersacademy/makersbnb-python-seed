@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS spaces (
     id SERIAL PRIMARY KEY,
-    space_address text UNIQUE,
-    space_description text,
+    address text UNIQUE,
+    description text,
     price decimal,
     host_id int,
     constraint fk_user foreign key(host_id)
@@ -59,7 +59,7 @@ INSERT INTO users (username, user_password, email, full_name) VALUES
 ('mike_jones', 'mikepass', 'mike@example.com', 'Mike Jones'),
 ('sara_williams', 'sara123', 'sara@example.com', 'Sara Williams');
 
-INSERT INTO spaces (space_address, space_description, price, host_id) VALUES
+INSERT INTO spaces (address, description, price, host_id) VALUES
 ('123 Main St', 'Cozy apartment in the heart of downtown', 100, 1),
 ('456 Elm St', 'Spacious loft with city views', 150, 2),
 ('789 Oak St', 'Charming cottage near the beach', 120, 3),
