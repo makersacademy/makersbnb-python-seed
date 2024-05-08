@@ -4,6 +4,8 @@ from lib.date import Date
 from lib.space import Space
 from lib.date_repository import DateRepository
 from lib.space_repository import SpaceRepository
+from lib.booking_repository import BookingRepository
+from lib.booking import Booking
 from datetime import date, timedelta
 
 def apply_space_routes(app):
@@ -38,11 +40,19 @@ def apply_space_routes(app):
             
         return redirect(url_for('get_spaces'))
     
-    @app.route('/spaces/<space_id>', methods=['GET'])
+    @app.route('/spaces/<space_id>', methods=['GET', 'POST'])
     def get_space(space_id):
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
         space = repository.find_space_and_dates(space_id)
+        
+        if request.method == 'POST':
+            selected_date_ids = request.form.getlist('selected_date')
+            booking_repository = BookingRepository(connection)
+            for date_id in selected_date_ids:
+                booking = Booking(None, date_id, 1) #need to add session user_id 
+                booking_repository.create(booking)
+            return "Booking request created"
         return render_template('spaces/show.html', space=space)
     
 
