@@ -1,4 +1,5 @@
 import os
+import datetime
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
@@ -30,7 +31,17 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     spaces = repo.all()
-    return render_template('spaces.html', spaces=spaces)
+    if len(request.args) == 0 or request.args['start'] == "" or request.args['end'] == "":
+        start = datetime.date(2000, 1, 1)
+        end = datetime.date(3000, 1, 1)
+    else:
+        start_list = request.args['start'].split("-")
+        start_list = [int(i) for i in start_list]
+        end_list = request.args['end'].split("-")
+        end_list = [int(i) for i in end_list]
+        start = datetime.date(start_list[0], start_list[1], start_list[2])
+        end = datetime.date(end_list[0], end_list[1], end_list[2])
+    return render_template('spaces.html', spaces=spaces, start=start, end=end)
 
 # Returns page to list a new space
 @app.route('/spaces/new', methods=['GET'])
