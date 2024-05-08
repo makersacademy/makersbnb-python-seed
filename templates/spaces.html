@@ -7,27 +7,27 @@
 </head>
 <body>
     <div>
-        <a href="/spaces"> Spaces</a> |
-        <a href="/requests"> Requests</a> |
+        <a href="/1/spaces"> Spaces</a> |
+        <a href="/1/requests"> Requests</a> |
         <a href="/"> Sign out</a>
     </div>
     <div>
     <h1>Book a Space</h1>
-    <form action="/spaces/new" method="post">
+    <form action="/1/spaces/new" method="post">
     <p>
         <input type="submit" value="List a Space">
 
     </p>
     </form>
-        <form action="/spaces" method="post">
+        <form action="/1/spaces" method="post">
 
         <p>
-            <label for="available_from">Available from (DD/MM/YY)</label>
+            <label for="available_from">Available from (YYYY/MM/DD)</label>
             <br>
             <input type="text" name="available_from" id="available_from">
         </p>
         <p>
-            <label for="available_to">Available to (DD/MM/YY)</label>
+            <label for="available_to">Available to (YYYY/MM/DD)</label>
             <br>
             <input type="text" name="available_to" id="available_to">
         </p>
