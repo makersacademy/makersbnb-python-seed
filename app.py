@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 from lib.database_connection import get_flask_database_connection
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from lib.user import User
@@ -23,13 +23,6 @@ def load_user(user_id):  # Define a function to load a user given a user id
     return None
 
 #LINK: http://127.0.0.1:5001/login
-
-#-------------------------------------------------HOME page
-@app.route('/')  # Define a route for the root URL
-def index():  # Define a function to handle requests to the root URL
-    return render_template('home.html') 
-#------------------------------------------------- HOME page
-
 
 
 #-------------------------------------------------LOGIN page
@@ -55,8 +48,6 @@ def login():
 #-------------------------------------------------LOGIN page
 
 
-
-
 #------------------------------------------------- DASHBOARD
 @app.route('/dashboard')  
 @login_required  # Decorate the route to require authentication
@@ -65,15 +56,12 @@ def dashboard():  # Define a function to handle requests to the dashboard page
 #------------------------------------------------- DASHBOARD
 
 
-
 #-------------------------------------------------------------------- LOGOUT 
-
-@app.route('/logout')  # Define a route for logging out
-@login_required  # Decorate the route to require authentication
-def logout():  # Define a function to handle logout requests
-    logout_user()  # Log out the user
-    return 'You are logged out.'  # Return a message indicating that the user has been logged out
-
+@app.route('/logout', methods=['POST'])  
+@login_required  
+def logout():  
+    logout_user()  #Log out user
+    return render_template('login.html') #Redirect back to login page
 #-------------------------------------------------------------------- LOGOUT 
 
 
