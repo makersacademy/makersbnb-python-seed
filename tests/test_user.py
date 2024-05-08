@@ -41,7 +41,7 @@ def test_generate_errors_valid():
 
 def test_generate_errors_nocap():
     user1 =  User(1,'harry','password123!')
-    assert user1.generate_errors() == "Passwords must include a Capital Letter!"
+    assert user1.generate_errors() == "Passwords must include a Capital Letter"
 
 def test_generate_errors_nospecial():
     user1 =  User(1,'harry','Password123')
@@ -49,5 +49,5 @@ def test_generate_errors_nospecial():
 
 def test_generate_errors_tooshort():
     user1 =  User(1,'harry','Pas123!')
-    assert user1.generate_errors() == "Passwords must be 8 characters or longer!"
+    assert user1.generate_errors() == "Passwords must be 8 characters or longer"
 

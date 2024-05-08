@@ -8,7 +8,7 @@ class SpaceRepository():
         rows = self._connection.execute('SELECT * from spaces')
         all_spaces = []
         for row in rows:
-            item = Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]), row['userid'], row['price'])
+            item = Space(row["id"], row["title"],row['price'], str(row["start_date"]), str(row["end_date"]), row['userid'])
             all_spaces.append(item)
         return all_spaces
     
@@ -17,7 +17,7 @@ class SpaceRepository():
             'SELECT * from spaces WHERE id = %s', [space_id])
         if rows:
             row = rows[0]
-            return Space(row["id"], row["title"], str(row["start_date"]), str(row["end_date"]),row['userid'],row['price'])
+            return Space(row["id"], row["title"],row['price'], str(row["start_date"]), str(row["end_date"]), row['userid'])
         else:
             raise Exception('Space not found!')
     
@@ -29,14 +29,10 @@ class SpaceRepository():
         return space
     
     def is_available(self, space_id, date):
-        rows = self._connection.execute('SELECT * from bookings WHERE space_id = %s AND booking_date = %s', [space_id, str(date)])
+        rows = self._connection.execute('SELECT * from bookings WHERE spaceid = %s AND booking_date = %s', [space_id, str(date)])
         if rows:
             return False
         else:
             return True
-        # pre_booked = []
-        # for row in rows:
-        #     item = Booking(row['id'],row['booking_date'], row['space_id'],row['user_id'])
-        #     pre_booked.append(item)
-        return pre_booked
+
     

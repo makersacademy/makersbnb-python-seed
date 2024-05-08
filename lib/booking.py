@@ -1,6 +1,6 @@
 from datetime import datetime
 class Booking:
-    def __init__(self,id, booking_date, spaceid, userid):
+    def __init__(self,id, booking_date, userid, spaceid):
         self.id = id
         self.userid = userid
         self.spaceid = spaceid
@@ -10,7 +10,7 @@ class Booking:
         return self.__dict__ == other.__dict__
 
     def __repr__(self):
-        return f"Booking({self.id}, {self.userid}, {self.spaceid}, {str(self.booking_date)})"
+        return f"Booking({self.id}, {str(self.booking_date)}, {self.userid}, {self.spaceid})"
         
         
         

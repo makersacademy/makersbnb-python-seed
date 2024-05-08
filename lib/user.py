@@ -13,15 +13,15 @@ class User:
     def generate_errors(self):
         errors = []
         if self.email == None or self.email == "":
-            errors.append("email can't be blank!")
+            errors.append("email can't be blank")
         if self.password == None or self.password == "":
-            errors.append("Password can't be blank!")
+            errors.append("Password can't be blank")
         if len(self.password) < 8:
-            errors.append("Passwords must be 8 characters or longer!")
+            errors.append("Passwords must be 8 characters or longer")
         if not any(char in self.password for char in ['!', '@', '$', '%', '&']):
                 errors.append("Passwords must include one of the following special characters(! @ $ % &)")
         if not any(char.isupper() == True for char in self.password):
-            errors.append("Passwords must include a Capital Letter!") 
+            errors.append("Passwords must include a Capital Letter") 
         if len(errors) == 0:
             return None
         else:

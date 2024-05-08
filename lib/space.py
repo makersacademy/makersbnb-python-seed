@@ -1,10 +1,10 @@
 from datetime import datetime
 class Space():
-    def __init__(self, id, title, start_date, end_date, userid,price):
+    def __init__(self, id, title,price, start_date, end_date, userid):
             self.id = id
             self.title = title
-            self.start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
-            self.end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+            self.start_date = datetime.strptime(str(start_date), '%Y-%m-%d').date()
+            self.end_date = datetime.strptime(str((end_date)), '%Y-%m-%d').date()
             self.userid = userid
             self.price = price
     

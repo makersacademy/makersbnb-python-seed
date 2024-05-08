@@ -11,4 +11,4 @@ def test_bookingeq_noteq():
 
 def test_booking_repr():
     booking1 = Booking(1,'2023-08-23',2,1)
-    assert str(booking1) == "Booking(1, 1, 2, 2023-08-23)"
+    assert str(booking1) == "Booking(1, 2023-08-23, 2, 1)"
