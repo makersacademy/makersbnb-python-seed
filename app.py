@@ -48,6 +48,15 @@ def create_a_space():
 def get_requests():
     return render_template('requests.html')
 
+@app.route('/requests', methods=['POST'])
+def post_requests():
+    return render_template('requests.html')
+
+
+@app.route('/spaces/1' , methods=(['GET']))  #change 1 to id later
+def post_request_space():
+    return render_template('single_space.html')
+
     
 
 

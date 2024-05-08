@@ -115,6 +115,8 @@ def test_book_a_space_has_requests_link(page, test_web_address):
     page.click("text='Requests'")
     h1_tag= page.locator("h1")  
     expect(h1_tag).to_have_text("Requests")
+    h2_tag=page.locator("h2")
+    expect(h2_tag).to_have_text([" Requests I've made "," Requests I've received "])
 
 
 def test_book_a_space_has_signout_link(page, test_web_address):
@@ -126,6 +128,8 @@ def test_book_a_space_has_signout_link(page, test_web_address):
     page.click("text='Sign out'")
     h1_tag= page.locator("h1")  
     expect(h1_tag).to_have_text("Feel at home, anywhere")
+
+
 
 
 
