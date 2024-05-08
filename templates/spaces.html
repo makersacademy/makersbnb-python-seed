@@ -8,8 +8,8 @@
         <a href="/spaces/new">List a Space</a>
         {% for space in spaces %}
         <div>
-            <a href="/spaces/{{space.id}}">{{space.name}}</a><br>
-            Released: {{space.description}}
+            <a href="/spaces/{{space.id}}">{{space.name}}<br>
+            Description: {{space.description}}</a>
         </div>
         {% endfor %}
     </body>
