@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Space</title>
+    </head>
+    <body>
+        <h1>Space: {{space.name}}</h1>
+        <p>
+            Description: {{space.description}}
+        </p>
+        <p>
+            Price: {{space.price}}
+        </p>
+        <h2>Available dates: </h2>
+        <form method="POST">
+            <ul>
+            {% for date in space.dates %}
+                <p>
+                    <label>
+                        {{date.date}}
+                        <input type="checkbox" name="selected_date" value="{{date.id}}">
+                    </label>
+                </p>
+            {% endfor %}   
+            </ul>
+            <button type="submit">Request to book</button>
+        </form>
+        <p>
+            <a href="/spaces">Go back to Spaces list</a>
+        </p>
+    </body>
+</html>
