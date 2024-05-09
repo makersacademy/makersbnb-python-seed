@@ -17,6 +17,11 @@
             Price per night: £{{space.price}}
         </p>
         <h3>Available dates: </h3>
+        {% if error %}
+            <p class="description">
+                {{error}}
+            </p>
+        {% endif %}
         <form method="POST">
             <ul class="description">
             {% for date in space.dates %}
