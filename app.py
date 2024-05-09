@@ -71,6 +71,15 @@ def has_valid_data(form, connection):
         any(char in '!@£$%^&*//.,' for char in password) and \
         any(char in '1234567890' for char in password)
 
+
+@app.route("/space/<id>", methods = ["GET"])
+def get_space(id):
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+    found_space = space_repo.find_space(id)
+    return render_template("space.html", space = found_space)
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
