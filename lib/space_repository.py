@@ -14,4 +14,16 @@ class SpaceRepository():
     
     def add(self, space):
         rows = self._connection.execute('INSERT INTO spaces (address, description, price, host_id) VALUES (%s, %s, %s, %s) RETURNING id', [space.address, space. description, space.price, space.host_id])
-        
+    
+    def find_space(self, id_to_find):
+        query = self._connection.execute(
+                "SELECT * FROM spaces WHERE id = %s",[id_to_find]
+                )
+        return Space(
+            query[0]["id"],
+            query[0]["address"],
+            query[0]["description"], 
+            query[0]["price"],
+            query[0]["host_id"]
+            )
+    

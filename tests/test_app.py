@@ -39,4 +39,13 @@ def test_get_sign_up_page(page, test_web_address):
 
     input_tag = page.get_by_label("Full name:")
     expect(input_tag).to_have_id("full_name")
+
+
+"""
+Wee can render a single space page
+"""
+def test_get_test_page(page, test_web_address):
+    page.goto(f"http://{test_web_address}/1")
+    h1_tag  = page.locator('h1')
+    expect(h1_tag).to_have_text("123 Main St")
     
