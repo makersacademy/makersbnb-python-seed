@@ -4,19 +4,6 @@
     <title>Bookings List</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/style.css">
-    <style>
-        .centered {
-            text-align: center;
-        }
-        .no-bullets {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .no-bullets li {
-            margin-bottom: 10px; /* Adjust as needed */
-        }
-    </style>
 </head>
 <body>
     <div class="topnav">
@@ -32,8 +19,10 @@
         <ul class="no-bullets">
             {% for booking, space_name, confirmed in user_booking_requests %}
                 <li>
-                    Space: {{ space_name }},
-                    Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
+                        Space: {{ space_name }},
+                        Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    </a>
                 </li>
             {% endfor %}
         </ul>
@@ -44,8 +33,10 @@
         <ul class="no-bullets">
             {% for booking, space_name, confirmed in requests_received %}
                 <li>
-                    Space: {{ space_name }},
-                    Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
+                        Space: {{ space_name }},
+                        Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    </a>
                 </li>
             {% endfor %}
         </ul>

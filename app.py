@@ -3,7 +3,6 @@ from flask import Flask, request, render_template, url_for, redirect
 from lib.database_connection import get_flask_database_connection
 import hashlib
 from lib.space_routes import apply_space_routes
-
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -49,9 +48,7 @@ def login():
 from lib.space_routes import apply_space_routes
 apply_space_routes(app)
 
-@app.route('/confirm_booking', methods=['GET', 'POST'])
-def confirm_booking():
-    return render_template('confirm_booking.html')
+
 
 from lib.booking_routes import apply_booking_routes
 apply_booking_routes(app)
