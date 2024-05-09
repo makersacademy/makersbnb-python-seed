@@ -81,8 +81,14 @@ def get_space(id):
 
 
 
+# open sign up page
+@app.route('/new_listing')
+def new_listing():
+    return render_template("new_listing.html")
+
+
 # submit sign up info
-@app.route('/new_listing', methods = ['POST'])
+@app.route('/space', methods = ['POST'])
 def new_listing_form():
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
@@ -99,8 +105,8 @@ def new_listing_form():
 
     new_space = Space(None, save_address, save_description, save_price, save_user_id)
     space_repo.add(new_space)
-
-    return redirect(url_for("get_space"))
+    new_space = space_repo.all()[-1]
+    return redirect(url_for("get_space", id = f"{new_space.space_id}"))
 
 
 # These lines start the server if you run this file directly
