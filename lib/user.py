@@ -13,7 +13,7 @@ class User:
     def generate_errors(self):
         errors = []
         if self.email == None or self.email == "":
-            errors.append("email can't be blank")
+            errors.append("Email can't be blank")
         if self.password == None or self.password == "":
             errors.append("Password can't be blank")
         if len(self.password) < 8:
