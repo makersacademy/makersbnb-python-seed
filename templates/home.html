@@ -23,9 +23,9 @@
         <div class="space_list">
             {% for space in spaces %}
             <div class="space">
-                <h2>{{space.address}}"</h2>
-                <p>{{space.description}}</p>
-                <p>Price: £{{space.price}}</p>
+                <h2 id="space_address">{{space.address}}</h2>
+                <p id="space_description">{{space.description}}</p>
+                <p id="space_price">Price: £{{space.price}}</p>
             </div>
             {% endfor %}
         </div>
