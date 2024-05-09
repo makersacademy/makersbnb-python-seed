@@ -5,6 +5,8 @@ from lib.space import Space
 from lib.space_repository import SpaceRepository
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 
 # from datetime import datetime
 
@@ -50,6 +52,16 @@ def sign_up_form():
     repo.add_user(new_user)
 
     return redirect(url_for("get_home"))
+
+@app.route('/requests', methods = ['GET'])
+def get_requests():
+    connection = get_flask_database_connection(app)
+    id = 1
+    requests = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = {id}" )
+    responses = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = {id}" )
+    #requests = booking_repo.find_by_guest_id(1)
+    #responses = booking_repo.find_by_host_id(1)
+    return render_template("requests.html", requests = requests, responses = responses)
 
 def has_valid_data(form, connection):
     handle = form['username']

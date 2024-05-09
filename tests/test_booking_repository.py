@@ -64,4 +64,19 @@ def test_delete_record(db_connection):
         Booking(2, 2, 3, 2, date(2024, 5, 15), "pending"),
         Booking(4, 4, 1, 4, date(2024, 5, 25), "approved"),
 ]
+"""
+When we call the delete method
+the record should be removed from the database
+"""
+def test_find_by_guest_id(db_connection):
+    db_connection.seed("seeds/makers_bnb_db_test.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.find_by_guest_id(1)
+    assert result == [Booking(4, 4, 1, 4, date(2024, 5, 25), "approved")]
 
+def test_find_by_host_id(db_connection):
+    db_connection.seed("seeds/makers_bnb_db_test.sql")
+    repository = BookingRepository(db_connection)
+    result = repository.find_by_host_id(1)
+    assert result == [Booking(1, 1, 2, 1, date(2024, 5, 10), "approved")]
+    
