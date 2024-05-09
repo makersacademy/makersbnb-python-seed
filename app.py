@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
+from lib.space import *
+from lib.space_repository import *
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -48,9 +50,27 @@ def get_spaces():
     return render_template('spaces.html')
 
 
+@app.route('/1/spaces/new', methods=['GET'])
+def get_create_space():
+    return render_template('create_space.html')
+
+
 @app.route('/1/spaces/new', methods=['POST'])
 def create_a_space():
-    return render_template('create_space.html')
+    connection = get_flask_database_connection(app)
+    id = 1
+    repo = SpaceRepository(connection)
+    title = request.form['title']
+    price = None
+    if request.form['price_per_night']:
+        price = float(request.form['price_per_night'])
+    available_from = request.form['available_from']
+    available_to = request.form['available_to']
+    space = Space(None, title, price, available_from, available_to, id)
+    if not space.is_valid():
+        return render_template('create_space.html', errors=space.generate_errors())
+    repo.create(space)
+    return render_template('spaces.html', posted=True, space=space)
 
 
 @app.route('/1/requests', methods=['GET'])
