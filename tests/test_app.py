@@ -39,4 +39,15 @@ def test_get_sign_up_page(page, test_web_address):
 
     input_tag = page.get_by_label("Full name:")
     expect(input_tag).to_have_id("full_name")
+
+
+"""
+In the requests page, we want to see the correct address for requests received
+"""
+
+def test_get_requests(db_connection, page, test_web_address):
+    db_connection.seed("seeds/makers_bnb_db_test.sql")
+    page.goto(f"http://{test_web_address}/requests")
+    h_tag = page.locator("h2").nth(1)
+    expect(h_tag).to_have_text("321 Pine St")
     

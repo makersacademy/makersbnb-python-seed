@@ -33,5 +33,26 @@ class BookingRepository:
         self._connection.execute(
             'DELETE FROM bookings WHERE id = %s', [id])
         return None
+    
+    def find_by_guest_id(self, id):
+        rows = self._connection.execute(
+            'SELECT * from bookings WHERE guest_id = %s', [id])
+        bookings = []
 
+        for row in rows:
+            booking = Booking(row["id"], row["host_id"], row["guest_id"], row["space_id"], row["booking_date"], row["booking_status"])
+            bookings.append(booking)
+
+        return bookings
+    
+    def find_by_host_id(self, id):
+        rows = self._connection.execute(
+            'SELECT * from bookings WHERE host_id = %s', [id])
+        bookings = []
+
+        for row in rows:
+            booking = Booking(row["id"], row["host_id"], row["guest_id"], row["space_id"], row["booking_date"], row["booking_status"])
+            bookings.append(booking)
+
+        return bookings
 
