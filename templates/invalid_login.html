@@ -6,11 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello, {{ user.email }}! You are logged in.</h1>
-    
-    <!-- Sign-out button -->
-    <form action="/logout" method="post">
-        <button type="submit">Sign Out</button>
+    <h1>Invalid email or password.</h1>
+
+    <!-- Return to login page button -->
+    <form action="/invalid_login" method="post">
+        <button type="submit">Back to login</button>
     </form>
 </body>
 </html>

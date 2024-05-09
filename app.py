@@ -41,7 +41,7 @@ def login():
                 login_user(user)
                 return render_template('dashboard.html', user=user)
         
-        return 'Invalid email or password'
+        return render_template('invalid_login.html')
     
     return render_template('login.html')
 
@@ -58,12 +58,16 @@ def dashboard():  # Define a function to handle requests to the dashboard page
 
 #-------------------------------------------------------------------- LOGOUT 
 @app.route('/logout', methods=['POST'])  
-@login_required  
-def logout():  
-    logout_user()  #Log out user
+def return_to_login():  
     return render_template('login.html') #Redirect back to login page
 #-------------------------------------------------------------------- LOGOUT 
 
+
+#-------------------------------------------------------------------- Incorrect password page
+@app.route('/invalid_login', methods=['POST'])  
+def return_to_login_after_incorrect_password():  # Define a function to handle requests to the login page after clicking return to login page
+    return render_template("login.html") 
+#-------------------------------------------------------------------- Incorrect password page
 
 
 # These lines start the server if you run this file directly

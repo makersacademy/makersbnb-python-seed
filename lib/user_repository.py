@@ -17,10 +17,10 @@ class UserRepository:
         return None 
     
     def find(self, user_id):
-        try:
-            user_id = int(user_id)  # Attempt to convert user_id to an integer
-        except ValueError:
-            return None
+        # try:
+        #     user_id = int(user_id)  # Attempt to convert user_id to an integer
+        # except ValueError:
+        #     return None
         rows = self._connection.execute('SELECT * FROM users WHERE id = %s', [user_id])
         row = rows[0]
         return User(row["id"], row["email"], row["password"])
