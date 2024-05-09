@@ -8,7 +8,7 @@ class RequestRepository:
         rows = self._connection.execute('SELECT * FROM users_spaces_requests')
         requests = []
         for row in rows:
-            item = Request(row["user_id"], row["space_id"], row["start_date"], row["end_date"])
+            item = Request(row["user_id"], row["space_id"], row["start_date"], row["end_date"], row["approval"])
             requests.append(item) 
         return requests
     
@@ -20,7 +20,7 @@ class RequestRepository:
     def find(self, user_id, space_id):
         rows = self._connection.execute('SELECT * FROM users_spaces_requests WHERE user_id = %s AND space_id = %s', [user_id, space_id])
         row = rows[0]
-        return Request(row["user_id"], row["space_id"], row["start_date"], row["end_date"])
+        return Request(row["user_id"], row["space_id"], row["start_date"], row["end_date"], row["approval"])
     
     def delete(self, user_id, space_id):
         self._connection.execute('DELETE FROM users_spaces_requests WHERE user_id = %s AND space_id = %s', [user_id, space_id])
