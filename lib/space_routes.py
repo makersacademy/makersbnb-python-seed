@@ -44,10 +44,14 @@ def apply_space_routes(app):
     def get_space(space_id):
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
-        space = repository.find_space_and_dates(space_id)
-        
+        space, error_message = repository.find_space_and_dates(space_id)
+        if error_message == "No dates available":
+            space = repository.find(space_id)
+            return render_template('spaces/show.html', space=space, error = "No dates available")
         if request.method == 'POST':
             selected_date_ids = request.form.getlist('selected_date')
+            if selected_date_ids == []:
+                return render_template('spaces/show.html', space=space, error = "Please select at least one date")
             booking_repository = BookingRepository(connection)
             for date_id in selected_date_ids:
                 booking = Booking(None, date_id, 1) #need to add session user_id 
