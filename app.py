@@ -45,6 +45,10 @@ def login():
 
     return render_template('login.html')
 
+
+from lib.space_routes import apply_space_routes
+apply_space_routes(app)
+
 @app.route('/confirm_booking', methods=['GET', 'POST'])
 def confirm_booking():
     return render_template('confirm_booking.html')
