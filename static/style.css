@@ -57,6 +57,20 @@ body {
     line-height: 25px;
 }
 
+/* NOT WORKING */
+/* .list-space-button {
+    float: left;
+    background-color: rgb(15, 216, 139);
+    border: 2px solid rgb(15, 216, 139);
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+} */
+
 .list-space-button a:hover {
     background-color: white;
     color: black;
@@ -160,3 +174,13 @@ body {
     background-color: white;
     border: 2px solid rgb(15, 216, 139);
 }
+
+/* NIAMH */
+.space-name{
+    font-weight: bold;
+}
+
+.date {
+    padding: 10px;
+}
+

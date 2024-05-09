@@ -42,7 +42,7 @@
             {% if space.start_date >= start and space.end_date <= end %}
             <a href="/spaces/{{space.id}}">
                 <button class="space-button">
-                    {{space.name}}<br>Description: {{space.description}}
+                    <div class="space-name">{{space.name}}</div><br>{{space.description}}
                 </button>
             </a>
             <br>
