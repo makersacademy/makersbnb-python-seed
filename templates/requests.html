@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>All Spaces | MakersBnB</title>
+</head>
+<body>
+    <div class="header">
+        MakersBnB
+        <div class="header-right">
+            <a href="/spaces">Spaces</a> |
+            <a href="/requests">Requests</a> |
+            <a href="/index">Sign out</a>
+        </div>
+    </div>
+    
+    <div class="centered-title">
+       <h1>Book a Space</h1>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem repellendus, nihil facilis labore error sapiente corrupti laudantium culpa atque reprehenderit ipsa libero nulla nostrum dignissimos ex enim expedita voluptate maxime!
+        </p> 
+    </div>
+<p>requests i've made</p>
+    <div class="spaces-container">
+        {% for req in reqs_from %}
+        <a href="/spaces/{{req['space_id']}}">
+            <button class="space-button">
+                {{req['name']}}
+                {{req['start_date']}}
+                {{req['end_date']}}
+            </button>
+        </a>
+        {% endfor %}
+    </div>
+    <p>requests made to me</p>
+    <div class="spaces-container">
+        {% for req in reqs_to %}
+        <a href="/spaces/{{req['space_id']}}">
+            <button class="space-button">
+                {{req['name']}}
+                {{req['start_date']}}
+                {{req['end_date']}}
+            </button>
+        </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

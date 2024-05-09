@@ -8,6 +8,7 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
+  name text, 
   email text,
   password text
 );
@@ -20,7 +21,8 @@ CREATE TABLE spaces (
   name text,
   description text,
   price_per_night int,
-  active boolean,
+  start_date date,
+  end_date date,
   constraint fk_owner foreign key(owner) references users(id) on delete cascade
 );
 
@@ -36,17 +38,17 @@ CREATE TABLE users_spaces_requests (
   PRIMARY KEY (user_id, space_id)
 );
 
-INSERT INTO users (email, password) VALUES ('test1@gmail.com', 'password123'); 
-INSERT INTO users (email, password) VALUES ('test2@gmail.com', 'password123');
-INSERT INTO users (email, password) VALUES ('test3@gmail.com', 'password123'); 
+INSERT INTO users (name, email, password) VALUES ('Person1', 'test1@gmail.com', 'password123'); 
+INSERT INTO users (name, email, password) VALUES ('Person2', 'test2@gmail.com', 'password123');
+INSERT INTO users (name, email, password) VALUES ('Person3', 'test3@gmail.com', 'password123'); 
 
-INSERT INTO spaces (owner, name, description, price_per_night, active) VALUES (1, 'venue #1', 'desc #1', 50, 'True');
-INSERT INTO spaces (owner, name, description, price_per_night, active) VALUES (1, 'venue #2', 'desc #2', 60, 'True');
-INSERT INTO spaces (owner, name, description, price_per_night, active) VALUES (1, 'venue #3', 'desc #3', 70, 'True');
-INSERT INTO spaces (owner, name, description, price_per_night, active) VALUES (2, 'venue #4', 'desc #4', 80, 'True');
-INSERT INTO spaces (owner, name, description, price_per_night, active) VALUES (2, 'venue #5', 'desc #5', 90, 'True');
+INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (1, 'venue #1', 'desc #1', 50, '2024-01-01', '2024-01-08');
+INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (1, 'venue #2', 'desc #2', 60, '2024-04-04', '2024-05-05');
+INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (1, 'venue #3', 'desc #3', 70, '2024-01-01', '2024-01-05');
+INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (2, 'venue #4', 'desc #4', 80, '2024-01-03', '2024-02-03');
+INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (2, 'venue #5', 'desc #5', 90, '2024-02-04', '2024-02-05');
 
-INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (1, 2, '01-01-2024', '08-01-2024');
-INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (2, 3, '01-01-2024', '05-01-2024');
-INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (3, 4, '03-01-2024', '03-02-2024');
-INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (2, 4, '04-02-2024', '05-02-2024');
+INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (1, 2, '2024-01-01', '2024-01-08');
+INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (2, 3, '2024-04-04', '2024-05-05');
+INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (3, 4, '2024-01-01', '2024-01-05');
+INSERT INTO users_spaces_requests (user_id, space_id, start_date, end_date) VALUES (2, 4, '2024-01-03', '2024-02-03');

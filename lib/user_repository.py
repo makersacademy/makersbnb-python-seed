@@ -8,12 +8,12 @@ class UserRepository:
         rows = self._connection.execute('SELECT * FROM users')
         users = []
         for row in rows:
-            item = User(row["id"], row["email"], row["password"])
+            item = User(row["id"], row["name"], row["email"], row["password"])
             users.append(item)
         return users
     
     def create(self, user):
-        self._connection.execute('INSERT INTO users(email, password) VALUES (%s, %s)', [user.email, user.password])
+        self._connection.execute('INSERT INTO users(name, email, password) VALUES (%s, %s, %s)', [user.name, user.email, user.password])
         return None 
     
     def find(self, user_id):
@@ -23,7 +23,7 @@ class UserRepository:
         #     return None
         rows = self._connection.execute('SELECT * FROM users WHERE id = %s', [user_id])
         row = rows[0]
-        return User(row["id"], row["email"], row["password"])
+        return User(row["id"], row["name"], row["email"], row["password"])
     
     
 
