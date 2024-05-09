@@ -49,7 +49,7 @@ def sign_up_form():
     new_user = User(None, save_username, save_user_passwor, save_email, save_full_name)
     repo.add_user(new_user)
 
-    return redirect(url_for("get_index"))
+    return redirect(url_for("get_home"))
 
 def has_valid_data(form, connection):
     handle = form['username']
