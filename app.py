@@ -13,6 +13,7 @@ from lib.booking_repository import BookingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = 'the_secret_key' # Does not need to be strong for this project, flask needs this to 'securely' sign cookies
 
 # == Your Routes Here ==
 
@@ -52,6 +53,37 @@ def sign_up_form():
     repo.add_user(new_user)
 
     return redirect(url_for("get_home"))
+
+# Route for logging in as a user
+# Once logged in you can show logged in users different versions of a page by adding an if statement to check whether a user session exists:
+"""     if 'username' in session:
+        connection = get_flask_database_connection(app)
+        repository = SpaceRepository(connection)
+        space_list = repository.all()
+        return render_template('home.html', spaces = space_list, username=session['username'])
+    else:
+        return redirect(url_for('login')) """
+# In the above example if a user session exists the user can access home, if the user is not logged in they are redirected to the login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['user_password']
+        connection = get_flask_database_connection(app)
+        repo = UserRepository(connection)
+        user = repo.find_by_username(username)
+        if user and user.user_password == password:
+            session['username'] = username
+            return redirect(url_for('get_home'))
+        else:
+            return 'Invalid username or password'
+    return render_template('login.html')
+
+# Route for logging out of a user session
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 @app.route('/requests', methods = ['GET'])
 def get_requests():
