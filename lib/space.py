@@ -1,18 +1,18 @@
 from datetime import datetime
 class Space():
-    def __init__(self, id, title,price, start_date, end_date, userid):
+    def __init__(self, id, title,price, start_date, end_date, ownerid):
             self.id = id
             self.title = title
             self.start_date = datetime.strptime(str(start_date), '%Y-%m-%d').date()
             self.end_date = datetime.strptime(str((end_date)), '%Y-%m-%d').date()
-            self.userid = userid
+            self.ownerid = ownerid
             self.price = price
     
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
     
     def __repr__(self):
-        return f"Space({self.id}, {self.title}, {self.start_date}, {self.end_date}, {self.userid}, {self.price})"
+        return f"Space({self.id}, {self.title}, {self.start_date}, {self.end_date}, {self.ownerid}, {self.price})"
     
     def generate_errors(self):
         errors = []
