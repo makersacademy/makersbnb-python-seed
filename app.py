@@ -3,10 +3,11 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
 from lib.user_repository import UserRepository
+from flask_bcrypt import Bcrypt
 
 # Create a new Flask app
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
 
 # == Your Routes Here ==
 
@@ -43,23 +44,31 @@ def post_signup():
         return render_template('home.html', email_error = email_error)
     # This else is if the entered email is not already in the database
     else:
-        user = User(None, email, password)
-        # This checks to make sure password and password confirmation are identical
-        if password == password_confirmation:
-            # This checks the users email is not blank and password is valid
-            if user.is_valid() == True:
-                # Save the user to the database
-                user_repository.create(user)
-                # Redirect to the login page for the user to sign in
-                return redirect('/login')
-            else:
-                errors = user.generate_errors()
-                # This else happens when either the email or password is not valid and returns the errors on the sign up page
-                return render_template('home.html', errors = errors)
-        else:
-            password_error = "Passwords must be indentical"
+        if len(password) == 0:
+            password_error = "Password must not be blank"
             # This else happens when the password and password confirmation are not identical and returns errors on the sign up page
             return render_template('home.html', password_error = password_error)
+        else:
+            # hashed_password decodes and encrpytes the provided password
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            # The user is being created and added to the database with the hashed password
+            user = User(None, email, hashed_password)
+            # This checks to make sure password and password confirmation are identical
+            if password == password_confirmation:
+                # This checks the users email is not blank and password is valid
+                if user.is_valid() == True:
+                    # Save the user to the database
+                    user_repository.create(user)
+                    # Redirect to the login page for the user to sign in
+                    return redirect('/login')
+                else:
+                    errors = user.generate_errors()
+                    # This else happens when either the email or password is not valid and returns the errors on the sign up page
+                    return render_template('home.html', errors = errors)
+            else:
+                password_error = "Passwords must be indentical"
+                # This else happens when the password and password confirmation are not identical and returns errors on the sign up page
+                return render_template('home.html', password_error = password_error)
 
 @app.route('/login', methods=['GET'])
 def get_login():
@@ -77,8 +86,12 @@ def login():
     email_check = connection.execute('SELECT * from users WHERE email_address = %s', [email])
     # If email is found
     if email_check:
-        # This check to see if the password enetered in the password field is the same as the password in the database
-        if password == email_check[0]['password']:
+        # This is to check the password of the provided email
+        password_check = email_check[0]['password']
+        # is_valid is checking the provided password with the hashed pasword in the database
+        is_valid = bcrypt.check_password_hash(password_check, password)
+        # if the password provided and the hashed password are the same is_valid will return true and the user will be logged in.
+        if is_valid == True:
             id = email_check[0]['id']
             # Redirects to the users spaces page using their id 
             return redirect(f"/{id}/spaces")

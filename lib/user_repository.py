@@ -1,4 +1,5 @@
 from lib.user import *
+
 class UserRepository:
     def __init__(self, connection):
         self.connection = connection
