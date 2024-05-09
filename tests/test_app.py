@@ -41,8 +41,21 @@ def test_get_sign_up_page(page, test_web_address):
     expect(input_tag).to_have_id("full_name")
 
 
+
 """
 We can render a single space page
+In the requests page, we want to see the correct address for requests received
+"""
+def test_get_requests(db_connection, page, test_web_address):
+    db_connection.seed("seeds/makers_bnb_db_test.sql")
+    page.goto(f"http://{test_web_address}/requests")
+    h_tag = page.locator("h2").nth(1)
+    expect(h_tag).to_have_text("321 Pine St")
+    
+
+
+"""
+Wee can render a single space page
 """
 def test_get_test_page(page, test_web_address):
     page.goto(f"http://{test_web_address}/space/1")
