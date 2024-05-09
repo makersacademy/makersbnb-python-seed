@@ -33,5 +33,11 @@ class SpaceRepository():
             dates.append(date)
         space = Space(rows[0]['space_id'], rows[0]['name'], rows[0]['description'], rows[0]['price'], rows[0]['user_id'], dates)
         return space
-
     
+    def get_spaces_by_user(self, user_id):
+        rows = self._connection.execute('SELECT * FROM spaces WHERE user_id = %s', (user_id,))
+        spaces = []
+        for row in rows:
+            space = Space(row["id"], row["name"], row["description"], row["price"], row["user_id"])
+            spaces.append(space)
+        return spaces

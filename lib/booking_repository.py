@@ -39,3 +39,63 @@ class BookingRepository:
             (booking_id,)
         )
         return None
+    def get_bookings_by_user(self,user_id):
+        rows = self.connection.execute(
+            'SELECT * FROM bookings WHERE user_id = %s',(user_id,)
+        )
+        
+        bookings = []
+        for row in rows:
+            booking = Booking(
+                row['id'],
+                row['date_id'],
+                row['user_id'],
+            )
+            bookings.append(booking)
+        return bookings
+    
+    def get_bookings_by_space(self, space_id):
+        query = """
+            SELECT b.id, b.date_id, b.user_id, d.confirmed, s.name
+            FROM bookings b
+            JOIN dates d ON b.date_id = d.id
+            JOIN spaces s ON d.space_id = s.id
+            WHERE d.space_id = %s
+        """
+        rows = self.connection.execute(query, (space_id,))
+        bookings = []
+        for row in rows:
+            booking = Booking(
+                row["id"],
+                row["date_id"],
+                row["user_id"]
+            )
+        space_name = row["name"]
+        confirmed = row["confirmed"]
+        bookings.append((booking, space_name, confirmed))
+        return bookings
+
+
+    
+    def get_bookings_with_space_names(self, user_id):
+        query = """
+            SELECT b.id, b.date_id, b.user_id, s.name, d.confirmed 
+            FROM bookings b
+            JOIN dates d ON b.date_id = d.id
+            JOIN spaces s ON d.space_id = s.id
+            WHERE b.user_id = %s
+        """
+        rows = self.connection.execute(query, (user_id,))
+        bookings = []
+        for row in rows:
+            booking = Booking(
+                row["id"],
+                row["date_id"],
+                row["user_id"]
+            )
+        space_name = row["name"]
+        confirmed = row["confirmed"]
+        bookings.append((booking, space_name, confirmed))
+        return bookings
+    
+    
