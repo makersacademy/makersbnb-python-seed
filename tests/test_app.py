@@ -141,12 +141,11 @@ def test_list_a_space_form(page, test_web_address):
     page.click("text='List a Space'")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("List a Space")
-    page.fill("input[name=name]", "Beautiful Space")
-    page.fill("input[name=description]", "one two three four")
+    page.fill("input[name=title]", "Beautiful Space")
     page.fill("input[name=price_per_night]", "100")
-    page.fill("input[name=available_from]", "01/06/24")
-    page.fill("input[name=available_to]", "01/06/25")
-    page.click("text='List my Space'")
+    page.fill("input[name=available_from]", "2024-01-06")
+    page.fill("input[name=available_to]", "2025-06-01")
+    page.click("text=List my Space")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Book a Space")
 
@@ -187,9 +186,13 @@ def test_book_a_space_has_signout_link(page, test_web_address):
     expect(h1_tag).to_have_text("Feel at home, anywhere")
 
 
-# def test_create_new_signup_error(page, test_web_address, db_connection):
-#     page.goto(f"http://{test_web_address}")
-#     page.click("text=Sign up")
-#     error_tag = page.locator('.errors')
-#     expect(error_tag).to_have_text(
-#         "There were errors in your submission")
+def test_create_new_space_error(page, test_web_address):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}/1/spaces")
+    page.click("text=List a Space")
+    page.fill("input[name=available_from]", "2024-05-10")
+    page.fill("input[name=available_to]", "2025-05-10")
+    page.click("text='List my Space'")
+    error_tag = page.locator('.errors')
+    expect(error_tag).to_have_text(
+        "Your form contained some errors: Title can't be blank, Price can't be blank, Price has to be a number (up to 2 decimals)")

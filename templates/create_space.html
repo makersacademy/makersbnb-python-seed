@@ -14,17 +14,17 @@
         <a href="/"> Sign out</a>
     </div>
     <h1>List a Space</h1>
-    <form action="/1/spaces" method="post">
-        <p>
-            <label for="name">Name</label>
-            <br>
-            <input type="text" name="name" id="name">
+    <form action="/1/spaces/new" method="post">
+        {% if errors %}
+        <h2 class="errors">
+            Your form contained some errors: {{errors}}
+        </h2>
+        {% endif %}
+        <label for="title">Title</label>
+        <br>
+        <input type="text" name="title" id="title">
         </p>
-        <p>
-            <label for="description">Description</label>
-            <br>
-            <input type="text" name="description" id="description">
-        </p>
+
         <p>
             <label for="price_per_night">Price per night (£)</label>
             <br>
@@ -32,12 +32,12 @@
         </p>
 
         <p>
-            <label for="available_from">Available from (YYYY/MM/DD)</label>
+            <label for="available_from">Available from (YYYY-MM-DD)</label>
             <br>
             <input type="text" name="available_from" id="available_from">
         </p>
         <p>
-            <label for="available_to">Available to (YYYY/MM/DD)</label>
+            <label for="available_to">Available to (YYYY-MM-DD)</label>
             <br>
             <input type="text" name="available_to" id="available_to">
         </p>
