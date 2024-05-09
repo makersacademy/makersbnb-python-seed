@@ -1,15 +1,35 @@
-<html>
-    <head>
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <h1>Booking Requests</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bookings List</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .centered {
+            text-align: center;
+        }
+        .no-bullets {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .no-bullets li {
+            margin-bottom: 10px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <h1 href="/index">Makers</h1>
+        <div>
+            <a href="/spaces">Spaces</a>
+            <a href="/bookings">Bookings</a>
+        </div>
+    </div>
+
+    <div class="centered">
         <h2>Booking Requests Made</h2>
-        <ul>
+        <ul class="no-bullets">
             {% for booking, space_name, confirmed in user_booking_requests %}
                 <li>
                     Space: {{ space_name }},
@@ -17,9 +37,11 @@
                 </li>
             {% endfor %}
         </ul>
+    </div>
 
+    <div class="centered">
         <h2>Booking Requests Received</h2>
-        <ul>
+        <ul class="no-bullets">
             {% for booking, space_name, confirmed in requests_received %}
                 <li>
                     Space: {{ space_name }},
@@ -27,5 +49,6 @@
                 </li>
             {% endfor %}
         </ul>
-    </body>
+    </div>
+</body>
 </html>
