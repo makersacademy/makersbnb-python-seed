@@ -3,17 +3,25 @@
     <head>
         <title> Spaces List </title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
-        <h1> Spaces </h1>
+        <div class="topnav">
+            <h1 href="#home">Makers</h1>
+            <div>
+                <a  href="">Bookings</a>
+                <a  href="">Requests</a>
+            </div>
+        </div>
+        <h2> Spaces </h2>
+        <a href="/spaces/new" class="regform"> Add A Space</a>
 
-        <a href="/spaces/new"> Add A Space</a>
-
-        <ul>
+        <div class="spaceboxcontainer">
             {% for space in spaces %}
-                <li>
-                    <a href="/spaces/{{space.id}}">{{ space.name }}</a>
-                </li>
+                <div>
+                    <a href="/spaces/{{space.id}}" class="spacebox">{{ space.name }}</a>
+                </div>
             {% endfor %}
+        </div>    
     </body>
 </html>

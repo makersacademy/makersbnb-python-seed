@@ -3,9 +3,13 @@
     <head>
         <title>Create New Space</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="../static/style.css">
     </head>
     <body>
-        <h1>Create New Space</h1>
+        <div class="topnav">
+            <h1 href="#home">Makers</h1>  
+        </div>
+        <h2>Create New Space</h2>
         <form action="/spaces" method="post">
 
 
@@ -15,33 +19,31 @@
                 </p>
             {% endif %}
 
-            <p>
+            <div class="spaceinputs">
                 <label for="name">Name</label>
-                <br>
                 <input type="text" name="name" id="name">
-            </p>
-            <p>
+                <br>
                 <label for="description">Description</label>
+                <textarea type="text" name="description" id="description" rows="10"></textarea>
+            </div>
+            <div class="description">
+                <label for="price">Price per night:</label>
                 <br>
-                <input type="text" name="description" id="description">
-            </p>
-            <p>
-                <label for="price">Price</label>
-                <br>
-                <input type="float" name="price" id="price">
-            </p>
-            <p>
+                <span class="currencyinput">£<input type="float" name="price" id="price"></span>
+            </div>
+            <div class="description">
                 <label for="start_date">Available from:</label>
                 <br>
                 <input type="date" name="start_date" id="start_date">
-            </p>
-            <p>
+            </div>
+            <div class="description">
                 <label for="end_date">Available until:</label>
                 <br>
                 <input type="date" name="end_date" id="end_date">
-            <p>
-                <input type="submit" value="Create Space">
-            </p>
+            </div>
+            <div class="description">
+                <button type="submit">Create Space</button>
+            </div>
         </form>
     </body>
 </html>
