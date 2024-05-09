@@ -80,6 +80,29 @@ def get_space(id):
     return render_template("space.html", space = found_space)
 
 
+
+# submit sign up info
+@app.route('/new_listing', methods = ['POST'])
+def new_listing_form():
+    connection = get_flask_database_connection(app)
+    space_repo = SpaceRepository(connection)
+
+    # check validation
+    # if not has_valid_data(request.form, connection):
+    #         return "error: inputs not valid", 400
+    
+    # read form data to generate new record for "spaces" table
+    save_address = request.form.get('address')
+    save_description = request.form.get('description')
+    save_price = request.form.get('price')
+    save_user_id = 1 # from global variable / cookie
+
+    new_space = Space(None, save_address, save_description, save_price, save_user_id)
+    space_repo.add(new_space)
+
+    return redirect(url_for("get_space"))
+
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.

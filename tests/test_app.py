@@ -17,7 +17,7 @@ def test_get_home(page, test_web_address):
 
 
 """
-Wee can render the sign up page
+We can render the sign up page
 """
 def test_get_sign_up_page(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
@@ -42,10 +42,31 @@ def test_get_sign_up_page(page, test_web_address):
 
 
 """
-Wee can render a single space page
+We can render a single space page
 """
 def test_get_test_page(page, test_web_address):
-    page.goto(f"http://{test_web_address}/1")
+    page.goto(f"http://{test_web_address}/space/1")
     h1_tag  = page.locator('h1')
     expect(h1_tag).to_have_text("123 Main St")
+
+
+
+"""
+We can render the new listing page
+"""
+def test_get_new_listing_page(page, test_web_address):
+    # We load a virtual browser and navigate to the /index page
+    page.goto(f"http://{test_web_address}/new_listing")
+    # We look at the <h1> tag
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("List a space")
     
+    # repeat for the form labels
+    input_tag = page.get_by_label("Address:")
+    expect(input_tag).to_have_id("address")
+
+    input_tag = page.get_by_label("Description:")
+    expect(input_tag).to_have_id("description")
+
+    input_tag = page.get_by_label("Price:")
+    expect(input_tag).to_have_id("price")
