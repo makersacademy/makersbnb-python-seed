@@ -22,9 +22,21 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem repellendus, nihil facilis labore error sapiente corrupti laudantium culpa atque reprehenderit ipsa libero nulla nostrum dignissimos ex enim expedita voluptate maxime!
         </p> 
     </div>
-
+<p>requests i've made</p>
     <div class="spaces-container">
-        {% for req in reqs %}
+        {% for req in reqs_from %}
+        <a href="/spaces/{{req['space_id']}}">
+            <button class="space-button">
+                {{req['name']}}
+                {{req['start_date']}}
+                {{req['end_date']}}
+            </button>
+        </a>
+        {% endfor %}
+    </div>
+    <p>requests made to me</p>
+    <div class="spaces-container">
+        {% for req in reqs_to %}
         <a href="/spaces/{{req['space_id']}}">
             <button class="space-button">
                 {{req['name']}}

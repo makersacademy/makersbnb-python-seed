@@ -87,8 +87,9 @@ def get_requests():
     connection = get_flask_database_connection(app)
     req_repo = RequestRepository(connection)
     #space_repo = SpaceRepository(connection)
-    reqs = req_repo.find_request_names(1) # replace with current user id
-    return render_template('requests.html', reqs=reqs)
+    reqs_from = req_repo.list_request_from_user(1) # replace with current user id
+    reqs_to = req_repo.list_request_to_user(1) # replace with current user id
+    return render_template('requests.html', reqs_from=reqs_from, reqs_to=reqs_to)
 
 
 # These lines start the server if you run this file directly

@@ -27,7 +27,10 @@ class RequestRepository:
         return None 
 
 # SELECT name FROM spaces, users_spaces_requests WHERE spaces.id = space_id AND user_id = 1;
-    def find_request_names(self, user_id):
+    def list_request_from_user(self, user_id):
         rows = self._connection.execute('SELECT space_id, name, users_spaces_requests.start_date, users_spaces_requests.end_date FROM spaces, users_spaces_requests WHERE spaces.id = space_id AND user_id = %s', [user_id])
         return rows
     
+    def list_request_to_user(self, user_id):
+        rows = self._connection.execute('SELECT space_id, name, users_spaces_requests.start_date, users_spaces_requests.end_date FROM spaces, users_spaces_requests WHERE spaces.id = space_id AND spaces.owner = %s', [user_id])
+        return rows
