@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, render_template
+import datetime
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.space_repository import SpaceRepository
 from lib.spaces import Space
@@ -30,7 +31,19 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     spaces = repo.all()
-    return render_template('spaces.html', spaces=spaces)
+
+    # the following block is horrible. Works mostly. Oh well!
+    if len(request.args) == 0 or request.args['start'] == "" or request.args['end'] == "":
+        start = datetime.date(2000, 1, 1)
+        end = datetime.date(3000, 1, 1)
+    else:
+        start_list = request.args['start'].split("-")
+        start_list = [int(i) for i in start_list]
+        end_list = request.args['end'].split("-")
+        end_list = [int(i) for i in end_list]
+        start = datetime.date(start_list[0], start_list[1], start_list[2])
+        end = datetime.date(end_list[0], end_list[1], end_list[2])
+    return render_template('spaces.html', spaces=spaces, start=start, end=end)
 
 # Returns page to list a new space
 @app.route('/spaces/new', methods=['GET'])
@@ -42,12 +55,12 @@ def list_a_space():
 def add_space():
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
-    space = Space(None, None, request.form['name'], request.form['description'], request.form['price_per_night'], True) # id, owner (current user id), name, desc., ppn, active (default: True)
-    if not space.is_valid():
-        return render_template('space_form.html', space=space, errors=space.generate_errors()), 400
+    space = Space(None, 1, request.form['name'], request.form['description'], request.form['price_per_night'], request.form['start_date'], request.form['end_date']) # id, owner (current user id), name, desc., ppn, active (default: True)
+    #if not space.is_valid():
+     #   return render_template('space_form.html', space=space, errors=space.generate_errors()), 400
     
     repo.create(space)
-    return render_template('space.html')
+    return redirect('/spaces')
 
 # Returns page with space via id
 @app.route('/spaces/<id>')
@@ -55,7 +68,7 @@ def find_space(id):
     connection = get_flask_database_connection(app)
     repo = SpaceRepository(connection)
     space = repo.find(id)
-    return render_template('single_space.html', space=space)
+    return render_template('spaces_id.html', space=space)
 
 # Returns page with requests made AND requests recieved.
 @app.route('/requests')
