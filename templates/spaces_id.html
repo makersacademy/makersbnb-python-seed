@@ -21,12 +21,12 @@
         <p>{{space.description}}</p>
 
         <p>{{space.price_per_night}}</p>
-        <form action="">
+        <form action="/spaces/{{space.id}}" method="POST">
             <label for="start_date">Start Date</label>
-            <input type="date" min="{{space.start_date}}" max="{{space.end_date}}" id="start_date"><br>
+            <input type="date" min="{{space.start_date}}" max="{{space.end_date}}" name="start_date" id="start_date"><br>
 
             <label for="end_date">End Date</label>
-            <input type="date" min="{{space.start_date}}" max="{{space.end_date}}" id="end_date"><br>
+            <input type="date" min="{{space.start_date}}" max="{{space.end_date}}" name="end_date" id="end_date"><br>
 
             <input type="submit" value="Request to Book">
         </form>
