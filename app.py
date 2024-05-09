@@ -23,7 +23,7 @@ def load_user(user_id):  # Define a function to load a user given a user id
     repo = UserRepository(connection)
     user_data = repo.find(user_id)
     if user_data:
-        return User(user_data.id, user_data.email, user_data.password)
+        return User(user_data.id, 'name',user_data.email, user_data.password)
     return None
 
 #LINK: http://127.0.0.1:5001/login
@@ -41,9 +41,10 @@ def login():
         users2 = users.all()
         for user in users2:  # Iterate over the users dictionary
             if user.email == email and user.password == password:
-                user = User(user.id, email, password)
+                user = User(user.id, 'name',email, password)
                 login_user(user)
-                return render_template('dashboard.html', user=user)
+                return redirect("/spaces")
+                # return render_template('dashboard.html', user=user)
         
         return render_template('invalid_login.html')
     
@@ -51,6 +52,19 @@ def login():
 
 #-------------------------------------------------LOGIN page
 
+#-------------------------------------------------SIGN UP page
+
+@app.route('/sign-up', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email']  # Retrieve the email from the form data
+        password = request.form['password']  # Retrieve the password from the form data
+        connection = get_flask_database_connection(app)
+        users = UserRepository(connection)
+        users.create(User(None, 'name', request.form['email'],request.form['password']))
+        return redirect("/login")
+    return render_template('sign_up_form.html')
+#-------------------------------------------------SIGN UP page
 
 #------------------------------------------------- DASHBOARD
 @app.route('/dashboard')  
@@ -61,7 +75,7 @@ def dashboard():  # Define a function to handle requests to the dashboard page
 
 
 #-------------------------------------------------------------------- LOGOUT 
-@app.route('/logout', methods=['POST'])  
+@app.route('/logout', methods=['GET'])  
 def return_to_login():  
     return render_template('login.html') #Redirect back to login page
 #-------------------------------------------------------------------- LOGOUT 
