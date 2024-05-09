@@ -6,6 +6,8 @@ from lib.space_repository import SpaceRepository
 from lib.spaces import Space
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.request_repository import RequestRepository
+from lib.request import Request
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -70,7 +72,16 @@ def find_space(id):
     space = repo.find(id)
     return render_template('spaces_id.html', space=space)
 
+@app.route('/spaces/<id>', methods=['POST'])
+def create_request(id):
+    connection = get_flask_database_connection(app)
+    repo = RequestRepository(connection)
+    current_user = 1
+    repo.create(Request(current_user, id, request.form['start_date'], request.form['end_date']))
+    return redirect('/spaces')
+
 # Returns page with requests made AND requests recieved.
+# DO NOT USE
 @app.route('/requests')
 def get_requests():
     connection = get_flask_database_connection(app)
