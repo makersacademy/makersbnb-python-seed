@@ -42,13 +42,13 @@ def sign_up_form():
     # check validation
     if not has_valid_data(request.form, connection):
             return "error: inputs not valid", 400
-    
+
     # read form data to generate new record for "users" table
     save_username = request.form.get('username')
     save_user_passwor = request.form.get('user_password')
     save_email = request.form.get('email')
     save_full_name = request.form.get('full_name')
-    
+
     new_user = User(None, save_username, save_user_passwor, save_email, save_full_name)
     repo.add_user(new_user)
 
@@ -91,11 +91,24 @@ def logout():
 def get_requests():
     connection = get_flask_database_connection(app)
     id = 1
-    requests = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = {id}" )
-    responses = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = {id}" )
+    requests = connection.execute("SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = %s", [id])
+    responses = connection.execute("SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = %s", [id])
     #requests = booking_repo.find_by_guest_id(1)
     #responses = booking_repo.find_by_host_id(1)
     return render_template("requests.html", requests = requests, responses = responses)
+
+@app.route('/request/<id>', methods = ['POST'])
+def check_request(id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    confirm = request.form.get("confirm")
+    deny = request.form.get("deny")
+    id = 1
+    date = connection.execute("SELECT booking_date FROM bookings WHERE id=%s", [id])
+    if confim is not None:
+
+
+
 
 def has_valid_data(form, connection):
     handle = form['username']

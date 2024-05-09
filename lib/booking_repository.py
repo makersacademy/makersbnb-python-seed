@@ -29,11 +29,15 @@ class BookingRepository:
         booking.id = row["id"]
         return booking
 
+    def update(self, id, status):
+        self._connection.execute('UPDATE bookings SET booking_status=%s WHERE id=%s', [status, id])
+        return None
+
     def delete(self, id):
         self._connection.execute(
             'DELETE FROM bookings WHERE id = %s', [id])
         return None
-    
+
     def find_by_guest_id(self, id):
         rows = self._connection.execute(
             'SELECT * from bookings WHERE guest_id = %s', [id])
@@ -44,7 +48,7 @@ class BookingRepository:
             bookings.append(booking)
 
         return bookings
-    
+
     def find_by_host_id(self, id):
         rows = self._connection.execute(
             'SELECT * from bookings WHERE host_id = %s', [id])
