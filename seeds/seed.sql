@@ -8,6 +8,7 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
+  name text, 
   email text,
   password text
 );
@@ -37,9 +38,9 @@ CREATE TABLE users_spaces_requests (
   PRIMARY KEY (user_id, space_id)
 );
 
-INSERT INTO users (email, password) VALUES ('test1@gmail.com', 'password123'); 
-INSERT INTO users (email, password) VALUES ('test2@gmail.com', 'password123');
-INSERT INTO users (email, password) VALUES ('test3@gmail.com', 'password123'); 
+INSERT INTO users (name, email, password) VALUES ('Person1', 'test1@gmail.com', 'password123'); 
+INSERT INTO users (name, email, password) VALUES ('Person2', 'test2@gmail.com', 'password123');
+INSERT INTO users (name, email, password) VALUES ('Person3', 'test3@gmail.com', 'password123'); 
 
 INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (1, 'venue #1', 'desc #1', 50, '2024-01-01', '2024-01-08');
 INSERT INTO spaces (owner, name, description, price_per_night, start_date, end_date) VALUES (1, 'venue #2', 'desc #2', 60, '2024-04-04', '2024-05-05');
