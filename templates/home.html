@@ -14,11 +14,20 @@
     <div>
     <h1>Feel at home, anywhere</h1>
     <h2> Sign up to MakersBnB</h2>
-    <form action="/login" method="post">
+    <form action="/" method="post">
             {% if errors%}
             <p class= "t-errors">
-                There were errors in your submission
-                <!-- There were errors in your submission: {{ errors | join(', ')}} will maybe use with python code --> 
+                There were errors in your submission: {{ errors }}
+            </p>
+            {% endif %}
+            {% if password_error%}
+            <p class= "t-password_error">
+                There were errors in your submission: {{password_error}}
+            </p>
+            {% endif %}
+            {% if email_error%}
+            <p class= "t-email_error">
+                There were errors in your submission: {{email_error}}
             </p>
             {% endif %}
     <p>

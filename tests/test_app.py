@@ -30,16 +30,45 @@ def test_get_homepage(page, test_web_address, db_connection):
     expect(h2_tag).to_have_text("Sign up to MakersBnB")
 
 
-def test_sign_up_inputs(page, test_web_address):
+def test_sign_up_inputs(page, test_web_address, db_connection):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}")
     page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
-    page.fill("input[name=password_confirmation]", "12345678")
+    page.fill("input[name=password]", "P12345678!")
+    page.fill("input[name=password_confirmation]", "P12345678!")
     page.click("text='Sign up'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Login to MakersBnB")
 
+def test_sign_up_inputs_with_email_indatabase_error(page, test_web_address):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "P12345678!")
+    page.fill("input[name=password_confirmation]", "P12345678!")
+    page.click("text='Sign up'")
+    errors_tag = page.locator(".t-email_error")
+    expect(errors_tag).to_have_text("There were errors in your submission: Email already registered")
+
+def test_sign_up_inputs_with_password_invalid_confirmation_error(page, test_web_address, db_connection):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}")
+    page.fill("input[name=email]", "ifdhdi@gmail.com")
+    page.fill("input[name=password]", "P12345678!")
+    page.fill("input[name=password_confirmation]", "P12345678!!")
+    page.click("text='Sign up'")
+    errors_tag = page.locator(".t-password_error")
+    expect(errors_tag).to_have_text("There were errors in your submission: Passwords must be indentical")
+
+def test_sign_up_inputs_with_invalid_entry_all_error(page, test_web_address, db_connection):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}")
+    page.fill("input[name=email]", "")
+    page.fill("input[name=password]", "")
+    page.fill("input[name=password_confirmation]", "")
+    page.click("text='Sign up'")
+    errors_tag = page.locator(".t-password_error")
+    expect(errors_tag).to_have_text("There were errors in your submission: Password must not be blank")
 
 def test_login_link(page, test_web_address):
     page.set_default_timeout(1000)
@@ -57,21 +86,42 @@ def test_about_link(page, test_web_address):
     expect(title_element).to_have_text("About MakersBnB")
 
 
-def test_login_inputs(page, test_web_address):
+def test_login_inputs(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a Space")
+
+def test_login_inputs_email_invalid(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name=email]", "")
+    page.fill("input[name=password]", "Hello12345@")
+    page.click("text='Log in'")
+    errors_tag = page.locator(".t-email_error")
+    expect(errors_tag).to_have_text("There were errors in your submission: Email not registered, please sign up")
+
+def test_login_inputs_password_invalid(page, test_web_address, db_connection):
+    db_connection.seed("seeds/makersbnb.sql")
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}/login")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "He2345@")
+    page.click("text='Log in'")
+    errors_tag = page.locator(".t-password_error")
+    expect(errors_tag).to_have_text("There were errors in your submission: Incorrect password, please try again")
 
 
 def test_list_a_space_link_from_spaces_page(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a Space")
@@ -83,8 +133,8 @@ def test_list_a_space_link_from_spaces_page(page, test_web_address):
 def test_list_a_space_form(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a Space")
@@ -103,8 +153,8 @@ def test_list_a_space_form(page, test_web_address):
 def test_book_a_space_has_spaces_link(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     page.click("text='Spaces'")
     h1_tag = page.locator("h1")
@@ -114,8 +164,8 @@ def test_book_a_space_has_spaces_link(page, test_web_address):
 def test_book_a_space_has_requests_link(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     page.click("text='Requests'")
     h1_tag = page.locator("h1")
@@ -128,8 +178,8 @@ def test_book_a_space_has_requests_link(page, test_web_address):
 def test_book_a_space_has_signout_link(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
-    page.fill("input[name=email]", "123@gmail.com")
-    page.fill("input[name=password]", "12345678")
+    page.fill("input[name=email]", "matthew@gmail.com")
+    page.fill("input[name=password]", "Password123!")
     page.click("text='Log in'")
     page.click("text='Sign out'")
     h1_tag = page.locator("h1")
