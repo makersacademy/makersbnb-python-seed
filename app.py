@@ -56,8 +56,9 @@ def sign_up_form():
 @app.route('/requests', methods = ['GET'])
 def get_requests():
     connection = get_flask_database_connection(app)
-    requests = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = 1" )
-    responses = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = 1" )
+    id = 1
+    requests = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = {id}" )
+    responses = connection.execute(f"SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = {id}" )
     #requests = booking_repo.find_by_guest_id(1)
     #responses = booking_repo.find_by_host_id(1)
     return render_template("requests.html", requests = requests, responses = responses)
