@@ -99,13 +99,24 @@ def get_requests():
 
 @app.route('/request/<id>', methods = ['POST'])
 def check_request(id):
+    if not session['username']:
+        return redirect(url_for('login'))
+
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     confirm = request.form.get("confirm")
     deny = request.form.get("deny")
-    id = 1
-    date = connection.execute("SELECT booking_date FROM bookings WHERE id=%s", [id])
+    id = session['user_id']
+    date = connection.execute("SELECT booking_date, space_id FROM bookings WHERE id=%s", [id])
+    space_id  = connection.execute("SELECT space_id FROM bookings WHERE id=%s", [id])
     if confim is not None:
+        repo.update(id, "approved")
+        connection.execute(
+            """UPDATE bookings SET booking_status='denied' WHERE booking_date=%s
+                AND host_id=%s AND space_id=%s""", [date, id, space_id])
+
+    return redirect(url_for('get_requests'))
+
 
 
 
@@ -155,7 +166,7 @@ def new_listing_form():
     # check validation
     # if not has_valid_data(request.form, connection):
     #         return "error: inputs not valid", 400
-    
+
     # read form data to generate new record for "spaces" table
     save_address = request.form.get('address')
     save_description = request.form.get('description')
