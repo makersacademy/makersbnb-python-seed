@@ -90,34 +90,49 @@ def logout():
 @app.route('/requests', methods = ['GET'])
 def get_requests():
     connection = get_flask_database_connection(app)
-    id = 1
-    requests = connection.execute("SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE guest_id = %s", [id])
-    responses = connection.execute("SELECT * from bookings JOIN spaces ON bookings.space_id = spaces.id WHERE bookings.host_id = %s", [id])
-    #requests = booking_repo.find_by_guest_id(1)
-    #responses = booking_repo.find_by_host_id(1)
-    return render_template("requests.html", requests = requests, responses = responses)
+    id = session['user_id']
+    requests = connection.execute(
+        "SELECT * from bookings JOIN spaces "\
+        "ON bookings.space_id = spaces.id "\
+        "WHERE guest_id = %s",
+        [id]
+        )
+    responses = connection.execute(
+        "SELECT * from bookings JOIN spaces "\
+        "ON bookings.space_id = spaces.id "\
+        "WHERE bookings.host_id = %s",
+        [id]
+        )
+    return render_template("requests.html", requests=requests, responses=responses, id=id)
 
-@app.route('/request/<id>', methods = ['POST'])
+@app.route('/request/<id>', methods = ['GET'])
 def check_request(id):
     if not session['username']:
         return redirect(url_for('login'))
-
+    print(request.form)
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     confirm = request.form.get("confirm")
     deny = request.form.get("deny")
     id = session['user_id']
-    date = connection.execute("SELECT booking_date, space_id FROM bookings WHERE id=%s", [id])
-    space_id  = connection.execute("SELECT space_id FROM bookings WHERE id=%s", [id])
-    if confim is not None:
+    date = connection.execute(
+        "SELECT booking_date, space_id FROM bookings WHERE id=%s",
+        [id]
+        )
+    space_id  = connection.execute(
+        "SELECT space_id FROM bookings WHERE id=%s",
+        [id]
+        )
+    if confirm is not None:
         repo.update(id, "approved")
         connection.execute(
             """UPDATE bookings SET booking_status='denied' WHERE booking_date=%s
                 AND host_id=%s AND space_id=%s""", [date, id, space_id])
-
-    return redirect(url_for('get_requests'))
-
-
+        return redirect(url_for('get_requests'))
+    if deny is not None:
+        repo.update(id, "denied")
+        return redirect(url_for('get_requests'))
+    return "ppppppppppp"
 
 
 
@@ -142,20 +157,18 @@ def has_valid_data(form, connection):
         any(char in '1234567890' for char in password)
 
 
+# open sign up page
+@app.route('/new_listing')
+def new_listing():
+    return render_template("new_listing.html")
+
+
 @app.route("/space/<id>", methods = ["GET"])
 def get_space(id):
     connection = get_flask_database_connection(app)
     space_repo = SpaceRepository(connection)
     found_space = space_repo.find_space(id)
     return render_template("space.html", space = found_space)
-
-
-
-# open sign up page
-@app.route('/new_listing')
-def new_listing():
-    return render_template("new_listing.html")
-
 
 # submit sign up info
 @app.route('/space', methods = ['POST'])
@@ -171,8 +184,7 @@ def new_listing_form():
     save_address = request.form.get('address')
     save_description = request.form.get('description')
     save_price = request.form.get('price')
-    save_user_id = 1 # from global variable / cookie
-
+    save_user_id = session["user_id"]
     new_space = Space(None, save_address, save_description, save_price, save_user_id)
     space_repo.add(new_space)
     new_space = space_repo.all()[-1]

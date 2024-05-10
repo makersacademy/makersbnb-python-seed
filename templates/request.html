@@ -22,7 +22,7 @@
                      <p id="request_price">Price: £{{request['price']}}</p>
                 </div>
                 {% endfor %}
-            <form action="/request" method="post">
+            <form action="/requests" method="post">
                 <button class="choice" type="button" name="confirm">Confirm request from {{user['email']}}</button>
                 <button class="choice" type="button" name="deny">Deny request from {{user['email']}}</button>
             </form>
