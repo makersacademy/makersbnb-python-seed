@@ -7,6 +7,7 @@ from lib.space_repository import SpaceRepository
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 from datetime import date, timedelta
+from markupsafe import escape
 
 def apply_space_routes(app):
 
@@ -25,14 +26,33 @@ def apply_space_routes(app):
     def post_new_space():
         connection = get_flask_database_connection(app)
         repository = SpaceRepository(connection)
-        # we need to figure out how to extract user_id from who is logged in, currently set to 1 in below line
-        space_id = repository.create(request.form['name'], request.form['description'], request.form['price'], 1)
-
+        error_messages = []
         date_repository = DateRepository(connection)
         start_date = str(request.form['start_date'])
         end_date = str(request.form['end_date'])
-        date1 = date.fromisoformat(start_date)
-        date2 = date.fromisoformat(end_date)
+        if request.form['name'] == '':
+            error_messages.append('Name is required')
+        if request.form['description'] == '':
+            error_messages.append('Description is required')
+        if request.form['price'] == '':
+            error_messages.append('Valid Price is required')    
+        else:
+            if float(request.form['price']) <= 0:
+                error_messages.append('Valid price is required')
+        if start_date == '':
+            error_messages.append('Start date is required')
+        if end_date == '':
+            error_messages.append('End date is required')
+        if start_date != '' and end_date != '':
+            date1 = date.fromisoformat(start_date)
+            date2 = date.fromisoformat(end_date)
+            if date1 > date2:
+                error_messages.append('End date must be after start date')
+        if len(error_messages) > 0:
+            return render_template('spaces/new.html', error_messages=error_messages)
+        # we need to figure out how to extract user_id from who is logged in, currently set to 1 in below line
+        space_id = repository.create(escape(request.form['name']), escape(request.form['description']), escape(request.form['price']), 1)
+
         date_diff = (date2 - date1).days
         for i in range(date_diff+1):
             new_date = Date(None, date1 + timedelta(days=i), False, space_id)

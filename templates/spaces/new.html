@@ -12,11 +12,10 @@
         <h2>Create New Space</h2>
         <form action="/spaces" method="post">
 
-
-            {% if errors %}
-                <p class="t-errors">
-                    There were errors with your submission: {{errors}}
-                </p>
+            {% if error_messages %}
+                <div class="description">
+                    There were errors with your submission: {{error_messages|join(', ')}}
+                </div>
             {% endif %}
 
             <div class="spaceinputs">
