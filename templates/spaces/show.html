@@ -2,30 +2,42 @@
 <html lang="en">
     <head>
         <title>The Space</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../static/style.css">
     </head>
     <body>
-        <h1>Space: {{space.name}}</h1>
-        <p>
+        <div class="topnav">
+            <h1 href="#home">Makers</h1>  
+        </div>
+        <h2>Space: {{space.name}}</h2>
+        <p class="description">
             Description: {{space.description}}
         </p>
-        <p>
-            Price: {{space.price}}
+        <p class="description">
+            Price per night: £{{space.price}}
         </p>
-        <h2>Available dates: </h2>
+        <h3>Available dates: </h3>
+        {% if error %}
+            <p class="description">
+                {{error}}
+            </p>
+        {% endif %}
         <form method="POST">
-            <ul>
+            <ul class="description">
             {% for date in space.dates %}
-                <p>
+                <div>
                     <label>
                         {{date.date}}
                         <input type="checkbox" name="selected_date" value="{{date.id}}">
                     </label>
-                </p>
+                </div>
             {% endfor %}   
             </ul>
+            <div class="description">
             <button type="submit">Request to book</button>
+            </div>
         </form>
-        <p>
+        <p class="description">
             <a href="/spaces">Go back to Spaces list</a>
         </p>
     </body>

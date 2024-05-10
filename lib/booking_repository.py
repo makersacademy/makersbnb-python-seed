@@ -69,11 +69,12 @@ class BookingRepository:
                 row["id"],
                 row["date_id"],
                 row["user_id"]
-            )
+        )
         space_name = row["name"]
         confirmed = row["confirmed"]
         bookings.append((booking, space_name, confirmed))
-        return bookings
+        return bookings if bookings else [("No bookings made for this space",)]
+
 
 
     

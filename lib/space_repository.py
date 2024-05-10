@@ -26,13 +26,16 @@ class SpaceRepository():
         return None
     
     def find_space_and_dates(self, space_id):
-        rows = self._connection.execute('SELECT * from spaces JOIN dates ON spaces.id = dates.space_id WHERE spaces.id = %s', (space_id,))
+        rows = self._connection.execute('SELECT * from spaces JOIN dates ON spaces.id = dates.space_id WHERE spaces.id = %s and dates.confirmed = False', (space_id,))
         dates = []
+        error_message = ''
         for row in rows:
             date = Date(row["id"], str(row["date"]), row["confirmed"], row["space_id"])
             dates.append(date)
+        if len(rows) == 0:
+            return 0, "No dates available"
         space = Space(rows[0]['space_id'], rows[0]['name'], rows[0]['description'], rows[0]['price'], rows[0]['user_id'], dates)
-        return space
+        return space, error_message
     
     def get_spaces_by_user(self, user_id):
         rows = self._connection.execute('SELECT * FROM spaces WHERE user_id = %s', (user_id,))
