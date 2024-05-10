@@ -22,18 +22,10 @@ def register():
         db_connection = get_flask_database_connection(app)
         username = request.form['username']
         password = request.form['password']
-
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
-        user = db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
-
-        if user:
-            session['username'] = username
-            return redirect(url_for('get_spaces'))
-        else:
-            return render_template('login.html', error='Invalid username or password')
-
-    return render_template('login.html')
+        db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+        return redirect(url_for('login'))
+    return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
