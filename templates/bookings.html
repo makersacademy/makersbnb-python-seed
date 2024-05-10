@@ -19,7 +19,7 @@
         <h2>Booking Requests Made</h2>
         <ul class="no-bullets">
             {% for booking, space_name, confirmed in user_booking_requests %}
-                <li>
+                <li class="description">
                     <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
                         Space: {{ space_name }},
                         Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
@@ -33,7 +33,7 @@
         <h2>Booking Requests Received</h2>
         <ul class="no-bullets">
             {% for booking, space_name, confirmed in requests_received %}
-                <li>
+                <li class="description">
                     <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
                         Space: {{ space_name }},
                         Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
