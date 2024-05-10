@@ -28,13 +28,15 @@ def get_home():
     space_list = repository.all()
     return render_template('home.html', spaces = space_list)
 
+
 # open sign up page
-@app.route('/sign_up')
+@app.route('/signup')
 def sign_up():
     return render_template("sign_up.html")
 
+
 # submit sign up info
-@app.route('/sign_up', methods = ['POST'])
+@app.route('/signup', methods = ['POST'])
 def sign_up_form():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
@@ -54,15 +56,17 @@ def sign_up_form():
 
     return redirect(url_for("get_home"))
 
+
 # Route for logging in as a user
 # Once logged in you can show logged in users different versions of a page by adding an if statement to check whether a user session exists:
-"""     if 'username' in session:
-        connection = get_flask_database_connection(app)
-        repository = SpaceRepository(connection)
-        space_list = repository.all()
-        return render_template('home.html', spaces = space_list, username=session['username'])
-    else:
-        return redirect(url_for('login')) """
+"""
+if 'username' in session:
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    space_list = repository.all()
+    return render_template('home.html', spaces = space_list, username=session['username'])
+else:
+    return redirect(url_for('login')) """
 # In the above example if a user session exists the user can access home, if the user is not logged in they are redirected to the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -81,59 +85,81 @@ def login():
             return redirect(url_for('login'))
     return render_template('login.html')
 
+
 # Route for logging out of a user session
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+
 @app.route('/requests', methods = ['GET'])
 def get_requests():
     connection = get_flask_database_connection(app)
     id = session['user_id']
-    requests = connection.execute(
-        "SELECT * from bookings JOIN spaces "\
+    requests_as_guest = connection.execute(
+        "SELECT * FROM bookings JOIN spaces "\
         "ON bookings.space_id = spaces.id "\
         "WHERE guest_id = %s",
         [id]
         )
-    responses = connection.execute(
-        "SELECT * from bookings JOIN spaces "\
+    requests_as_host = connection.execute(
+        "SELECT * FROM bookings JOIN spaces "\
         "ON bookings.space_id = spaces.id "\
         "WHERE bookings.host_id = %s",
         [id]
         )
-    return render_template("requests.html", requests=requests, responses=responses, id=id)
+    return render_template(
+        "requests.html",
+        requests_as_guest=requests_as_guest,
+        requests_as_host=requests_as_host,
+        id=id
+        )
 
-@app.route('/request/<id>', methods = ['GET'])
-def check_request(id):
-    if not session['username']:
+
+@app.route('/request/<booking_id>', methods = ['GET'])
+def check_request(booking_id):
+    if "username" not in session:
         return redirect(url_for('login'))
-    print(request.form)
     connection = get_flask_database_connection(app)
-    repo = BookingRepository(connection)
-    confirm = request.form.get("confirm")
-    deny = request.form.get("deny")
-    id = session['user_id']
-    date = connection.execute(
-        "SELECT booking_date, space_id FROM bookings WHERE id=%s",
-        [id]
+    booking_repo = BookingRepository(connection)
+    booking = booking_repo.find(booking_id)
+    space_repo = SpaceRepository(connection)
+    space = space_repo.find_space(booking.space_id)
+    guest_repo = UserRepository(connection)
+    guest = guest_repo.find_user_by_id(booking.guest_id)
+    other_requests = booking_repo.find_by_space_id(booking.space_id)
+    return render_template(
+        "request.html",
+        booking=booking,
+        space=space,
+        guest=guest,
+        other_requests=other_requests
         )
-    space_id  = connection.execute(
-        "SELECT space_id FROM bookings WHERE id=%s",
-        [id]
-        )
-    if confirm is not None:
-        repo.update(id, "approved")
-        connection.execute(
-            """UPDATE bookings SET booking_status='denied' WHERE booking_date=%s
-                AND host_id=%s AND space_id=%s""", [date, id, space_id])
-        return redirect(url_for('get_requests'))
-    if deny is not None:
-        repo.update(id, "denied")
-        return redirect(url_for('get_requests'))
-    return "ppppppppppp"
 
+
+@app.route("/request/<booking_id>", methods = ['POST'])
+def decide_request(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repo = BookingRepository(connection)
+    booking = booking_repo.find(booking_id)
+    # confirm = request.form.get("confirm")
+    # deny = request.form.get("deny")
+    user_id = session['user_id']
+    date = booking.booking_date
+    space_id  = booking.space_id
+    if request.form["booking_status"] == "approved":
+        booking_repo.update(booking_id, "approved")
+        connection.execute(
+            "UPDATE bookings SET booking_status='denied' "\
+            "WHERE id != %s AND booking_date = %s "\
+            "AND host_id = %s AND space_id = %s",
+            [booking_id, date, user_id, space_id]
+            )
+        return redirect(url_for('get_requests'))
+    if request.form["booking_status"] == "denied":
+        booking_repo.update(booking_id, "denied")
+        return redirect(url_for('get_requests'))
 
 
 def has_valid_data(form, connection):
@@ -158,7 +184,7 @@ def has_valid_data(form, connection):
 
 
 # open sign up page
-@app.route('/new_listing')
+@app.route('/newlisting')
 def new_listing():
     return render_template("new_listing.html")
 
@@ -169,6 +195,7 @@ def get_space(id):
     space_repo = SpaceRepository(connection)
     found_space = space_repo.find_space(id)
     return render_template("space.html", space = found_space)
+
 
 # submit sign up info
 @app.route('/space', methods = ['POST'])

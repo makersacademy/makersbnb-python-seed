@@ -12,7 +12,7 @@
         <div>
             <div>
                 <h2>Requests I have made</h2>
-                    {% for request in requests %}
+                    {% for request in requests_as_guest %}
                     <div class="request">
                         <h2 id="request_address">{{request['address']}}</h2>
                         <p id="request_description">{{request['description']}}</p>
@@ -22,7 +22,7 @@
             </div>
             <div>
                 <h2>Requests I have received</h2>
-                    {% for response in responses %}
+                    {% for response in requests_as_host %}
                     <div class="response">
                         <h2 id="response_address">{{response['address']}}</h2>
                         <p id="response_description">{{response['description']}}</p>
