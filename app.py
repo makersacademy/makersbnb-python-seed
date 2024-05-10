@@ -1,11 +1,11 @@
 import os
-from flask import Flask, request, render_template, url_for, redirect
+from flask import Flask, request, render_template, url_for, redirect, session
 from lib.database_connection import get_flask_database_connection
 import hashlib
 from lib.space_routes import apply_space_routes
 # Create a new Flask app
 app = Flask(__name__)
-
+app.secret_key = os.urandom(95)
 # == Your Routes Here ==
 
 # GET /index
@@ -22,10 +22,18 @@ def register():
         db_connection = get_flask_database_connection(app)
         username = request.form['username']
         password = request.form['password']
+
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
-        return redirect(url_for('login'))
-    return render_template('register.html')
+
+        user = db_connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+
+        if user:
+            session['username'] = username
+            return redirect(url_for('get_spaces'))
+        else:
+            return render_template('login.html', error='Invalid username or password')
+
+    return render_template('login.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -44,6 +52,10 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 from lib.space_routes import apply_space_routes
 apply_space_routes(app)
