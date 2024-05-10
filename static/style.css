@@ -2,8 +2,6 @@ body {
     font-size: 18px;
 }
 
-
-
 .topnav {
    margin: 0px 32px;
    display: flex;
@@ -67,6 +65,36 @@ input[type=submit] {
 p {
     margin-top: 10px;
     margin-bottom: 10px;
+    /* justify-self: center; */ 
+}
+
+.spaceData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.spaceBookingInfo {
+    border: 2px solid;
+    justify-content: flex-start;
+    padding: 10px;
+    padding-right: 180px;
+}
+
+button {
+    background-color: #ff944d;
+    color: #000;
+    padding: 15px;
+    margin: 15px 0 22px 0;
+    border: none;
+    cursor: pointer;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+=======
     /* justify-self: center; */
 }
 

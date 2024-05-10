@@ -17,20 +17,23 @@
     
     <h3>Request for 'Beautiful Relaxing Space'</h3>
 
-    <div>
+    <div class="spaceData">
         <p>Date: {{ booking.date }}</p> <!-- Replace with actual booking date -->
         <p>No of spaces booked: {{ booking.spaces }}</p> <!-- Replace with actual number of spaces booked -->
     </div>
-
-    <h4>Other Requests for this Space</h4>
     
     <div  class="regform">
-        <p>Other Space</p>
-        <p>Not confirmed</p>
-        <p>09/05/2024</p>
+        <h4>Other Requests for this Space</h4>
+        <div class="spaceBookingInfo">
+            <p>Other Space</p>
+            <p>Not confirmed</p>
+            <p>09/05/2024</p>
+        </div>
         <br>
-        <input type="submit" value="Confirm Request from username@gmail.com">
-        <input type="submit" value="Deny Request from username@gmail.com">
+        <div>
+            <button type="submit" class='requests'>Confirm Request from username@gmail.com</button>
+            <button type="submit" class='requests'>Deny Request from username@gmail.com</button>
+        </div>
     </div>
 </body>
 </html>
