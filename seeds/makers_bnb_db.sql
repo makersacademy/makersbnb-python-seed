@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS spaces (
     id SERIAL PRIMARY KEY,
-    space_address text UNIQUE,
-    space_description text,
+    address text UNIQUE,
+    description text,
     price decimal,
     host_id int,
     constraint fk_user foreign key(host_id)
