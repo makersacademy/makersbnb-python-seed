@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, flash, jsonify, url_for
+from flask import Flask, request, render_template, redirect, flash, jsonify, url_for, session
 from lib.database_connection import get_flask_database_connection
 from lib.space import Space
 from lib.space_repository import SpaceRepository
@@ -29,7 +29,7 @@ def get_home():
     return render_template('home.html', spaces = space_list)
 
 # open sign up page
-@app.route('/signup')
+@app.route('/sign_up')
 def sign_up():
     return render_template("sign_up.html")
 
@@ -73,10 +73,12 @@ def login():
         repo = UserRepository(connection)
         user = repo.find_by_username(username)
         if user and user.user_password == password:
+            session['user_id'] = user.id
             session['username'] = username
             return redirect(url_for('get_home'))
         else:
-            return 'Invalid username or password'
+            flash('Invalid username or password')  # It's better to use flash messages for errors
+            return redirect(url_for('login'))
     return render_template('login.html')
 
 # Route for logging out of a user session
