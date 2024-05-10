@@ -83,19 +83,17 @@ p {
     padding-right: 180px;
 }
 
-button {
+.requests {
     background-color: #ff944d;
     color: #000;
     padding: 15px;
     margin: 15px 0 22px 0;
     border: none;
     cursor: pointer;
-    width: 300px;
+    width: 300px !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
-=======
-    /* justify-self: center; */
 }
 
 
