@@ -39,7 +39,7 @@ CREATE TABLE bookings (
     CONSTRAINT fk_userID FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE
 );
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO users (email_address, password) VALUES ('matthew@gmail.com', 'Hello12345@');
+INSERT INTO users (email_address, password) VALUES ('matthew@gmail.com', '$2b$12$wuVZ7gFuaWwfeB8OdBsow.DrjAt30msLYkRMTlnSYZdhE5/Uwzp4.');
 INSERT INTO users (email_address, password) VALUES ('myrto@hotmail.com', '6789@Gkx');
 INSERT INTO users (email_address, password) VALUES ('constantine@smith.net', 'Password123!');
 INSERT INTO users (email_address, password) VALUES ('john@yahoo.com', 'Hello67£');
