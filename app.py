@@ -34,7 +34,7 @@ def sign_up():
     return render_template("sign_up.html")
 
 # submit sign up info
-@app.route('/signup', methods = ['POST'])
+@app.route('/sign_up', methods = ['POST'])
 def sign_up_form():
     connection = get_flask_database_connection(app)
     repo = UserRepository(connection)
