@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Booking</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="topnav">
+        <h1 href="#home">Makers</h1>
+        <div>
+            <a href="/spaces">Spaces</a>
+            <a href="#Requests">Requests</a>
+            <a href="#Signout">Signout</a>
+        </div>
+    </div>
+    
+    <h3>Request for 'Beautiful Relaxing Space'</h3>
+
+    <div class="spaceData">
+        <p>Date: {{ booking.date }}</p> <!-- Replace with actual booking date -->
+        <p>No of spaces booked: {{ booking.spaces }}</p> <!-- Replace with actual number of spaces booked -->
+    </div>
+    
+    <div  class="regform">
+        <h4>Other Requests for this Space</h4>
+        <div class="spaceBookingInfo">
+            <p>Other Space</p>
+            <p>Not confirmed</p>
+            <p>09/05/2024</p>
+        </div>
+        <br>
+        <div>
+            <button type="submit" class='requests'>Confirm Request from username@gmail.com</button>
+            <button type="submit" class='requests'>Deny Request from username@gmail.com</button>
+        </div>
+    </div>
+</body>
+</html>
