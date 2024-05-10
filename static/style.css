@@ -94,8 +94,6 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: center;
-=======
-    /* justify-self: center; */
 }
 
 
