@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
-
+from lib.booking_repository import *
 # Tests for your routes go here
 
 # """
@@ -75,7 +75,7 @@ def test_list_a_space_link_from_spaces_page(page, test_web_address):
     page.click("text='Log in'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a Space")
-    page.click("text='List a Space'")
+    page.click("text='Create A Space'")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("List a Space")
 
@@ -88,7 +88,7 @@ def test_list_a_space_form(page, test_web_address):
     page.click("text='Log in'")
     title_element = page.locator("h1")
     expect(title_element).to_have_text("Book a Space")
-    page.click("text='List a Space'")
+    page.click("text='Create A Space'")
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("List a Space")
     page.fill("input[name=name]", "Beautiful Space")
@@ -101,7 +101,8 @@ def test_list_a_space_form(page, test_web_address):
     expect(h1_tag).to_have_text("Book a Space")
 
 
-def test_book_a_space_has_spaces_link(page, test_web_address):
+def test_book_a_space_has_spaces_link(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name=email]", "123@gmail.com")
@@ -112,7 +113,8 @@ def test_book_a_space_has_spaces_link(page, test_web_address):
     expect(h1_tag).to_have_text("Book a Space")
 
 
-def test_book_a_space_has_requests_link(page, test_web_address):
+def test_book_a_space_has_requests_link(page, test_web_address, db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/login")
     page.fill("input[name=email]", "123@gmail.com")
@@ -143,3 +145,32 @@ def test_book_a_space_has_signout_link(page, test_web_address):
 #     error_tag = page.locator('.errors')
 #     expect(error_tag).to_have_text(
 #         "There were errors in your submission")
+
+def test_spaces_display_chosen_date(page, test_web_address):
+    page.set_default_timeout(1000)
+    page.goto(f"http://{test_web_address}/1/spaces")
+    page.fill("input[name='Pick A Date']", "2024-07-09")
+    page.screenshot(path='screenshot.png')
+    page.click('input[type="submit"][value="List Available Spaces"]')
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text("Available Spaces on 2024-07-09")
+
+
+def test_spaces_display_booking_confirmation(page, test_web_address,db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    page.set_default_timeout(1000)
+    bookingrepo = BookingRepository(db_connection)
+    page.goto(f"http://{test_web_address}/1/spaces")
+    page.fill("input[name='Pick A Date']", "2026-10-27")
+    #page.screenshot(path='screenshot.png')
+    page.click('input[type="submit"][value="List Available Spaces"]')
+    h3_tag = page.locator("h3")
+    expect(h3_tag).to_have_text("Available Spaces on 2026-10-27")
+    page.click('input[type="submit"][value="Book"]')
+    #page.screenshot(path='screenshot.png')
+    page.click('input[type="submit"][value="Confirm Booking"]')
+    new_booking = Booking(5,'2026-10-27',1,4)
+    assert new_booking == bookingrepo.find_by_id(5)
+    
+    
+

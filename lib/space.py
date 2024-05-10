@@ -3,10 +3,10 @@ class Space():
     def __init__(self, id, title,price, start_date, end_date, ownerid):
             self.id = id
             self.title = title
-            self.start_date = datetime.strptime(str(start_date), '%Y-%m-%d').date()
-            self.end_date = datetime.strptime(str((end_date)), '%Y-%m-%d').date()
+            self.start_date = start_date
+            self.end_date = end_date
             self.ownerid = ownerid
-            self.price = price
+            self.price = float(price)
     
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
