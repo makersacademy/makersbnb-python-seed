@@ -8,7 +8,7 @@ class SpaceRepository():
         rows = self._connection.execute('SELECT * from spaces')
         spaces = []
         for row in rows:
-            space = Space(row["id"], row["space_address"], row["space_description"], row["price"], row["host_id"])
+            space = Space(row["id"], row["address"], row["description"], row["price"], row["host_id"])
             spaces.append(space)
         return spaces
     
