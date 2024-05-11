@@ -3,24 +3,20 @@
     <head>
         <title>new listing</title>
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet"  type="text/css"  href="/static/new_listing.css" >
     </head>
     <body>
-        <!--homepage button-->
         <form action="/home" method="get">
             <button type="submit">Homepage</button>
         </form>
 
-        <!--login button-->
         <form action="/log_in" method="get">
             <button type="submit">Log in</button>
         </form>
 
-        <!--new listin form-->
         <h1>List a space</h1>
         <form action="/space" method="post">
             <label for="address">Address:</label><br>

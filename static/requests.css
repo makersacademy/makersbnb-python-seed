@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    background-image: url(./images/house_reflection.jpg);
+    background-size: cover;
+    color: #f9f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #1f357e;
+}    
+
+/* Paragraph Styles */
+p {
+    margin-bottom: 50px;
+}
+
+/* Request and Response Styles */
+.request,
+.response {
+    border: 1px solid #0e0e0e;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    /* Background color for requests and responses */
+}
+
+/* Request Title Styles */
+.request h2,
+.response h2 {
+    margin-top: 20px;
+}
+
+/* Request/Response Content Styles */
+.request p,
+.response p {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Price Styles */
+#request_price,
+#response_price {
+    font-weight: bold;
+    font-size: 18px;
+}
