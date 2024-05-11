@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bookings List</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="topnav">
+        <h1 href="/index">Makers</h1>
+        <div>
+            <a href="/spaces">Spaces</a>
+            <a href="/bookings">Bookings</a>
+        </div>
+    </div>
+
+    <div class="centered">
+        <h2>Booking Requests Made</h2>
+        <ul class="no-bullets">
+            {% for booking, space_name, confirmed in user_booking_requests %}
+                <li>
+                    <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
+                        Space: {{ space_name }},
+                        Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="centered">
+        <h2>Booking Requests Received</h2>
+        <ul class="no-bullets">
+            {% for booking, space_name, confirmed in requests_received %}
+                <li>
+                    <a href="/confirm_booking/{{ booking.id }}"> <!-- Link to confirmation page -->
+                        Space: {{ space_name }},
+                        Confirmation Status: {% if confirmed %} Confirmed {% else %} Not Confirmed {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
