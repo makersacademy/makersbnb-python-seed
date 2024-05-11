@@ -45,11 +45,11 @@ def sign_up_form():
     
     # read form data to generate new record for "users" table
     save_username = request.form.get('username')
-    save_user_passwor = request.form.get('user_password')
+    save_user_password = request.form.get('user_password')
     save_email = request.form.get('email')
     save_full_name = request.form.get('full_name')
     
-    new_user = User(None, save_username, save_user_passwor, save_email, save_full_name)
+    new_user = User(None, save_username, save_user_password, save_email, save_full_name)
     repo.add_user(new_user)
 
     return redirect(url_for("get_home"))
@@ -64,7 +64,7 @@ def sign_up_form():
     else:
         return redirect(url_for('login')) """
 # In the above example if a user session exists the user can access home, if the user is not logged in they are redirected to the login page
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/loginpage', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -78,8 +78,8 @@ def login():
             return redirect(url_for('get_home'))
         else:
             flash('Invalid username or password')  # It's better to use flash messages for errors
-            return redirect(url_for('login'))
-    return render_template('login.html')
+            return redirect(url_for('loginpage'))
+    return render_template('loginpage.html')
 
 # Route for logging out of a user session
 @app.route('/logout')

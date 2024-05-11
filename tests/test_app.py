@@ -21,7 +21,7 @@ We can render the sign up page
 """
 def test_get_sign_up_page(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/signup")
+    page.goto(f"http://{test_web_address}/sign_up")
     # We look at the <h1> tag
     h1_tag = page.locator("h1")
     # We assert that it has the text "Register"

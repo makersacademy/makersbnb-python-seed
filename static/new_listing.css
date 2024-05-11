@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    background-image: url(./images/watervilla.jpg);
+    background-size: cover;
+    ;
+
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.space_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 100px;
+    position: relative;
+    bottom: 0;
+}
+
+.space {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#space_address {
+    font-size: 20px;
+    color: #0f0e01;
+    margin-bottom: 10px;
+}
+
+#space_description {
+    margin-bottom: 10px;
+}
+
+#space_price {
+    font-weight: bold;
+}
