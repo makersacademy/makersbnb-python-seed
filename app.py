@@ -186,7 +186,7 @@ def has_valid_data(form, connection):
 # open sign up page
 @app.route('/newlisting')
 def new_listing():
-    return render_template("new_listing.html")
+    return render_template("newlisting.html")
 
 
 @app.route("/space/<id>", methods = ["GET"])
