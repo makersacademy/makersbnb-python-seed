@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List a Space| MakersBnB</title>
+</head>
+
+<body>
+    <div>
+        <a href="/spaces"> Spaces</a> |
+        <a href="/requests"> Requests</a> |
+        <a href="/"> Sign out</a>
+    </div>
+    <h1>List a Space</h1>
+
+    <form action="/1/spaces/new" method="post">
+        {% if errors %}
+        <h2 class="errors">
+            Your form contained some errors: {{errors}}
+        </h2>
+        {% endif %}
+        <label for="title">Title</label>
+        <br>
+        <input type="text" name="title" id="title">
+
+        </p>
+
+        <p>
+            <label for="price_per_night">Price per night (£)</label>
+            <br>
+            <input type="text" name="price_per_night" id="price_per_night">
+        </p>
+
+        <p>
+            <label for="available_from">Available from (YYYY-MM-DD)</label>
+            <br>
+            <input type="text" name="available_from" id="available_from">
+        </p>
+        <p>
+            <label for="available_to">Available to (YYYY-MM-DD)</label>
+            <br>
+            <input type="text" name="available_to" id="available_to">
+        </p>
+        <p>
+            <input type="submit" value="List my Space">
+
+        </p>
+    </form>
+</body>
+
+</html>

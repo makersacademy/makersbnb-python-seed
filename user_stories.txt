@@ -1,0 +1,19 @@
+User Stories:
+MVP:
+
+As a admin, I would like to be able to store listings
+and bookings and accounts
+
+As a User so that i can keep track of stuff. 
+I want to be able to Sign Up for an account
+
+As a User so that i can add stuff.
+ I want to be able to add spaces along with price per night
+
+As a User I would like to be able to 
+see whether a space is available on a chosen day
+
+As a Signed in User I would like to be able to hire a space for one night
+
+
+ADD ONS:
