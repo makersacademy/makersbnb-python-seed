@@ -30,10 +30,51 @@ CREATE TABLE properties (
         on delete cascade
 );
 
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    property_id INT,
+    user_id INT,
+    start_date DATE,
+    end_date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (property_id) REFERENCES properties(id),
+    UNIQUE (property_id, start_date, end_date)  -- Ensure no overlapping bookings for the same location
+);
+
+-- Then we add the FUNCTIONS and TRIGGERS to our database --
+
+-- This creates the database function to check for our overlapping booking --
+CREATE OR REPLACE FUNCTION prevent_overlapping_bookings()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Check for overlapping bookings
+    IF EXISTS (
+        SELECT 1
+        FROM Bookings
+        WHERE property_id = NEW.property_id
+            AND NEW.start_date < end_date
+            AND NEW.end_date > start_date
+        LIMIT 1 -- Early exit if any match is found
+    ) THEN
+        -- Raise an exception if an overlapping booking is found
+        RAISE EXCEPTION 'Booking conflict detected for location %', NEW.property_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- This creates a TRIGGER for our database that activates before we INSERT or UPDATE our Bookings table
+CREATE TRIGGER check_booking_conflict
+BEFORE INSERT OR UPDATE ON Bookings
+FOR EACH ROW
+EXECUTE FUNCTION prevent_overlapping_bookings();
+
+
 -- Finally, we add any records that are needed for the tests to run
 INSERT INTO users (name, password) VALUES ('charlie_roberts23@hotmail.co.uk', 'Password!23');
 INSERT INTO users (name, password) VALUES ('taconlin@hotmail.co.uk', 'Password!24');
 INSERT INTO users (name, password) VALUES ('joshuadosanjh@gmail.com', 'Qwerty?09');
+INSERT INTO users (name, password) VALUES ('charlieroberts201@hotmail.co.uk', 'passWord?12');
 
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property1', 'This place is nice', 'test1', '999', '1');
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property2', 'This place is okay', 'test2', '888', '1');
@@ -41,3 +82,8 @@ INSERT INTO properties (property, description, location, cost, user_id) VALUES (
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property4', 'This place is cool', 'test4', '666', '2');
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property5', 'This place is wicked', 'test5', '555', '3');
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property6', 'This place is rubbish', 'test6', '444', '3');
+
+INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (1,2,'2025-01-01', '2025-01-08');
+INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (2,3,'2025-01-01','2025-01-08');
+INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (3,1,'2025-02-01','2025-02-08');
+INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (4,4,'2025-02-01','2025-02-08');
