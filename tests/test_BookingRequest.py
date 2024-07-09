@@ -1,19 +1,15 @@
 from lib.BookingRequest import BookingRequest
-
+from datetime import date
 """
 Simple property constructs with an id etc.
 """
 def test_property_request_constructs():
-    propReq = BookingRequest('08-Jul-2024', '09-Jul-2024', 1, 1)
+    propReq = BookingRequest(date(2024,7,8), date(2024,7,9),1,1 )
     assert propReq.property_id == 1
-    assert propReq.customer_id == 1
+    assert propReq.user_id == 1
     assert propReq.status == 'PENDING'
     
 """
 Call the state change methods.
 """
-def test_property_request_constructs():
-    propReq = BookingRequest('08-Jul-2024', '09-Jul-2024', 1, 1)
-    assert propReq.property_id == 1
-    assert propReq.customer_id == 1
-    # TODO : Change above.
+# TODO: Need to review these unit tests.
