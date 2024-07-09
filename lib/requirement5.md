@@ -21,4 +21,4 @@ approve // check that the dates are availble before a commit.
 constructor(startDate, endDate, customer_id, property_id)
 
 
-TODO : Confirm that the customer and owner classes are defined **Can decide on 1 or 2 classes later on. ORM vs Repository classes **
+Confirm that the customer and owner classes are defined **Can decide on 1 or 2 classes later on. ORM vs Repository classes **
