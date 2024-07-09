@@ -13,19 +13,19 @@ app = Flask(__name__)
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5001/index
-@app.route('/index', methods=['GET'])
-def get_index():
-    return render_template('index.html')
+# @app.route('/index', methods=['GET'])
+# def get_index():
+#     return render_template('index.html')
 
-# GET all listings
-@app.route('/listings', methods=['GET'])
-def get_listings():
-    return render_template('listings.html')
+# # GET all listings
+# @app.route('/listings', methods=['GET'])
+# def get_listings():
+#     return render_template('listings.html')
 
-# GET all booking
-@app.route('/booking', methods=['GET'])
-def get_booking():
-    return render_template('booking.html')
+# # GET all booking
+# @app.route('/booking', methods=['GET'])
+# def get_booking():
+#     return render_template('booking.html')
 
 @app.route("/listings", methods=["POST"])
 def post_listing():
@@ -35,6 +35,13 @@ def post_listing():
     listing = repository.create(listing)
     return "Listing added!", 200
 
+@app.route("/listings", methods=["GET"])
+def show_listings():
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    return "\n".join([
+        str(listing) for listing in repository.all()
+    ]) 
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
