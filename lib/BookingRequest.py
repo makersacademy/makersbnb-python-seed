@@ -1,6 +1,6 @@
 class BookingRequest: 
 
-    def __init__(self, property_id, user_id, start_date, end_date):
+    def __init__(self, start_date, end_date, property_id, user_id):
         self.start_date = start_date
         self.end_date = end_date
         self.status = 'PENDING' # Todo Another data type?
