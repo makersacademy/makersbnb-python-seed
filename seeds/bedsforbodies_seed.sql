@@ -4,12 +4,12 @@
 -- database state, and that tests don't interfere with each other.
 
 -- First, we must delete (drop) all our tables
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS users_id_seq;
-DROP TABLE IF EXISTS properties;
-DROP SEQUENCE IF EXISTS properties_id_seq;
 DROP TABLE IF EXISTS bookings;
 DROP SEQUENCE IF EXISTS bookings_id_seq;
+DROP TABLE IF EXISTS properties;
+DROP SEQUENCE IF EXISTS properties_id_seq;
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS users_id_seq;
 
 
 -- Then, we recreate them
