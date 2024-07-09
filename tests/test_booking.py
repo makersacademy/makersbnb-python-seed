@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 from lib.models.booking import *
 from datetime import datetime
 
@@ -23,4 +21,3 @@ def test_str_repr():
 def test_eq():
     booking = Booking(1, 1, datetime(2024, 1, 1), datetime(2024, 1, 3), True, 455.50, datetime(2024, 1, 1))
     assert booking == Booking(1, 1, datetime(2024, 1, 1), datetime(2024, 1, 3), True, 455.50, datetime(2024, 1, 1))
->>>>>>> e3998440b4b4ac986f7155f490ddc71a50c54719
