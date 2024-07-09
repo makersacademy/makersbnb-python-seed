@@ -1,6 +1,8 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.listing import Listing
+from lib.listing_repository import ListingRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -24,6 +26,15 @@ def get_listings():
 @app.route('/booking', methods=['GET'])
 def get_booking():
     return render_template('booking.html')
+
+@app.route("/listings", methods=["POST"])
+def post_listing():
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    listing = Listing(None, request.form["name"], request.form["description"], request.form["price_per_night"], request.form["available_from"], request.form["available_to"])
+    listing = repository.create(listing)
+    return "Listing added!", 200
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
