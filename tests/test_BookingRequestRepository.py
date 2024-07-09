@@ -13,6 +13,6 @@ def test_get_BookingRequests (db_connection):
         BookingRequest(date(2025,1,1), date(2025,1,8), 1, 2),
         BookingRequest(date(2025,1,1), date(2025,1,8), 2, 3),
         BookingRequest(date(2025,2,1), date(2025,2,8), 3, 1),
-        BookingRequest(date(2025,2,1), date(2025,2,8), 4, 4)
+        BookingRequest(date(2025,2,1), date(2025,2,8), 5, 4)
     ]
 
