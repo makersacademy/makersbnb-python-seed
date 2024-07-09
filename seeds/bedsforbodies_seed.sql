@@ -8,6 +8,9 @@ DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS users_id_seq;
 DROP TABLE IF EXISTS properties;
 DROP SEQUENCE IF EXISTS properties_id_seq;
+DROP TABLE IF EXISTS bookings;
+DROP SEQUENCE IF EXISTS bookings_id_seq;
+
 
 -- Then, we recreate them
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
@@ -23,13 +26,14 @@ CREATE TABLE properties (
     property VARCHAR(255),
     description VARCHAR,
     location VARCHAR,
-    cost INTEGER
-    user_id INTEGER
+    cost INTEGER,
+    user_id INTEGER,
     constraint fk_user foreign key(user_id)
         references users(id)
         on delete cascade
 );
 
+CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     property_id INT,
