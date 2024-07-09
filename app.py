@@ -35,6 +35,13 @@ def post_listing():
     listing = repository.create(listing)
     return "Listing added!", 200
 
+@app.route("/listings", methods=["GET"])
+def show_listings():
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    return "\n".join([
+        str(listing) for listing in repository.all()
+    ]) 
 
 
 # These lines start the server if you run this file directly
