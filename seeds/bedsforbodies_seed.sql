@@ -90,4 +90,4 @@ INSERT INTO properties (property, description, location, cost, user_id) VALUES (
 INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (1,2,'2025-01-01', '2025-01-08');
 INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (2,3,'2025-01-01','2025-01-08');
 INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (3,1,'2025-02-01','2025-02-08');
-INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (4,4,'2025-02-01','2025-02-08');
+INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (5,4,'2025-02-01','2025-02-08');
