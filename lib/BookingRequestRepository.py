@@ -7,18 +7,18 @@ class BookingRequestRepository():
         self.connection = connection
 
     def all(self):
-        rows = self._connection.execute('SELECT * from REQUESTS') # Need SQL from Charlie and Tara.
+        rows = self._connection.execute('SELECT * from bookings') # Need SQL from Charlie and Tara.
         booking_requests = []
         for row in rows:
-            br =  BookingRequest(row["start_date"], row["end_date"], row["property_id"], row["customer_id"])
+            br =  BookingRequest(row["property_id"], row["user_id"],row["start_date"], row["end_date"])
             booking_requests.append(br)
         return booking_requests
     
     def create(self, BookingRequest):
         # Need SQL from Charlie and Tara.
         rows = self._connection.execute(
-            'INSERT INTO booking_request (start_date, end_date, property_id, customer_id) VALUES (%s, %s, %s, %s) Returning Id', 
-            [BookingRequest.start_date, BookingRequest.end_date, BookingRequest.property_id, BookingRequest.customer_id])
+            'INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (%s, %s, %s, %s)', 
+            [BookingRequest.property_id, BookingRequest.user_id, BookingRequest.start_date, BookingRequest.end_date])
         # BookingRequest.id = rows[0]['id'] - Not sure if we need this yet.
         return None
     
@@ -26,7 +26,7 @@ class BookingRequestRepository():
     def delete(self, booking_request_id):
         # Need SQL from Charlie and Tara.
         self._connection.execute(
-            'DELETE FROM REQUESTS WHERE id = %s', [booking_request_id])
+            'DELETE FROM bookings WHERE id = %s', [booking_request_id])
         return None
     
     # Find bookingReferences by their requester.
@@ -35,9 +35,9 @@ class BookingRequestRepository():
         booking_requests= []
         # Need SQL from Charlie and Tara.
         rows = self._connection.execute(
-            'SELECT * from REQUESTS WHERE customer_id = %s', [customer_id])
+            'SELECT * from bookings WHERE customer_id = %s', [customer_id])
         for row in rows:
-            br =  BookingRequest(row["start_date"], row["end_date"], row["property_id"], row["customer_id"])
+            br =  BookingRequest(row["property_id"], row["user_id"], row["start_date"], row["end_date"])
             booking_requests.append(br)
         return booking_requests
     
@@ -47,8 +47,8 @@ class BookingRequestRepository():
         booking_requests= []
         # Need SQL from Charlie and Tara.
         rows = self._connection.execute(
-            'SELECT * from REQUESTS WHERE property_id = %s', [property_id])
+            'SELECT * from bookings WHERE property_id = %s', [property_id])
         for row in rows:
-            br =  BookingRequest(row["start_date"], row["end_date"], row["property_id"], row["customer_id"])
+            br =  BookingRequest(row["property_id"], row["user_id"], row["start_date"], row["end_date"])
             booking_requests.append(br)
         return booking_requests
