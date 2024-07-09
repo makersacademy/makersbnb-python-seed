@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 
+from lib.BookingRequestRepository import BookingRequestRepository
+
 # Create a new Flask app
 app = Flask(__name__)
 
@@ -34,8 +36,11 @@ def list_new_property():
 # See requests that I've made and received so far.
 @app.route('/requests', methods=['GET'])
 def get_requests():
-    return render_template('requests.html')
-
+    Connection = get_flask_database_connection(app)
+    repository = BookingRequestRepository(Connection)
+    bookings_list = repository.all()
+    print(bookings_list) # TODO remove
+    return render_template('requests.html', bookings_list = bookings_list)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

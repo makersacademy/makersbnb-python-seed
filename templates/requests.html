@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>MakersBnB - Spaces</title>
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="/static/style.css">
+        <meta charset="utf-8">
     </head>
     <body>
-        <p>Here you'll see a list of requests which you've made as a customer and also requests you've received as a property owner.</p>
+        <h1>Bookings list</h1>
+        <p>blah. blah... blah.... </p>
+        {% for item in bookings_list %}
+            <div>Start date : {{item.start_date}} End date: {{item.end_date}} Property id: {{item.property_id}} Customer ID: {{item.customer_id}}</div>
+        {% endfor %}
+        <p>End of page.</p>
     </body>
 </html>
