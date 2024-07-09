@@ -40,8 +40,8 @@ CREATE TABLE bookings (
     user_id INT,
     start_date DATE,
     end_date DATE,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (property_id) REFERENCES properties(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
     UNIQUE (property_id, start_date, end_date)  -- Ensure no overlapping bookings for the same location
 );
 
