@@ -40,8 +40,8 @@ def show_listings():
     connection = get_flask_database_connection(app)
     repository = ListingRepository(connection)
     listings = repository.all()
-    print(listings)
     return render_template("listings.html", listings=listings)
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
