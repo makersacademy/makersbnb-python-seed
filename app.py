@@ -3,6 +3,7 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 
 from lib.BookingRequestRepository import BookingRequestRepository
+from lib.BookingRequest import BookingRequest
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -35,6 +36,8 @@ def get_spaces():
 def list_new_property():
     return render_template('spaces_new.html')
 
+# BOOKING REQUESTS
+
 # See requests that I've made and received so far.
 @app.route('/requests', methods=['GET'])
 def get_requests():
@@ -42,6 +45,14 @@ def get_requests():
     repository = BookingRequestRepository(Connection)
     bookings_list = repository.all()
     return render_template('requests.html', bookings_list = bookings_list)
+
+# Get details for a booking and change details.
+@app.route('/booking_detail/<id>', methods=['GET'])
+def get_booking_detail(id):
+    Connection = get_flask_database_connection(app)
+    repository = BookingRequestRepository(Connection)
+    booking_details = repository.get_request_detail(id)
+    return render_template('booking_detail.html', booking_details = booking_details)
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
