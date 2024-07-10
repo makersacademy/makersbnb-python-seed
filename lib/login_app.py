@@ -36,16 +36,17 @@ app = flask.Flask(__name__)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
-# user_list = DatabaseConnection.execute('SELECT name FROM users', [])
-# users = [user['name'] for user in user_list]
+
+database_connection = DatabaseConnection()
+database_connection.connect()
+user_list = database_connection.execute('SELECT name FROM users',[])
+users = [user['name'] for user in user_list]
 
 def list_of_users():
     database_connection = DatabaseConnection()
     database_connection.connect()
     user_list = database_connection.execute('SELECT name FROM users',[])
     users = [user['name'] for user in user_list]
-    print('==> LIST OF USERS')
-    print(users)    
     return users
 
 
@@ -68,6 +69,7 @@ def request_loader(request):
     user = User()
     user.name = email
     return user
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
