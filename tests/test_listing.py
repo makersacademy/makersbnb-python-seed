@@ -17,7 +17,7 @@ Formatting to string
 '''
 def test_listing_formats_to_string_correctly():
     listing = Listing(1, "testname", "testdescription", 100, "2021-01-01", "2021-01-02")
-    assert str(listing) == "User(1, testname, testdescription, 100, 2021-01-01, 2021-01-02)"
+    assert str(listing) == "Listing:(1, testname, testdescription, 100, 2021-01-01, 2021-01-02)"
 
 '''
 Check to see two identical listings are equal

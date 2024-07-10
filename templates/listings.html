@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Available Listings</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>Find your dream stay</h1>
+    <ul>
+        {% for listing in listings %}
+        <li>
+            <p class="t-name">Name: {{listing.name}}</p>
+            <p class="t-description">About this home: {{listing.description}}</p>
+            <p class="t-price-per-night">Price per night: £{{listing.price_per_night}}</p>
+            <p class="t-available-from">Availble from: {{listing.available_from}}</p>
+            <p class="t-available-to">Available to: {{listing.available_to}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
