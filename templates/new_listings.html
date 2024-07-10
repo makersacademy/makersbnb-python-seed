@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Listings</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>New Listing</h1>
+    <!-- This creates a form that will submit to POST /books -->
+    <form action="/listings" method="post">
+
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+        <!-- If so, we show them. -->
+        <p class="t-errors">
+            There were errors with your submission: {{ errors }}
+        </p>
+        {% endif %}
+
+        <p>
+            <!-- These `label` tags are important for accessibility -->
+            <label for="name">Name</label>
+
+            <!-- The `type` attribute says what kind of field this is -->
+            <!-- The `name` attribute says what parameter name should be sent to the server -->
+            <!-- The `id` field here is used to link it to the `for` tag in the label -->
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description">
+        </p>
+        <p>
+            <label for="price_per_night">Price per night</label>
+            <input type="text" name="price_per_night" id="price_per_night">
+        </p>
+        <p>
+            <label for="available_from">Available from</label>
+            <input type="text" name="available_from" id="available_from">
+        </p>
+        <p>
+            <label for="available_to">Available to</label>
+            <input type="text" name="available_to" id="available_to">
+        </p>
+        <p>
+            <!-- `type` is submit here, to indicate it is a button -->
+            <!-- `value` is used as the button's text -->
+            <input type="submit" value="Create new listing">
+        </p>
+    </form>
+</body>
+
+</html>

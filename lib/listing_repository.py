@@ -13,8 +13,11 @@ class ListingRepository:
         return Listing(row["id"], row["name"], row["description"], row["price_per_night"], row["available_from"], row["available_to"])
     
     def create(self, listing):
-        self._connection.execute('INSERT INTO listings (name, description, price_per_night, available_from, available_to) VALUES (%s, %s, %s, %s, %s)', [listing.name, listing.description, listing.price_per_night, listing.available_from, listing.available_to])
-        return None
+        rows = self._connection.execute('INSERT INTO listings (name, description, price_per_night, available_from, available_to) VALUES (%s, %s, %s, %s, %s) RETURNING id', [listing.name, listing.description, listing.price_per_night, listing.available_from, listing.available_to])
+        row = rows[0]
+        listing.id = row["id"]
+        return listing
+    
     
     def delete(self, id):
         self._connection.execute('DELETE FROM listings WHERE id = %s', [id])
