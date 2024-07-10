@@ -23,13 +23,11 @@ How to store a session locally when a user logs in.
 ====
 """
 
-
-from database_connection import DatabaseConnection
+from lib.database_connection import DatabaseConnection
 from lib.user import User
 import psycopg
 import flask
 import flask_login
-
 
 
 app = flask.Flask(__name__)
@@ -37,8 +35,19 @@ app = flask.Flask(__name__)
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-user_list = DatabaseConnection.execute('SELECT name FROM users')
-users = [user['name'] for user in user_list]
+
+# user_list = DatabaseConnection.execute('SELECT name FROM users', [])
+# users = [user['name'] for user in user_list]
+
+def list_of_users():
+    database_connection = DatabaseConnection()
+    database_connection.connect()
+    user_list = database_connection.execute('SELECT name FROM users',[])
+    users = [user['name'] for user in user_list]
+    print('==> LIST OF USERS')
+    print(users)    
+    return users
+
 
 @login_manager.user_loader
 def user_loader(email):
