@@ -2,14 +2,35 @@
 <html>
     <head>
         <title>MakersBnB - Spaces</title>
-        <link rel="stylesheet" href="/static/style.css" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-        <h1> All Properties: </h1>
+        <h1> Book a space: </h1>
+        <a href="/spaces/new"><button type=button>List a space</button></a>
+        <form>
+            <p>
+                <label for="Available from">Available from</label>
+                <input type="text" name="Available From" id="Available from" >
+
+                <label for="Available to">Available to</label>
+                <input type="text" name="Available To" id="Available to" >
+
+                <button type=button>List Spaces</button>
+            </p>
+
+
         <p>Here you'll see a list of spaces where you can book a property.</p>
         {% for item in test_list %}
             <div>{{item[2]}}: {{item[1]}} - {{item[3]}} <br> £{{item[4]}} <br> listed by {{item[0][0].name}} <br> <br></div>
         {% endfor %}
+
+    
     </body>
 </html>
+
+#button to take you to /spaces/new 'list a space' DONE
+#forms for available from and available to
+#button that returns list of all available spaces 'list spaces'
+#once property is clicked - takes you to booking page with available dates
