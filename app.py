@@ -17,11 +17,6 @@ app = Flask(__name__)
 # def get_index():
 #     return render_template('index.html')
 
-## GET all listings
-@app.route('/listings', methods=['GET'])
-def get_listings():
-    return render_template('listings.html')
-
 # # GET all booking
 # @app.route('/booking', methods=['GET'])
 # def get_booking():

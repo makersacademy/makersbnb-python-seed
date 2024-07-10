@@ -8,17 +8,15 @@
 
 <body>
     <h1>Find your dream stay</h1>
-    <ul>
-        {% for listing in listings %}
-        <li>
-            <p class="t-name">Name: {{listing.name}}</p>
-            <p class="t-description">About this home: {{listing.description}}</p>
-            <p class="t-price-per-night">Price per night: £{{listing.price_per_night}}</p>
-            <p class="t-available-from">Availble from: {{listing.available_from}}</p>
-            <p class="t-available-to">Available to: {{listing.available_to}}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    {% for listing in listings %}
+    <div>
+        <p class= "t-name"><strong>{{listing.name}}</strong></p>
+        <p class= "t-description">{{listing.description}}</p>
+        <p class= "t-price-per-night"><strong>£{{listing.price_per_night}} per night</strong></p>
+        <p class= "t-available-from">Available from: {{listing.available_from}}</p>
+        <p class= "t-available-to">Available to: {{listing.available_to}}</p>
+    </div>
+    {% endfor %}
 </body>
 
 </html>
