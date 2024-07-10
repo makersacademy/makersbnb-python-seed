@@ -40,6 +40,7 @@ CREATE TABLE bookings (
     user_id INT,
     start_date DATE,
     end_date DATE,
+    status VARCHAR,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
     UNIQUE (property_id, start_date, end_date)  -- Ensure no overlapping bookings for the same location
@@ -69,7 +70,7 @@ $$ LANGUAGE plpgsql;
 
 -- This creates a TRIGGER for our database that activates before we INSERT or UPDATE our Bookings table
 CREATE TRIGGER check_booking_conflict
-BEFORE INSERT OR UPDATE ON Bookings
+BEFORE INSERT ON Bookings
 FOR EACH ROW
 EXECUTE FUNCTION prevent_overlapping_bookings();
 
@@ -87,7 +88,7 @@ INSERT INTO properties (property, description, location, cost, user_id) VALUES (
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property5', 'This place is wicked', 'test5', '555', '3');
 INSERT INTO properties (property, description, location, cost, user_id) VALUES ('test_property6', 'This place is rubbish', 'test6', '444', '3');
 
-INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (1,2,'2025-01-01', '2025-01-08');
-INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (2,3,'2025-01-01','2025-01-08');
-INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (3,1,'2025-02-01','2025-02-08');
-INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (4,4,'2025-02-01','2025-02-08');
+INSERT INTO bookings (property_id, user_id, start_date, end_date, status) VALUES (1,2,'2025-01-01', '2025-01-08', 'PENDING');
+INSERT INTO bookings (property_id, user_id, start_date, end_date, status) VALUES (2,3,'2025-01-01','2025-01-08', 'PENDING');
+INSERT INTO bookings (property_id, user_id, start_date, end_date, status) VALUES (3,1,'2025-02-01','2025-02-08', 'PENDING');
+INSERT INTO bookings (property_id, user_id, start_date, end_date, status) VALUES (4,4,'2025-02-01','2025-02-08', 'PENDING');
