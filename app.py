@@ -12,13 +12,9 @@ app = Flask(__name__)
 # http://127.0.0.1:5001/index
 # http://127.0.0.1:5001/spaces
 # http://127.0.0.1:5001/spaces/new
-# http://127.0.0.1:5001/requests
+# http://127.0.0.1:5001/requests - See all the requests in the system.
 
 
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5001/index
 @app.route('/index', methods=['GET'])
 def get_index():
     return render_template('index.html')
@@ -45,7 +41,6 @@ def get_requests():
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
     bookings_list = repository.all()
-    print(bookings_list) # TODO remove
     return render_template('requests.html', bookings_list = bookings_list)
 
 # These lines start the server if you run this file directly
