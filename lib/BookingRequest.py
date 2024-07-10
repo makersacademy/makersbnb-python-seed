@@ -1,11 +1,14 @@
 class BookingRequest: 
 
-    def __init__(self, start_date, end_date, property_id, user_id):
+    def __init__(self, start_date, end_date, property_id, user_id, booking_id):
         self.start_date = start_date
         self.end_date = end_date
-        self.status = 'PENDING' # Todo Another data type?
+        self.status = 'PENDING - need to get from DB' # Charlie - can you expose this as a field please?
         self.property_id = property_id
-        self.user_id = user_id   
+        self.user_id = user_id
+        self.booking_id = booking_id
+
+
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

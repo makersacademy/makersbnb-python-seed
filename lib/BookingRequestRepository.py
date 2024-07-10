@@ -9,14 +9,14 @@ class BookingRequestRepository():
 
     def all(self):
 
-        rows = self._connection.execute('SELECT property_id, user_id, start_date, end_date from bookings') 
+        rows = self._connection.execute('SELECT property_id, user_id, start_date, end_date, id from bookings') 
         booking_requests = []
         for row in rows:
 
             end_date_obj = row["end_date"]
             start_date_obj = row["start_date"]
 
-            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"])
+            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"], row["id"])
             
             booking_requests.append(br)
 
@@ -27,17 +27,13 @@ class BookingRequestRepository():
         rows = self._connection.execute(
             'INSERT INTO bookings (property_id, user_id, start_date, end_date) VALUES (%s, %s, %s, %s)', 
             [BookingRequest.property_id, BookingRequest.user_id, BookingRequest.start_date, BookingRequest.end_date])
-        # BookingRequest.id = rows[0]['id'] - Not sure if we need this yet.
         return None
     
     # Delete a BookingReference.
     def delete(self, booking_request_id):
-        # Need SQL from Charlie and Tara.
         self._connection.execute(
             'DELETE FROM bookings WHERE id = %s', [booking_request_id])
         return None
-
-    
 
     
     # Find bookingReferences by their requester.
@@ -53,7 +49,7 @@ class BookingRequestRepository():
             end_date_obj = row["end_date"]
             start_date_obj = row["start_date"]
 
-            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"])            
+            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"], row["id"])            
             booking_requests.append(br)
 
             return booking_requests
@@ -72,7 +68,7 @@ class BookingRequestRepository():
             end_date_obj = row["end_date"]
             start_date_obj = row["start_date"]
 
-            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"])            
+            br =  BookingRequest(start_date_obj, end_date_obj, row["property_id"], row["user_id"], row["id"])            
 
             booking_requests.append(br)
 
