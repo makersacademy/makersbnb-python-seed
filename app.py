@@ -19,8 +19,7 @@ app.secret_key = 'bedsforbodies_crew'
 # http://127.0.0.1:5001/spaces/new
 # http://127.0.0.1:5001/requests - See all the requests in the system.
 
-
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
 
@@ -32,6 +31,9 @@ def get_index():
 def get_requests():
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
+
+    
+
     #bookings_list = repository.all()
     bookings_list = repository.get_bookings_by_customer(1)
     return render_template('requests.html', bookings_list = bookings_list)
@@ -114,6 +116,9 @@ def list_new_property():
 #######   LOGIN 
 
 
+
+# Details for logging in and creating an account:
+
 @app.route('/login', methods=['GET'])
 def get_login():
     return render_template('login_page.html')
@@ -130,16 +135,39 @@ def post_login():
     else:
         return render_template('login_error.html')
 
+@app.route('/create', methods=['GET'])
+def get_create_account():
+    return render_template('create_account.html')
+
+@app.route('/create', methods=['POST'])
+def post_create_account():
+    Connection = get_flask_database_connection(app)
+    user_repository = UserRepository(Connection)
+    email = request.form['email']
+    password = request.form['password']
+    password_authenticator = request.form['password_authenticator']
+    if user_repository.create(email, password, password_authenticator) == 0:
+        session['user_id'] = email
+        return render_template('account_created.html')
+    if user_repository.create(email, password, password_authenticator) == 1:
+        return render_template('error_matching_passwords.html')
+    if user_repository.create(email, password, password_authenticator) == 2:
+        return render_template('email_in_use.html')
+    else:
+        return render_template('index.html')
+
 
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('get_login'))
-    return f"Welcome to your dashboard, {session['user_id']}!"
+    return render_template('dashboard.html', user_id=session['user_id'])
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
