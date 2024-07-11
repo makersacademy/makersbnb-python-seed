@@ -7,9 +7,40 @@
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
+        <style>
+            body{
+                background-color: peachpuff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .header {
+                position: absolute;
+                top: 100px;
+                text-align: center;
+                width: 100%;
+                font-family: 'Roboto', sans-serif;   
+            }
+            .container {
+                text-align: center;
+            }
+            .link {
+                display: block;
+                margin: 10px 0;
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-        <p>This is the homepage.</p>
+        <div class="header">
+            <p>This is the homepage.</p>
+        </div>
+        <div class="container">
+            Please login:
+            <a href="{{ url_for('get_login') }}" class="link">LOGIN</a>
+        </div>
     </body>
 </html>

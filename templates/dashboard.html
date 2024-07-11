@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body{
+            background-color: peachpuff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+            font-family: 'Roboto', sans-serif;   
+        }
+        .container {
+            text-align: center;
+        }
+        .link {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to <br>Beds For Bodies! </h1>
+    </div>
+    <div class="container"
+        <h1>This is your dashboard:</h1>
+        <p>User email: {{ session['email'] }}</p>
+        <!-- Add more content here as needed -->
+        <a href="{{ url_for('get_requests') }}" class="link">My Requests</a>
+        <a href="{{ url_for('create_space') }}" class="link">Create A Property</a>
+        <a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a>
+    </div>      
+</body>
+</html>

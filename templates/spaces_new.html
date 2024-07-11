@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB - Spaces - New</title>
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+        <form action="/spaces" method="post">
+
+            <!-- We check to see if there are any errors from a previous submission -->
+            {% if errors %}
+            <!-- If so, we show them. -->
+            <p class="t-errors">
+                There were errors with your submission: {{ errors }}
+            </p>
+            {% endif %}
+            
+            <p>
+            <!-- These `label` tags are important for accessibility -->
+                <label for="Property Name">Property Name</label>
+                <input type="text" name="Property Name" id="Property Name" >
+
+                <label for="Description">Description</label>
+                <input type="text" name="Description" id="Description" >
+
+                <label for="Price per night">Price per night (£)</label>
+                <input type="number" name="Price per Night (£)" id="Price per night" >
+
+                <label for="Available from">Available from</label>
+                <input type="text" name="Available From" id="Available from" >
+
+                <label for="Available to">Available to</label>
+                <input type="text" name="Available To" id="Available to" >
+            </p>
+
+            <p>
+                <input type="submit" value="List My Space"
+            </p>      
+        </form>       
+    </body>
+</html>
