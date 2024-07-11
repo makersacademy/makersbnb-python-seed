@@ -28,6 +28,24 @@
             display: block;
             margin: 10px 0;
         }
+        .dashboard-button {
+            top: 20px;
+            right: 20px;
+            background-color: rgb(251, 172, 103);
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .dashboard-button:hover {
+            background-color: peachpuff
+        }
     </style>
 </head>
 <body>
@@ -38,9 +56,20 @@
         <h1>This is your dashboard:</h1>
         <p>User email: {{ session['email'] }}</p>
         <!-- Add more content here as needed -->
-        <a href="{{ url_for('get_requests') }}" class="link">My Requests</a>
-        <a href="{{ url_for('create_space') }}" class="link">Create A Property</a>
-        <a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a>
-    </div>      
+    </div>
+    <div class="container">
+        <div class="dashboard-button">
+            <a href="{{ url_for('get_requests') }}" class="link">Incoming Requests</a>
+        </div>  
+        <div class="dashboard-button">
+            <a href="{{ url_for('create_space') }}" class="link">Create A Property</a>
+        </div>
+        <div class="dashboard-button">
+            <a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a>
+        </div>    
+    </div>    
+        
 </body>
 </html>
+
+
