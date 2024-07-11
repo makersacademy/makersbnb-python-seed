@@ -19,6 +19,7 @@ app.secret_key = 'bedsforbodies_crew'
 # http://127.0.0.1:5001/spaces/new
 # http://127.0.0.1:5001/requests - See all the requests in the system.
 
+
 @app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
