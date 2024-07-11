@@ -7,10 +7,10 @@ test that the create a user works as intended
 def test_creates_a_user_and_adds_to_database(db_connection):
     db_connection.seed("seeds/bedsforbodies_seed.sql")
     user_repository = UserRepository(db_connection)
-    user_repository.create('charlieroberts.editor@gmail.com','blahblahblah')
+    user_repository.create('charlieroberts.editor@gmail.com','blahblahblah', 'blahblahblah')
     result = user_repository.list()
     assert result == [
-        {'name': 'charlie_roberts23@hotmail.co.uk', 'password': 'Password!23'},
+        {'name': 'charlie_roberts23@hotmail.co.uk', 'password': 'Password!23',},
         {'name': 'taconlin@hotmail.co.uk', 'password': 'Password!24'},
         {'name': 'joshuadosanjh@gmail.com', 'password': 'Qwerty?09'},
         {'name': 'charlieroberts201@hotmail.co.uk', 'password': 'passWord?12'},
