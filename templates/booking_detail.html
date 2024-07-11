@@ -7,8 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-        <h1>Request for 'Beautiful Relaxing Space'</h1>
-        <h2>TODO - Show property details..... get details from Tara and Josh</h2>
+        <h1>Booking Request for {{booking_details.property_name}}</h1>
 
         <img src="{{url_for('static', filename='shed.webp')}}" class="img-fluid" class="center" style="width:300px;height:200px">
 
@@ -30,9 +29,9 @@
             <button type="button" class="btn btn-secondary btn-lg">Cancel booking</button>
         </a>
 
+        <br><br>
+        <p><a href='/dashboard'>Dashboard</a></p>
         <br>
-        <p>End of page.</p>
-        <br>
-        
+        <small>User id : {{ session['user_id'] }}</small>
     </body>
 </html>

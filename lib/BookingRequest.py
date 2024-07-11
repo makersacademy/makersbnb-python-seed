@@ -7,6 +7,7 @@ class BookingRequest:
         self.property_id = property_id
         self.user_id = user_id
         self.booking_id = booking_id
+        
         # Extra fields for the read-only booking detail page.
         self.property_name = property_name
         self.property_description = property_description

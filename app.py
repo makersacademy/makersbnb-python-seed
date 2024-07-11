@@ -54,11 +54,8 @@ def list_new_property():
 def get_requests():
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
-
-    
-
-    #bookings_list = repository.all()
-    bookings_list = repository.get_bookings_by_customer(1)
+    # Grab the user ID and use this to filter the requests bookings.
+    bookings_list = repository.get_bookings_by_customer(session['user_id'])
     return render_template('requests.html', bookings_list = bookings_list)
 
 # Get details for a booking and change details.
@@ -76,7 +73,7 @@ def update_booking_approve(id):
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
     repository.update_booking_approved(id)
-    bookings_list = repository.all()
+    bookings_list = repository.get_bookings_by_customer(session['user_id'])
     return render_template('requests.html', bookings_list = bookings_list)
 
 
@@ -86,8 +83,9 @@ def update_booking_reject(id):
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
     repository.update_booking_rejected(id)
-    bookings_list = repository.all()
+    bookings_list = repository.get_bookings_by_customer(session['user_id'])
     return render_template('requests.html', bookings_list = bookings_list)
+
 ###### SPACES
 
 
@@ -157,11 +155,10 @@ def book_space(id):
     if 'user_id' not in session:
         return redirect(url_for('get_login'))
     else:
-        Brequest = BookingRequest(request.form['Start Date'],request.form['End Date'],id,None,None,'PENDING') #To Do - User_Id, Booking_Id
+        Brequest = BookingRequest(request.form['Start Date'], request.form['End Date'], id, session['user_id'], None,'PENDING') #To Do - User_Id, Booking_Id
         booking_repo.create(Brequest)
         return redirect(url_for('get_requests'))
     
-
 
 @app.route('/login', methods=['GET'])
 def get_login():
