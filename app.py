@@ -121,20 +121,20 @@ def create_space():
 
 
 # List available spaces.
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    Connection = get_flask_database_connection(app)
-    infotoprint = []
-    allspaces = Connection.execute('SELECT * FROM properties')
-    for space in allspaces:
-        user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
-        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
-    return render_template('spaces.html', test_list = infotoprint)
+# @app.route('/spaces', methods=['GET'])
+# def get_spaces():
+#     Connection = get_flask_database_connection(app)
+#     infotoprint = []
+#     allspaces = Connection.execute('SELECT * FROM properties')
+#     for space in allspaces:
+#         user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
+#         infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
+#     return render_template('spaces.html', test_list = infotoprint)
 
 # List a new space as a Property owner.
-@app.route('/spaces/new', methods=['GET'])
-def list_new_property():
-    return render_template('spaces_new.html')
+# @app.route('/spaces/new', methods=['GET'])
+# def list_new_property():
+#     return render_template('spaces_new.html')
 
 #######   LOGIN 
 
