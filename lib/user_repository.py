@@ -17,12 +17,14 @@ class UserRepository:
         # Hash the password
         # binary_password = password.encode("utf-8")
         # hashed_password = hashlib.sha256(binary_password).hexdigest()
+        email_list = []
+        rows = self._connection.execute('SELECT name FROM users')
+        for row in rows:
+            email_list.append(row['name'])
+        if email in email_list:
+            return 2
         if password != password_authenticator:
             return 1
-        
-        if self._connection.execute('SELECT users (name) VALUES (%s)',[email]):
-            return 2
-
         # Store the email and hashed password in the database
         self._connection.execute(
             'INSERT INTO users (name, password) VALUES (%s, %s)',

@@ -148,7 +148,8 @@ def post_create_account():
     password = request.form['password']
     password_authenticator = request.form['password_authenticator']
     if user_repository.create(email, password, password_authenticator) == 0:
-        session['user_id'] = email
+        session['email'] = email
+        session['user_id'] = user_repository.get_user_id_from_email(email)
         return render_template('account_created.html')
     if user_repository.create(email, password, password_authenticator) == 1:
         return render_template('error_matching_passwords.html')
