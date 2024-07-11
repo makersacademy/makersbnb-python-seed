@@ -24,31 +24,47 @@ app.secret_key = 'bedsforbodies_crew'
 def get_index():
     return render_template('index.html')
 
-# List available spaces.
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    Connection = get_flask_database_connection(app)
-    infotoprint = []
-    allspaces = Connection.execute('SELECT * FROM properties')
-    for space in allspaces:
-        user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
-        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
-    return render_template('spaces.html', test_list = infotoprint)
 
-# List a new space as a Property owner.
-@app.route('/spaces/new', methods=['GET'])
-def list_new_property():
-    return render_template('spaces_new.html')
-
-# BOOKING REQUESTS
+###### BOOKING REQUESTS
 
 # See requests that I've made and received so far.
 @app.route('/requests', methods=['GET'])
 def get_requests():
     Connection = get_flask_database_connection(app)
     repository = BookingRequestRepository(Connection)
+    #bookings_list = repository.all()
+    bookings_list = repository.get_bookings_by_customer(1)
+    return render_template('requests.html', bookings_list = bookings_list)
+
+# Get details for a booking and change details.
+@app.route('/booking_detail/<id>', methods=['GET'])
+def get_booking_detail(id):
+    Connection = get_flask_database_connection(app)
+    repository = BookingRequestRepository(Connection)
+    booking_details = repository.get_request_detail(id)
+    return render_template('booking_detail.html', booking_details = booking_details)
+
+
+# Approve a booking request.. do the update and then return the end user back to the list of requests.
+@app.route('/booking_update_approve/<id>', methods=['GET'])
+def update_booking_approve(id):
+    Connection = get_flask_database_connection(app)
+    repository = BookingRequestRepository(Connection)
+    repository.update_booking_approved(id)
     bookings_list = repository.all()
     return render_template('requests.html', bookings_list = bookings_list)
+
+
+# Reject a booking request.. do the update and then return the end user back to the list of requests.
+@app.route('/booking_update_reject/<id>', methods=['GET'])
+def update_booking_reject(id):
+    Connection = get_flask_database_connection(app)
+    repository = BookingRequestRepository(Connection)
+    repository.update_booking_rejected(id)
+    bookings_list = repository.all()
+    return render_template('requests.html', bookings_list = bookings_list)
+###### SPACES
+
 
 # POST /spaces/new
     # Creates a new book
@@ -78,13 +94,25 @@ def create_space():
     # Redirect to the book's show route to the user can see it
     return redirect(f"/spaces/{property.id}")
 
-# Get details for a booking and change details.
-@app.route('/booking_detail/<id>', methods=['GET'])
-def get_booking_detail(id):
+
+# List available spaces.
+@app.route('/spaces', methods=['GET'])
+def get_spaces():
     Connection = get_flask_database_connection(app)
-    repository = BookingRequestRepository(Connection)
-    booking_details = repository.get_request_detail(id)
-    return render_template('booking_detail.html', booking_details = booking_details)
+    infotoprint = []
+    allspaces = Connection.execute('SELECT * FROM properties')
+    for space in allspaces:
+        user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
+        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
+    return render_template('spaces.html', test_list = infotoprint)
+
+# List a new space as a Property owner.
+@app.route('/spaces/new', methods=['GET'])
+def list_new_property():
+    return render_template('spaces_new.html')
+
+#######   LOGIN 
+
 
 @app.route('/login', methods=['GET'])
 def get_login():
