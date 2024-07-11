@@ -13,15 +13,23 @@ class UserRepository:
         print(user_lists)
         return user_lists
 
-    def create(self, email, password):
+    def create(self, email, password, password_authenticator):
         # Hash the password
-        binary_password = password.encode("utf-8")
-        hashed_password = hashlib.sha256(binary_password).hexdigest()
+        # binary_password = password.encode("utf-8")
+        # hashed_password = hashlib.sha256(binary_password).hexdigest()
+        if password != password_authenticator:
+            return 1
+        
+        if self._connection.execute('SELECT users (name) VALUES (%s)',[email]):
+            return 2
 
         # Store the email and hashed password in the database
         self._connection.execute(
             'INSERT INTO users (name, password) VALUES (%s, %s)',
             [email, password])
+        return 0
+        
+        
 
     def check_password(self, email, password_attempt):
         # binary_password_attempt = password_attempt.encode("utf-8")
