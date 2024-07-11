@@ -28,30 +28,32 @@
         </style>
     </head>
     <body>
+        <h1>Your bookings list</h1>
+        <p>Here are the list of booking requests in your account</p>
         <a href="{{ url_for('dashboard') }}" class="dashboard-button">Dashboard</a>
-        <h1>Bookings list</h1>
-        <p>Here are the list of booking requests</p>
+
         <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
                 <th>Booking ID</th>
                 <th>Start date</th>
                 <th>End date</th>
-                <th>Property id</th>
-                <th>Customer ID</th>
-                <th>Status</th>
+                <th>Property</th>
+                <th>Booking Status</th>
             </tr>
             {% for item in bookings_list %}
             <tr>
                 <td><a href='/booking_detail/{{item.booking_id}}'>{{item.booking_id}}</a></td>
-                <td><a href='/booking_detail'>{{item.start_date}}</a></td>
+                <td>{{item.start_date}}</td>
                 <td>{{item.end_date}} </td>
-                <td>{{item.property_id}}</td>
-                <td>{{item.user_id}}</td>
+                <td>{{item.property_name}} : {{item.property_description}}</td>
                 <td>{{item.status}}</td>
             {% endfor %}
             </tr>    
         </table>
-        <p>End of section.</p>
+        
+        <br>
+        <p><a href='/dashboard'>Dashboard</a></p>
+        <br>
 
 
 

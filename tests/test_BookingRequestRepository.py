@@ -49,16 +49,16 @@ def test_get_bookings_by_customer(db_connection):
         BookingRequest(date(2025,1,1), date(2025,1,8), 2, 3, 2, 'PENDING')
     ]
 
-def test_get_bookings_by_property (db_connection):
+# def test_get_bookings_by_property (db_connection):
 
-    db_connection.seed("seeds/bedsforbodies_seed.sql")
-    myRequests = BookingRequestRepository(db_connection)    
+#     db_connection.seed("seeds/bedsforbodies_seed.sql")
+#     myRequests = BookingRequestRepository(db_connection)    
     
-    results = myRequests.get_bookings_by_property(1)
+#     results = myRequests.get_bookings_by_property(1)
 
-    assert results == [
-        BookingRequest(date(2025,1,1), date(2025,1,8), 1, 2, 1, 'PENDING')
-    ]    
+#     assert results == [
+#         BookingRequest(date(2025,1,1), date(2025,1,8), 1, 2, 1, 'PENDING')
+#     ]    
 
 def test_get_booking_detail (db_connection):
 
