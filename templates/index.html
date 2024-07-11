@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MakersBnB</title>
 
-        <!--
+<head>
+    <title>MakersBnB</title>
+
+    <!--
             Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
             If you're wondering how the CSS file below is being loaded.
         -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <h1>Welcome to MakersBnB</h1>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Welcome to MakersBnB</h1>
+    <h2>The place to find your perfect space</h2>
+    <div>
         <a href="/listings">
-            <button>View Listings</button>
+            <img src="static/house.jpg" alt="House Image">
         </a>
-        <p>
+    </div>
+    <a href="/listings">
+        <button>View Listings</button>
+    </a>
+    <p>
         <a href="/listings/new">
             <button>Add a new Listing</button>
         </a>
-        </p>
-    </body>
+    </p>
+</body>
+
 </html>
