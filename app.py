@@ -100,7 +100,8 @@ def post_login():
     email = request.form['email']
     password = request.form['password']
     if user_repository.check_password(email, password):
-        session['user_id'] = email
+        session['email'] = email
+        session['user_id'] = user_repository.get_user_id_from_email(email)
         return render_template('login_success.html')
     else:
         return render_template('login_error.html')
