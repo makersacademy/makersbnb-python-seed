@@ -29,31 +29,23 @@
     </head>
     <body>
         <a href="{{ url_for('dashboard') }}" class="dashboard-button">Dashboard</a>
-        <h1> Book a space: </h1>
-        <a href="/spaces/new"><button type=button>List a space</button></a>
-        <form>
-            <p>
-                <label for="Available from">Available from</label>
-                <input type="text" name="Available From" id="Available from" >
-
-                <label for="Available to">Available to</label>
-                <input type="text" name="Available To" id="Available to" >
-
-                <button type=button>List Spaces</button>
-            </p>
-
-
-        <p>Here you'll see a list of spaces where you can book a property.</p>
-        {% for item in test_list %}
-            <a href="/spaces/{{item[5]}}"><button type=button>View This Space</button></a>
-            <div>{{item[2]}}: {{item[1]}} - {{item[3]}} <br> £{{item[4]}} <br> listed by {{item[0][0].name}} <br> <br></div>
-        {% endfor %}
-
-    
+        <p>
+            <a href = /spaces><button type = button>All Spaces</button></a>
+            <br>
+            <h1>{{space_info.property}}</h1>
+            <h3><i>{{space_info.location}}</i></h3>
+            <i>"{{space_info.description}}"</i><br>
+            £{{space_info.cost}}
+        </p>
+        <p>Please enter the dates of your stay</p>
+        <form action='/spaces/{{space_info.id}}' method='POST'>
+            Start Date:
+            <input type='date' name='Start Date' id='Start Date'/>
+            <br>
+            End Date:
+            <input type='date' name='End Date' id='End Date' />
+            <br>
+            <input type='submit' name='submit'/>
+    </form>
     </body>
 </html>
-
-#button to take you to /spaces/new 'list a space' DONE
-#forms for available from and available to
-#button that returns list of all available spaces 'list spaces'
-#once property is clicked - takes you to booking page with available dates

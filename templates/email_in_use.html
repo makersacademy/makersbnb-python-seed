@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MakersBnB - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
-    <meta charset="utf-8">
     <style>
         body{
             background-color: peachpuff;
@@ -15,7 +16,7 @@
         }
         .header {
             position: absolute;
-            top: 100px;
+            top: 20px;
             text-align: center;
             width: 100%;
             font-family: 'Roboto', sans-serif;   
@@ -30,17 +31,10 @@
     </style>
 </head>
 <body>
-    <div class="container">    
-        <h1>Login Page</h1>
-        <p>Please enter your email and password</p>
-        <form action='login' method='POST'>
-            <input type='text' name='email' id='email' placeholder='email'/>
-            <input type='password' name='password' id='password' placeholder='password'/>
-            <input type='submit' name='submit'/>
-        </form>
-        <p> or create an account </p>
-        <a href="{{ url_for('get_create_account') }}">
-            <button>create account</button>
+    <div class="header">
     </div>
+    <div class="container"
+        <h1>email address already in use</h1>
+    </div>      
 </body>
 </html>

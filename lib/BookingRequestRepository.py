@@ -40,9 +40,14 @@ class BookingRequestRepository():
             [BookingRequest.property_id, BookingRequest.user_id, BookingRequest.start_date, BookingRequest.end_date, BookingRequest.status])
         return None
     
-    def updateBooking(self, BookingRequest):
-        print('=> here is the status and id fields: ', BookingRequest.status, ' : ' , BookingRequest.booking_id)
-        rows = self._connection.execute("UPDATE bookings SET status=%s WHERE id = %s", [BookingRequest.status, BookingRequest.booking_id])
+    def update_booking_rejected(self, booking_id):
+        # print('=> here is the status and id fields: ', BookingRequest.status, ' : ' , BookingRequest.booking_id)
+        rows = self._connection.execute("UPDATE bookings SET status='REJECTED' WHERE id = %s", [booking_id])
+        return None
+
+    def update_booking_approved(self, booking_id):
+        #print('=> here is the status and id fields: ', BookingRequest.status, ' : ' , BookingRequest.booking_id)
+        rows = self._connection.execute("UPDATE bookings SET status='APPROVED' WHERE id = %s", [booking_id])
         return None
 
     # # Delete a BookingReference.

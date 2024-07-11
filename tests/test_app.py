@@ -7,7 +7,7 @@ We can render the index page
 """
 def test_get_index(page, test_web_address):
     # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
+    page.goto(f"http://{test_web_address}/")
 
     # We look at the <p> tag
     p_tag = page.locator("p")
@@ -37,10 +37,10 @@ def test_create_space(db_connection, page, test_web_address):
     page.fill("input[name='Price per Night (£)']", "777") #LOOK INTO POUND SIGN
 
     # And the field with the name attribute 'available from'
-    page.fill("input[name='Available From']", "10-07-2024")
+    page.fill("input[name='Available From']", "2024-07-10")
 
     # And the field with the name attribute 'available to'
-    page.fill("input[name='Available To']", "10-07-2026")
+    page.fill("input[name='Available To']", "2026-07-10")
 
     # Finally we click the button with the text 'List my Space'
     page.click("text=List My Space")
@@ -53,6 +53,13 @@ def test_create_space(db_connection, page, test_web_address):
 
     # author_element = page.locator(".t-author-name")
     # expect(author_element).to_have_text("Author: J.R.R. Tolkien")
+
+#create request tests:
+def test_click_through_to_page(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bedsforbodies_seed.sql")
+    page.goto(f"http://{test_web_address}/spaces")
+    page.locator("button:has-text('View This Space')").first.click()
+    expect(page).to_have_url(f'http://{test_web_address}/spaces/1')
 
 # """
 # We can list out all of the spaces / properties
@@ -76,3 +83,4 @@ def test_create_space(db_connection, page, test_web_address):
 #         "Property(test_property5, This place is wicked, test5, 555, 3)",
 #         "Property(test_property6, This place is rubbish, test6, 444, 3)",
 #     ])
+

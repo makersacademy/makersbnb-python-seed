@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MakersBnB - Login Error</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
-    <meta charset="utf-8">
     <style>
         body{
             background-color: peachpuff;
@@ -31,10 +29,9 @@
             margin: 10px 0;
         }
         .dashboard-button {
-            position: absolute;
             top: 20px;
             right: 20px;
-            background-color: peachpuff;
+            background-color: rgb(251, 172, 103);
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -47,19 +44,32 @@
             border-radius: 4px;
         }
         .dashboard-button:hover {
-            background-color: rgb(251, 172, 103);
+            background-color: peachpuff
         }
     </style>
 </head>
-    <body>
-        <div class="container">
-            <h1>Login error. Please check username and password.</h1>
-            <a href="{{ url_for('get_login') }}">
-                <button>Return to login</button>
-            <h1> Or please create an account: </h1>
-            <a href="{{ url_for('get_create_account') }}">
-                <button>create account</button>
+<body>
+    <div class="header">
+        <h1>Welcome to <br>Beds For Bodies! </h1>
+    </div>
+    <div class="container"
+        <h1>This is your dashboard:</h1>
+        <p>User email: {{ session['email'] }}</p>
+        <!-- Add more content here as needed -->
+    </div>
+    <div class="container">
+        <div class="dashboard-button">
+            <a href="{{ url_for('get_requests') }}" class="link">Incoming Requests</a>
+        </div>  
+        <div class="dashboard-button">
+            <a href="{{ url_for('create_space') }}" class="link">Create A Property</a>
         </div>
-    </body>
+        <div class="dashboard-button">
+            <a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a>
+        </div>    
+    </div>    
+        
+</body>
 </html>
+
 

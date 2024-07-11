@@ -17,6 +17,11 @@ class PropertyRepository():
         self._connection.execute('INSERT INTO properties (property, description, location, cost, user_id) VALUES (%s, %s, %s, %s, %s)', [
                                 property.property, property.description, property.location, property.cost, property.user_id])
         return None
+    
+    def find(self, property_id):
+        rows = self._connection.execute("SELECT * FROM properties WHERE id = %s", [property_id])
+        row = rows[0]
+        return Property(row["id"], row["property"], row["description"], row["location"], row["cost"], row["user_id"])
 
     def delete(self, property_id):
         self._connection.execute(
