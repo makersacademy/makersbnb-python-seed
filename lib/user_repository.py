@@ -38,10 +38,18 @@ class UserRepository:
         # Check whether there is a user in the database with the given email
         # and a matching password hash, using a SELECT statement.
         rows = self._connection.execute(
-            'SELECT * FROM users WHERE name = %s AND password = %s',
+            'SELECT id FROM users WHERE name = %s AND password = %s',
             [email, password_attempt])
 
         # If that SELECT finds any rows, the password is correct.
         return len(rows) > 0 
 
     # ...
+    def get_user_id_from_email(self, email):
+        rows = self._connection.execute(
+            'SELECT id FROM users WHERE name = %s',
+            [email])
+        row = rows[0]
+        id = row['id']
+        return id
+    
