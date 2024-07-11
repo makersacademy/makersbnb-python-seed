@@ -19,7 +19,11 @@ def test_get_BookingRequests (db_connection):
 def test_create_BookingRequest (db_connection):
 
     db_connection.seed("seeds/bedsforbodies_seed.sql")
-    myBookingRequest = BookingRequest(date(2024,7,8), date(2024,7,9), 1, 2, 0, 'PENDING') # 0 parameter is not needed for the save.
+    
+    # Create the booking request.....
+
+    # 0 [below] (booking ID is passed in but parameter is not needed for the save. I should make it an optional paramter ideally)
+    myBookingRequest = BookingRequest(date(2024,7,8), date(2024,7,9), 1, 2, 0, 'PENDING') 
     
     myRequests = BookingRequestRepository(db_connection)    
     myRequests.create(myBookingRequest)
@@ -70,12 +74,12 @@ def test_update_booking_status_approved (db_connection):
     myRequests = BookingRequestRepository(db_connection)    
     
     # Arrange
-    myBooking = myRequests.get_request_detail(4)
+    # myBooking = myRequests.get_request_detail(4)
     
     # Act
 
-    myBooking.approveRequest()
-    myRequests.updateBooking(myBooking)
+    #myBooking.approveRequest(4)
+    myRequests.update_booking_approved(4)
     
     #Assert
 
@@ -83,16 +87,17 @@ def test_update_booking_status_approved (db_connection):
     assert myBooking.status == 'APPROVED'
 
 def test_update_booking_status_rejected (db_connection):
+    
     db_connection.seed("seeds/bedsforbodies_seed.sql")
     myRequests = BookingRequestRepository(db_connection)    
     
     # Arrange
-    myBooking = myRequests.get_request_detail(1)
+    # myBooking = myRequests.get_request_detail(1)
     
     # Act
 
-    myBooking.rejectRequest()
-    myRequests.updateBooking(myBooking)
+    #myBooking.rejectRequest(1)
+    myRequests.update_booking_rejected(1)
     
     #Assert
 
