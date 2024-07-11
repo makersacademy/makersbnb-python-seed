@@ -1,29 +1,27 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, url_for, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.listing import Listing
 from lib.listing_repository import ListingRepository
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
 
-# GET /index
-# Returns the homepage
-# Try it:
-#   ; open http://localhost:5001/index
-# @app.route('/index', methods=['GET'])
-# def get_index():
-#     return render_template('index.html')
-
-# # GET all booking
-# @app.route('/booking', methods=['GET'])
-# def get_booking():
-#     return render_template('booking.html')
 @app.route('/index', methods=['GET'])
 def get_homepage():
     return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 @app.route('/listings/new', methods=['GET'])
 def get_new_listing():
