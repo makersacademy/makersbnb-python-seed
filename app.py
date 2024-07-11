@@ -32,12 +32,14 @@ def get_spaces():
     allspaces = Connection.execute('SELECT * FROM properties')
     for space in allspaces:
         user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
-        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
+        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"], space['id'])]
     return render_template('spaces.html', test_list = infotoprint)
 
 # List a new space as a Property owner.
 @app.route('/spaces/new', methods=['GET'])
 def list_new_property():
+    Connection = get_flask_database_connection(app)
+    #What info to pas
     return render_template('spaces_new.html')
 
 # BOOKING REQUESTS
@@ -85,6 +87,27 @@ def get_booking_detail(id):
     repository = BookingRequestRepository(Connection)
     booking_details = repository.get_request_detail(id)
     return render_template('booking_detail.html', booking_details = booking_details)
+
+@app.route('/spaces/<id>', methods=['GET'])
+def get_space(id):
+    Connection = get_flask_database_connection(app)
+    repository = PropertyRepository(Connection)
+    space_info = repository.find(id)
+    #space_info = Connection.execute('SELECT * FROM properties WHERE id = %s',[id])[0] #Remove Hardcoded SQL when we can get details by a method on property repo
+    return render_template('space_info.html',space_info = space_info)
+
+@app.route('/spaces/<id>', methods=['POST'])
+def book_space(id):
+    Connection = get_flask_database_connection(app)
+    booking_repo = BookingRequestRepository(Connection)
+    if 'user_id' not in session:
+        return redirect(url_for('get_login'))
+    else:
+        Brequest = BookingRequest(request.form['Start Date'],request.form['End Date'],id,None,None,'PENDING') #To Do - User_Id, Booking_Id
+        booking_repo.create(Brequest)
+        return redirect(url_for('get_requests'))
+    
+
 
 @app.route('/login', methods=['GET'])
 def get_login():
