@@ -12,3 +12,20 @@ class Property:
     
     def __repr__(self):
         return f"Property({self.id}, {self.property}, {self.description}, {self.location}, {self.cost}, {self.user_id})"
+    
+    def is_valid(self):
+        return bool(self.property and self.description and self.location and self.cost and self.user_id)
+
+    def generate_errors(self):
+        errors = []
+        if not self.property:
+            errors.append("Property name is required.")
+        if not self.description:
+            errors.append("Description is required.")
+        if not self.location:
+            errors.append("Location is required.")
+        if not self.cost:
+            errors.append("Cost is required.")
+        if not self.user_id:
+            errors.append("User ID is required.")
+        return errors

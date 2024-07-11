@@ -5,9 +5,31 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+            .dashboard-button {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background-color: rgb(251, 172, 103);
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+            }
+            .dashboard-button:hover {
+                background-color: peachpuff
+            }
+        </style>
     </head>
     <body>
         <h1>Booking Request for {{booking_details.property_name}}</h1>
+        <a href="{{ url_for('dashboard') }}" class="dashboard-button">Dashboard</a>
 
         <img src="{{url_for('static', filename='shed.webp')}}" class="img-fluid" class="center" style="width:300px;height:200px">
 

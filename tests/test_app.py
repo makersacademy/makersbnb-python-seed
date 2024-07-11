@@ -37,10 +37,10 @@ def test_create_space(db_connection, page, test_web_address):
     page.fill("input[name='Price per Night (£)']", "777") #LOOK INTO POUND SIGN
 
     # And the field with the name attribute 'available from'
-    page.fill("input[name='Available From']", "10-07-2024")
+    page.fill("input[name='Available From']", "2024-07-10")
 
     # And the field with the name attribute 'available to'
-    page.fill("input[name='Available To']", "10-07-2026")
+    page.fill("input[name='Available To']", "2026-07-10")
 
     # Finally we click the button with the text 'List my Space'
     page.click("text=List My Space")
