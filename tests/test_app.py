@@ -54,6 +54,13 @@ def test_create_space(db_connection, page, test_web_address):
     # author_element = page.locator(".t-author-name")
     # expect(author_element).to_have_text("Author: J.R.R. Tolkien")
 
+#create request tests:
+def test_click_through_to_page(db_connection, page, test_web_address):
+    db_connection.seed("seeds/bedsforbodies_seed.sql")
+    page.goto(f"http://{test_web_address}/spaces")
+    page.locator("button:has-text('View This Space')").first.click()
+    expect(page).to_have_url(f'http://{test_web_address}/spaces/1')
+
 # """
 # We can list out all of the spaces / properties
 # """
@@ -76,3 +83,4 @@ def test_create_space(db_connection, page, test_web_address):
 #         "Property(test_property5, This place is wicked, test5, 555, 3)",
 #         "Property(test_property6, This place is rubbish, test6, 444, 3)",
 #     ])
+

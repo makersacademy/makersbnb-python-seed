@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB - Spaces</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <p>
+            <a href = /spaces><button type = button>All Spaces</button></a>
+            <br>
+            <h1>{{space_info.property}}</h1>
+            <h3><i>{{space_info.location}}</i></h3>
+            <i>"{{space_info.description}}"</i><br>
+            £{{space_info.cost}}
+        </p>
+        <p>Please enter the dates of your stay</p>
+        <form action='/spaces/{{space_info.id}}' method='POST'>
+            Start Date:
+            <input type='date' name='Start Date' id='Start Date'/>
+            <br>
+            End Date:
+            <input type='date' name='End Date' id='End Date' />
+            <br>
+            <input type='submit' name='submit'/>
+    </form>
+    </body>
+</html>
