@@ -26,8 +26,11 @@
         </style>
     </head>
     <body>
+        <h1>List a Space</h1>
+        <form action="/spaces/new" method="post">
+
         <a href="{{ url_for('dashboard') }}" class="dashboard-button">Dashboard</a>
-        <form action="/spaces" method="post">
+
 
             <!-- We check to see if there are any errors from a previous submission -->
             {% if errors %}
@@ -40,19 +43,20 @@
             <p>
             <!-- These `label` tags are important for accessibility -->
                 <label for="Property Name">Property Name</label>
-                <input type="text" name="Property Name" id="Property Name" >
+                <input type="text" name="Property Name" id="property_name" required>
 
                 <label for="Description">Description</label>
-                <input type="text" name="Description" id="Description" >
+                <input type="text" name="Description" id="description" required>
 
-                <label for="Price per night">Price per night (£)</label>
-                <input type="number" name="Price per Night (£)" id="Price per night" >
+                <label for="Price per Night (£)">Price per Night (£)</label>
+                <input type="number" name="Price per Night (£)" id="price_per_night" required>
 
-                <label for="Available from">Available from</label>
-                <input type="date" name="Available From" id="Available from" >
+                <label for="Available From (dd-mm-yyyy)">Available From (dd-mm-yyyy)</label>
+                <input type="date" name="Available From (dd-mm-yyyy)" id="available_from" required>
 
-                <label for="Available to">Available to</label>
-                <input type="date" name="Available To" id="Available to" >
+                <label for="Available To (dd-mm-yyyy)">Available To (dd-mm-yyyy)</label>
+                <input type="date" name="Available To (dd-mm-yyyy)" id="available_to" required>
+
             </p>
 
             <p>
