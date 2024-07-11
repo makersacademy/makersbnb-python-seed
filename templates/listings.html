@@ -8,13 +8,15 @@
 
 <body>
     <h1>Find your dream stay</h1>
+    <p>click on each listing for more information</p>
     {% for listing in listings %}
     <div>
-        <p class= "t-name"><strong>{{listing.name}}</strong></p>
-        <p class= "t-description">{{listing.description}}</p>
-        <p class= "t-price-per-night"><strong>£{{listing.price_per_night}} per night</strong></p>
-        <p class= "t-available-from">Available from: {{listing.available_from}}</p>
-        <p class= "t-available-to">Available to: {{listing.available_to}}</p>
+        <p class="t-name">
+            <a href="{{ url_for('get_listing', id=listing.id) }}"><strong>{{ listing.name }}</strong></a>
+        </p>
+
+        <p class="t-description">{{listing.description}}</p>
+
     </div>
     {% endfor %}
 </body>
