@@ -50,6 +50,18 @@ def get_requests():
     bookings_list = repository.all()
     return render_template('requests.html', bookings_list = bookings_list)
 
+
+@app.route('/spaces', methods=['GET'])
+def list_spaces():
+    connection = get_flask_database_connection(app)
+    repository = PropertyRepository(connection)
+    properties = repository.all()
+    return render_template('spaces.html', properties=properties)
+
+@app.route('/spaces/new', methods=['GET'])
+def new_space_form():
+    return render_template('spaces_new.html')
+
 # POST /spaces/new
     # Creates a new book
 @app.route('/spaces/new', methods=['POST'])
@@ -59,24 +71,22 @@ def create_space():
     repository = PropertyRepository(connection)
 
     # Get the fields from the request form
-    property = request.form['Property Name']
+    property_name = request.form['Property Name']
     description = request.form['Description']
     price_per_night = request.form['Price per Night (£)']
-    available_from = request.form['Available From (dd-mm-yy)']
-    available_to = request.form['Available To (dd-mm-yy)']
+    available_from = request.form['Available From (dd-mm-yyyy)']
+    available_to = request.form['Available To (dd-mm-yyyy)']
+    # Assume user_id is 1 for simplicity; replace with actual user session or other logic
+    user_id = 1 
 
-    # Create a property object
-    property = Property(None, property, description, price_per_night, available_from, available_to)
+    property = Property(None, property_name, description, "Some Location", price_per_night, user_id)
 
-    # Check for validity and if not valid, show the form again with errors
     if not property.is_valid():
-        return render_template('spaces/new.html', property=property, errors=property.generate_errors()), 400
+        return render_template('spaces_new.html', property=property, errors=property.generate_errors()), 400
 
-    # Save the property to the database
-    property = repository.create(property)
+    property = repository.add(property)
 
-    # Redirect to the book's show route to the user can see it
-    return redirect(f"/spaces/{property.id}")
+    return redirect(url_for('list_spaces'))
 
 # Get details for a booking and change details.
 @app.route('/booking_detail/<id>', methods=['GET'])
