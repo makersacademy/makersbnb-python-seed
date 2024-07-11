@@ -10,6 +10,8 @@
         <h1>Request for 'Beautiful Relaxing Space'</h1>
         <h2>TODO - Show property details..... get details from Tara and Josh</h2>
 
+        <img src="{{url_for('static', filename='shed.webp')}}" class="img-fluid" class="center" style="width:300px;height:200px">
+
         <ul class="list-group">
 
         <li class="list-group-item">Booking status : {{booking_details.status}}</li>
@@ -21,9 +23,13 @@
         </ul>
         <br>
 
-        <button type="button" class="btn btn-primary btn-lg">Accept booking</button>
-        <button type="button" class="btn btn-secondary btn-lg">Cancel booking</button>
-        
+        <a href="/booking_update_approve/{{booking_details.booking_id}}">
+            <button type="button" class="btn btn-primary btn-lg">Accept booking</button>
+        </a>
+        <a href="/booking_update_reject/{{booking_details.booking_id}}">
+            <button type="button" class="btn btn-secondary btn-lg">Cancel booking</button>
+        </a>
+
         <br>
         <p>End of page.</p>
         <br>

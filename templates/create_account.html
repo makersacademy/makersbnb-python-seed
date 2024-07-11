@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MakersBnB - Login Error</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>MakersBnB - Create</title>
     <link rel="stylesheet" href="/static/style.css">
     <meta charset="utf-8">
     <style>
@@ -18,7 +15,7 @@
         }
         .header {
             position: absolute;
-            top: 20px;
+            top: 100px;
             text-align: center;
             width: 100%;
             font-family: 'Roboto', sans-serif;   
@@ -32,15 +29,16 @@
         }
     </style>
 </head>
-    <body>
-        <div class="container">
-            <h1>Login error. Please check username and password.</h1>
-            <a href="{{ url_for('get_login') }}">
-                <button>Return to login</button>
-            <h1> Or please create an account: </h1>
-            <a href="{{ url_for('get_create_account') }}">
-                <button>create account</button>
-        </div>
-    </body>
+<body>
+    <div class="container">    
+        <h1>Create an account</h1>
+        <p>Please enter your email and password</p>
+        <form action='create' method='POST'>
+            <input type='text' name='email' id='email' placeholder='email'/><br><br>
+            <input type='password' name='password' id='password' placeholder='password'/><br><br>
+            <input type='password' name='password_authenticator' id='password_authenticator' placeholder='check password'/><br>
+            <input type='submit' name='submit'/>
+        </form>
+    </div>
+</body>
 </html>
-
