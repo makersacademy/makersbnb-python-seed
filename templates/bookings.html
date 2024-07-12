@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bookings</title>
+    <link rel="stylesheet" href="/static/style.css" >
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>Here are your bookings</h1>
+    {% for booking in bookings %}
+    <div>
+
+        <p class="t-listing-name">Listing: {{ listing_names.get(booking.listing_id, 'Unknown') }}</p>
+        <p class="t-booked-at">{{booking.booked_at}}</p>
+        <p class="t-check-in">Check in: {{booking.check_in}}</p>
+        <p class="t-check-out">Check out: {{booking.check_out}}</p>
+
+    </div>
+    {% endfor %}
+</body>
+
+</html>
