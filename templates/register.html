@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <h1>Registration Page</h1>
-    <a href="{{url_for('login')}}">Already have an account? Log in!</a><br>
+    <nav>
+        <ul class="nav-links">
+            <li><a class="active" href="index">Home</a></li>
+            <li><a href="/listings">View Spaces</a></li>
+            <li><a href="/listings/new">Create a Space</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    <h1>Register</h1>
+    <!-- This creates a form that will submit to POST /register -->
+    <form action="/register" method="post">
+
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+        <!-- If so, we show them. -->
+        <p class="t-errors">
+            There were errors with your submission: {{ errors }}
+        </p>
+        {% endif %}
+
+        <p>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required>
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </p>
+        <p>
+            <!-- `type` is submit here, to indicate it is a button -->
+            <!-- `value` is used as the button's text -->
+            <input type="submit" value="Register">
+        </p>
+    </form>
+    <p>
+        Already have an account? <a href="/login">Login here</a>
+    </p>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,16 +8,27 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/index">Home</a></li>
+            <li><a class="active" href="/listings">View Spaces</a></li>
+            <li><a href="/listings/new">Create a Space</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
     <h1>Here are your bookings</h1>
     {% for booking in bookings %}
+        {% if booking.booker_id == session['user_id'] %}
     <div>
 
         <p class="t-listing-name">Listing: {{ listing_names.get(booking.listing_id, 'Unknown') }}</p>
-        <p class="t-booked-at">{{booking.booked_at}}</p>
+        <p class="t-booked-at">Booking made: {{booking.formatted_booked_at()}}</p>
         <p class="t-check-in">Check in: {{booking.check_in}}</p>
         <p class="t-check-out">Check out: {{booking.check_out}}</p>
 
     </div>
+        {% endif %}
     {% endfor %}
 </body>
 
