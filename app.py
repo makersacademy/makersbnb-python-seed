@@ -1,8 +1,12 @@
 import os
-from flask import Flask, request, render_template, url_for, redirect
+from flask import Flask, request, render_template, url_for, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.listing import Listing
 from lib.listing_repository import ListingRepository
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
+from lib.user import User
+from lib.user_repository import UserRepository
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -56,6 +60,38 @@ def get_listing(id):
         repository = ListingRepository(connection)
         listing = repository.find_by_id(id)
         return render_template('single_listing.html', listing=listing)
+
+@app.route('/bookings', methods=['GET'])
+def get_bookings():
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    bookings = repository.all()
+    listing_repository = ListingRepository(connection)
+    listings = listing_repository.all()
+    listing_names = {listing.id: listing.name for listing in listings}
+    return render_template('bookings.html', bookings=bookings, listing_names=listing_names)
+
+@app.route('/bookings/new/<int:listing_id>', methods=['POST'])
+def post_booking(listing_id):
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    user_repository = UserRepository(connection)
+    # booker_id = user_repository.find_by_id(session['user_id'])
+    booker_id = 1 # hardcoding user id for now
+    check_in = request.form['check_in']
+    check_out = request.form['check_out']
+    booking = Booking(None, listing_id, None, booker_id, check_in, check_out)
+    booking = repository.create(booking)
+    return redirect('/bookings')
+
+@app.route('/bookings/new/<int:listing_id>', methods=['GET'])
+def get_booking_form(listing_id):
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    listing = repository.find_by_id(listing_id)
+    return render_template('booking_form.html', listing=listing)
+
+
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
