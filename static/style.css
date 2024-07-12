@@ -1,35 +1,34 @@
-/* Reset default margin and padding for all elements */
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    }
 
-}
+    nav {
+        background-color: #6e6767;
+        padding: 10px;
+    }
 
-nav {
-    background-color: #6e6767;
-    padding: 10px;
-}
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
 
-.nav-links {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-}
+    .nav-links li {
+        margin: 0 12px;
+    }
 
-.nav-links li {
-    margin: 0 12px;
-}
+    .nav-links a {
+        color: #f6f6f6;
+        text-decoration: none;
+        display: block;
+        border-radius: 4px;
+        padding: 8px 16px;
+    }
 
-.nav-links a {
-    color: #f6f6f6;
-    text-decoration: none;
-    display: block;
-    border-radius: 4px;
-    padding: 8px 16px;
-}
-
-.nav-links a:hover,
+    .nav-links a:hover,
     .nav-links a.active {
         background-color: #575757;
     }
@@ -43,7 +42,6 @@ nav {
         text-align: center;
     }
 
-    /* Header 1 styles */
     h1 {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 40px;
@@ -80,35 +78,29 @@ nav {
         background-color: #1f1f20;
     }
 
-    .t-name a {
-        font-family: Arial, Helvetica, sans-serif;
-        text-decoration: none;
-        color: #80868b;
-        font-size: 24px;
-        display: block;
-        padding: 10px; 
-        border-radius: 5px; 
-        background-color: #f0f0f0;
-        margin-bottom: 10px;
-    }
-
-    .t-description
-    .t-price-per-night
-    .t-available-from
-    .t-available-to
-    {
+    .t-booked-at,
+    .t-check-in,
+    .t-check-out {
         font-family: Arial, Helvetica, sans-serif;
         color: #000000;
         margin-top: 10px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
+    .t-listing-name,
+    .t-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+    }
 
     p {
         margin: 5px 0;
         line-height: 1.5;
         font-family: Arial, Helvetica, sans-serif;
-
     }
 
     div {

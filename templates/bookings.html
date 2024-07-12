@@ -8,15 +8,6 @@
 </head>
 
 <body>
-    <nav>
-        <ul class="nav-links">
-            <li><a href="/index">Home</a></li>
-            <li><a class="active" href="/listings">View Spaces</a></li>
-            <li><a href="/listings/new">Create a Space</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </nav>
     <h1>Here are your bookings</h1>
     {% for booking in bookings %}
         {% if booking.booker_id == session['user_id'] %}

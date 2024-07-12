@@ -4,32 +4,29 @@
 <head>
     <title>MakersBnB</title>
 
-    <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
+    <!-- Load external stylesheet -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <nav>
         <ul class="nav-links">
-
             <li><a class="active" href="index">Home</a></li>
-
             <li><a href="/listings">View Spaces</a></li>
-
             <li><a href="/listings/new">Create a Space</a></li>
-
+            {% if user_id is none %}
             <li><a href="/login">Login</a></li>
-
             <li><a href="/register">Register</a></li>
+            {% else %}
+            <li><a href="/bookings">Bookings</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
     <h1>Welcome to MakersBnB</h1>
     <h2>The place to find your perfect space</h2>
-    
-    <p
+
+    <p>
         <a href="/listings">
             <img src="static/house.png" alt="House Image">
         </a>
@@ -39,7 +36,7 @@
     <a href="/bookings" class="button">View Bookings</a>
     <a href="{{url_for('login')}}" class="button">Login Page</a>
     <a href="{{url_for('register')}}" class="button">Registration Page</a><br>
-    </p>
+
 </body>
 
 </html>

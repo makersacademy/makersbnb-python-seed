@@ -53,9 +53,23 @@ CREATE TABLE bookings (
         ON DELETE CASCADE
 );
 
+CREATE SEQUENCE IF NOT EXISTS reviews_id_seq;
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,
+    listing_id INT NOT NULL,
+    review_text VARCHAR(255),
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    CONSTRAINT fk_listing
+        FOREIGN KEY(listing_id)
+        REFERENCES listings(id)
+        ON DELETE CASCADE
+);
+
 -- Finally, we add any records that are needed for the tests to run
 INSERT INTO users (username, password) VALUES ('marya_test', 'password1');
 
 INSERT INTO listings (name, description, price_per_night, available_from, available_to, user_id) VALUES ('test-cottage', 'nice cottage by the beach', 25.00, '2024-01-01', '2024-10-01', 1);
 
 INSERT INTO bookings (listing_id, booker_id, check_in, check_out) VALUES (1, 1, '2024-01-01', '2024-01-02');
+
+INSERT INTO reviews (listing_id, review_text, rating) VALUES (1, 'Fantastic place to stay', 5);
