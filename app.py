@@ -100,12 +100,13 @@ def show_listings():
     return render_template("listings.html", listings=listings)
 
 @app.route('/listings/<int:id>', methods=['GET'])
-@login_required
 def get_listing(id):
         connection = get_flask_database_connection(app)
         repository = ListingRepository(connection)
+        review_repository = ReviewRepository(connection)
+        reviews = review_repository.find_by_listing_id(id)
         listing = repository.find_by_id(id)
-        return render_template('single_listing.html', listing=listing)
+        return render_template('single_listing.html', listing=listing, reviews=reviews)
 
 @app.route('/bookings', methods=['GET'])
 @login_required
@@ -155,7 +156,7 @@ def post_review(listing_id):
         rating = request.form['rating']
         review = Review(None, listing_id, review_text, rating)
         review = repository.create(review)
-        return redirect('/listings/<int:listing_id>')
+        return redirect(f'/listings/{listing_id}')
     
     except Exception as e:
         print(f'Errors printed here,{e}')

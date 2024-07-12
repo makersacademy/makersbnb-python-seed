@@ -43,7 +43,7 @@
 
     {% for review in reviews %}
 
-        {% if review.listing_id == listing_id %}
+        {% if review.listing_id == listing.id %}
         <p class="t-review_text">{{review.review_text}}</p>
         <p class="t-rating">{{review.rating}}</p>
 
