@@ -8,8 +8,15 @@
 </head>
 
 <body>
-    <h1><strong>{{listing.name}}</strong></h1>
-    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/index">Home</a></li>
+            <li><a class="active" href="/listings">View Spaces</a></li>
+            <li><a href="/listings/new">Create a Space</a></li>
+        </ul>
+    </nav>
+    <h1>{{listing.name}}</h1>
+
     <div>
         
         <p class= "t-description">{{listing.description}}</p>
@@ -18,7 +25,7 @@
         <p class= "t-available-to">Available to: {{listing.available_to}}</p>
     </div>
     <a 
-    href="/listings"><button>Show all listings</button></a>
+    href="/listings" class="button">Show all Spaces</a>
 </body>
 
 </html>

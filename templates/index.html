@@ -12,26 +12,32 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-links">
+
+            <li><a class="active" href="index">Home</a></li>
+
+            <li><a href="/listings">View Spaces</a></li>
+
+            <li><a href="/listings/new">Create a Space</a></li>
+
+            <li><a href="/login">Login</a></li>
+
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
     <h1>Welcome to MakersBnB</h1>
     <h2>The place to find your perfect space</h2>
-    <div>
+    
+    <p
         <a href="/listings">
-            <img src="static/house.jpg" alt="House Image">
+            <img src="static/house.png" alt="House Image">
         </a>
-    </div>
-    <a href="/listings">
-        <button>View Listings</button>
-    </a>
-    <p>
-        <a href="/listings/new">
-            <button>Add a new Listing</button>
-        </a>
-        <a href="{{url_for('login')}}">
-            <button>Login Page</button>
-        </a><br>
-        <a href="{{url_for('register')}}">
-            <button>Registration Page</button>
-        </a><br>
+    </p>
+    <a href="/listings" class="button">View Listings</a>
+    <a href="/listings/new" class="button">Add a new Listing</a>
+    <a href="{{url_for('login')}}" class="button">Login Page</a>
+    <a href="{{url_for('register')}}" class="button">Registration Page</a><br>
     </p>
 </body>
 

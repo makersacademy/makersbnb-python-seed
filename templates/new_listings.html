@@ -2,13 +2,22 @@
 <html lang="en">
 
 <head>
-    <title>Listings</title>
+    <title>Create a listing</title>
     <link rel="stylesheet" href="/static/style.css" >
     <meta charset="utf-8">
 </head>
 
 <body>
-    <h1>New Listing</h1>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/index">Home</a></li>
+            <li><a href="/listings">View Spaces</a></li>
+            <li><a class="active" href="/listings/new">Create a Space</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    <h1>New Space Listing</h1>
     <!-- This creates a form that will submit to POST /books -->
     <form action="/listings" method="post">
 
@@ -48,7 +57,7 @@
         <p>
             <!-- `type` is submit here, to indicate it is a button -->
             <!-- `value` is used as the button's text -->
-            <input type="submit" value="Create new listing">
+            <input type="submit" class="button" value="Create new listing">
         </p>
     </form>
 </body>

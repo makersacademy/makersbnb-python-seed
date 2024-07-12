@@ -3,21 +3,30 @@
 
 <head>
     <title>Available Listings</title>
-    <link rel="stylesheet" href="/static/style.css" >
+    <link rel="stylesheet" href="/static/style.css">
     <meta charset="utf-8">
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/index">Home</a></li>
+            <li><a class="active" href="/listings">View Spaces</a></li>
+            <li><a href="/listings/new">Create a Space</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
     <h1>Find your dream stay</h1>
-    <p>Select a listing below to find out more</p>
     {% for listing in listings %}
-    <div>
+    <div class="listing">
         <p class="t-name">
-            <a href="{{ url_for('get_listing', id=listing.id) }}"><strong>{{ listing.name }}</strong></a>
+            <a href="{{ url_for('get_listing', id=listing.id) }}">{{ listing.name }}</a>
         </p>
-
-        <p class="t-description">{{listing.description}}</p>
-
+        <p class="t-description">{{ listing.description }}</p>
+        <p class="t-price-per-night">£{{ listing.price_per_night }} per night</p>
+        <p class="t-available-from">Available from: {{ listing.available_from }}</p>
+        <p class="t-available-to">Available to: {{ listing.available_to }}</p>
     </div>
     {% endfor %}
 </body>
