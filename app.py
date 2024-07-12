@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, render_template, url_for, redirect, session
+from functools import wraps
 from lib.database_connection import get_flask_database_connection
 from lib.listing import Listing
 from lib.listing_repository import ListingRepository
@@ -13,7 +14,29 @@ from lib.review_repository import ReviewRepository
 # Create a new Flask app
 app = Flask(__name__)
 
+app.secret_key = "your_secret_key_here"
+
 # == Your Routes Here ==
+
+# decorator to only allow registered users to access certain routes
+def login_required(view):
+        @wraps(view)
+        def wrapped_view(**kwargs):
+            if session.get('user_id') is None:
+                return redirect(url_for('login'))
+            return view(**kwargs)
+        return wrapped_view
+
+# to allow session to be accessed in templates
+@app.context_processor
+def inject_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        return dict(user=None)
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    user = repository.find_by_id(user_id)
+    return dict(user=user)
 
 @app.route('/index', methods=['GET'])
 def get_homepage():
@@ -23,15 +46,47 @@ def get_homepage():
 def login():
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/login', methods=['POST'])
+def login_user():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    username = request.form['username']
+    password = request.form['password']
+    user = repository.find_by_username_and_password(username, password)
+    if user is None or user.password != password:
+        return redirect(url_for('login'))
+    session['user_id'] = user.id
+    return redirect(url_for('get_homepage'))
+
+@app.route('/register', methods=['GET'])
 def register():
     return render_template('register.html')
 
+@app.route('/register', methods=['POST'])
+def register_user():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+    username = request.form['username']
+    password = request.form['password']
+    user = User(None, username, password)
+    if not user.is_valid():
+        return redirect(url_for('register'), user=user, errors=user.generate_errors())
+    repository.create(user)
+    return redirect(url_for('login'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
+
 @app.route('/listings/new', methods=['GET'])
+@login_required
 def get_new_listing():
     return render_template('new_listings.html')
 
 @app.route("/listings", methods=["POST"])
+@login_required
 def post_listing():
     connection = get_flask_database_connection(app)
     repository = ListingRepository(connection)
@@ -41,9 +96,9 @@ def post_listing():
     price_per_night = request.form["price_per_night"]
     available_from = request.form["available_from"]
     available_to = request.form["available_to"]
-    
+    user_id = session['user_id']
 
-    listing = Listing(None, name, description, price_per_night, available_from, available_to) 
+    listing = Listing(None, name, description, price_per_night, available_from, available_to, user_id) 
     listing = repository.create(listing)
     return redirect(f"/listings/{listing.id}")
 
@@ -55,6 +110,7 @@ def show_listings():
     return render_template("listings.html", listings=listings)
 
 @app.route('/listings/<int:id>', methods=['GET'])
+@login_required
 def get_listing(id):
         connection = get_flask_database_connection(app)
         repository = ListingRepository(connection)
@@ -62,6 +118,7 @@ def get_listing(id):
         return render_template('single_listing.html', listing=listing)
 
 @app.route('/bookings', methods=['GET'])
+@login_required
 def get_bookings():
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
@@ -71,20 +128,20 @@ def get_bookings():
     listing_names = {listing.id: listing.name for listing in listings}
     return render_template('bookings.html', bookings=bookings, listing_names=listing_names)
 
-@app.route('/bookings/new/<int:listing_id>', methods=['POST'])
+@app.route('/listings/<int:listing_id>/book', methods=['POST'])
+@login_required
 def post_booking(listing_id):
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
-    user_repository = UserRepository(connection)
-    # booker_id = user_repository.find_by_id(session['user_id'])
-    booker_id = 1 # hardcoding user id for now
+    booker_id = session['user_id']
     check_in = request.form['check_in']
     check_out = request.form['check_out']
     booking = Booking(None, listing_id, None, booker_id, check_in, check_out)
     booking = repository.create(booking)
     return redirect('/bookings')
 
-@app.route('/bookings/new/<int:listing_id>', methods=['GET'])
+@app.route('/listing/<int:listing_id>/book', methods=['GET'])
+@login_required
 def get_booking_form(listing_id):
     connection = get_flask_database_connection(app)
     repository = ListingRepository(connection)

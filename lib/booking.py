@@ -13,3 +13,6 @@ class Booking:
     
     def __repr__(self):
         return f"Booking:({self.id}, {self.listing_id}, {self.booked_at}, {self.booker_id}, {self.check_in}, {self.check_out})"
+    
+    def formatted_booked_at(self):
+        return self.booked_at.strftime("%d-%m-%Y %H:%M")

@@ -1,11 +1,12 @@
 class Listing:
-    def __init__(self, id, name, description, price_per_night, available_from, available_to):
+    def __init__(self, id, name, description, price_per_night, available_from, available_to, user_id):
         self.id = id
         self.name = name
         self.description = description
         self.price_per_night = price_per_night
         self.available_from = available_from
         self.available_to = available_to
+        self.user_id = user_id
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

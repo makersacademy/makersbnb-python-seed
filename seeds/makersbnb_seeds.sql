@@ -15,8 +15,9 @@ DROP SEQUENCE IF EXISTS bookings_id_seq;
 
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-    username text
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255),
+    password VARCHAR(255)
 );
 -- Then, we recreate them
 CREATE SEQUENCE IF NOT EXISTS listings_id_seq;
@@ -28,17 +29,18 @@ CREATE TABLE listings (
     available_from DATE, 
     available_to DATE,
     user_id int,
-    constraint fk_user foreign key(user_id)
-    references users(id)
-    on delete cascade
+    constraint fk_user 
+        foreign key(user_id)
+        references users(id)
+        on delete cascade
 );
 
 CREATE SEQUENCE IF NOT EXISTS bookings_id_seq;
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
-    listing_id INT NOT NULL,
+    listing_id INT,
     booked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    booker_id INT NOT NULL,
+    booker_id INT,
     check_in DATE,
     check_out DATE,
     CONSTRAINT fk_listing
@@ -64,7 +66,7 @@ CREATE TABLE reviews (
 );
 
 -- Finally, we add any records that are needed for the tests to run
-INSERT INTO users (username) VALUES ('marya_test');
+INSERT INTO users (username, password) VALUES ('marya_test', 'password1');
 
 INSERT INTO listings (name, description, price_per_night, available_from, available_to, user_id) VALUES ('test-cottage', 'nice cottage by the beach', 25.00, '2024-01-01', '2024-10-01', 1);
 
