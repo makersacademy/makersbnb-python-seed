@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         body{
-            background-color: peachpuff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,11 +14,11 @@
             margin: 0;
         }
         .header {
+            color: #0e3f3a;
             position: absolute;
-            top: 20px;
             text-align: center;
             width: 100%;
-            font-family: 'Roboto', sans-serif;   
+            font-family: 'Leto', sans-serif;   
         }
         .container {
             text-align: center;
@@ -28,10 +27,11 @@
             display: block;
             margin: 10px 0;
         }
-        .dashboard-button {
+        .dashboard-buttons {
             top: 20px;
             right: 20px;
-            background-color: rgb(251, 172, 103);
+            background-color: rgb(250, 184, 126);
+            font-family: 'Leto', sans-serif;
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -43,30 +43,21 @@
             border: none;
             border-radius: 4px;
         }
-        .dashboard-button:hover {
-            background-color: peachpuff
+        .dashboard-buttons:hover {
+            background-color: #b2c6ca;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Welcome to <br>Beds For Bodies! </h1>
-    </div>
-    <div class="container"
-        <h1>This is your dashboard:</h1>
+        <h1>Welcome to Beds For Bodies! </h1>
+        <p class="container"><h1>This is your dashboard:</h1></p>
         <p>User email: {{ session['email'] }}</p>
         <!-- Add more content here as needed -->
-    </div>
     <div class="container">
-        <div class="dashboard-button">
-            <a href="{{ url_for('get_requests') }}" class="link">Incoming Requests</a>
-        </div>  
-        <div class="dashboard-button">
-            <a href="{{ url_for('create_space') }}" class="link">Create A Property</a>
-        </div>
-        <div class="dashboard-button">
-            <a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a>
-        </div>    
+        <p class="dashboard-buttons"><a href="{{ url_for('get_requests') }}" class="link">Incoming Requests</a></p>
+        <p class="dashboard-buttons"><a href="{{ url_for('create_space') }}" class="link">Create A Property</a></p>
+        <p class="dashboard-buttons"><a href="{{ url_for('get_spaces') }}" class="link">Browse Properties</a></p>
     </div>    
         
 </body>

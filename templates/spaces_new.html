@@ -26,6 +26,7 @@
         </style>
     </head>
     <body>
+        <div class="header">
         <h1>List a Space</h1>
         <form action="/spaces/new" method="post">
 
@@ -44,16 +45,20 @@
             <!-- These `label` tags are important for accessibility -->
                 <label for="Property Name">Property Name</label>
                 <input type="text" name="Property Name" id="property_name" required>
-
+                <br>
+                <br>
                 <label for="Description">Description</label>
                 <input type="text" name="Description" id="description" required>
-
+                <br>
+                <br>
                 <label for="Price per Night (£)">Price per Night (£)</label>
                 <input type="number" name="Price per Night (£)" id="price_per_night" required>
-
+                <br>
+                <br>
                 <label for="Available From (dd-mm-yyyy)">Available From (dd-mm-yyyy)</label>
                 <input type="date" name="Available From (dd-mm-yyyy)" id="available_from" required>
-
+                <br>
+                <br>
                 <label for="Available To (dd-mm-yyyy)">Available To (dd-mm-yyyy)</label>
                 <input type="date" name="Available To (dd-mm-yyyy)" id="available_to" required>
 
@@ -62,6 +67,7 @@
             <p>
                 <input type="submit" value="List My Space">
             </p>      
-        </form>       
+        </form> 
+        </div>    
     </body>
 </html>
