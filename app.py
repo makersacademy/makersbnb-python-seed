@@ -27,17 +27,6 @@ def login_required(view):
             return view(**kwargs)
         return wrapped_view
 
-# to allow session to be accessed in templates
-@app.context_processor
-def inject_user():
-    user_id = session.get('user_id')
-    if user_id is None:
-        return dict(user=None)
-    connection = get_flask_database_connection(app)
-    repository = UserRepository(connection)
-    user = repository.find_by_id(user_id)
-    return dict(user=user)
-
 @app.route('/index', methods=['GET'])
 def get_homepage():
     return render_template('index.html')
@@ -56,6 +45,7 @@ def login_user():
     if user is None or user.password != password:
         return redirect(url_for('login'))
     session['user_id'] = user.id
+    print(f'User logged in is: {session["user_id"]}')
     return redirect(url_for('get_homepage'))
 
 @app.route('/register', methods=['GET'])
