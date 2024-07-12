@@ -15,7 +15,7 @@ class ReviewRepository:
     # This is what we want displayed on the single listing page
     def find_by_listing_id(self, listing_id):
         rows = self._connection.execute('SELECT * FROM reviews WHERE listing_id = %s', [listing_id])
-        return [Review(row["id"], row["listing_id"], row["review_text"], row["rating"], row["review_date"]) for row in rows]
+        return [Review(row["id"], row["listing_id"], row["review_text"], row["rating"]) for row in rows]
     
     # This function lets us delete the review for a specific review id
     def delete(self, id):

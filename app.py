@@ -7,8 +7,8 @@ from lib.booking import Booking
 from lib.booking_repository import BookingRepository
 from lib.user import User
 from lib.user_repository import UserRepository
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from lib.review import Review
+from lib.review_repository import ReviewRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -91,7 +91,28 @@ def get_booking_form(listing_id):
     listing = repository.find_by_id(listing_id)
     return render_template('booking_form.html', listing=listing)
 
+@app.route('/listings/review/<int:listing_id>', methods = ['GET'])
+def get_review_form(listing_id):
+    connection = get_flask_database_connection(app)
+    repository = ListingRepository(connection)
+    listing = repository.find_by_id(listing_id)
+    return render_template('review_form.html', listing=listing)
 
+@app.route('/listings/review/<int:listing_id>', methods = ['POST'])
+def post_review(listing_id):
+    
+    try: 
+        connection = get_flask_database_connection(app)
+        repository = ReviewRepository(connection)
+        review_text = request.form['review_text']
+        rating = request.form['rating']
+        review = Review(None, listing_id, review_text, rating)
+        review = repository.create(review)
+        return redirect('/listings/<int:listing_id>')
+    
+    except Exception as e:
+        print(f'Errors printed here,{e}')
+        return redirect('/index')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
