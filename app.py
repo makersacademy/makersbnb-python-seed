@@ -30,11 +30,14 @@ def get_index():
 def get_spaces():
     Connection = get_flask_database_connection(app)
     infotoprint = []
+    images = ["1.webp", "2.webp", "3.webp", "4.webp", "5.webp", "6.webp", "7.webp", "8.webp", "9.webp", "10.webp"]
     allspaces = Connection.execute('SELECT * FROM properties')
     for space in allspaces:
         user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
         infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"], space['id'])]
-    return render_template('spaces.html', test_list = infotoprint)
+    zipped_list = zip(infotoprint, images)
+    return render_template('spaces.html', test_list = zipped_list)
+
 
 # List a new space as a Property owner.
 @app.route('/spaces/new', methods=['GET'])
@@ -219,6 +222,8 @@ def dashboard():
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
+
+
 
 
 
