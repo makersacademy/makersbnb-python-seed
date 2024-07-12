@@ -1,12 +1,12 @@
 class Review:
-    def __init__(self, id, review_content, number_rating, listing_id):
+    def __init__(self, id, listing_id, review_text, rating):
         self.id = id
-        self.review_content = review_content
-        self.number_rating = number_rating
         self.listing_id = listing_id
+        self.review_text = review_text
+        self.rating = rating
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
     
     def __repr__(self):
-        return f"Review:({self.listing_id}, {self.review_content}, {self.number_rating}, {self.price_per_night}, {self.available_from}, {self.available_to})"
+        return f"Review:({self.id}, {self.listing_id}, {self.review_text}, {self.rating})"
