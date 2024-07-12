@@ -50,19 +50,17 @@
 
                 <button type=button>List Spaces</button>
             </p>
-            <p>Here you'll see a list of spaces where you can book a property.</p>
-            {% for item in test_list %}
-                <a href="/spaces/{{item[5]}}"><button type=button>View This Space</button></a>
-                <div>{{item[2]}}: {{item[1]}} - {{item[3]}} <br> £{{item[4]}} <br> listed by {{item[0][0].name}} <br> <br><br></div>
-            {% endfor %}
-        </div>
-
+        
         <p>Here you'll see a list of spaces where you can book a property.</p>
         {% for item, images in test_list %}
             <a href="/spaces/{{item[5]}}"><button type=button>View This Space</button></a>
             <img src="{{url_for('static', filename=images)}}" class="img-fluid" class="center" style="width:300px;height:200px">
             <div>{{item[2]}}: {{item[1]}} - {{item[3]}} <br> £{{item[4]}} <br> listed by {{item[0][0].name}} <br> <br></div>
         {% endfor %}
+            
+        </div>
+
+  
 
     
     </body>
