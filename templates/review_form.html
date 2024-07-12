@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Review Form</title>
+    <link rel="stylesheet" href="/static/style.css" >
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/index">Home</a></li>
+            <li><a href="/listings">View Spaces</a></li>
+            <li><a class="active" href="/listings/new">Create a Space</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    <h1>Leave a review for {{ listing.name }}</h1>
+    <!-- This creates a form that will submit to POST /books -->
+    <form action="{{ url_for('post_review', listing_id=listing.id) }}" method="POST"></form>
+
+        <!-- We check to see if there are any errors from a previous submission -->
+        {% if errors %}
+        <!-- If so, we show them. -->
+        <p class="t-errors">
+            There were errors with your submission: {{ errors }}
+        </p>
+        {% endif %}
+
+        <p>
+            <label for="review_text">Type in review</label>
+            <input type="text" name="review_text" id="review_text">
+        </p>
+        <p>
+            <label for="rating">Rating out of 5</label>
+            <input type="number" name="rating" id="rating">
+        </p>
+            <input type="submit" class="button" value="Post new review">
+        </p>
+    </form>
+</body>
+
+</html>

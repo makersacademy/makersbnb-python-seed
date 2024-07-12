@@ -39,6 +39,17 @@
         <p class = "button" href="{{ url_for('get_booking_form', listing_id=listing.id) }}">Book</a></p>
     </div>
     <a 
+    href="{{ url_for('get_review_form', listing_id=listing.id)}}">Leave a review for this space</a>
+
+    {% for review in reviews %}
+
+        {% if review.listing_id == listing_id %}
+        <p class="t-review_text">{{review.review_text}}</p>
+        <p class="t-rating">{{review.rating}}</p>
+
+        {% endif %}
+    {% endfor %}
+    <a 
     href="/listings" class="button">Show all Spaces</a>
 </body>
 
