@@ -115,13 +115,14 @@ def create_space():
     # Get the fields from the request form
     property_name = request.form['Property Name']
     description = request.form['Description']
+    location = request.form['Location']
     price_per_night = request.form['Price per Night (£)']
     available_from = request.form['Available From (dd-mm-yyyy)']
     available_to = request.form['Available To (dd-mm-yyyy)']
     # Assume user_id is 1 for simplicity; replace with actual user session or other logic
     user_id = 1 
 
-    property = Property(None, property_name, description, "Some Location", price_per_night, user_id)
+    property = Property(None, property_name, description, location, price_per_night, user_id)
 
     if not property.is_valid():
         return render_template('spaces_new.html', property=property, errors=property.generate_errors()), 400
@@ -186,7 +187,7 @@ def post_login():
     if user_repository.check_password(email, password):
         session['email'] = email
         session['user_id'] = user_repository.get_user_id_from_email(email)
-        return render_template('login_success.html')
+        return dashboard()
     else:
         return render_template('login_error.html')
 
