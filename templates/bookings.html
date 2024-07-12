@@ -8,6 +8,26 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-links">
+
+            <li><a class="active" href="/index">Home</a></li>
+
+            <li><a href="/listings">View Spaces</a></li>
+
+            <li><a href="/listings/new">Create a Space</a></li>
+            {% if user_id is none %}
+
+            <li><a href="/login">Login</a></li>
+
+            <li><a href="/register">Register</a></li>
+            {% else %}
+            <li><a class="active" href="/bookings">Bookings</a></li>
+
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     <h1>Here are your bookings</h1>
     {% for booking in bookings %}
     <div>

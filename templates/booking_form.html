@@ -9,11 +9,33 @@
 
 <body>
     <!-- In booking_form.html -->
+    <nav>
+        <ul class="nav-links">
+
+            <li><a href="index">Home</a></li>
+
+            <li><a href="/listings">View Spaces</a></li>
+
+            <li><a href="/listings/new">Create a Space</a></li>
+            {% if user_id is none %}
+
+            <li><a href="/login">Login</a></li>
+
+            <li><a href="/register" class="active">Register</a></li>
+            {% else %}
+            <li><a href="/bookings">Bookings</a></li>
+
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     <h1>Book {{ listing.name }}</h1>
     <form action="{{ url_for('post_booking', listing_id=listing.id) }}" method="POST">
         <input type="date" name="check_in" required>
         <input type="date" name="check_out" required>
-        <input type="submit" value="Book">
+    <p>
+        <input type="submit"  class="button" value="Book">
+    </p>
     </form>
 </body>
 

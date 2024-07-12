@@ -10,9 +10,22 @@
 <body>
     <nav>
         <ul class="nav-links">
+
             <li><a href="/index">Home</a></li>
-            <li><a class="active" href="/listings">View Spaces</a></li>
+
+            <li><a href="/listings" class="active">View Spaces</a></li>
+
             <li><a href="/listings/new">Create a Space</a></li>
+            {% if user_id is none %}
+
+            <li><a href="/login">Login</a></li>
+
+            <li><a href="/register">Register</a></li>
+            {% else %}
+            <li><a href="/bookings">Bookings</a></li>
+
+            <li><a href="/logout">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
     <h1>{{listing.name}}</h1>
@@ -23,7 +36,7 @@
         <p class= "t-price-per-night"><strong>£{{listing.price_per_night}} per night</strong></p>
         <p class= "t-available-from">Available from: {{listing.available_from}}</p>
         <p class= "t-available-to">Available to: {{listing.available_to}}</p>
-        <a href="{{ url_for('get_booking_form', listing_id=listing.id) }}">Book</a>
+        <p class = "button" href="{{ url_for('get_booking_form', listing_id=listing.id) }}">Book</a></p>
     </div>
     <a 
     href="/listings" class="button">Show all Spaces</a>
