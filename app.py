@@ -119,29 +119,6 @@ def create_space():
     # Redirect to the book's show route to the user can see it
     return redirect(f"/spaces/{property.id}")
 
-
-# List available spaces.
-@app.route('/spaces', methods=['GET'])
-def get_spaces():
-    Connection = get_flask_database_connection(app)
-    infotoprint = []
-    allspaces = Connection.execute('SELECT * FROM properties')
-    for space in allspaces:
-        user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
-        infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
-    return render_template('spaces.html', test_list = infotoprint)
-
-# List a new space as a Property owner.
-@app.route('/spaces/new', methods=['GET'])
-def list_new_property():
-    return render_template('spaces_new.html')
-
-#######   LOGIN 
-
-
-
-# Details for logging in and creating an account:
-
 @app.route('/spaces/<id>', methods=['GET'])
 def get_space(id):
     Connection = get_flask_database_connection(app)
@@ -157,10 +134,42 @@ def book_space(id):
     if 'user_id' not in session:
         return redirect(url_for('get_login'))
     else:
-        Brequest = BookingRequest(request.form['Start Date'],request.form['End Date'],id,None,None,'PENDING') #To Do - User_Id, Booking_Id
+        Brequest = BookingRequest(request.form['Start Date'],request.form['End Date'],id,session['user_id'],None,'PENDING') #To Do - User_Id, Booking_Id
         booking_repo.create(Brequest)
-        return redirect(url_for('get_requests'))
-    
+        return redirect(url_for('get_my_requests'))
+
+@app.route('/my-requests', methods=['GET'])
+def get_my_requests():
+    if 'user_id' not in session:
+        return redirect(url_for('get_login'))
+    else:
+        Connection = get_flask_database_connection(app)
+        user = session['user_id']
+        booking_repo = BookingRequestRepository(Connection)
+        return render_template('requests.html',booking_list = booking_repo.get_bookings_by_customer(int(user)))
+
+
+# '''# List available spaces.
+# @app.route('/spaces', methods=['GET'])
+# def get_spaces():
+#     Connection = get_flask_database_connection(app)
+#     infotoprint = []
+#     allspaces = Connection.execute('SELECT * FROM properties')
+#     for space in allspaces:
+#         user = Connection.execute('SELECT name FROM users WHERE id = %s',[space["user_id"]])
+#         infotoprint += [(user, space["description"], space["property"], space["location"], space["cost"])]
+#     return render_template('spaces.html', test_list = infotoprint)
+
+# # List a new space as a Property owner.
+# @app.route('/spaces/new', methods=['GET'])
+# def list_new_property():
+#     return render_template('spaces_new.html')'''
+
+#######   LOGIN 
+
+
+
+# Details for logging in and creating an account:
 
 
 @app.route('/login', methods=['GET'])

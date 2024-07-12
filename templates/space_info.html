@@ -18,10 +18,10 @@
         <p>Please enter the dates of your stay</p>
         <form action='/spaces/{{space_info.id}}' method='POST'>
             Start Date:
-            <input type='date' name='Start Date' id='Start Date'/>
+            <input type='date' name='Start Date' id='Start Date' required/>
             <br>
             End Date:
-            <input type='date' name='End Date' id='End Date' />
+            <input type='date' name='End Date' id='End Date' required/>
             <br>
             <input type='submit' name='submit'/>
     </form>
